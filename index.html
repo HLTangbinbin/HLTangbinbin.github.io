@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ECharts</title>
+    <!-- 引入刚刚下载的 ECharts 文件 -->
+    <script src="echarts.min.js"></script>
+  </head>
+  <body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="newHouse1" style="position: absolute;left: 100px;top: 100px;width: 1000px;height:600px;"></div>
+    <div id="newHouse2" style="position: absolute;left: 100px;top: 800px;width: 500px;height:400px;"></div>
+    <div id="newHouse3" style="position: absolute;left: 700px;top: 800px;width: 500px;height:400px;"></div>
+    <div id="oldHouse1" style="position: absolute;left: 1100px;top: 100px;width: 1000px;height:600px;"></div>
+    <div id="oldHouse2" style="position: absolute;left: 1300px;top: 800px;width: 500px;height:400px;"></div>
+    <script type="text/javascript">
+      function dataJson(data) {
+        var houseData = Array();
+        houseData = data
+        var houseArray = houseData.houseList.filter( houseObj => {
+            var areaStr = String()
+            areaStr = houseObj.cityDistrict            
+            return areaStr.search('合计') != -1;
+        })
+        console.log(houseArray);
+        //按照年份与日期做赛选与排序
+        function selectMonthArr(year) {
+            return houseArray.filter( houseObj => {
+                var yearStr = String()
+                //筛选不同年份数据
+                yearStr = houseObj.month
+                return yearStr.search(year) != -1;
+            }).sort(function(a,b) {
+                return a.statisticsTime > b.statisticsTime ? 1: -1;
+            }).map(item => {
+                //取出某个字段数据
+                var hosuseNum = Number(item.houseNum)
+                return hosuseNum
+            })
+        }
+        //每年销量总和
+        function yearTotalArr(arr) {
+            let sum = 0
+            for(let i=0;i<arr.length;i++) {
+                var num = arr[i]
+                sum += num
+            }
+            return sum
+        }
+        // 2017-2022年每月的合计数据
+        var monthArray2017 = selectMonthArr('2017')
+        var monthArray2018 = selectMonthArr('2018')
+        var monthArray2019 = selectMonthArr('2019')
+        var monthArray2020 = selectMonthArr('2020')
+        var monthArray2021 = selectMonthArr('2021')
+        var monthArray2022 = selectMonthArr('2022')
+        //前面数据补齐-2020年前3月数据为0
+        monthArray2020.unshift(0, 0, 0)
+        console.log(monthArray2020)
+        // 2017-2022年每年的合计数据
+        var yearNum2017 = yearTotalArr(monthArray2017)
+        var yearNum2018 = yearTotalArr(monthArray2018)
+        var yearNum2019 = yearTotalArr(monthArray2019)
+        var yearNum2020 = yearTotalArr(monthArray2020)
+        var yearNum2021 = yearTotalArr(monthArray2021)
+        var yearNum2022 = yearTotalArr(monthArray2022)
+        
+
+        // 基于准备好的dom，初始化echarts实例（每月柱状图）
+        var newHouseChart1 = echarts.init(document.getElementById('newHouse1'));
+        // 指定图表的配置项和数据
+        var newHouseOption1 = {
+            title: {
+                text: '武汉新房月成交量'
+            },
+            tooltip: {},
+            legend: {
+                data: ['2018', '2019', '2020', '2021' ,'2022']
+            },
+            xAxis: {
+                data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+            },
+            yAxis: {},
+            series: [
+                // {
+                //     name: 2017,
+                //     type: 'bar',
+                //     data: houseArray2017
+                // },
+                {
+                    name: 2018,
+                    type: 'bar',
+                    data: monthArray2018
+                },
+                {
+                    name: 2019,
+                    type: 'bar',
+                    data: monthArray2019
+                },
+                {
+                    name: 2020,
+                    type: 'bar',
+                    data: monthArray2020
+                },
+                {
+                    name: 2021,
+                    type: 'bar',
+                    data: monthArray2021
+                },
+                {
+                    name: 2022,
+                    type: 'bar',
+                    data: monthArray2022
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        newHouseChart1.setOption(newHouseOption1);
+        
+        // 基于准备好的dom，初始化echarts实例（每年饼状图）
+        var newHouseChart2 = echarts.init(document.getElementById('newHouse2'));
+        // 指定图表的配置项和数据
+        newHouseOption2 = {
+            title: {
+                text: '2018-2022新房成交量',
+                subtext: '',
+                left: 'center'
+            },
+            series: [
+                {
+                    type: 'pie',
+                    label: {
+                        show: true
+                    },
+                    data: [
+                        {
+                            value: yearNum2018,
+                            name: '2018年 ' + yearNum2018 + ' 套'
+                        },
+                        {
+                            value: yearNum2019,
+                            name: '2019年 ' + yearNum2019 + ' 套'
+                        },
+                        {
+                            value: yearNum2020,
+                            name: '2020年 ' + yearNum2020 + ' 套'
+                        },
+                        {
+                            value: yearNum2021,
+                            name: '2021年 ' + yearNum2021 + ' 套'
+                        },
+                        {
+                            value: yearNum2022,
+                            name: '2022年 ' + yearNum2022 + ' 套'
+                        }
+                    ],
+                    radius: 100
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        newHouseChart2.setOption(newHouseOption2);
+      }
+
+      // 二手房交易相关数据
+      function tradingJson(data) {
+        var houseData = Array();
+        houseData = data
+        console.log(houseData.houseList)
+        //按照年份与日期做筛选与排序
+        function oldHouseTotalArr(houseType, year) {
+            return houseData.houseList.filter( houseObj => {
+                var yearStr = String()
+                yearStr = houseObj.tradingDate
+                return yearStr.search(year) != -1;
+            }).sort(function(a,b) {
+                return a.statisticalTime > b.statisticalTime ? 1: -1;
+            }).map(item => {
+                if (houseType == 'old') {
+                    var volume = Number(item.oldHouseVolume)
+                    return volume
+                }else {
+                    var inventory = Number(item.newHouseInventory)
+                    return inventory
+                }
+                
+            })
+        }
+        function oldSelectMonthArr(arr) {
+            var tempArr = Array()
+            for(let i in arr) {
+                if (i>0) {
+                    var currenthMonth = (arr[i])-(arr[i-1])
+                    tempArr.push(currenthMonth)
+                }
+            }
+            return tempArr
+        }
+        // 2019-2022年二手房月成交累计数据
+        var oldHouseTotalArray2019 = oldHouseTotalArr('old','2019')
+        var oldHouseTotalArray2020 = oldHouseTotalArr('old','2020')
+        var oldHouseTotalArray2021 = oldHouseTotalArr('old','2021')
+        var oldHouseTotalArray2022 = oldHouseTotalArr('old','2022')
+
+        //2019-2022每年新房库存数据
+        var newHouseInventory2019 = oldHouseTotalArr('new','2019').pop()
+        var newHouseInventory2020 = oldHouseTotalArr('new','2020').pop()
+        var newHouseInventory2021 = oldHouseTotalArr('new','2021').pop()
+        var newHouseInventory2022 = oldHouseTotalArr('new','2022').pop()
+        
+        console.log(newHouseInventory2019)
+
+        // 2019-2022年二手房月成交数据
+        var oldHouseArray2019 = oldSelectMonthArr(oldHouseTotalArray2019)
+        var oldHouseArray2020 = oldSelectMonthArr(oldHouseTotalArray2020)
+        var oldHouseArray2021 = oldSelectMonthArr(oldHouseTotalArray2021)
+        var oldHouseArray2022 = oldSelectMonthArr(oldHouseTotalArray2022)
+
+        //补全数据处理
+        oldHouseArray2020.unshift(0, 0, oldHouseTotalArray2020[0])
+        oldHouseArray2021.unshift(0, oldHouseTotalArray2021[0])
+        oldHouseArray2022.unshift(0, oldHouseTotalArray2022[0])
+        console.log(oldHouseArray2020)
+
+        // 基于准备好的dom，初始化echarts实例（每月柱状图）
+        var oldHouseChart1 = echarts.init(document.getElementById('oldHouse1'));
+        // 指定图表的配置项和数据
+        var oldHouseOption1 = {
+            title: {
+                text: '武汉二手房累计月成交量'
+            },
+            tooltip: {},
+            legend: {
+                data: ['2019', '2020', '2021' ,'2022']
+            },
+            xAxis: {
+                data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: 2019,
+                    type: 'bar',
+                    data: oldHouseArray2019
+                },
+                {
+                    name: 2020,
+                    type: 'bar',
+                    data: oldHouseArray2020
+                },
+                {
+                    name: 2021,
+                    type: 'bar',
+                    data: oldHouseArray2021
+                },
+                {
+                    name: 2022,
+                    type: 'bar',
+                    data: oldHouseArray2022
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        oldHouseChart1.setOption(oldHouseOption1);
+        
+        // 基于准备好的dom，初始化echarts实例（每年饼状图）
+        var oldHouseChart2 = echarts.init(document.getElementById('oldHouse2'));
+        // 指定图表的配置项和数据
+        oldHouseOption2 = {
+            title: {
+                text: '2019-2022二手房成交量',
+                subtext: '',
+                left: 'center'
+            },
+            series: [
+                {
+                    type: 'pie',
+                    label: {
+                        show: true
+                    },
+                    data: [
+                        {
+                            value: oldHouseTotalArray2019.pop(),
+                            name: '2019年 ' + oldHouseTotalArray2019.pop() + ' 套'
+                        },
+                        {
+                            value: oldHouseTotalArray2020.pop(),
+                            name: '2020年 ' + oldHouseTotalArray2020.pop() + ' 套'
+                        },
+                        {
+                            value: oldHouseTotalArray2021.pop(),
+                            name: '2021年 ' + oldHouseTotalArray2021.pop() + ' 套'
+                        },
+                        {
+                            value: oldHouseTotalArray2022.pop(),
+                            name: '2022年 ' + oldHouseTotalArray2022.pop() + ' 套'
+                        }
+                    ],
+                    radius: 100
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        oldHouseChart2.setOption(oldHouseOption2);
+
+        // 基于准备好的dom，初始化echarts实例（每年饼状图）
+        var newHouseChart3 = echarts.init(document.getElementById('newHouse3'));
+        // 指定图表的配置项和数据
+        newHouseOption3 = {
+            title: {
+                text: '2019-2022新房库存',
+                subtext: '',
+                left: 'center'
+            },
+            series: [
+                {
+                    type: 'pie',
+                    label: {
+                        show: true
+                    },
+                    data: [
+                        {
+                            value: newHouseInventory2019,
+                            name: '2019年 ' + newHouseInventory2019 + ' 套'
+                        },
+                        {
+                            value: newHouseInventory2020,
+                            name: '2020年 ' + newHouseInventory2020 + ' 套'
+                        },
+                        {
+                            value: newHouseInventory2021,
+                            name: '2021年 ' + newHouseInventory2021 + ' 套'
+                        },
+                        {
+                            value: newHouseInventory2022,
+                            name: '2022年 ' + newHouseInventory2022 + ' 套'
+                        }
+                    ],
+                    radius: 100
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        newHouseChart3.setOption(newHouseOption3);
+      }
+
+    </script>
+     <script type="text/javascript" src="./house.json?callback=dataJson"></script>
+     <script type="text/javascript" src="./houseTradingInfo.json?callback=tradingJson"></script>
+     
+  </body>
+</html>
