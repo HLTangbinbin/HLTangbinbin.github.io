@@ -208,7 +208,7 @@
         var newHouseInventory2021 = oldHouseTotalArr('new','2021').pop()
         var newHouseInventory2022 = oldHouseTotalArr('new','2022').pop()
         
-        console.log(newHouseInventory2019)
+        console.log(newHouseInventory2022)
 
         // 2019-2022年二手房月成交数据
         var oldHouseArray2019 = oldSelectMonthArr(oldHouseTotalArray2019)
@@ -220,14 +220,14 @@
         oldHouseArray2020.unshift(0, 0, oldHouseTotalArray2020[0])
         oldHouseArray2021.unshift(0, oldHouseTotalArray2021[0])
         oldHouseArray2022.unshift(0, oldHouseTotalArray2022[0])
-        console.log(oldHouseArray2020)
+        console.log(oldHouseArray2022)
 
         // 基于准备好的dom，初始化echarts实例（每月柱状图）
         var oldHouseChart1 = echarts.init(document.getElementById('oldHouse1'));
         // 指定图表的配置项和数据
         var oldHouseOption1 = {
             title: {
-                text: '武汉二手房累计月成交量'
+                text: '武汉二手房月成交量'
             },
             tooltip: {},
             legend: {
