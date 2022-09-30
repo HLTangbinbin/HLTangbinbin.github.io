@@ -20,6 +20,11 @@
     <!-- 新房、二手房年成交量、新房库存折线图 -->
     <div id="houseVolumeLineYear" style="position: absolute;left: 100px;top: 1500px;width: 1000px;height:600px;"></div>
 
+    <!-- 社会融资存折线图 -->
+    <div id="afreLineMonth" style="position: absolute;left: 100px;top: 2200px;width: 1000px;height:600px;"></div>
+    <!-- 货币供应存折线图 -->
+    <div id="currencyLineMonth" style="position: absolute;left: 1100px;top: 2200px;width: 1000px;height:600px;"></div>
+
     <script type="text/javascript">
       function dataJson(data) {
         /**
@@ -427,9 +432,201 @@
         houseVolumeLineYearChart.setOption(houseVolumeLineYearOption);
       }
 
+        /**
+         * 社会融资及货币供应数据与图表
+         *
+        */
+
+      function currencyJson(data) {
+        var currencyData = Array();
+        currencyData = data
+
+        //按照年份与日期做筛选与排序
+        function afreAndCurrencylArr(dataType, year) {
+            return currencyData.currencyInfoList.filter( afreAndCurrencyObj => {
+                var yearStr = String()
+                yearStr = afreAndCurrencyObj.itemDate
+                return yearStr.search(year) != -1;
+            }).sort(function(a,b) {
+                return a.itemDate > b.itemDate ? 1: -1;
+            }).map(item => {
+                if (dataType == 'afre') {
+                    var afre = Number(item.afre)
+                    return afre
+                }else if (dataType == 'currency') {
+                    var currencyM2 = Number(item.m2)
+                    return currencyM2
+                }
+                
+            })
+        }
+
+        //获取每年每月的社会融资数据
+        var afreArrayOfYear2014 = afreAndCurrencylArr('afre',2014)
+        var afreArrayOfYear2015 = afreAndCurrencylArr('afre',2015)
+        var afreArrayOfYear2016 = afreAndCurrencylArr('afre',2016)
+        var afreArrayOfYear2017 = afreAndCurrencylArr('afre',2017)
+        var afreArrayOfYear2018 = afreAndCurrencylArr('afre',2018)
+        var afreArrayOfYear2019 = afreAndCurrencylArr('afre',2019)
+        var afreArrayOfYear2020 = afreAndCurrencylArr('afre',2020)
+        var afreArrayOfYear2021 = afreAndCurrencylArr('afre',2021)
+        var afreArrayOfYear2022 = afreAndCurrencylArr('afre',2022)
+        console.log('2018年每月社会融资数组 %o ',afreArrayOfYear2018)
+        //获取每年每月的货币供应数据
+        var currencyArrayOfYear2014 = afreAndCurrencylArr('currency',2014)
+        var currencyArrayOfYear2015 = afreAndCurrencylArr('currency',2015)
+        var currencyArrayOfYear2016 = afreAndCurrencylArr('currency',2016)
+        var currencyArrayOfYear2017 = afreAndCurrencylArr('currency',2017)
+        var currencyArrayOfYear2018 = afreAndCurrencylArr('currency',2018)
+        var currencyArrayOfYear2019 = afreAndCurrencylArr('currency',2019)
+        var currencyArrayOfYear2020 = afreAndCurrencylArr('currency',2020)
+        var currencyArrayOfYear2021 = afreAndCurrencylArr('currency',2021)
+        var currencyArrayOfYear2022 = afreAndCurrencylArr('currency',2022)
+        console.log('2018年每月货币供应数组 %o ',currencyArrayOfYear2018)
+
+        //绘制社会融资折线图
+        var afreLineMonthChart = echarts.init(document.getElementById('afreLineMonth'));
+        // 指定图表的配置项和数据
+        var afreLineMonthOption = {
+            title: {
+                text: '社会融资规模增量统计'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['2014', '2015', '2016' ,'2017','2018','2019', '2020', '2021' ,'2022']
+            },
+            xAxis: {
+                data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '2014',
+                    type: 'line',
+                    data: afreArrayOfYear2014
+                },
+                {
+                    name: '2015',
+                    type: 'line',
+                    data: afreArrayOfYear2015
+                },
+                {
+                    name: '2016',
+                    type: 'line',
+                    data: afreArrayOfYear2016
+                },
+                {
+                    name: '2017',
+                    type: 'line',
+                    data: afreArrayOfYear2017
+                },
+                {
+                    name: '2018',
+                    type: 'line',
+                    data: afreArrayOfYear2018
+                },
+                {
+                    name: '2019',
+                    type: 'line',
+                    data: afreArrayOfYear2019
+                },
+                {
+                    name: '2020',
+                    type: 'line',
+                    data: afreArrayOfYear2020
+                },
+                {
+                    name: '2021',
+                    type: 'line',
+                    data: afreArrayOfYear2021
+                },
+                {
+                    name: '2022',
+                    type: 'line',
+                    data: afreArrayOfYear2022
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        afreLineMonthChart.setOption(afreLineMonthOption);
+
+        //绘制货币供应折线图
+        var currencyLineMonthChart = echarts.init(document.getElementById('currencyLineMonth'));
+        // 指定图表的配置项和数据
+        var currencyLineMonthOption = {
+            title: {
+                text: '货币供应量M2统计'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['2014', '2015', '2016' ,'2017','2018','2019', '2020', '2021' ,'2022']
+            },
+            xAxis: {
+                data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '2014',
+                    type: 'line',
+                    data: currencyArrayOfYear2014
+                },
+                {
+                    name: '2015',
+                    type: 'line',
+                    data: currencyArrayOfYear2015
+                },
+                {
+                    name: '2016',
+                    type: 'line',
+                    data: currencyArrayOfYear2016
+                },
+                {
+                    name: '2017',
+                    type: 'line',
+                    data: currencyArrayOfYear2017
+                },
+                {
+                    name: '2018',
+                    type: 'line',
+                    data: currencyArrayOfYear2018
+                },
+                {
+                    name: '2019',
+                    type: 'line',
+                    data: currencyArrayOfYear2019
+                },
+                {
+                    name: '2020',
+                    type: 'line',
+                    data: currencyArrayOfYear2020
+                },
+                {
+                    name: '2021',
+                    type: 'line',
+                    data: currencyArrayOfYear2021
+                },
+                {
+                    name: '2022',
+                    type: 'line',
+                    data: currencyArrayOfYear2022
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        currencyLineMonthChart.setOption(currencyLineMonthOption);
+    }
+
+
+
     </script>
      <script type="text/javascript" src="./house.json?callback=dataJson"></script>
      <script type="text/javascript" src="./houseTradingInfo.json?callback=tradingJson"></script>
+     <script type="text/javascript" src="./currencyInfo.json?callback=currencyJson"></script>
      
   </body>
 </html>
