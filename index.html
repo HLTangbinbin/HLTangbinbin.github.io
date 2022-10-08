@@ -19,6 +19,8 @@
 
     <!-- 新房、二手房年成交量、新房库存折线图 -->
     <div id="houseVolumeLineYear" style="position: absolute;left: 100px;top: 1500px;width: 1000px;height:600px;"></div>
+    <!-- 新房每日成交量曲线图 -->
+    <div id="houseVolumeLineDay" style="position: absolute;left: 1100px;top: 1500px;width: 1000px;height:600px;"></div>
 
     <!-- 社会融资存折线图 -->
     <div id="afreLineMonth" style="position: absolute;left: 100px;top: 2200px;width: 1000px;height:600px;"></div>
@@ -26,11 +28,7 @@
     <div id="currencyLineMonth" style="position: absolute;left: 1100px;top: 2200px;width: 1000px;height:600px;"></div>
 
     <script type="text/javascript">
-      function dataJson(data) {
-        /**
-         * 新房交易数据处理
-        */
-        var areaName = {
+       var areaName = {
             JA : '江岸区',
             JH : '江汉区',
             QK : '硚口区',
@@ -48,6 +46,11 @@
             HN : '汉南区',
             TOTAL : '合计',
         }
+      function dataJson(data) {
+        /**
+         * 新房交易数据处理
+        */
+
         var houseData = Array();
         houseData = data
         //筛选合计或者每个区域的数据
@@ -134,6 +137,8 @@
         var newHouseArrayYear2021 = yearTotalArr(newHouseArrayMonth2021)
         var newHouseArrayYear2022 = yearTotalArr(newHouseArrayMonth2022)
         
+        //2022年武汉新房每天成交量
+        var newHouseArrayMonth2022 = selectMonthArr(totalHouseArray,'2017')
 
         // 基于准备好的dom，初始化echarts实例（武汉新房月成交量柱状图）
         var newHouseVolumeBarMonthChart = echarts.init(document.getElementById('newHouseVolumeBarMonth'));
@@ -231,11 +236,67 @@
         newHouseVolumeLineMonthChart.setOption(newHouseVolumeLineMonthOption);
     }
 
+
+    //2022年每日成交数据
+    function dayVolumeJson(data) {
+        var houseData = Array();
+        houseData = data
+        //筛选合计的数据
+        function houseArrayWith(itemType, itemName) {
+            return houseData.houseList.filter( houseObj => {
+                var areaStr = String()
+                areaStr = houseObj.cityDistrict            
+                return areaStr.search(itemType) != -1;
+            }).sort(function(a,b) {
+                return a.statisticsTime > b.statisticsTime ? 1: -1;
+            }).map(item => {
+                if (itemName == 'houseVolume') {
+                    var volume = Number(item.houseNum)
+                    return volume
+                }else if (itemName == 'day') {
+                    var day = item.day
+                    return day
+                }
+            })
+        }
+
+        
+        //筛选出每日成交量数据
+        var newHouseArrayDay2022 = houseArrayWith(areaName.TOTAL,'houseVolume')
+        console.log('2022年每日成交量所有数据 %o', newHouseArrayDay2022)
+        //筛选出每日成交量日期
+        var day2022 = houseArrayWith(areaName.TOTAL,'day')
+        console.log('2022年每日成交量日期 %o', day2022)
+        // 基于准备好的dom，初始化echarts实例（2022年新房每日曲线图）
+        var newHouseVolumeLineDayChart = echarts.init(document.getElementById('houseVolumeLineDay'));
+        // 指定图表的配置项和数据
+        var newHouseVolumeLineDayOption = {
+            title: {
+                text: '2022年武汉新房日成交量'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                data: day2022
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '2022年',
+                    type: 'line',
+                    data: newHouseArrayDay2022
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        newHouseVolumeLineDayChart.setOption(newHouseVolumeLineDayOption);
+    }
       // 二手房交易相关数据
       function tradingJson(data) {
         var houseData = Array();
         houseData = data
-        console.log(houseData.houseList)
+        console.log('二手房成交量所有数据 %o', houseData.houseList)
         //按照年份与日期做筛选与排序
         function oldHouseTotalArr(houseType, year) {
             return houseData.houseList.filter( houseObj => {
@@ -624,6 +685,7 @@
 
 
     </script>
+    <script type="text/javascript" src="./houseDayVolume.json?callback=dayVolumeJson"></script>
      <script type="text/javascript" src="./house.json?callback=dataJson"></script>
      <script type="text/javascript" src="./houseTradingInfo.json?callback=tradingJson"></script>
      <script type="text/javascript" src="./currencyInfo.json?callback=currencyJson"></script>
