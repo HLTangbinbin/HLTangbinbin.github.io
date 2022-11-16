@@ -1,6 +1,18 @@
 tradingJson({
   "houseList": [
     {
+      "newHouseSupply": "77844",
+      "newHouseSupplyArea": "896.25",
+      "newHouseVolume": "93301",
+      "newHouseVolumeArea": "1052.23",
+      "oldHouseVolume": "65571",
+      "oldHouseVolumeArea": "638.15",
+      "newHouseInventory": "181626",
+      "newHouseInventoryArea": "2109.64",
+      "tradingDate": "2022年1-10月",
+      "statisticalTime": "2022-11-15 10:20"
+    },
+    {
       "newHouseSupply": "72618",
       "newHouseSupplyArea": "839.97",
       "newHouseVolume": "85737",
