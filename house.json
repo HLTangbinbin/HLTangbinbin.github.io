@@ -22,6 +22,118 @@ dataJson({
       "statisticsTime": "2022-10-21 10:25"
     },
     {
+      "cityDistrict": "江岸区",
+      "houseNum": "340",
+      "dealArea": "44630",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "江汉区",
+      "houseNum": "137",
+      "dealArea": "15779",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "硚口区",
+      "houseNum": "577",
+      "dealArea": "57207",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "汉阳区",
+      "houseNum": "774",
+      "dealArea": "94972",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "青山区",
+      "houseNum": "277",
+      "dealArea": "34537",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "武昌区",
+      "houseNum": "293",
+      "dealArea": "42674",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "洪山区",
+      "houseNum": "848",
+      "dealArea": "95292",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "东西湖区",
+      "houseNum": "814",
+      "dealArea": "87866",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "东湖高新区",
+      "houseNum": "907",
+      "dealArea": "102000",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "经济开发区",
+      "houseNum": "380",
+      "dealArea": "44274",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "江夏区",
+      "houseNum": "570",
+      "dealArea": "64515",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "黄陂区",
+      "houseNum": "684",
+      "dealArea": "78459",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "蔡甸区",
+      "houseNum": "339",
+      "dealArea": "38547",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "新洲区",
+      "houseNum": "563",
+      "dealArea": "63796",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "汉南区",
+      "houseNum": "61",
+      "dealArea": "6647",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
+      "cityDistrict": "合计",
+      "houseNum": "7564",
+      "dealArea": "871197",
+      "month": "2022年10月",
+      "statisticsTime": "2022-11-24 09:10"
+    },
+    {
       "cityDistrict": "汉阳区",
       "houseNum": "802",
       "dealArea": "95789",
