@@ -103,13 +103,14 @@
                 }
                 return sum
             }
-            // 2017-2022年每月的合计数据
+            // 2017-2023年每月的合计数据
             var newHouseArrayMonth2017 = selectMonthArr(totalHouseArray,'2017')
             var newHouseArrayMonth2018 = selectMonthArr(totalHouseArray,'2018')
             var newHouseArrayMonth2019 = selectMonthArr(totalHouseArray,'2019')
             var newHouseArrayMonth2020 = selectMonthArr(totalHouseArray,'2020')
             var newHouseArrayMonth2021 = selectMonthArr(totalHouseArray,'2021')
             var newHouseArrayMonth2022 = selectMonthArr(totalHouseArray,'2022')
+            var newHouseArrayMonth2023 = selectMonthArr(totalHouseArray,'2023')
             //各个区域每年销量
             var JAnewHouseArrayMonth2018 = selectMonthArr(JAHouseArray,'2018')
             var JHnewHouseArrayMonth2018 = selectMonthArr(JHHouseArray,'2018')
@@ -136,6 +137,7 @@
             var newHouseArrayYear2020 = yearTotalArr(newHouseArrayMonth2020)
             var newHouseArrayYear2021 = yearTotalArr(newHouseArrayMonth2021)
             var newHouseArrayYear2022 = yearTotalArr(newHouseArrayMonth2022)
+            var newHouseArrayYear2023 = yearTotalArr(newHouseArrayMonth2023)
 
             // 基于准备好的dom，初始化echarts实例（武汉新房月成交量柱状图）
             var newHouseVolumeBarMonthChart = echarts.init(document.getElementById('newHouseVolumeBarMonth'));
@@ -146,7 +148,7 @@
                 },
                 tooltip: {},
                 legend: {
-                    data: ['2018', '2019', '2020', '2021' ,'2022']
+                    data: ['2018', '2019', '2020', '2021' ,'2022','2023']
                 },
                 xAxis: {
                     data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
@@ -177,6 +179,11 @@
                         name: 2022,
                         type: 'bar',
                         data: newHouseArrayMonth2022
+                    },
+                    {
+                        name: 2023,
+                        type: 'bar',
+                        data: newHouseArrayMonth2023
                     }
                 ]
             };
@@ -195,7 +202,7 @@
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['2018', '2019', '2020', '2021' ,'2022']
+                    data: ['2018', '2019', '2020', '2021' ,'2022','2023']
                 },
                 xAxis: {
                     data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
@@ -226,6 +233,11 @@
                         name: '2022',
                         type: 'line',
                         data: newHouseArrayMonth2022
+                    },
+                    {
+                        name: '2023',
+                        type: 'line',
+                        data: newHouseArrayMonth2023
                     }
                 ]
             };
