@@ -1,6 +1,23 @@
 currencyJson({
   "currencyInfoList": [
     {
+      "itemDate": "2023.01",
+      "afre": "59840",
+      "rmbLoans": "49314",
+      "foreignLoans": "-131",
+      "enTrustedLoans": "584",
+      "trustLoans": "-62",
+      "bankerAcceptances": "2963",
+      "corporatebonds": "1486",
+      "governmentBonds": "4140",
+      "nonFinancialStockEquity": "964",
+      "depositoryInstitutions": "-333",
+      "writtenoffLoans": "326",
+      "m0": "114601.3",
+      "m1": "655214.19",
+      "m2": "2738072"
+    },
+    {
       "itemDate": "2022.01",
       "afre": "61623",
       "rmbLoans": "41988",

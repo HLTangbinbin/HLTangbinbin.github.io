@@ -373,7 +373,8 @@
             var newHouseVolume2020 = oldHouseTotalArr('newHouseVolume','2020').pop()
             var newHouseVolume2021 = oldHouseTotalArr('newHouseVolume','2021').pop()
             var newHouseVolume2022 = oldHouseTotalArr('newHouseVolume','2022').pop()
-            console.log('新房年成交数量 %o ',oldHouseArrayMonth2020)
+            var newHouseVolume2023 = oldHouseTotalArr('newHouseVolume','2023').pop()
+            console.log('新房年成交数量 %o ',newHouseVolume2023)
 
             //2019-2022每年新房库存数据
             var newHouseInventory2019 = oldHouseTotalArr('newHouseInventory','2019').pop()
@@ -546,6 +547,7 @@
             var afreArrayOfYear2020 = afreAndCurrencylArr('afre',2020)
             var afreArrayOfYear2021 = afreAndCurrencylArr('afre',2021)
             var afreArrayOfYear2022 = afreAndCurrencylArr('afre',2022)
+            var afreArrayOfYear2023 = afreAndCurrencylArr('afre',2023)
             console.log('2018年每月社会融资数组 %o ',afreArrayOfYear2018)
             //获取每年每月的货币供应数据
             var currencyArrayOfYear2014 = afreAndCurrencylArr('currency',2014)
@@ -557,6 +559,7 @@
             var currencyArrayOfYear2020 = afreAndCurrencylArr('currency',2020)
             var currencyArrayOfYear2021 = afreAndCurrencylArr('currency',2021)
             var currencyArrayOfYear2022 = afreAndCurrencylArr('currency',2022)
+            var currencyArrayOfYear2023 = afreAndCurrencylArr('currency',2023)
             console.log('2018年每月货币供应数组 %o ',currencyArrayOfYear2018)
 
             //绘制社会融资折线图
@@ -570,7 +573,7 @@
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['2014', '2015', '2016' ,'2017','2018','2019', '2020', '2021' ,'2022']
+                    data: ['2014', '2015', '2016' ,'2017','2018','2019', '2020', '2021' ,'2022','2023']
                 },
                 xAxis: {
                     data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
@@ -621,6 +624,11 @@
                         name: '2022',
                         type: 'line',
                         data: afreArrayOfYear2022
+                    },
+                    {
+                        name: '2023',
+                        type: 'line',
+                        data: afreArrayOfYear2023
                     }
                 ]
             };
@@ -638,7 +646,7 @@
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['2014', '2015', '2016' ,'2017','2018','2019', '2020', '2021' ,'2022']
+                    data: ['2014', '2015', '2016' ,'2017','2018','2019', '2020', '2021' ,'2022','2023']
                 },
                 xAxis: {
                     data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
@@ -689,6 +697,11 @@
                         name: '2022',
                         type: 'line',
                         data: currencyArrayOfYear2022
+                    },
+                    {
+                        name: '2023',
+                        type: 'line',
+                        data: currencyArrayOfYear2023
                     }
                 ]
             };
