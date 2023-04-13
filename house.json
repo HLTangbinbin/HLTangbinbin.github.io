@@ -2,6 +2,118 @@ dataJson({
   "houseList": [
     {
       "cityDistrict": "江岸区",
+      "houseNum": "921",
+      "dealArea": "109670",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "江汉区",
+      "houseNum": "379",
+      "dealArea": "46128",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "硚口区",
+      "houseNum": "804",
+      "dealArea": "95659",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "汉阳区",
+      "houseNum": "2060",
+      "dealArea": "256386",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "青山区",
+      "houseNum": "875",
+      "dealArea": "100845",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "武昌区",
+      "houseNum": "331",
+      "dealArea": "52945",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "洪山区",
+      "houseNum": "1948",
+      "dealArea": "228659",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "东西湖区",
+      "houseNum": "1116",
+      "dealArea": "121776",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "东湖高新区",
+      "houseNum": "1505",
+      "dealArea": "177220",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "经济开发区",
+      "houseNum": "1048",
+      "dealArea": "120044",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "江夏区",
+      "houseNum": "855",
+      "dealArea": "96868",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "黄陂区",
+      "houseNum": "1362",
+      "dealArea": "158637",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "蔡甸区",
+      "houseNum": "629",
+      "dealArea": "68372",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "新洲区",
+      "houseNum": "733",
+      "dealArea": "80928",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "汉南区",
+      "houseNum": "77",
+      "dealArea": "8700",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "合计",
+      "houseNum": "14643",
+      "dealArea": "1722836",
+      "month": "2023年3月",
+      "statisticsTime": "2023-04-13 16:20"
+    },
+    {
+      "cityDistrict": "江岸区",
       "houseNum": "529",
       "dealArea": "65152",
       "month": "2023年2月",
