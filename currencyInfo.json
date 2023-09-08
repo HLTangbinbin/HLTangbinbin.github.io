@@ -1,21 +1,21 @@
 currencyJson({
   "currencyInfoList": [
     {
-      "itemDate": "2023.05",
-      "afre": "15555",
-      "rmbLoans": "12219",
-      "foreignLoans": "-338",
-      "enTrustedLoans": "35",
-      "trustLoans": "303",
-      "bankerAcceptances": "-1795",
-      "corporatebonds": "-2150",
-      "governmentBonds": "5571",
-      "nonFinancialStockEquity": "753",
-      "depositoryInstitutions": "-349",
-      "writtenoffLoans": "516",
-      "m0": "104756.71",
-      "m1": "675253",
-      "m2": "2820504.75"
+      "itemDate": "2023.07",
+      "afre": "5282",
+      "rmbLoans": "364",
+      "foreignLoans": "-339",
+      "enTrustedLoans": "8",
+      "trustLoans": "230",
+      "bankerAcceptances": "-1962",
+      "corporatebonds": "1179",
+      "governmentBonds": "4109",
+      "nonFinancialStockEquity": "786",
+      "depositoryInstitutions": "-296",
+      "writtenoffLoans": "402",
+      "m0": "106129.68",
+      "m1": "677218.94",
+      "m2": "2854031.5"
     },
     {
       "itemDate": "2023.06",
@@ -33,6 +33,23 @@ currencyJson({
       "m0": "105419.2",
       "m1": "695595.5",
       "m2": "2873023.75"
+    },
+    {
+      "itemDate": "2023.05",
+      "afre": "15555",
+      "rmbLoans": "12219",
+      "foreignLoans": "-338",
+      "enTrustedLoans": "35",
+      "trustLoans": "303",
+      "bankerAcceptances": "-1795",
+      "corporatebonds": "-2150",
+      "governmentBonds": "5571",
+      "nonFinancialStockEquity": "753",
+      "depositoryInstitutions": "-349",
+      "writtenoffLoans": "516",
+      "m0": "104756.71",
+      "m1": "675253",
+      "m2": "2820504.75"
     },
     {
       "itemDate": "2023.04",
