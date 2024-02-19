@@ -1,6 +1,40 @@
 currencyJson({
   "currencyInfoList": [
     {
+      "itemDate": "2023.12",
+      "afre": "19401",
+      "rmbLoans": "11092",
+      "foreignLoans": "-635",
+      "enTrustedLoans": "-43",
+      "trustLoans": "347",
+      "bankerAcceptances": "-1867",
+      "corporatebonds": "-2741",
+      "governmentBonds": "9324",
+      "nonFinancialStockEquity": "508",
+      "depositoryInstitutions": "-278",
+      "writtenoffLoans": "2347",
+      "m0": "113444.64",
+      "m1": "680542.52",
+      "m2": "2922713.33"
+    },
+    {
+      "itemDate": "2023.11",
+      "afre": "24554",
+      "rmbLoans": "11120",
+      "foreignLoans": "-357",
+      "enTrustedLoans": "-386",
+      "trustLoans": "197",
+      "bankerAcceptances": "202",
+      "corporatebonds": "1388",
+      "governmentBonds": "11512",
+      "nonFinancialStockEquity": "359",
+      "depositoryInstitutions": "-1355",
+      "writtenoffLoans": "742",
+      "m0": "110225.18",
+      "m1": "675903.41",
+      "m2": "2912014.22"
+    },
+    {
       "itemDate": "2023.10",
       "afre": "18452",
       "rmbLoans": "4837",
