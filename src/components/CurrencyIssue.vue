@@ -1,39 +1,160 @@
 <template>
-    <div>
-      <h2>货币数据</h2>
-      <div ref="chart" style="width: 600px; height: 400px;"></div>
-      <button @click="toggleChartType">切换图表类型</button>
+  <div class="container">
+    <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive }" @click="drawBarChart">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive }" @click="drawLineChart">折线图</button>
     </div>
-  </template>
+   
+    <div class="chart-container" id="currencymonth"></div>
+  </div>
+</template>
   
   <script>
   import * as echarts from 'echarts';
   
   export default {
+
     data() {
       return {
-        chart: null,
-        isBarChart: true
+        isBarActive: false,
+        isLineActive: false,
+        currencyInfoList: null,
+        chartsType: null
       };
     },
     mounted() {
-      this.chart = echarts.init(this.$refs.chart);
       this.loadData();
     },
+
     methods: {
       loadData() {
-        // 根据需要加载本地 JSON 文件数据并绘制图表
+        // 读取本地的 JSON 文件
+        fetch('currencyInfo.json', { cache: 'no-cache' })
+          .then(response => response.json())
+          .then(data => {
+            console.log('请求成功金融数据:', data.currencyInfoList);
+            this.currencyInfoList = data.currencyInfoList;
+            // 处理数据绘制图表
+            this.drawBarChart();
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error)
+          })
       },
-      toggleChartType() {
-        this.isBarChart = !this.isBarChart;
-        this.chart.setOption({
-          series: [{
-            type: this.isBarChart ? 'bar' : 'line'
-          }]
-        });
+        //按照年份与日期做筛选与排序
+        afreAndCurrencylArr(year) {
+          return this.currencyInfoList.filter( afreAndCurrencyObj => {
+              var yearStr = String()
+              yearStr = afreAndCurrencyObj.itemDate
+              return yearStr.search(year) != -1;
+          }).sort(function(a,b) {
+              return a.itemDate > b.itemDate ? 1: -1;
+          }).map(item => {
+              //取出某个字段数据
+              var afre = Number(item.m2)
+              return afre;
+          })
+        },
+
+      drawCharts() {
+        // 基于准备好的dom，初始化echarts实例
+        var currencyLineMonthChart = echarts.init(document.getElementById('currencymonth'));
+        // 指定图表的配置项和数据
+        var currencyLineMonthOption = {
+            title: {
+                text: '货币供应量M2统计',
+                left: '50px'
+            },
+            tooltip: {},
+            legend: {
+                data: ['2014', '2015', '2016' ,'2017','2018','2019', '2020', '2021' ,'2022','2023','2024']
+            },
+            xAxis: {
+                data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: 2014,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2014)
+                },
+                {
+                    name: 2015,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2015)
+                },
+                {
+                    name: 2016,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2016)
+                },
+                {
+                    name: 2017,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2017)
+                },
+                {
+                    name: 2018,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2018)
+                },
+                {
+                    name: 2019,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2019)
+                },
+                {
+                    name: 2020,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2020)
+                },
+                {
+                    name: 2021,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2015)
+                },
+                {
+                    name: 2015,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2021)
+                },
+                {
+                    name: 2022,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2022)
+                },
+                {
+                    name: 2023,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2023)
+                },
+                {
+                    name: 2024,
+                    type: this.chartsType,
+                    data: this.afreAndCurrencylArr(2024)
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        currencyLineMonthChart.setOption(currencyLineMonthOption);
+      },
+      drawBarChart() {
+        this.isBarActive = true;
+        this.isLineActive = false;
+        this.chartsType = "bar"
+        this.drawCharts();
+ 
+      },
+      drawLineChart() {
+        this.isBarActive = false;
+        this.isLineActive = true;
+        // 在这里绘制折线图
+        this.chartsType = "line"
+        this.drawCharts();
       }
     }
   };
   </script>
- 
-  
+
+

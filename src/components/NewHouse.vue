@@ -6,7 +6,7 @@
     <!-- 新房月销量柱状图 -->
     </div>
    
-    <div class="chart-container" id="newHouseVolumeBarMonth"></div>
+    <div class="chart-container" id="newHouseVolumeMonth"></div>
   </div>
 </template>
   
@@ -40,7 +40,7 @@
         fetch('house.json', { cache: 'no-cache' })
           .then(response => response.json())
           .then(data => {
-            console.log('请求成功data:', data.houseList);
+            console.log('请求成功新房数据:', data.houseList);
             this.houseList = data.houseList;
             this.handleData();
             // 处理数据绘制图表
@@ -107,12 +107,13 @@
           })
       },
       drawCharts() {
-               // 基于准备好的dom，初始化echarts实例（武汉新房月成交量柱状图）
-               var newHouseVolumeBarMonthChart = echarts.init(document.getElementById('newHouseVolumeBarMonth'));
+        // 基于准备好的dom，初始化echarts实例（武汉新房月成交量柱状图）
+        var newHouseVolumeBarMonthChart = echarts.init(document.getElementById('newHouseVolumeMonth'));
         // 指定图表的配置项和数据
         var newHouseVolumeBarMonthOption = {
             title: {
-                text: '武汉新房月成交量'
+                text: '武汉新房月成交量',
+                left: '60px'
             },
             tooltip: {},
             legend: {
@@ -186,15 +187,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
-  
+  margin-top: 50px;
 }
 .buttons {
   display: flex;
   justify-content: center;
-  margin-top: 50px; /* 添加右侧间距 */
 }
 .button {
   display: flex;
@@ -218,10 +216,8 @@
   align-items:center;
   justify-content: center;
   margin-top: 20px; 
-  width: 1000px;
+  width: 1200px;
   min-width: 600px;
   height: 600px;
 }
 </style>
-
-  
