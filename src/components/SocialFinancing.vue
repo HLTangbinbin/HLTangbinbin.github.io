@@ -63,7 +63,7 @@
         var afreLineMonthOption = {
             title: {
                 text: '社会融资增量',
-                left: '60px'
+                left: '70px'
             },
             tooltip: {},
             legend: {

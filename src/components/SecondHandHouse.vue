@@ -113,7 +113,7 @@
         var oldHouseVolumeBarMonthOption = {
             title: {
                 text: '武汉二手房月成交量',
-                left: '60px'
+                left: '70px'
             },
             tooltip: {},
             legend: {
