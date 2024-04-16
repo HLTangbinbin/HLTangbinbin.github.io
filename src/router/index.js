@@ -18,6 +18,7 @@ const routes = [
 // 创建路由实例
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
+  model: 'hash',
   routes,
 });
 
