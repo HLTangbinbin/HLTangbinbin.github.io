@@ -216,8 +216,8 @@
   align-items:center;
   justify-content: center;
   margin-top: 20px; 
-  width: 1200px;
-  min-width: 600px;
+  width: 95%;
+  min-width: 400px;
   height: 600px;
 }
 </style>
