@@ -113,11 +113,14 @@
         var oldHouseVolumeBarMonthOption = {
             title: {
                 text: '武汉二手房月成交量',
-                left: '70px'
+                left: 'center',
+                top: 'top'
             },
             tooltip: {},
             legend: {
-                data: ['2019', '2020', '2021' ,'2022']
+                data: ['2019', '2020', '2021' ,'2022'],
+                left: 'center',
+                top: '30px'
             },
             xAxis: {
                 data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']

@@ -113,11 +113,14 @@
         var newHouseVolumeBarMonthOption = {
             title: {
                 text: '武汉新房月成交量',
-                left: '60px'
+                left: 'center',
+                top: 'top'
             },
             tooltip: {},
             legend: {
-                data: ['2018', '2019', '2020', '2021' ,'2022','2023','2024']
+                data: ['2018', '2019', '2020', '2021' ,'2022','2023','2024'],
+                left: 'center',
+                top: '30px'
             },
             xAxis: {
                 data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
@@ -188,7 +191,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 .buttons {
   display: flex;
@@ -215,9 +218,8 @@
   display: flex;
   align-items:center;
   justify-content: center;
-  margin-top: 20px; 
+  margin-top: 30px; 
   width: 95%;
-  min-width: 400px;
   height: 600px;
 }
 </style>
