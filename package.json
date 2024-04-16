@@ -2,7 +2,7 @@
   "name": "estatesfinance",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://HLTangbinbin.github.io/HLTangbinbin.github.io/",
+  "homepage": "https://HLTangbinbin.github.io/",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
