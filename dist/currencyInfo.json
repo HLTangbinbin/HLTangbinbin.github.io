@@ -2039,6 +2039,57 @@
       "m0": "60259.53",
       "m1": "348056.41",
       "m2": "1228374.75"
+    },
+    {
+      "itemDate": "2024.01",
+      "afre": "65364",
+      "rmbLoans": "48401",
+      "foreignLoans": "989",
+      "enTrustedLoans": "-359",
+      "trustLoans": "732",
+      "bankerAcceptances": "5636",
+      "corporatebonds": "4950",
+      "governmentBonds": "2947",
+      "nonFinancialStockEquity": "422",
+      "depositoryInstitutions": "-203",
+      "writtenoffLoans": "474",
+      "m0": "121398.54",
+      "m1": "694197.88",
+      "m2": "2976250.20"
+    },
+    {
+      "itemDate": "2024.02",
+      "afre": "15248",
+      "rmbLoans": "9773",
+      "foreignLoans": "-9",
+      "enTrustedLoans": "-172",
+      "trustLoans": "571",
+      "bankerAcceptances": "-3686",
+      "corporatebonds": "1712",
+      "governmentBonds": "6011",
+      "nonFinancialStockEquity": "114",
+      "depositoryInstitutions": "-210",
+      "writtenoffLoans": "488",
+      "m0": "121009.93",
+      "m1": "665916.09",
+      "m2": "2995572.97"
+    },
+    {
+      "itemDate": "2024.03",
+      "afre": "48675",
+      "rmbLoans": "32920",
+      "foreignLoans": "543",
+      "enTrustedLoans": "-465",
+      "trustLoans": "681",
+      "bankerAcceptances": "3550",
+      "corporatebonds": "4545",
+      "governmentBonds": "4626",
+      "nonFinancialStockEquity": "227",
+      "depositoryInstitutions": "-588",
+      "writtenoffLoans": "1587",
+      "m0": "117210.50",
+      "m1": "685808.90",
+      "m2": "3047952.16"
     }
   ]
 }

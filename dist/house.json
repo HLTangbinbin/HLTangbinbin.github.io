@@ -8287,6 +8287,342 @@
       "dealArea": "1706736",
       "month": "2017年9月",
       "statisticsTime": "2017-10-18 23:00"
+    },
+    {
+      "cityDistrict": "江岸区",
+      "houseNum": "349",
+      "dealArea": "46655.2",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "江汉区",
+      "houseNum": "83",
+      "dealArea": "9769.06",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "硚口区",
+      "houseNum": "435",
+      "dealArea": "41153.74",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "汉阳区",
+      "houseNum": "314",
+      "dealArea": "41131.24",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "青山区",
+      "houseNum": "59",
+      "dealArea": "6822.55",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "武昌区",
+      "houseNum": "450",
+      "dealArea": "49759.66",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "洪山区",
+      "houseNum": "375",
+      "dealArea": "42954.45",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "东西湖区",
+      "houseNum": "282",
+      "dealArea": "30250.76",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "东湖高新区",
+      "houseNum": "445",
+      "dealArea": "50636.31",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "经济开发区",
+      "houseNum": "140",
+      "dealArea": "16887.96",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "江夏区",
+      "houseNum": "635",
+      "dealArea": "72691.28",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "黄陂区",
+      "houseNum": "351",
+      "dealArea": "40674.27",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "蔡甸区",
+      "houseNum": "162",
+      "dealArea": "19040.38",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "新洲区",
+      "houseNum": "1198",
+      "dealArea": "125204.42",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "汉南区",
+      "houseNum": "102",
+      "dealArea": "10288.59",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "合计",
+      "houseNum": "5380",
+      "dealArea": "603919.87",
+      "month": "2024年1月",
+      "statisticsTime": "2024-02-04 15:27"
+    },
+    {
+      "cityDistrict": "江岸区",
+      "houseNum": "177",
+      "dealArea": "21617.35",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "江汉区",
+      "houseNum": "177",
+      "dealArea": "18229.65",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "硚口区",
+      "houseNum": "240",
+      "dealArea": "23923.65",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "汉阳区",
+      "houseNum": "496",
+      "dealArea": "71951.05",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "青山区",
+      "houseNum": "25",
+      "dealArea": "3457.51",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "武昌区",
+      "houseNum": "66",
+      "dealArea": "8092.92",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "洪山区",
+      "houseNum": "169",
+      "dealArea": "18234.45",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "东西湖区",
+      "houseNum": "304",
+      "dealArea": "32781.84",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "东湖高新区",
+      "houseNum": "163",
+      "dealArea": "19952.56",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "经济开发区",
+      "houseNum": "180",
+      "dealArea": "22218.8",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "江夏区",
+      "houseNum": "398",
+      "dealArea": "44297.06",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "黄陂区",
+      "houseNum": "128",
+      "dealArea": "15173.02",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "蔡甸区",
+      "houseNum": "118",
+      "dealArea": "13476.89",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "新洲区",
+      "houseNum": "145",
+      "dealArea": "16127.58",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "汉南区",
+      "houseNum": "11",
+      "dealArea": "1078.98",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "合计",
+      "houseNum": "2797",
+      "dealArea": "330613.31",
+      "month": "2024年2月",
+      "statisticsTime": "2024-03-07 15:12"
+    },
+    {
+      "cityDistrict": "江岸区",
+      "houseNum": "495",
+      "dealArea": "61188.19",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "江汉区",
+      "houseNum": "486",
+      "dealArea": "50757.95",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "硚口区",
+      "houseNum": "392",
+      "dealArea": "43461.17",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "汉阳区",
+      "houseNum": "780",
+      "dealArea": "93633.66",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "青山区",
+      "houseNum": "102",
+      "dealArea": "13068.56",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "武昌区",
+      "houseNum": "188",
+      "dealArea": "24624.48",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "洪山区",
+      "houseNum": "485",
+      "dealArea": "54532.75",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "东西湖区",
+      "houseNum": "510",
+      "dealArea": "56925.78",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "东湖高新区",
+      "houseNum": "727",
+      "dealArea": "83776.95",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "经济开发区",
+      "houseNum": "330",
+      "dealArea": "38696.68",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "江夏区",
+      "houseNum": "425",
+      "dealArea": "48050.29",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "黄陂区",
+      "houseNum": "392",
+      "dealArea": "46431.12",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "蔡甸区",
+      "houseNum": "330",
+      "dealArea": "37713.61",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "新洲区",
+      "houseNum": "186",
+      "dealArea": "21965.43",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "汉南区",
+      "houseNum": "185",
+      "dealArea": "17806.58",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
+    },
+    {
+      "cityDistrict": "合计",
+      "houseNum": "6013",
+      "dealArea": "692633.2",
+      "month": "2024年3月",
+      "statisticsTime": "2024-04-03 16:55"
     }
   ]
 }
