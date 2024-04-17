@@ -116,10 +116,19 @@
                 left: 'center',
                 top: 'top'
             },
-            tooltip: {},
+            tooltip: {
+               //X轴悬浮显示所有数据
+               trigger: 'axis'
+            },
             legend: {
                 left: 'center',
                 top: '30px'
+            },
+            grid: {
+                left: '1%',
+                right: '1%',
+                bottom: '1%',
+                containLabel: true
             },
             xAxis: {
                 data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
