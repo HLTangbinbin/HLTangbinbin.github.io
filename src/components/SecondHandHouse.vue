@@ -118,7 +118,6 @@
             },
             tooltip: {},
             legend: {
-                data: ['2019', '2020', '2021' ,'2022'],
                 left: 'center',
                 top: '30px'
             },
