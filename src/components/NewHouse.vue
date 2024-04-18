@@ -174,21 +174,36 @@
         // 指定图表的配置项和数据
         setTimeout(function () {
           // 数据集处理，先把名字插入到数据数组第一个位置中
-          var arr_JA = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JA),'2023').unshift(_this.areaName.JA);
-          var arr_JH = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JH),'2023').unshift(_this.areaName.JH);
-          var arr_QK = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.QK),'2023').unshift(_this.areaName.QK);
-          var arr_HY = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HY),'2023').unshift(_this.areaName.HY);
-          var arr_QS = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.QS),'2023').unshift(_this.areaName.QS);
-          var arr_WC = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.WC),'2023').unshift(_this.areaName.WC);
-          var arr_HS = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HS),'2023').unshift(_this.areaName.HS);
-          var arr_DXH = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.DXH),'2023').unshift(_this.areaName.DXH);
-          var arr_DHGX = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.DHGX),'2023').unshift(_this.areaName.DHGX);
-          var arr_JJKF = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JJKF),'2023').unshift(_this.areaName.JJKF);
-          var arr_JX = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JX),'2023').unshift(_this.areaName.JX);
-          var arr_HP = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HP),'2023').unshift(_this.areaName.HP);
-          var arr_CD = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.CD),'2023').unshift(_this.areaName.CD);
-          var arr_XZ = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.XZ),'2023').unshift(_this.areaName.XZ);
-          var arr_HN = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HN),'2023').unshift(_this.areaName.HN);
+          var arr_JA = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JA),'2023');
+          arr_JA.unshift(_this.areaName.JA);
+          var arr_JH = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JH),'2023');
+          arr_JH.unshift(_this.areaName.JH);
+          var arr_QK = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.QK),'2023');
+          arr_QK.unshift(_this.areaName.QK);
+          var arr_HY = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HY),'2023');
+          arr_HY.unshift(_this.areaName.HY);
+          var arr_QS = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.QS),'2023');
+          arr_QS.unshift(_this.areaName.QS);
+          var arr_WC = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.WC),'2023');
+          arr_WC.unshift(_this.areaName.WC);
+          var arr_HS = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HS),'2023');
+          arr_HS.unshift(_this.areaName.HS);
+          var arr_DXH = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.DXH),'2023');
+          arr_DXH.unshift(_this.areaName.DXH);
+          var arr_DHGX = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.DHGX),'2023');
+          arr_DHGX.unshift(_this.areaName.DHGX);
+          var arr_JJKF = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JJKF),'2023');
+          arr_JJKF.unshift(_this.areaName.JJKF);
+          var arr_JX = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JX),'2023');
+          arr_JX.unshift(_this.areaName.JX);
+          var arr_HP = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HP),'2023');
+          arr_HP.unshift(_this.areaName.HP);
+          var arr_CD = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.CD),'2023');
+          arr_CD.unshift(_this.areaName.CD);
+          var arr_XZ = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.XZ),'2023');
+          arr_XZ.unshift(_this.areaName.XZ);
+          var arr_HN = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HN),'2023');
+          arr_HN.unshift(_this.areaName.HN);
 
           newHouseVolumeBarMonthOptionForArea = {
             title: {
@@ -350,7 +365,7 @@
       drawBarChart() {
         this.isBarActive = true;
         this.isLineActive = false;
-        this.chartsType = "bar"
+        this.chartsType = "line"
         this.drawCharts();
         this.drawChartsWithArea();
  
