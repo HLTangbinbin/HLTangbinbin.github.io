@@ -168,14 +168,38 @@
       drawChartsWithArea() {
         // 基于准备好的dom，初始化echarts实例（武汉新房月成交量柱状图）
         var newHouseVolumeBarMonthChartForArea = echarts.init(document.getElementById('newHouseVolumeMonthForArea'));
+        var newHouseVolumeBarMonthOptionForArea;
+        //必须加这句，否则setTimeout里无法访问到this变量，访问到的是windows
+        let _this = this;
         // 指定图表的配置项和数据
-        var newHouseVolumeBarMonthOptionForArea = {
+        setTimeout(function () {
+          // 数据集处理，先把名字插入到数据数组第一个位置中
+          var arr_JA = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JA),'2023').unshift(_this.areaName.JA);
+          var arr_JH = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JH),'2023').unshift(_this.areaName.JH);
+          var arr_QK = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.QK),'2023').unshift(_this.areaName.QK);
+          var arr_HY = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HY),'2023').unshift(_this.areaName.HY);
+          var arr_QS = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.QS),'2023').unshift(_this.areaName.QS);
+          var arr_WC = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.WC),'2023').unshift(_this.areaName.WC);
+          var arr_HS = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HS),'2023').unshift(_this.areaName.HS);
+          var arr_DXH = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.DXH),'2023').unshift(_this.areaName.DXH);
+          var arr_DHGX = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.DHGX),'2023').unshift(_this.areaName.DHGX);
+          var arr_JJKF = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JJKF),'2023').unshift(_this.areaName.JJKF);
+          var arr_JX = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JX),'2023').unshift(_this.areaName.JX);
+          var arr_HP = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HP),'2023').unshift(_this.areaName.HP);
+          var arr_CD = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.CD),'2023').unshift(_this.areaName.CD);
+          var arr_XZ = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.XZ),'2023').unshift(_this.areaName.XZ);
+          var arr_HN = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HN),'2023').unshift(_this.areaName.HN);
+
+          newHouseVolumeBarMonthOptionForArea = {
             title: {
                 text: '武汉各区域新房月成交量',
                 left: 'center',
                 top: 'top'
             },
-            tooltip: {},
+            tooltip: {
+              //X轴悬浮显示所有数据
+              trigger: 'axis'
+            },
             legend: {
                 left: 'center',
                 top: '50px'
@@ -183,95 +207,145 @@
             grid: {
                 left: '1%',
                 right: '1%',
-                top: '20%',
+                top: '50%',
                 bottom: '1%',
                 containLabel: true
             },
             xAxis: {
-              data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+              type: 'category'
             },
             yAxis: {},
+            // 多图共享数据集
+            dataset: {
+              // 提供一份数据。
+              source: [
+                // 第一行默认是x轴的数据
+                ['product', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                // 下面是y轴的数据
+                [arr_JA],
+                [arr_JH],
+                [arr_QK],
+                [arr_HY],
+                [arr_QS],
+                [arr_WC],
+                [arr_HS],
+                [arr_DXH],
+                [arr_DHGX],
+                [arr_JJKF],
+                [arr_JX],
+                [arr_HP],
+                [arr_CD],
+                [arr_XZ],
+                [arr_HN]
+
+              ]
+            },
             series: [
                 {
-                    name: this.areaName.JA,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.JA),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.JH,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.JH),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.QK,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.QK),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.HY,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.HY),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.QS,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.QS),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.WC,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.WC),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.HS,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.HS),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.DXH,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.DXH),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.DHGX,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.DHGX),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.JJKF,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.JJKF),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.JX,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.JX),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.HP,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.HP),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.CD,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.CD),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.XZ,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.XZ),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
                 },
                 {
-                    name: this.areaName.HN,
-                    type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.HN),'2023')
+                    type: _this.chartsType,
+                    emphasis: { focus: 'series' }
+                },
+                {
+                  type: 'pie',
+                  id: 'pie',
+                  radius: '40%',
+                  center: ['50%', '40%'],
+                  emphasis: {
+                    focus: 'self'
+                  },
+                  label: {
+                    formatter: '{b}: {@一月} ({d}%)'
+                  },
+
+                  encode: {
+                    itemName: 'product',
+                    value: '一月',
+                    tooltip: '一月'
+                  }
                 }
               
             ]
-        };
-        // 使用刚指定的配置项和数据显示图表。
-        newHouseVolumeBarMonthChartForArea.setOption(newHouseVolumeBarMonthOptionForArea);
+          };
+          newHouseVolumeBarMonthChartForArea.on('updateAxisPointer', function (event) {
+            const xAxisInfo = event.axesInfo[0];
+            
+            if (xAxisInfo) {
+              const dimension = xAxisInfo.value + 1;
+              console.log('区域是',dimension);
+              newHouseVolumeBarMonthChartForArea.setOption({
+                series: {
+                  id: 'pie',
+                  label: {
+                    formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                  },
+                  encode: {
+                    value: dimension,
+                    tooltip: dimension
+                  }
+                }
+              });
+            }
+          });
+           // 使用刚指定的配置项和数据显示图表。
+          newHouseVolumeBarMonthChartForArea.setOption(newHouseVolumeBarMonthOptionForArea);
+        },1000),
+        newHouseVolumeBarMonthOptionForArea && newHouseVolumeBarMonthChartForArea.setOption(newHouseVolumeBarMonthOptionForArea);
       },
       drawBarChart() {
         this.isBarActive = true;
