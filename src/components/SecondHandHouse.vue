@@ -122,11 +122,12 @@
             },
             legend: {
                 left: 'center',
-                top: '30px'
+                top: '50px'
             },
             grid: {
                 left: '1%',
                 right: '1%',
+                top: '20%',
                 bottom: '1%',
                 containLabel: true
             },

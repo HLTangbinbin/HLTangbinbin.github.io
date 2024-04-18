@@ -111,11 +111,12 @@
             },
             legend: {
                 left: 'center',
-                top: '30px'
+                top: '50px'
             },
             grid: {
                 left: '1%',
                 right: '1%',
+                top: '20%',
                 bottom: '1%',
                 containLabel: true
             },
@@ -177,7 +178,14 @@
             tooltip: {},
             legend: {
                 left: 'center',
-                top: '30px'
+                top: '50px'
+            },
+            grid: {
+                left: '1%',
+                right: '1%',
+                top: '20%',
+                bottom: '1%',
+                containLabel: true
             },
             xAxis: {
               data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']

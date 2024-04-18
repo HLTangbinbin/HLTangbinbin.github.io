@@ -72,11 +72,12 @@
             },
             legend: {
                 left: 'center',
-                top: '30px'
+                top: '50px'
             },
             grid: {
                 left: '1%',
                 right: '1%',
+                top: '20%',
                 bottom: '1%',
                 containLabel: true
             },
@@ -85,34 +86,34 @@
                 data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
             },
             yAxis: {
-              min: '1000000'
+              min: '1500000'
             },
             series: [
-                {
-                    name: 2014,
-                    type: this.chartsType,
-                    data: this.afreAndCurrencylArr(2014)
-                },
-                {
-                    name: 2015,
-                    type: this.chartsType,
-                    data: this.afreAndCurrencylArr(2015)
-                },
-                {
-                    name: 2016,
-                    type: this.chartsType,
-                    data: this.afreAndCurrencylArr(2016)
-                },
-                {
-                    name: 2017,
-                    type: this.chartsType,
-                    data: this.afreAndCurrencylArr(2017)
-                },
-                {
-                    name: 2018,
-                    type: this.chartsType,
-                    data: this.afreAndCurrencylArr(2018)
-                },
+                // {
+                //     name: 2014,
+                //     type: this.chartsType,
+                //     data: this.afreAndCurrencylArr(2014)
+                // },
+                // {
+                //     name: 2015,
+                //     type: this.chartsType,
+                //     data: this.afreAndCurrencylArr(2015)
+                // },
+                // {
+                //     name: 2016,
+                //     type: this.chartsType,
+                //     data: this.afreAndCurrencylArr(2016)
+                // },
+                // {
+                //     name: 2017,
+                //     type: this.chartsType,
+                //     data: this.afreAndCurrencylArr(2017)
+                // },
+                // {
+                //     name: 2018,
+                //     type: this.chartsType,
+                //     data: this.afreAndCurrencylArr(2018)
+                // },
                 {
                     name: 2019,
                     type: this.chartsType,
@@ -125,11 +126,6 @@
                 },
                 {
                     name: 2021,
-                    type: this.chartsType,
-                    data: this.afreAndCurrencylArr(2015)
-                },
-                {
-                    name: 2015,
                     type: this.chartsType,
                     data: this.afreAndCurrencylArr(2021)
                 },
