@@ -213,7 +213,8 @@
             },
             tooltip: {
               //X轴悬浮显示所有数据
-              trigger: 'axis'
+              trigger: 'axis',
+              position: ['85%', '20%']
             },
             legend: {
                 left: 'center',
@@ -237,89 +238,104 @@
                 // 第一行默认是x轴的数据
                 ['product', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                 // 下面是y轴的数据
-                [arr_JA],
-                [arr_JH],
-                [arr_QK],
-                [arr_HY],
-                [arr_QS],
-                [arr_WC],
-                [arr_HS],
-                [arr_DXH],
-                [arr_DHGX],
-                [arr_JJKF],
-                [arr_JX],
-                [arr_HP],
-                [arr_CD],
-                [arr_XZ],
-                [arr_HN]
+                arr_JA,
+                arr_JH,
+                arr_QK,
+                arr_HY,
+                arr_QS,
+                arr_WC,
+                arr_HS,
+                arr_DXH,
+                arr_DHGX,
+                arr_JJKF,
+                arr_JX,
+                arr_HP,
+                arr_CD,
+                arr_XZ,
+                arr_HN
 
               ]
             },
             series: [
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                     type: _this.chartsType,
+                    seriesLayoutBy: 'row',
                     emphasis: { focus: 'series' }
                 },
                 {
                   type: 'pie',
                   id: 'pie',
-                  radius: '40%',
+                  radius: '30%',
                   center: ['50%', '40%'],
                   emphasis: {
                     focus: 'self'
@@ -365,7 +381,7 @@
       drawBarChart() {
         this.isBarActive = true;
         this.isLineActive = false;
-        this.chartsType = "line"
+        this.chartsType = "bar"
         this.drawCharts();
         this.drawChartsWithArea();
  
