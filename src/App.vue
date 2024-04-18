@@ -1,13 +1,13 @@
 <template>
   <div>
     <div>
-    <h1 class="main-title">武汉房地产与金融数据</h1>
+    <h1 class="main-title">武汉房地产与金融</h1>
     </div>
     <nav class="nav-container">
       <router-link to="/newhouse" class="nav" :class="{ active: $route.path === '/newhouse' }">新房</router-link>
       <router-link to="/secondhand" class="nav" :class="{ active: $route.path === '/secondhand' }">二手房</router-link>
       <router-link to="/socialfinancing" class="nav" :class="{ active: $route.path === '/socialfinancing' }">社会融资增量</router-link>
-      <router-link to="/currencyissue" class="nav" :class="{ active: $route.path === '/currencyissue' }">货币M2统计数据</router-link>
+      <router-link to="/currencyissue" class="nav" :class="{ active: $route.path === '/currencyissue' }">货币供应量M2</router-link>
     </nav>
     <router-view></router-view>
   </div>
