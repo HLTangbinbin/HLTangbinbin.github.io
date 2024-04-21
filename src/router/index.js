@@ -4,6 +4,7 @@ import NewHouse from '../components/NewHouse.vue';
 import SecondHandHouse from '../components/SecondHandHouse.vue';
 import SocialFinancing from '../components/SocialFinancing.vue';
 import CurrencyIssue from '../components/CurrencyIssue.vue';
+import PopulationCorrelation from '../components/PopulationCorrelation.vue';
 
 
 const routes = [
@@ -11,7 +12,9 @@ const routes = [
   { path: '/newhouse', component: NewHouse },
   { path: '/secondhand', component: SecondHandHouse },
   { path: '/socialfinancing', component: SocialFinancing },
-  { path: '/currencyissue', component: CurrencyIssue }
+  { path: '/currencyissue', component: CurrencyIssue },
+  { path: '/populationcorrelation', component: PopulationCorrelation }
+  
 ];
 
 

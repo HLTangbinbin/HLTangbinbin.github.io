@@ -29,7 +29,7 @@
     methods: {
       loadData() {
         // 读取本地的 JSON 文件
-        fetch(process.env.BASE_URL + 'currencyInfo.json', { cache: 'no-cache' })
+        fetch('currencyInfo.json')
           .then(response => response.json())
           .then(data => {
             console.log('请求成功金融数据:', data.currencyInfoList);
