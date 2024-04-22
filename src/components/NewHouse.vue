@@ -19,7 +19,7 @@
 
     data() {
       return {
-        areaName : {
+        AreaName : {
             JA : '江岸区',
             JH : '江汉区',
             QK : '硚口区',
@@ -68,7 +68,7 @@
       },
         handleTotalData() {
           //每年每月合计数据前面数据补齐-2020年前3月数据为0
-          this.selectMonthArr(this.houseArrayWith(this.areaName.TOTAL),'2020').unshift(0, 0, 0);
+          this.selectMonthArr(this.houseArrayWith(this.AreaName.TOTAL),'2020').unshift(0, 0, 0);
         },
         // 每年每月的合计数据需要先选出合计，然后选出每月的数组数据
         //筛选合计或者每个区域的数据
@@ -128,37 +128,37 @@
                 {
                     name: 2018,
                     type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.TOTAL),'2018')
+                    data: this.selectMonthArr(this.houseArrayWith(this.AreaName.TOTAL),'2018')
                 },
                 {
                     name: 2019,
                     type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.TOTAL),'2019')
+                    data: this.selectMonthArr(this.houseArrayWith(this.AreaName.TOTAL),'2019')
                 },
                 {
                     name: 2020,
                     type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.TOTAL),'2020')
+                    data: this.selectMonthArr(this.houseArrayWith(this.AreaName.TOTAL),'2020')
                 },
                 {
                     name: 2021,
                     type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.TOTAL),'2021')
+                    data: this.selectMonthArr(this.houseArrayWith(this.AreaName.TOTAL),'2021')
                 },
                 {
                     name: 2022,
                     type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.TOTAL),'2022')
+                    data: this.selectMonthArr(this.houseArrayWith(this.AreaName.TOTAL),'2022')
                 },
                 {
                     name: 2023,
                     type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.TOTAL),'2023')
+                    data: this.selectMonthArr(this.houseArrayWith(this.AreaName.TOTAL),'2023')
                 },
                 {
                     name: 2024,
                     type: this.chartsType,
-                    data: this.selectMonthArr(this.houseArrayWith(this.areaName.TOTAL),'2024')
+                    data: this.selectMonthArr(this.houseArrayWith(this.AreaName.TOTAL),'2024')
                 }
             ]
         };
@@ -174,36 +174,36 @@
         // 指定图表的配置项和数据
         setTimeout(function () {
           // 数据集处理，先把名字插入到数据数组第一个位置中
-          var arr_JA = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JA),'2023');
-          arr_JA.unshift(_this.areaName.JA);
-          var arr_JH = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JH),'2023');
-          arr_JH.unshift(_this.areaName.JH);
-          var arr_QK = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.QK),'2023');
-          arr_QK.unshift(_this.areaName.QK);
-          var arr_HY = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HY),'2023');
-          arr_HY.unshift(_this.areaName.HY);
-          var arr_QS = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.QS),'2023');
-          arr_QS.unshift(_this.areaName.QS);
-          var arr_WC = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.WC),'2023');
-          arr_WC.unshift(_this.areaName.WC);
-          var arr_HS = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HS),'2023');
-          arr_HS.unshift(_this.areaName.HS);
-          var arr_DXH = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.DXH),'2023');
-          arr_DXH.unshift(_this.areaName.DXH);
-          var arr_DHGX = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.DHGX),'2023');
-          arr_DHGX.unshift(_this.areaName.DHGX);
-          var arr_JJKF = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JJKF),'2023');
-          arr_JJKF.unshift(_this.areaName.JJKF);
-          var arr_JX = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.JX),'2023');
-          arr_JX.unshift(_this.areaName.JX);
-          var arr_HP = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HP),'2023');
-          arr_HP.unshift(_this.areaName.HP);
-          var arr_CD = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.CD),'2023');
-          arr_CD.unshift(_this.areaName.CD);
-          var arr_XZ = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.XZ),'2023');
-          arr_XZ.unshift(_this.areaName.XZ);
-          var arr_HN = _this.selectMonthArr(_this.houseArrayWith(_this.areaName.HN),'2023');
-          arr_HN.unshift(_this.areaName.HN);
+          var arr_JA = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JA),'2023');
+          arr_JA.unshift(_this.AreaName.JA);
+          var arr_JH = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JH),'2023');
+          arr_JH.unshift(_this.AreaName.JH);
+          var arr_QK = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.QK),'2023');
+          arr_QK.unshift(_this.AreaName.QK);
+          var arr_HY = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HY),'2023');
+          arr_HY.unshift(_this.AreaName.HY);
+          var arr_QS = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.QS),'2023');
+          arr_QS.unshift(_this.AreaName.QS);
+          var arr_WC = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.WC),'2023');
+          arr_WC.unshift(_this.AreaName.WC);
+          var arr_HS = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HS),'2023');
+          arr_HS.unshift(_this.AreaName.HS);
+          var arr_DXH = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.DXH),'2023');
+          arr_DXH.unshift(_this.AreaName.DXH);
+          var arr_DHGX = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.DHGX),'2023');
+          arr_DHGX.unshift(_this.AreaName.DHGX);
+          var arr_JJKF = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JJKF),'2023');
+          arr_JJKF.unshift(_this.AreaName.JJKF);
+          var arr_JX = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JX),'2023');
+          arr_JX.unshift(_this.AreaName.JX);
+          var arr_HP = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HP),'2023');
+          arr_HP.unshift(_this.AreaName.HP);
+          var arr_CD = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.CD),'2023');
+          arr_CD.unshift(_this.AreaName.CD);
+          var arr_XZ = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.XZ),'2023');
+          arr_XZ.unshift(_this.AreaName.XZ);
+          var arr_HN = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HN),'2023');
+          arr_HN.unshift(_this.AreaName.HN);
 
           newHouseVolumeBarMonthOptionForArea = {
             title: {
