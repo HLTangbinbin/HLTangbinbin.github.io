@@ -9,6 +9,7 @@
       <router-link to="/socialfinancing" class="nav" :class="{ active: $route.path === '/socialfinancing' }">社会融资增量</router-link>
       <router-link to="/currencyissue" class="nav" :class="{ active: $route.path === '/currencyissue' }">货币供应量M2</router-link>
       <router-link to="/populationcorrelation" class="nav" :class="{ active: $route.path === '/populationcorrelation' }">人口数据</router-link>
+      <router-link to="/priceindices" class="nav" :class="{ active: $route.path === '/priceindices' }">价格指数</router-link>
     </nav>
     <router-view></router-view>
   </div>

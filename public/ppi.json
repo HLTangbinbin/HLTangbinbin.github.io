@@ -1,0 +1,972 @@
+{
+    "returncode": 200,
+    "returndata": {
+        "datanodes": [
+            {
+                "code": "zb.A01080701_sj.202403",
+                "data": {
+                    "data": 99.9,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.9"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202403",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202402",
+                "data": {
+                    "data": 99.8,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.8"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202402",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202401",
+                "data": {
+                    "data": 99.8,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.8"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202401",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202312",
+                "data": {
+                    "data": 99.7,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.7"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202312",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202311",
+                "data": {
+                    "data": 99.7,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.7"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202311",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202310",
+                "data": {
+                    "data": 100,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.0"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202310",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202309",
+                "data": {
+                    "data": 100.4,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.4"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202309",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202308",
+                "data": {
+                    "data": 100.2,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.2"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202308",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202307",
+                "data": {
+                    "data": 99.8,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.8"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202307",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202306",
+                "data": {
+                    "data": 99.2,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.2"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202306",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202305",
+                "data": {
+                    "data": 99.1,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.1"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202305",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202304",
+                "data": {
+                    "data": 99.5,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.5"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202304",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080701_sj.202303",
+                "data": {
+                    "data": 100,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.0"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080701",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202303",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202403",
+                "data": {
+                    "data": 99.9,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.9"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202403",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202402",
+                "data": {
+                    "data": 99.7,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.7"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202402",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202401",
+                "data": {
+                    "data": 99.8,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.8"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202401",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202312",
+                "data": {
+                    "data": 99.7,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.7"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202312",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202311",
+                "data": {
+                    "data": 99.7,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.7"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202311",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202310",
+                "data": {
+                    "data": 100.1,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.1"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202310",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202309",
+                "data": {
+                    "data": 100.5,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.5"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202309",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202308",
+                "data": {
+                    "data": 100.3,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.3"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202308",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202307",
+                "data": {
+                    "data": 99.6,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.6"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202307",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202306",
+                "data": {
+                    "data": 98.9,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "98.9"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202306",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202305",
+                "data": {
+                    "data": 98.8,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "98.8"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202305",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202304",
+                "data": {
+                    "data": 99.4,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.4"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202304",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080702_sj.202303",
+                "data": {
+                    "data": 100,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.0"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080702",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202303",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202403",
+                "data": {
+                    "data": 99.9,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.9"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202403",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202402",
+                "data": {
+                    "data": 99.9,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.9"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202402",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202401",
+                "data": {
+                    "data": 99.8,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.8"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202401",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202312",
+                "data": {
+                    "data": 99.9,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.9"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202312",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202311",
+                "data": {
+                    "data": 99.8,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.8"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202311",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202310",
+                "data": {
+                    "data": 99.9,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.9"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202310",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202309",
+                "data": {
+                    "data": 100.1,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.1"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202309",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202308",
+                "data": {
+                    "data": 100.1,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.1"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202308",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202307",
+                "data": {
+                    "data": 100.3,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.3"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202307",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202306",
+                "data": {
+                    "data": 99.8,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.8"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202306",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202305",
+                "data": {
+                    "data": 99.8,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.8"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202305",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202304",
+                "data": {
+                    "data": 99.7,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "99.7"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202304",
+                        "wdcode": "sj"
+                    }
+                ]
+            },
+            {
+                "code": "zb.A01080703_sj.202303",
+                "data": {
+                    "data": 100,
+                    "dotcount": 1,
+                    "hasdata": true,
+                    "strdata": "100.0"
+                },
+                "wds": [
+                    {
+                        "valuecode": "A01080703",
+                        "wdcode": "zb"
+                    },
+                    {
+                        "valuecode": "202303",
+                        "wdcode": "sj"
+                    }
+                ]
+            }
+        ],
+        "freshsort": 0,
+        "hasdatacount": 39,
+        "wdnodes": [
+            {
+                "nodes": [
+                    {
+                        "cname": "å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°(ä¸Šæœˆ=100)",
+                        "code": "A01080701",
+                        "dotcount": 1,
+                        "exp": "å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°æ˜¯åæ˜ ä¸€å®šæ—¶æœŸå†…å…¨éƒ¨å·¥ä¸šäº§å“å‡ºåŽ‚ä»·æ ¼æ€»æ°´å¹³çš„å˜åŠ¨è¶‹åŠ¿å’Œç¨‹åº¦çš„ç›¸å¯¹æ•°ï¼ŒåŒ…æ‹¬å·¥ä¸šä¼ä¸šå”®ç»™æœ¬ä¼ä¸šä»¥å¤–æ‰€æœ‰å•ä½çš„å„ç§äº§å“å’Œç›´æŽ¥å”®ç»™å±…æ°‘ç”¨äºŽç”Ÿæ´»æ¶ˆè´¹çš„äº§å“ã€‚è¯¥æŒ‡æ•°å¯ä»¥è§‚å¯Ÿå‡ºåŽ‚ä»·æ ¼å˜åŠ¨å¯¹å·¥ä¸šæ€»äº§å€¼åŠå¢žåŠ å€¼çš„å½±å“ã€‚",
+                        "ifshowcode": false,
+                        "memo": "å›½å®¶ç»Ÿè®¡å±€ä»Ž2011å¹´1æœˆå¼€å§‹å®žæ–½æ–°çš„å·¥ä¸šç”Ÿäº§è€…ä»·æ ¼ç»Ÿè®¡è°ƒæŸ¥åˆ¶åº¦æ–¹æ³•ã€‚\"å·¥ä¸šå“ä»·æ ¼ç»Ÿè®¡\"æ”¹ç§°ä¸º\"å·¥ä¸šç”Ÿäº§è€…ä»·æ ¼ç»Ÿè®¡\"ï¼Œå°†\"å·¥ä¸šå“å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°\"æ”¹ç§°ä¸º\"å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°\"ã€‚",
+                        "name": "å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°(ä¸Šæœˆ=100)",
+                        "nodesort": "1",
+                        "sortcode": 598,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "ç”Ÿäº§èµ„æ–™å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°(ä¸Šæœˆ=100)",
+                        "code": "A01080702",
+                        "dotcount": 1,
+                        "exp": "å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°æ˜¯åæ˜ ä¸€å®šæ—¶æœŸå†…å…¨éƒ¨å·¥ä¸šäº§å“å‡ºåŽ‚ä»·æ ¼æ€»æ°´å¹³çš„å˜åŠ¨è¶‹åŠ¿å’Œç¨‹åº¦çš„ç›¸å¯¹æ•°ï¼ŒåŒ…æ‹¬å·¥ä¸šä¼ä¸šå”®ç»™æœ¬ä¼ä¸šä»¥å¤–æ‰€æœ‰å•ä½çš„å„ç§äº§å“å’Œç›´æŽ¥å”®ç»™å±…æ°‘ç”¨äºŽç”Ÿæ´»æ¶ˆè´¹çš„äº§å“ã€‚è¯¥æŒ‡æ•°å¯ä»¥è§‚å¯Ÿå‡ºåŽ‚ä»·æ ¼å˜åŠ¨å¯¹å·¥ä¸šæ€»äº§å€¼åŠå¢žåŠ å€¼çš„å½±å“ã€‚",
+                        "ifshowcode": false,
+                        "memo": "å›½å®¶ç»Ÿè®¡å±€ä»Ž2011å¹´1æœˆå¼€å§‹å®žæ–½æ–°çš„å·¥ä¸šç”Ÿäº§è€…ä»·æ ¼ç»Ÿè®¡è°ƒæŸ¥åˆ¶åº¦æ–¹æ³•ã€‚\"å·¥ä¸šå“ä»·æ ¼ç»Ÿè®¡\"æ”¹ç§°ä¸º\"å·¥ä¸šç”Ÿäº§è€…ä»·æ ¼ç»Ÿè®¡\"ï¼Œå°†\"å·¥ä¸šå“å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°\"æ”¹ç§°ä¸º\"å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°\"ã€‚",
+                        "name": "ç”Ÿäº§èµ„æ–™å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°(ä¸Šæœˆ=100)",
+                        "nodesort": "1",
+                        "sortcode": 599,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "ç”Ÿæ´»èµ„æ–™å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°(ä¸Šæœˆ=100)",
+                        "code": "A01080703",
+                        "dotcount": 1,
+                        "exp": "å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°æ˜¯åæ˜ ä¸€å®šæ—¶æœŸå†…å…¨éƒ¨å·¥ä¸šäº§å“å‡ºåŽ‚ä»·æ ¼æ€»æ°´å¹³çš„å˜åŠ¨è¶‹åŠ¿å’Œç¨‹åº¦çš„ç›¸å¯¹æ•°ï¼ŒåŒ…æ‹¬å·¥ä¸šä¼ä¸šå”®ç»™æœ¬ä¼ä¸šä»¥å¤–æ‰€æœ‰å•ä½çš„å„ç§äº§å“å’Œç›´æŽ¥å”®ç»™å±…æ°‘ç”¨äºŽç”Ÿæ´»æ¶ˆè´¹çš„äº§å“ã€‚è¯¥æŒ‡æ•°å¯ä»¥è§‚å¯Ÿå‡ºåŽ‚ä»·æ ¼å˜åŠ¨å¯¹å·¥ä¸šæ€»äº§å€¼åŠå¢žåŠ å€¼çš„å½±å“ã€‚",
+                        "ifshowcode": false,
+                        "memo": "å›½å®¶ç»Ÿè®¡å±€ä»Ž2011å¹´1æœˆå¼€å§‹å®žæ–½æ–°çš„å·¥ä¸šç”Ÿäº§è€…ä»·æ ¼ç»Ÿè®¡è°ƒæŸ¥åˆ¶åº¦æ–¹æ³•ã€‚\"å·¥ä¸šå“ä»·æ ¼ç»Ÿè®¡\"æ”¹ç§°ä¸º\"å·¥ä¸šç”Ÿäº§è€…ä»·æ ¼ç»Ÿè®¡\"ï¼Œå°†\"å·¥ä¸šå“å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°\"æ”¹ç§°ä¸º\"å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°\"ã€‚",
+                        "name": "ç”Ÿæ´»èµ„æ–™å·¥ä¸šç”Ÿäº§è€…å‡ºåŽ‚ä»·æ ¼æŒ‡æ•°(ä¸Šæœˆ=100)",
+                        "nodesort": "1",
+                        "sortcode": 600,
+                        "tag": "",
+                        "unit": ""
+                    }
+                ],
+                "wdcode": "zb",
+                "wdname": "æŒ‡æ ‡"
+            },
+            {
+                "nodes": [
+                    {
+                        "cname": "2024å¹´3æœˆ",
+                        "code": "202403",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2024å¹´3æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 3,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2024å¹´2æœˆ",
+                        "code": "202402",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2024å¹´2æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 4,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2024å¹´1æœˆ",
+                        "code": "202401",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2024å¹´1æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 5,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2023å¹´12æœˆ",
+                        "code": "202312",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2023å¹´12æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 6,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2023å¹´11æœˆ",
+                        "code": "202311",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2023å¹´11æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 7,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2023å¹´10æœˆ",
+                        "code": "202310",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2023å¹´10æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 8,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2023å¹´9æœˆ",
+                        "code": "202309",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2023å¹´9æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 9,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2023å¹´8æœˆ",
+                        "code": "202308",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2023å¹´8æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 10,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2023å¹´7æœˆ",
+                        "code": "202307",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2023å¹´7æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 11,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2023å¹´6æœˆ",
+                        "code": "202306",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2023å¹´6æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 12,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2023å¹´5æœˆ",
+                        "code": "202305",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2023å¹´5æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 13,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2023å¹´4æœˆ",
+                        "code": "202304",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2023å¹´4æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 14,
+                        "tag": "",
+                        "unit": ""
+                    },
+                    {
+                        "cname": "2023å¹´3æœˆ",
+                        "code": "202303",
+                        "dotcount": 4,
+                        "exp": "",
+                        "ifshowcode": false,
+                        "memo": "",
+                        "name": "2023å¹´3æœˆ",
+                        "nodesort": "1",
+                        "sortcode": 15,
+                        "tag": "",
+                        "unit": ""
+                    }
+                ],
+                "wdcode": "sj",
+                "wdname": "æ—¶é—´"
+            }
+        ]
+    }
+}

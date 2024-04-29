@@ -5,6 +5,7 @@ import SecondHandHouse from '../components/SecondHandHouse.vue';
 import SocialFinancing from '../components/SocialFinancing.vue';
 import CurrencyIssue from '../components/CurrencyIssue.vue';
 import PopulationCorrelation from '../components/PopulationCorrelation.vue';
+import PriceIndices from '../components/PriceIndices.vue';
 
 
 const routes = [
@@ -13,7 +14,8 @@ const routes = [
   { path: '/secondhand', component: SecondHandHouse },
   { path: '/socialfinancing', component: SocialFinancing },
   { path: '/currencyissue', component: CurrencyIssue },
-  { path: '/populationcorrelation', component: PopulationCorrelation }
+  { path: '/populationcorrelation', component: PopulationCorrelation },
+  { path: '/priceindices', component: PriceIndices }
   
 ];
 
