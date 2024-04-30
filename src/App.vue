@@ -30,9 +30,11 @@ export default {
   background-color: #fff; /* 设置背景颜色为灰色 */
 }
 .nav-container {
+  overflow-x: auto; /* 启用水平滚动条 */
+  white-space: nowrap; /* 防止换行 */
+  -webkit-overflow-scrolling: touch; /* 在移动设备上优化滚动 */
   display: flex;
-  justify-content: center;
-  width: 100%;
+  justify-content: safe center; /* 解决居中滚动时左边无法显示全的问题 */
   margin-top: 20px; /* 添加底部间距 */
   background-color: #fff; /* 设置背景颜色为灰色 */
 }
