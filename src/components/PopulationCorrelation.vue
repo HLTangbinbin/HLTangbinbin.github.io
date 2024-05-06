@@ -32,8 +32,7 @@
         },
           isBarActive: false,
           isLineActive: false,
-          populationList: null,
-          populationRateList: null,
+          populationDataList: null,
           chartsType: null
         };
       },
@@ -44,24 +43,12 @@
       methods: {
         loadData() {
           // 请求总人口公开数据
-          fetch('population.json')
+          fetch('populationData.json')
             .then(response => response.json())
             .then(data => {
-              console.log('请求成功总人口数据:', data.returndata.datanodes);
+              console.log('请求成功总人口数据:',data);
               // 数组倒序处理
-              this.populationList = data.returndata.datanodes.reverse();
-              // 处理数据绘制图表
-              this.drawBarChart();
-            })
-            .catch(error => {
-              console.error('Error fetching data:', error)
-            }),
-          // 请求人口率公开数据
-          fetch('populationRate.json')
-            .then(response => response.json())
-            .then(data => {
-              console.log('请求成功人口率数据:', data.returndata.datanodes);
-              this.populationRateList = data.returndata.datanodes.reverse();
+              this.populationDataList = data;
               // 处理数据绘制图表
               this.drawBarChart();
             })
@@ -71,21 +58,25 @@
         },
           //按照年份与日期做筛选与排序
           populationArr(type) {
-            return this.populationList.filter( populationListObj => {
-              return populationListObj.code.search(type) != -1;
+            return this.populationDataList.populationData.filter( populationDataListObj => {
+              return populationDataListObj.code.search(type) != -1;
+          }).sort(function(a,b) {
+              return a.date > b.date ? 1: -1;
           }).map(item => {
                 //取出某个字段数据
-                var number = Number(item.data.data)
+                var number = Number(item.value)
                 return number;
             })
           },
           //按照年份与日期做筛选与排序
           populationRateArr(type) {
-            return this.populationRateList.filter( populationListObj => {
-              return populationListObj.code.search(type) != -1;
+            return this.populationDataList.populationRateData.filter( populationDataListObj => {
+              return populationDataListObj.code.search(type) != -1;
+          }).sort(function(a,b) {
+              return a.date > b.date ? 1: -1;
           }).map(item => {
                 //取出某个字段数据
-                var number = Number(item.data.data)
+                var number = Number(item.value)
                 return number;
             })
           },
