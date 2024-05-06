@@ -12,7 +12,7 @@
     
     <script>
     import * as echarts from 'echarts';
-    
+    import { sortYearMonths } from './CommonUtil';
     export default {
   
       data() {
@@ -61,7 +61,7 @@
             return this.populationDataList.populationData.filter( populationDataListObj => {
               return populationDataListObj.code.search(type) != -1;
           }).sort(function(a,b) {
-              return a.date > b.date ? 1: -1;
+              return sortYearMonths(a.date, b.date);
           }).map(item => {
                 //取出某个字段数据
                 var number = Number(item.value)
@@ -73,7 +73,7 @@
             return this.populationDataList.populationRateData.filter( populationDataListObj => {
               return populationDataListObj.code.search(type) != -1;
           }).sort(function(a,b) {
-              return a.date > b.date ? 1: -1;
+              return sortYearMonths(a.date, b.date);
           }).map(item => {
                 //取出某个字段数据
                 var number = Number(item.value)

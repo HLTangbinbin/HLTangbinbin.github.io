@@ -11,7 +11,7 @@
     
     <script>
     import * as echarts from 'echarts';
-    
+    import { sortYearMonths } from './CommonUtil';
     export default {
   
       data() {
@@ -50,14 +50,18 @@
         cpiArr(type) {
           return this.priceIndicesList.cpiData.filter( priceIndicesListObj => {
                 return priceIndicesListObj.code.search(type) != -1;
-            }).map(item => {
+            }).sort(function(a,b) {
+              return sortYearMonths(a.date, b.date);
+          }).map(item => {
                 return Number(item.value);
           })
         },
         ppiArr(type) {
           return this.priceIndicesList.ppiData.filter( priceIndicesListObj => {
                 return priceIndicesListObj.code.search(type) != -1;
-            }).map(item => {
+            }).sort(function(a,b) {
+              return sortYearMonths(a.date, b.date);
+          }).map(item => {
                 return Number(item.value);
           })
         },
@@ -65,6 +69,8 @@
         axisArr(type) {
             return this.priceIndicesList.cpiData.filter(priceIndicesListObj => {
               return priceIndicesListObj.code.search(type) != -1;
+          }).sort(function(a,b) {
+              return sortYearMonths(a.date, b.date);
           }).map(item => {
               return Number(item.date);
             })

@@ -11,6 +11,7 @@
   
   <script>
   import * as echarts from 'echarts';
+  import { sortYearMonths } from './CommonUtil';
   
   export default {
 
@@ -48,7 +49,8 @@
               yearStr = afreAndCurrencyObj.itemDate
               return yearStr.search(year) != -1;
           }).sort(function(a,b) {
-              return a.itemDate > b.itemDate ? 1: -1;
+              return sortYearMonths(a.itemDate, b.itemDate);
+              
           }).map(item => {
               //取出某个字段数据
               var afre = Number(item.afre)
