@@ -17,14 +17,13 @@
       data() {
         return {
           IndicesType : {
-            CPI : 'A01030101',
-            PPI : 'A01080701'
+            CPI_101 : 'A01030101',
+            PPI_701 : 'A01080701'
         
         },
           isBarActive: false,
           isLineActive: false,
-          cpiList: null,
-          ppiList: null,
+          priceIndicesList: null,
           chartsType: null
         };
       },
@@ -34,25 +33,12 @@
   
       methods: {
         loadData() {
-          // 请求cpi数据
-          fetch('cpi.json')
+          // 请求priceIndices数据
+          fetch('priceIndices.json')
             .then(response => response.json())
             .then(data => {
-              console.log('请求成功cpi数据:', data.returndata.datanodes);
-              // 数组倒序处理
-              this.cpiList = data.returndata.datanodes.reverse();
-              // 处理数据绘制图表
-              this.drawBarChart();
-            })
-            .catch(error => {
-              console.error('Error fetching data:', error)
-            }),
-          // 请求ppi公开数据
-          fetch('ppi.json')
-            .then(response => response.json())
-            .then(data => {
-              console.log('请求成功ppi数据:', data.returndata.datanodes);
-              this.ppiList = data.returndata.datanodes.reverse();
+              this.priceIndicesList = data
+              console.log('请求成功priceIndices数据:', this.priceIndicesList);
               // 处理数据绘制图表
               this.drawBarChart();
             })
@@ -61,29 +47,26 @@
             })
         },
         // 按照类型与字段名称
-        indicesArr(type) {
-            if (type == this.IndicesType.CPI) {
-                return this.cpiList.filter( cpiListObj => {
-                    return cpiListObj.code.search(type) != -1;
-                }).map(item => {
-                    return Number(item.data.data)
-                })
-            }else if (type == this.IndicesType.PPI) {
-                return this.ppiList.filter( cpiListObj => {
-                    return cpiListObj.code.search(type) != -1;
-                }).map(item => {
-                    return Number(item.data.data)
-                })
-            }
-
-          },
+        cpiArr(type) {
+          return this.priceIndicesList.cpiData.filter( priceIndicesListObj => {
+                return priceIndicesListObj.code.search(type) != -1;
+            }).map(item => {
+                return Number(item.value);
+          })
+        },
+        ppiArr(type) {
+          return this.priceIndicesList.ppiData.filter( priceIndicesListObj => {
+                return priceIndicesListObj.code.search(type) != -1;
+            }).map(item => {
+                return Number(item.value);
+          })
+        },
         // 获取时间横坐标数组数据
         axisArr(type) {
-            return this.ppiList.filter(ppiListObj => {
-              return ppiListObj.code.search(type) != -1;
+            return this.priceIndicesList.cpiData.filter(priceIndicesListObj => {
+              return priceIndicesListObj.code.search(type) != -1;
           }).map(item => {
-                var wdsDic = item.wds;
-                return Number(wdsDic[1].valuecode);
+              return Number(item.date);
             })
           },
 
@@ -115,7 +98,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.axisArr(this.IndicesType.PPI)
+                  data: this.axisArr(this.IndicesType.CPI_101)
               },
               yAxis: {
                 min: '99',
@@ -125,12 +108,12 @@
                   {
                       name: 'CPI',
                       type: this.chartsType,
-                      data: this.indicesArr(this.IndicesType.CPI)
+                      data: this.cpiArr(this.IndicesType.CPI_101)
                   },
                   {
                       name: 'PPI',
                       type: this.chartsType,
-                      data: this.indicesArr(this.IndicesType.PPI)
+                      data: this.ppiArr(this.IndicesType.PPI_701)
                   }
               ]
           };
