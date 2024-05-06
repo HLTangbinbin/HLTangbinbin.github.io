@@ -6,6 +6,7 @@
       </div>
      
       <div class="chart-container" id="priceIndices"></div>
+      <div class="chart-container" id="pmi"></div>
     </div>
   </template>
     
@@ -18,12 +19,15 @@
         return {
           IndicesType : {
             CPI_101 : 'A01030101',
-            PPI_701 : 'A01080701'
+            PPI_701 : 'A01080701',
+            PMI_301 : 'A0B0301',
+            PMI_201 : 'A0B0201',
+            PMI_101 : 'A0B0101'
         
         },
           isBarActive: false,
           isLineActive: false,
-          priceIndicesList: null,
+          indicesDataList: null,
           chartsType: null
         };
       },
@@ -34,11 +38,11 @@
       methods: {
         loadData() {
           // 请求priceIndices数据
-          fetch('priceIndices.json')
+          fetch('indicesData.json')
             .then(response => response.json())
             .then(data => {
-              this.priceIndicesList = data
-              console.log('请求成功priceIndices数据:', this.priceIndicesList);
+              this.indicesDataList = data.data
+              console.log('请求成功priceIndices数据:', this.indicesDataList);
               // 处理数据绘制图表
               this.drawBarChart();
             })
@@ -47,28 +51,20 @@
             })
         },
         // 按照类型与字段名称
-        cpiArr(type) {
-          return this.priceIndicesList.cpiData.filter( priceIndicesListObj => {
-                return priceIndicesListObj.code.search(type) != -1;
+        dataArr(type) {
+          return this.indicesDataList.filter( indicesDataListObj => {
+                return indicesDataListObj.code.search(type) != -1;
             }).sort(function(a,b) {
               return sortYearMonths(a.date, b.date);
           }).map(item => {
                 return Number(item.value);
           })
         },
-        ppiArr(type) {
-          return this.priceIndicesList.ppiData.filter( priceIndicesListObj => {
-                return priceIndicesListObj.code.search(type) != -1;
-            }).sort(function(a,b) {
-              return sortYearMonths(a.date, b.date);
-          }).map(item => {
-                return Number(item.value);
-          })
-        },
+       
         // 获取时间横坐标数组数据
         axisArr(type) {
-            return this.priceIndicesList.cpiData.filter(priceIndicesListObj => {
-              return priceIndicesListObj.code.search(type) != -1;
+            return this.indicesDataList.filter(indicesDataListObj => {
+              return indicesDataListObj.code.search(type) != -1;
           }).sort(function(a,b) {
               return sortYearMonths(a.date, b.date);
           }).map(item => {
@@ -83,7 +79,7 @@
           // 指定图表的配置项和数据
           var priceIndicesOption = {
               title: {
-                  text: '价格指数数据统计',
+                  text: '居民消费价格指数',
                   left: 'center',
                   top: 'top'
               },
@@ -114,17 +110,73 @@
                   {
                       name: 'CPI',
                       type: this.chartsType,
-                      data: this.cpiArr(this.IndicesType.CPI_101)
+                      data: this.dataArr(this.IndicesType.CPI_101)
                   },
                   {
                       name: 'PPI',
                       type: this.chartsType,
-                      data: this.ppiArr(this.IndicesType.PPI_701)
+                      data: this.dataArr(this.IndicesType.PPI_701)
                   }
               ]
           };
           // 使用刚指定的配置项和数据显示图表。
           priceIndicesChart.setOption(priceIndicesOption);
+        },
+
+         // pmi图表
+         drawPMIChart() {
+          // 基于准备好的dom，初始化echarts实例
+          var pmiChart = echarts.init(document.getElementById('pmi'));
+          // 指定图表的配置项和数据
+          var pmiOption = { 
+              title: {
+                  text: '采购经理指数',
+                  left: 'center',
+                  top: 'top'
+              },
+              tooltip: {
+                 //X轴悬浮显示所有数据
+                 trigger: 'axis'
+              },
+              legend: {
+                  left: 'center',
+                  top: '50px'
+              },
+              grid: {
+                  left: '1%',
+                  right: '1%',
+                  top: '20%',
+                  bottom: '1%',
+                  containLabel: true
+              },
+              xAxis: {
+                  type: 'category',
+                  data: this.axisArr(this.IndicesType.CPI_101)
+              },
+              yAxis: {
+                min: '48',
+                max: '55'
+              },
+              series: [
+                  {
+                      name: '制造业PMI',
+                      type: this.chartsType,
+                      data: this.dataArr(this.IndicesType.PMI_101)
+                  },
+                  {
+                      name: '非制造业PMI',
+                      type: this.chartsType,
+                      data: this.dataArr(this.IndicesType.PMI_201)
+                  },
+                  {
+                      name: '综合PMI',
+                      type: this.chartsType,
+                      data: this.dataArr(this.IndicesType.PMI_301)
+                  }
+              ]
+          };
+          // 使用刚指定的配置项和数据显示图表。
+          pmiChart.setOption(pmiOption);
         },
        
         drawBarChart() {
@@ -132,6 +184,7 @@
           this.isLineActive = false;
           this.chartsType = "bar"
           this.drawPriceIndices();
+          this.drawPMIChart();
    
         },
         drawLineChart() {
@@ -140,6 +193,7 @@
           // 在这里绘制折线图
           this.chartsType = "line"
           this.drawPriceIndices();
+          this.drawPMIChart()
         }
       }
     };

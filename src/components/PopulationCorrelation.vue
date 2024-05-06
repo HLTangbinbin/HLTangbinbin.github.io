@@ -46,9 +46,9 @@
           fetch('populationData.json')
             .then(response => response.json())
             .then(data => {
-              console.log('请求成功总人口数据:',data);
+              console.log('请求成功人口数据:',data.data);
               // 数组倒序处理
-              this.populationDataList = data;
+              this.populationDataList = data.data;
               // 处理数据绘制图表
               this.drawBarChart();
             })
@@ -56,30 +56,18 @@
               console.error('Error fetching data:', error)
             })
         },
-          //按照年份与日期做筛选与排序
-          populationArr(type) {
-            return this.populationDataList.populationData.filter( populationDataListObj => {
-              return populationDataListObj.code.search(type) != -1;
-          }).sort(function(a,b) {
-              return sortYearMonths(a.date, b.date);
-          }).map(item => {
-                //取出某个字段数据
-                var number = Number(item.value)
-                return number;
-            })
-          },
-          //按照年份与日期做筛选与排序
-          populationRateArr(type) {
-            return this.populationDataList.populationRateData.filter( populationDataListObj => {
-              return populationDataListObj.code.search(type) != -1;
-          }).sort(function(a,b) {
-              return sortYearMonths(a.date, b.date);
-          }).map(item => {
-                //取出某个字段数据
-                var number = Number(item.value)
-                return number;
-            })
-          },
+        //按照年份与日期做筛选与排序
+        populationArr(type) {
+          return this.populationDataList.filter( populationDataListObj => {
+            return populationDataListObj.code.search(type) != -1;
+        }).sort(function(a,b) {
+            return sortYearMonths(a.date, b.date);
+        }).map(item => {
+              //取出某个字段数据
+              var number = Number(item.value)
+              return number;
+          })
+        },
         // 总人口图表
         drawPopulationCharts() {
           // 基于准备好的dom，初始化echarts实例
@@ -179,17 +167,17 @@
                   {
                       name: '出生率',
                       type: this.chartsType,
-                      data: this.populationRateArr(this.PopulationRateType.Birth)
+                      data: this.populationArr(this.PopulationRateType.Birth)
                   },
                   {
                       name: '死亡率',
                       type: this.chartsType,
-                      data: this.populationRateArr(this.PopulationRateType.Death)
+                      data: this.populationArr(this.PopulationRateType.Death)
                   },
                   {
                       name: '自然增长率',
                       type: this.chartsType,
-                      data: this.populationRateArr(this.PopulationRateType.Growth)
+                      data: this.populationArr(this.PopulationRateType.Growth)
                   }
                 
               ]

@@ -1,5 +1,5 @@
 {
-    "populationData": [
+    "data": [
         {
             "value": 140967.0,
             "code": "A030101",
@@ -249,9 +249,7 @@
             "value": 60908.355,
             "code": "A030105",
             "date": "2014"
-        }
-    ],
-    "populationRateData": [
+        },
         {
             "value": 6.39,
             "code": "A030201",
