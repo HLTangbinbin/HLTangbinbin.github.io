@@ -80,7 +80,7 @@
           // 指定图表的配置项和数据
           var priceIndicesOption = {
               title: {
-                  text: '居民消费价格指数',
+                  text: '价格指数',
                   left: 'center',
                   top: 'top'
               },
@@ -104,7 +104,7 @@
                   data: this.axisArr(this.IndicesType.CPI_A01010101)
               },
               yAxis: {
-                min: '94',
+                min: '94', // 这里不是0，所以最后一个月为0的时候折线图显示在上一个月落点处
                 max: '101'
               },
               series: [
@@ -193,6 +193,7 @@
         drawBarChart() {
           this.isBarActive = true;
           this.isLineActive = false;
+          // 在这里绘制柱状图
           this.chartsType = "bar"
           this.drawPriceIndices();
           this.drawPMIChart();

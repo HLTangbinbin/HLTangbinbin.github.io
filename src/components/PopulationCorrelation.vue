@@ -7,6 +7,7 @@
      
       <div class="chart-container" id="population"></div>
       <div class="chart-container" id="populationrate"></div>
+      <div class="chart-container" id="dependencyratio"></div>
     </div>
   </template>
     
@@ -18,16 +19,22 @@
       data() {
         return {
           PopulationType : {
-            Total : 'A030101',
-            Man : 'A030102',
-            Women : 'A030103',
-            City : 'A030104',
-            Country : 'A030105'
+            Population_A030101 : 'A030101',   // 总人口
+            Population_A030102 : 'A030102',   // 男性
+            Population_A030103 : 'A030103',   // 女性
+            Population_A030104 : 'A030104',   // 城市
+            Population_A030105 : 'A030105',   // 农村
+            Population_A030302 : 'A030302',   // 0-14岁
+            Population_A030303 : 'A030303',   // 15-64岁
+            Population_A030304 : 'A030304'    // 65岁以上
         },
         PopulationRateType : {
-            Birth : 'A030201',
-            Death : 'A030202',
-            Growth : 'A030203'
+            Population_A030201 : 'A030201',   // 出生率
+            Population_A030202 : 'A030202',   // 死亡率
+            Population_A030203 : 'A030203',   // 自然增长率
+            Population_A030305 : 'A030305',   // 总抚养比
+            Population_A030306 : 'A030306',   // 少儿抚养比
+            Population_A030307 : 'A030307'    // 老年抚养比
             
         },
           isBarActive: false,
@@ -104,26 +111,41 @@
                   {
                       name: '总人口',
                       type: this.chartsType,
-                      data: this.populationArr(this.PopulationType.Total)
+                      data: this.populationArr(this.PopulationType.Population_A030101)
                   },
                   {
                       name: '男性',
                       type: this.chartsType,
-                      data: this.populationArr(this.PopulationType.Man)
+                      data: this.populationArr(this.PopulationType.Population_A030102)
                   },
                   {
                       name: '女性',
                       type: this.chartsType,
-                      data: this.populationArr(this.PopulationType.Women)
+                      data: this.populationArr(this.PopulationType.Population_A030103)
                   },                  {
                       name: '城镇',
                       type: this.chartsType,
-                      data: this.populationArr(this.PopulationType.City)
+                      data: this.populationArr(this.PopulationType.Population_A030104)
                   },
                   {
                       name: '农村',
                       type: this.chartsType,
-                      data: this.populationArr(this.PopulationType.Country)
+                      data: this.populationArr(this.PopulationType.Population_A030105)
+                  },
+                  {
+                      name: '0-14岁',
+                      type: this.chartsType,
+                      data: this.populationArr(this.PopulationType.Population_A030302)
+                  },
+                  {
+                      name: '14-64岁',
+                      type: this.chartsType,
+                      data: this.populationArr(this.PopulationType.Population_A030303)
+                  },
+                  {
+                      name: '65岁以上',
+                      type: this.chartsType,
+                      data: this.populationArr(this.PopulationType.Population_A030304)
                   }
                 
               ]
@@ -167,30 +189,81 @@
                   {
                       name: '出生率',
                       type: this.chartsType,
-                      data: this.populationArr(this.PopulationRateType.Birth)
+                      data: this.populationArr(this.PopulationRateType.Population_A030201)
                   },
                   {
                       name: '死亡率',
                       type: this.chartsType,
-                      data: this.populationArr(this.PopulationRateType.Death)
+                      data: this.populationArr(this.PopulationRateType.Population_A030202)
                   },
                   {
                       name: '自然增长率',
                       type: this.chartsType,
-                      data: this.populationArr(this.PopulationRateType.Growth)
-                  }
-                
+                      data: this.populationArr(this.PopulationRateType.Population_A030203)
+                  } 
               ]
           };
           // 使用刚指定的配置项和数据显示图表。
           populationrateChart.setOption(populationrateOption);
         },
+         // 抚养比图表
+         drawDependencyRatioCharts() {
+          // 基于准备好的dom，初始化echarts实例
+          var dependencyratioChart = echarts.init(document.getElementById('dependencyratio'));
+          // 指定图表的配置项和数据
+          var dependencyratioOption = {
+              title: {
+                  text: '抚养比统计',
+                  left: 'center',
+                  top: 'top'
+              },
+              tooltip: {
+                 //X轴悬浮显示所有数据
+                 trigger: 'axis'
+              },
+              legend: {
+                  left: 'center',
+                  top: '50px'
+              },
+              grid: {
+                  left: '1%',
+                  right: '1%',
+                  top: '20%',
+                  bottom: '1%',
+                  containLabel: true
+              },
+              xAxis: {
+                  type: 'category',
+                  data: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
+              },
+              yAxis: {
+              },
+              series: [
+                  {
+                      name: '总抚养比',
+                      type: this.chartsType,
+                      data: this.populationArr(this.PopulationRateType.Population_A030305)
+                  },
+                  {
+                      name: '少儿抚养比',
+                      type: this.chartsType,
+                      data: this.populationArr(this.PopulationRateType.Population_A030306)
+                  },
+                  {
+                      name: '老年抚养比',
+                      type: this.chartsType,
+                      data: this.populationArr(this.PopulationRateType.Population_A030307)
+                  }
+              ]
+          };
+          // 使用刚指定的配置项和数据显示图表。
+          dependencyratioChart.setOption(dependencyratioOption);
+        },
         drawBarChart() {
           this.isBarActive = true;
           this.isLineActive = false;
           this.chartsType = "bar"
-          this.drawPopulationCharts();
-          this.drawPopulationRateCharts();
+          this.drawChart()
    
         },
         drawLineChart() {
@@ -198,11 +271,15 @@
           this.isLineActive = true;
           // 在这里绘制折线图
           this.chartsType = "line"
+          this.drawChart()
+        },
+        drawChart() {
           this.drawPopulationCharts();
           this.drawPopulationRateCharts();
-        }
+          this.drawDependencyRatioCharts();
       }
-    };
+    }
+  };
     </script>
   
   
