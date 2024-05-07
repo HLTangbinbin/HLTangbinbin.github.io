@@ -62,7 +62,7 @@
         // 指定图表的配置项和数据
         var currencyLineMonthOption = {
             title: {
-                text: '货币供应量M2统计',
+                text: '货币供应量M2',
                 left: 'center',
                 top: 'top'
             },
