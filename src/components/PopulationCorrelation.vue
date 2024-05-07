@@ -46,9 +46,9 @@
           fetch('populationData.json')
             .then(response => response.json())
             .then(data => {
-              console.log('请求成功人口数据:',data.data);
+              console.log('请求成功人口数据:',data.populationData);
               // 数组倒序处理
-              this.populationDataList = data.data;
+              this.populationDataList = data.populationData;
               // 处理数据绘制图表
               this.drawBarChart();
             })

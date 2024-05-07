@@ -18,12 +18,13 @@
       data() {
         return {
           IndicesType : {
-            CPI_101 : 'A01030101',
-            PPI_701 : 'A01080701',
-            PMI_301 : 'A0B0301',
-            PMI_201 : 'A0B0201',
-            PMI_101 : 'A0B0101'
-        
+            CPI_A01010101 : 'A01010101', //  CPI 上年同比
+            CPI_A01030101 : 'A01030101', //  CPI 上月环比
+            PPI_A01080101 : 'A01080101', //  PPI 上年同比
+            PPI_A01080701 : 'A01080701', //  PPI 上月环比
+            PMI_A0B0101 :   'A0B0101',   //  制造业采购指数
+            PMI_A0B0201 :   'A0B0201',   //  非制造业采购指数
+            PMI_A0B0301 :   'A0B0301'    //  综合采购指数
         },
           isBarActive: false,
           isLineActive: false,
@@ -41,7 +42,7 @@
           fetch('indicesData.json')
             .then(response => response.json())
             .then(data => {
-              this.indicesDataList = data.data
+              this.indicesDataList = data.indicesData
               console.log('请求成功priceIndices数据:', this.indicesDataList);
               // 处理数据绘制图表
               this.drawBarChart();
@@ -100,22 +101,32 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.axisArr(this.IndicesType.CPI_101)
+                  data: this.axisArr(this.IndicesType.CPI_A01010101)
               },
               yAxis: {
-                min: '99',
+                min: '94',
                 max: '101'
               },
               series: [
                   {
-                      name: 'CPI',
+                      name: 'CPI同比',
                       type: this.chartsType,
-                      data: this.dataArr(this.IndicesType.CPI_101)
+                      data: this.dataArr(this.IndicesType.CPI_A01010101)
                   },
                   {
-                      name: 'PPI',
+                      name: 'CPI环比',
                       type: this.chartsType,
-                      data: this.dataArr(this.IndicesType.PPI_701)
+                      data: this.dataArr(this.IndicesType.CPI_A01030101)
+                  },
+                  {
+                      name: 'PPI同比',
+                      type: this.chartsType,
+                      data: this.dataArr(this.IndicesType.PPI_A01080101)
+                  },
+                  {
+                      name: 'PPI环比',
+                      type: this.chartsType,
+                      data: this.dataArr(this.IndicesType.PPI_A01080701)
                   }
               ]
           };
@@ -151,7 +162,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.axisArr(this.IndicesType.CPI_101)
+                  data: this.axisArr(this.IndicesType.PMI_A0B0101)
               },
               yAxis: {
                 min: '48',
@@ -161,17 +172,17 @@
                   {
                       name: '制造业PMI',
                       type: this.chartsType,
-                      data: this.dataArr(this.IndicesType.PMI_101)
+                      data: this.dataArr(this.IndicesType.PMI_A0B0101)
                   },
                   {
                       name: '非制造业PMI',
                       type: this.chartsType,
-                      data: this.dataArr(this.IndicesType.PMI_201)
+                      data: this.dataArr(this.IndicesType.PMI_A0B0201)
                   },
                   {
                       name: '综合PMI',
                       type: this.chartsType,
-                      data: this.dataArr(this.IndicesType.PMI_301)
+                      data: this.dataArr(this.IndicesType.PMI_A0B0301)
                   }
               ]
           };
