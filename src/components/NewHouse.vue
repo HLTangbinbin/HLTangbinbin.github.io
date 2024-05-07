@@ -207,7 +207,7 @@
 
           newHouseVolumeBarMonthOptionForArea = {
             title: {
-                text: '武汉各区域新房月成交量',
+                text: '武汉各区域2023新房月成交量',
                 left: 'center',
                 top: 'top'
             },

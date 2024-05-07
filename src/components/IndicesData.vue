@@ -166,7 +166,7 @@
               },
               yAxis: {
                 min: '48',
-                max: '55'
+                max: '57'
               },
               series: [
                   {
