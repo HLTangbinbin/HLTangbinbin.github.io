@@ -109,22 +109,22 @@
               },
               series: [
                   {
-                      name: 'CPI同比',
+                      name: 'CPI同比(上年=100)',
                       type: this.chartsType,
                       data: this.dataArr(this.IndicesType.CPI_A01010101)
                   },
                   {
-                      name: 'CPI环比',
+                      name: 'CPI环比(上月=100)',
                       type: this.chartsType,
                       data: this.dataArr(this.IndicesType.CPI_A01030101)
                   },
                   {
-                      name: 'PPI同比',
+                      name: 'PPI同比(上年=100)',
                       type: this.chartsType,
                       data: this.dataArr(this.IndicesType.PPI_A01080101)
                   },
                   {
-                      name: 'PPI环比',
+                      name: 'PPI环比(上月=100)',
                       type: this.chartsType,
                       data: this.dataArr(this.IndicesType.PPI_A01080701)
                   }

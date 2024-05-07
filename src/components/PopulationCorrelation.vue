@@ -82,7 +82,7 @@
           // 指定图表的配置项和数据
           var populationOption = {
               title: {
-                  text: '人口数据统计',
+                  text: '人口数据',
                   left: 'center',
                   top: 'top'
               },
@@ -109,41 +109,41 @@
               },
               series: [
                   {
-                      name: '总人口',
+                      name: '总人口(万人)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationType.Population_A030101)
                   },
                   {
-                      name: '男性',
+                      name: '男性(万人)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationType.Population_A030102)
                   },
                   {
-                      name: '女性',
+                      name: '女性(万人)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationType.Population_A030103)
                   },                  {
-                      name: '城镇',
+                      name: '城镇(万人)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationType.Population_A030104)
                   },
                   {
-                      name: '农村',
+                      name: '农村(万人)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationType.Population_A030105)
                   },
                   {
-                      name: '0-14岁',
+                      name: '0-14岁(万人)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationType.Population_A030302)
                   },
                   {
-                      name: '14-64岁',
+                      name: '14-64岁(万人)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationType.Population_A030303)
                   },
                   {
-                      name: '65岁以上',
+                      name: '65岁以上(万人)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationType.Population_A030304)
                   }
@@ -160,7 +160,7 @@
           // 指定图表的配置项和数据
           var populationrateOption = {
               title: {
-                  text: '人口率统计',
+                  text: '人口率',
                   left: 'center',
                   top: 'top'
               },
@@ -187,17 +187,17 @@
               },
               series: [
                   {
-                      name: '出生率',
+                      name: '出生率(%)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationRateType.Population_A030201)
                   },
                   {
-                      name: '死亡率',
+                      name: '死亡率(%)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationRateType.Population_A030202)
                   },
                   {
-                      name: '自然增长率',
+                      name: '自然增长率(%)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationRateType.Population_A030203)
                   } 
@@ -213,7 +213,7 @@
           // 指定图表的配置项和数据
           var dependencyratioOption = {
               title: {
-                  text: '抚养比统计',
+                  text: '抚养比',
                   left: 'center',
                   top: 'top'
               },
@@ -240,17 +240,17 @@
               },
               series: [
                   {
-                      name: '总抚养比',
+                      name: '总抚养比(%)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationRateType.Population_A030305)
                   },
                   {
-                      name: '少儿抚养比',
+                      name: '少儿抚养比(%)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationRateType.Population_A030306)
                   },
                   {
-                      name: '老年抚养比',
+                      name: '老年抚养比(%)',
                       type: this.chartsType,
                       data: this.populationArr(this.PopulationRateType.Population_A030307)
                   }
