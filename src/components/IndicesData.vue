@@ -1,11 +1,17 @@
-<template>
+  <template>
     <div class="container">
       <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive }" @click="drawBarChart">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive }" @click="drawLineChart">折线图</button>
+        <button class="button" :class="{ 'is-active': isBarActive_Indices}" @click="drawBarChart_Indices">柱状图</button>
+        <button class="button" :class="{ 'is-active': isLineActive_Indices }" @click="drawLineChart_Indices">折线图</button>
       </div>
      
       <div class="chart-container" id="priceIndices"></div>
+
+       <!-- 为下方的按钮添加上边距 style="margin-top -->
+      <div class="buttons">
+        <button class="button" :class="{ 'is-active': isBarActive_PMI }" @click="drawBarChart_PMI" style="margin-top: 100px;">柱状图</button>
+        <button class="button" :class="{ 'is-active': isLineActive_PMI }" @click="drawLineChart_PMI" style="margin-top: 100px;">折线图</button>
+      </div>
       <div class="chart-container" id="pmi"></div>
     </div>
   </template>
@@ -26,8 +32,8 @@
             PMI_A0B0201 :   'A0B0201',   //  非制造业采购指数
             PMI_A0B0301 :   'A0B0301'    //  综合采购指数
         },
-          isBarActive: false,
-          isLineActive: false,
+          isBarActive_Indices: false,
+          isLineActive_PMI: false,
           indicesDataList: null,
           chartsType: null
         };
@@ -45,7 +51,8 @@
               this.indicesDataList = data.indicesData
               console.log('请求成功priceIndices数据:', this.indicesDataList);
               // 处理数据绘制图表
-              this.drawBarChart();
+              this.drawBarChart_Indices();
+              this.drawBarChart_PMI();
             })
             .catch(error => {
               console.error('Error fetching data:', error)
@@ -74,7 +81,7 @@
           },
 
         // cpi图表
-        drawPriceIndices() {
+        drawPriceIndicesChat() {
           // 基于准备好的dom，初始化echarts实例
           var priceIndicesChart = echarts.init(document.getElementById('priceIndices'));
           // 指定图表的配置项和数据
@@ -203,21 +210,34 @@
           pmiChart.setOption(pmiOption);
         },
        
-        drawBarChart() {
-          this.isBarActive = true;
-          this.isLineActive = false;
+        drawBarChart_Indices() {
+          this.isBarActive_Indices = true;
+          this.isLineActive_Indices = false;
           // 在这里绘制柱状图
           this.chartsType = "bar"
-          this.drawPriceIndices();
+          this.drawPriceIndicesChat();
+   
+        },
+        drawLineChart_Indices() {
+          this.isBarActive_Indices = false;
+          this.isLineActive_Indices = true;
+          // 在这里绘制折线图
+          this.chartsType = "line"
+          this.drawPriceIndicesChat();
+        },
+        drawBarChart_PMI() {
+          this.isBarActive_PMI = true;
+          this.isLineActive_PMI = false;
+          // 在这里绘制柱状图
+          this.chartsType = "bar"
           this.drawPMIChart();
    
         },
-        drawLineChart() {
-          this.isBarActive = false;
-          this.isLineActive = true;
+        drawLineChart_PMI() {
+          this.isBarActive_PMI = false;
+          this.isLineActive_PMI = true;
           // 在这里绘制折线图
           this.chartsType = "line"
-          this.drawPriceIndices();
           this.drawPMIChart()
         }
       }
