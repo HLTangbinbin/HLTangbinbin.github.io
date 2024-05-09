@@ -1,16 +1,16 @@
   <template>
     <div class="container">
       <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive_Indices}" @click="drawBarChart_Indices">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive_Indices }" @click="drawLineChart_Indices">折线图</button>
+        <button class="button" :class="{ 'is-active': isBarActive_Indices}" @click="drawBarChart_Indices" style="margin-top: 50px;">柱状图</button>
+        <button class="button" :class="{ 'is-active': isLineActive_Indices }" @click="drawLineChart_Indices" style="margin-top: 50px;">折线图</button>
       </div>
      
       <div class="chart-container" id="priceIndices"></div>
 
        <!-- 为下方的按钮添加上边距 style="margin-top -->
       <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive_PMI }" @click="drawBarChart_PMI" style="margin-top: 100px;">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive_PMI }" @click="drawLineChart_PMI" style="margin-top: 100px;">折线图</button>
+        <button class="button" :class="{ 'is-active': isBarActive_PMI }" @click="drawBarChart_PMI" style="margin-top: 50px;">柱状图</button>
+        <button class="button" :class="{ 'is-active': isLineActive_PMI }" @click="drawLineChart_PMI" style="margin-top: 50px;">折线图</button>
       </div>
       <div class="chart-container" id="pmi"></div>
     </div>
@@ -33,6 +33,8 @@
             PMI_A0B0301 :   'A0B0301'    //  综合采购指数
         },
           isBarActive_Indices: false,
+          isLineActive_Indices: false,
+          isBarActive_PMI: false,
           isLineActive_PMI: false,
           indicesDataList: null,
           chartsType: null
