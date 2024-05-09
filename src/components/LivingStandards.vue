@@ -1,15 +1,28 @@
+
 <template>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive }" @click="drawBarChart">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive }" @click="drawLineChart">折线图</button>
-      </div>
-     
-      <div class="chart-container" id="livingStandards"></div>
-      <div class="chart-container" id="engelcoefficient"></div>
-      <div class="chart-container" id="ginicoefficient"></div>
+  <div class="container">
+    <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_Income }" @click="drawBarChart_Income" style="margin-top: 50px;" >柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Income }" @click="drawLineChart_Income" style="margin-top: 50px;">折线图</button>
     </div>
-  </template>
+    <div class="chart-container" id="income"></div>
+
+     <!-- 为下方的按钮添加上边距 style="margin-top -->
+    <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_Engel }" @click="drawBarChart_Engel" style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Engel }" @click="drawLineChart_Engel" style="margin-top: 50px;">折线图</button>
+    </div>
+    <div class="chart-container" id="engelcoefficient"></div>
+
+     <!-- 为下方的按钮添加上边距 style="margin-top -->
+    <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_Gini }" @click="drawBarChart_Gini" style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Gini }" @click="drawLineChart_Gini" style="margin-top: 50px;">折线图</button>
+    </div>
+    <div class="chart-container" id="ginicoefficient"></div>
+
+  </div>
+</template>
     
     <script>
     import * as echarts from 'echarts';
@@ -33,8 +46,12 @@
             A0A0H03 : 'A0A0H03',   // 农村居民恩格尔系数
     
         },
-          isBarActive: false,
-          isLineActive: false,
+          isBarActive_Income: false,
+          isLineActive_Income: false,
+          isBarActive_Engel: false,
+          isLineActive_Engel: false,
+          isBarActive_Gini: false,
+          isLineActive_Gini: false,
           livingStandardsDataList: null,
           chartsType: null
         };
@@ -53,7 +70,9 @@
               // 列表数据
               this.livingStandardsDataList = data.livingStandardsData;
               // 处理数据绘制图表
-              this.drawBarChart();
+              this.drawBarChart_Income()
+              this.drawBarChart_Engel()
+              this.drawBarChart_Gini()
             })
             .catch(error => {
               console.error('Error fetching data:', error)
@@ -72,11 +91,11 @@
           })
         },
         // 平均收入图表
-        drawLivingStandardsCharts() {
+        drawIncomeCharts() {
           // 基于准备好的dom，初始化echarts实例
-          var livingStandardsChart = echarts.init(document.getElementById('livingStandards'));
+          var incomeChart = echarts.init(document.getElementById('income'));
           // 指定图表的配置项和数据
-          var livingStandardsOption = {
+          var incomeOption = {
               title: {
                   text: '居民人均收入数据',
                   left: 'center',
@@ -137,7 +156,7 @@
               ]
           };
           // 使用刚指定的配置项和数据显示图表。
-          livingStandardsChart.setOption(livingStandardsOption);
+          incomeChart.setOption(incomeOption);
         },
         // 恩格尔系数
         drawEngelCoefficientCharts() {
@@ -247,25 +266,49 @@
           // 使用刚指定的配置项和数据显示图表。
           giniCoefficientChart.setOption(giniCoefficientOption);
         },
-        drawBarChart() {
-          this.isBarActive = true;
-          this.isLineActive = false;
+        drawBarChart_Income() {
+          this.isBarActive_Income = true;
+          this.isLineActive_Income = false;
           this.chartsType = "bar"
-          this.drawChart()
+          this.drawIncomeCharts()
    
         },
-        drawLineChart() {
-          this.isBarActive = false;
-          this.isLineActive = true;
+        drawLineChart_Income() {
+          this.isBarActive_Income = false;
+          this.isLineActive_Income = true;
           // 在这里绘制折线图
           this.chartsType = "line"
-          this.drawChart()
+          this.drawIncomeCharts()
         },
-        drawChart() {
-          this.drawLivingStandardsCharts();
-          this.drawEngelCoefficientCharts();
-          this.drawGiniCoefficientCharts();
-      }
+        drawBarChart_Engel() {
+          this.isBarActive_Engel = true;
+          this.isLineActive_Engel = false;
+          this.chartsType = "bar"
+          this.drawEngelCoefficientCharts()
+   
+        },
+        drawLineChart_Engel() {
+          this.isBarActive_Engel = false;
+          this.isLineActive_Engel = true;
+          // 在这里绘制折线图
+          this.chartsType = "line"
+          this.drawEngelCoefficientCharts()
+        },
+        drawBarChart_Gini() {
+          this.isBarActive_Gini = true;
+          this.isLineActive_Gini = false;
+          this.chartsType = "bar"
+          this.drawGiniCoefficientCharts()
+   
+        },
+        drawLineChart_Gini() {
+          this.isBarActive_Gini = false;
+          this.isLineActive_Gini = true;
+          // 在这里绘制折线图
+          this.chartsType = "line"
+          this.drawGiniCoefficientCharts()
+        }
+
     }
   };
     </script>
