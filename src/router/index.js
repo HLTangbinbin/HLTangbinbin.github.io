@@ -6,7 +6,7 @@ import SocialFinancing from '../components/SocialFinancing.vue';
 import CurrencyIssue from '../components/CurrencyIssue.vue';
 import PopulationCorrelation from '../components/PopulationCorrelation.vue';
 import IndicesData from '../components/IndicesData.vue';
-
+import LivingStandards from '../components/LivingStandards.vue';
 
 const routes = [
   { path: '/', redirect: '/newhouse' }, 
@@ -15,7 +15,8 @@ const routes = [
   { path: '/socialfinancing', component: SocialFinancing },
   { path: '/currencyissue', component: CurrencyIssue },
   { path: '/populationcorrelation', component: PopulationCorrelation },
-  { path: '/indicesdata', component: IndicesData }
+  { path: '/indicesdata', component: IndicesData },
+  { path: '/livingstandards', component: LivingStandards }
   
 ];
 
