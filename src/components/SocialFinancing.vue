@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="buttons">
-      <button class="button" :class="{ 'is-active': isBarActive }" @click="drawBarChart">柱状图</button>
-      <button class="button" :class="{ 'is-active': isLineActive }" @click="drawLineChart">折线图</button>
+      <button class="button" :class="{ 'is-active': isBarActive }" @click="drawBarChart" style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive }" @click="drawLineChart" style="margin-top: 50px;">折线图</button>
     </div>
    
     <div class="chart-container" id="socialFinancingMonth"></div>

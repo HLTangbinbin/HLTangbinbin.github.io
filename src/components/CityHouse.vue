@@ -1,16 +1,16 @@
 <template>
     <div class="container">
       <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive_NewHouse }" @click="drawBarChart_NewHouse">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive_NewHouse }" @click="drawLineChart_NewHouse">折线图</button>
+        <button class="button" :class="{ 'is-active': isBarActive_NewHouse }" @click="drawBarChart_NewHouse" style="margin-top: 50px;">柱状图</button>
+        <button class="button" :class="{ 'is-active': isLineActive_NewHouse }" @click="drawLineChart_NewHouse" style="margin-top: 50px;">折线图</button>
       </div>
      
       <div class="chart-container" id="cityHouseNew"></div>
 
        <!-- 为下方的按钮添加上边距 style="margin-top -->
       <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive_OldHouse }" @click="drawBarChart_OldHouse" style="margin-top: 100px;">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive_OldHouse }" @click="drawLineChart_OldHouse" style="margin-top: 100px;">折线图</button>
+        <button class="button" :class="{ 'is-active': isBarActive_OldHouse }" @click="drawBarChart_OldHouse" style="margin-top: 50px;">柱状图</button>
+        <button class="button" :class="{ 'is-active': isLineActive_OldHouse }" @click="drawLineChart_OldHouse" style="margin-top: 50px;">折线图</button>
       </div>
       <div class="chart-container" id="cityHouseOld"></div>
     </div>

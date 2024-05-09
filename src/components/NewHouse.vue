@@ -1,14 +1,17 @@
 <template>
   <div class="container">
     <div class="buttons">
-      <button class="button" :class="{ 'is-active': isBarActive }" @click="drawBarChart">柱状图</button>
-      <button class="button" :class="{ 'is-active': isLineActive }" @click="drawLineChart">折线图</button>
-    <!-- 新房月销量柱状图 -->
+      <button class="button" :class="{ 'is-active': isBarActive_VolumeMonth}" @click="drawBarChart_VolumeMonth" style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_VolumeMonth }" @click="drawLineChart_VolumeMonth" style="margin-top: 50px;">折线图</button>
     </div>
-   
     <div class="chart-container" id="newHouseVolumeMonth"></div>
-    <div class="chart-container-area" id="newHouseVolumeMonthForArea"></div>
-    
+
+     <!-- 为下方的按钮添加上边距 style="margin-top -->
+    <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_VolumeMonthForArea }" @click="drawBarChart_VolumeMonthForArea" style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_VolumeMonthForArea }" @click="drawLineChart_VolumeMonthForArea" style="margin-top: 50px;">折线图</button>
+    </div>
+    <div class="chart-container" id="newHouseVolumeMonthForArea"></div>
   </div>
 </template>
   
@@ -37,8 +40,10 @@
             HN : '汉南区',
             TOTAL : '合计',
         },
-        isBarActive: false,
-        isLineActive: false,
+        isBarActive_VolumeMonth: false,
+        isLineActive_VolumeMonth: false,
+        isBarActive_VolumeMonthForArea: false,
+        isLineActive_VolumeMonthForArea: false,
         houseList: null,
         chartsType: null
       };
@@ -59,8 +64,8 @@
             // 每年每月合计数据
             this.handleTotalData();
             // 处理数据绘制图表
-            this.drawBarChart();
-            //各个区域图表
+            this.drawBarChart_VolumeMonth();
+            this.drawBarChart_VolumeMonthForArea();
           })
           .catch(error => {
             console.error('Error fetching data:', error)
@@ -95,7 +100,7 @@
           })
       },
 
-      drawCharts() {
+      drawVolumeMonthChart() {
         // 基于准备好的dom，初始化echarts实例（武汉新房月成交量柱状图）
         var newHouseVolumeBarMonthChart = echarts.init(document.getElementById('newHouseVolumeMonth'));
         // 指定图表的配置项和数据
@@ -165,7 +170,7 @@
         // 使用刚指定的配置项和数据显示图表。
         newHouseVolumeBarMonthChart.setOption(newHouseVolumeBarMonthOption);
       },
-      drawChartsWithArea() {
+      drawVolumeMonthForAreaChart() {
         // 基于准备好的dom，初始化echarts实例（武汉新房月成交量柱状图）
         var newHouseVolumeBarMonthChartForArea = echarts.init(document.getElementById('newHouseVolumeMonthForArea'));
         var newHouseVolumeBarMonthOptionForArea;
@@ -378,22 +383,36 @@
         },1000),
         newHouseVolumeBarMonthOptionForArea && newHouseVolumeBarMonthChartForArea.setOption(newHouseVolumeBarMonthOptionForArea);
       },
-      drawBarChart() {
-        this.isBarActive = true;
-        this.isLineActive = false;
-        this.chartsType = "bar"
-        this.drawCharts();
-        this.drawChartsWithArea();
- 
-      },
-      drawLineChart() {
-        this.isBarActive = false;
-        this.isLineActive = true;
-        // 在这里绘制折线图
-        this.chartsType = "line"
-        this.drawCharts();
-        this.drawChartsWithArea();
-      }
+      drawBarChart_VolumeMonth() {
+          this.isBarActive_VolumeMonth = true;
+          this.isLineActive_VolumeMonth = false;
+          // 在这里绘制柱状图
+          this.chartsType = "bar"
+          this.drawVolumeMonthChart();
+   
+        },
+        drawLineChart_VolumeMonth() {
+          this.isBarActive_VolumeMonth = false;
+          this.isLineActive_VolumeMonth = true;
+          // 在这里绘制折线图
+          this.chartsType = "line"
+          this.drawVolumeMonthChart();
+        },
+        drawBarChart_VolumeMonthForArea() {
+          this.isBarActive_VolumeMonthForArea = true;
+          this.isLineActive_VolumeMonthForArea = false;
+          // 在这里绘制柱状图
+          this.chartsType = "bar"
+          this.drawVolumeMonthForAreaChart();
+   
+        },
+        drawLineChart_VolumeMonthForArea() {
+          this.isBarActive_VolumeMonthForArea = false;
+          this.isLineActive_VolumeMonthForArea = true;
+          // 在这里绘制折线图
+          this.chartsType = "line"
+          this.drawVolumeMonthForAreaChart()
+        }
     }
   };
   </script>
