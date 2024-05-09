@@ -431,13 +431,14 @@
 }
 .button {
   display: flex;
-  padding: 6px 6px;
+  padding: 10px 10px;
   font-size: 16px;
   color: #fff;
   background-color: #ccc;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
+  margin-left: 20px;
   margin-right: 20px;
 }
 
@@ -454,12 +455,5 @@
   width: 95%;
   height: 600px;
 }
-.chart-container-area {
-  display: flex;
-  align-items:center;
-  justify-content: center;
-  margin-top: 30px; 
-  width: 95%;
-  height: 600px;
-}
+
 </style>
