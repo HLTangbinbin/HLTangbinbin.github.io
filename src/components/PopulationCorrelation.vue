@@ -1,15 +1,27 @@
 <template>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive }" @click="drawBarChart">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive }" @click="drawLineChart">折线图</button>
-      </div>
-     
-      <div class="chart-container" id="population"></div>
-      <div class="chart-container" id="populationrate"></div>
-      <div class="chart-container" id="dependencyratio"></div>
+  <div class="container">
+    <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_Population }" @click="drawBarChart_Population" style="margin-top: 50px;" >柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Population }" @click="drawLineChart_Population" style="margin-top: 50px;">折线图</button>
     </div>
-  </template>
+    <div class="chart-container" id="population"></div>
+
+     <!-- 为下方的按钮添加上边距 style="margin-top -->
+    <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_Populationrate }" @click="drawBarChart_Populationrate" style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Populationrate }" @click="drawLineChart_Populationrate" style="margin-top: 50px;">折线图</button>
+    </div>
+    <div class="chart-container" id="populationrate"></div>
+
+     <!-- 为下方的按钮添加上边距 style="margin-top -->
+    <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_Dependencyratio }" @click="drawBarChart_Dependencyratio" style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Dependencyratio }" @click="drawLineChart_Dependencyratio" style="margin-top: 50px;">折线图</button>
+    </div>
+    <div class="chart-container" id="dependencyratio"></div>
+
+  </div>
+</template>
     
     <script>
     import * as echarts from 'echarts';
@@ -37,8 +49,12 @@
             Population_A030307 : 'A030307'    // 老年抚养比
             
         },
-          isBarActive: false,
-          isLineActive: false,
+          isBarActive_Population: false,
+          isLineActive_Population: false,
+          isBarActive_Populationrate: false,
+          isLineActive_Populationrate: false,
+          isBarActive_Dependencyratio: false,
+          isLineActive_Dependencyratio: false,
           populationDataList: null,
           chartsType: null
         };
@@ -57,7 +73,9 @@
               // 数组倒序处理
               this.populationDataList = data.populationData;
               // 处理数据绘制图表
-              this.drawBarChart();
+              this.drawBarChart_Population()
+              this.drawBarChart_Populationrate()
+              this.drawBarChart_Dependencyratio()
             })
             .catch(error => {
               console.error('Error fetching data:', error)
@@ -259,25 +277,48 @@
           // 使用刚指定的配置项和数据显示图表。
           dependencyratioChart.setOption(dependencyratioOption);
         },
-        drawBarChart() {
-          this.isBarActive = true;
-          this.isLineActive = false;
+        drawBarChart_Population() {
+          this.isBarActive_Population = true;
+          this.isLineActive_Population = false;
           this.chartsType = "bar"
-          this.drawChart()
+          this.drawPopulationCharts()
    
         },
-        drawLineChart() {
-          this.isBarActive = false;
-          this.isLineActive = true;
+        drawLineChart_Population() {
+          this.isBarActive_Population = false;
+          this.isLineActive_Population = true;
           // 在这里绘制折线图
           this.chartsType = "line"
-          this.drawChart()
+          this.drawPopulationCharts()
         },
-        drawChart() {
-          this.drawPopulationCharts();
-          this.drawPopulationRateCharts();
-          this.drawDependencyRatioCharts();
-      }
+        drawBarChart_Populationrate() {
+          this.isBarActive_Populationrate = true;
+          this.isLineActive_Populationrate = false;
+          this.chartsType = "bar"
+          this.drawPopulationRateCharts()
+   
+        },
+        drawLineChart_Populationrate() {
+          this.isBarActive_Populationrate = false;
+          this.isLineActive_Populationrate = true;
+          // 在这里绘制折线图
+          this.chartsType = "line"
+          this.drawPopulationRateCharts()
+        },
+        drawBarChart_Dependencyratio() {
+          this.isBarActive_Dependencyratio = true;
+          this.isLineActive_Dependencyratio = false;
+          this.chartsType = "bar"
+          this.drawDependencyRatioCharts()
+   
+        },
+        drawLineChart_Dependencyratio() {
+          this.isBarActive_Dependencyratio = false;
+          this.isLineActive_Dependencyratio = true;
+          // 在这里绘制折线图
+          this.chartsType = "line"
+          this.drawDependencyRatioCharts()
+        }
     }
   };
     </script>
