@@ -1,4 +1,4 @@
-# estatesfinance
+# statisticalbureau
 
 ## Project setup
 ```

@@ -1,11 +1,11 @@
 <template>
   <div>
     <div>
-    <h1 class="main-title">武汉房地产与金融</h1>
+    <h1 class="main-title">大唐统计局</h1>
     </div>
     <nav class="nav-container">
-      <router-link to="/newhouse" class="nav" :class="{ active: $route.path === '/newhouse' }">新房</router-link>
-      <router-link to="/secondhand" class="nav" :class="{ active: $route.path === '/secondhand' }">二手房</router-link>
+      <router-link to="/newhouse" class="nav" :class="{ active: $route.path === '/newhouse' }">武汉新房</router-link>
+      <router-link to="/secondhand" class="nav" :class="{ active: $route.path === '/secondhand' }">武汉二手房</router-link>
       <router-link to="/socialfinancing" class="nav" :class="{ active: $route.path === '/socialfinancing' }">社融增量</router-link>
       <router-link to="/currencyissue" class="nav" :class="{ active: $route.path === '/currencyissue' }">货币M2</router-link>
       <router-link to="/populationcorrelation" class="nav" :class="{ active: $route.path === '/populationcorrelation' }">人口数据</router-link>
