@@ -7,6 +7,7 @@ import CurrencyIssue from '../components/CurrencyIssue.vue';
 import PopulationCorrelation from '../components/PopulationCorrelation.vue';
 import IndicesData from '../components/IndicesData.vue';
 import LivingStandards from '../components/LivingStandards.vue';
+import CityHouse from '../components/CityHouse.vue';
 
 const routes = [
   { path: '/', redirect: '/newhouse' }, 
@@ -16,7 +17,8 @@ const routes = [
   { path: '/currencyissue', component: CurrencyIssue },
   { path: '/populationcorrelation', component: PopulationCorrelation },
   { path: '/indicesdata', component: IndicesData },
-  { path: '/livingstandards', component: LivingStandards }
+  { path: '/livingstandards', component: LivingStandards },
+  { path: '/cityhouse', component: CityHouse }
   
 ];
 

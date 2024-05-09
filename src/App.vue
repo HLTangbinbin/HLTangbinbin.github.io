@@ -6,11 +6,13 @@
     <nav class="nav-container">
       <router-link to="/newhouse" class="nav" :class="{ active: $route.path === '/newhouse' }">武汉新房</router-link>
       <router-link to="/secondhand" class="nav" :class="{ active: $route.path === '/secondhand' }">武汉二手房</router-link>
+      <router-link to="/cityhouse" class="nav" :class="{ active: $route.path === '/cityhouse' }">一线房价</router-link>
       <router-link to="/socialfinancing" class="nav" :class="{ active: $route.path === '/socialfinancing' }">社融增量</router-link>
       <router-link to="/currencyissue" class="nav" :class="{ active: $route.path === '/currencyissue' }">货币M2</router-link>
       <router-link to="/populationcorrelation" class="nav" :class="{ active: $route.path === '/populationcorrelation' }">人口数据</router-link>
       <router-link to="/indicesdata" class="nav" :class="{ active: $route.path === '/indicesdata' }">指数数据</router-link>
       <router-link to="/livingstandards" class="nav" :class="{ active: $route.path === '/livingstandards' }">人民生活</router-link>
+      
     </nav>
     <router-view></router-view>
   </div>
