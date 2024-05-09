@@ -146,9 +146,15 @@
           // 指定图表的配置项和数据
           var engelCoefficientOption = {
               title: {
-                  text: '人口率',
+                  text: '恩格尔系数',
+                  subtext: '恩格尔系数是食品支出总额占个人消费支出总额的比重 \n 59%以上为贫困 50~59%为温饱 \n 40~50%为小康 30~40%为富裕 \n 低于30%为最富裕',
                   left: 'center',
-                  top: 'top'
+                  top: 'top',
+                  subtextStyle: {
+                    fontWeight: 'bold',
+                    fontSize: 13,
+                    lineHeight: 20,
+                  }
               },
               tooltip: {
                  //X轴悬浮显示所有数据
@@ -156,12 +162,12 @@
               },
               legend: {
                   left: 'center',
-                  top: '50px'
+                  top: '20%'
               },
               grid: {
                   left: '1%',
                   right: '1%',
-                  top: '20%',
+                  top: '30%',
                   bottom: '1%',
                   containLabel: true
               },
@@ -200,8 +206,14 @@
           var giniCoefficientOption = {
               title: {
                   text: '基尼系数',
+                  subtext: '衡量一个国家或地区居民收入差距的常用指标之一 \n 0.2-0.29表示指数等级低(比较平均) \n 0.3-0.39表示指数等级中(相对合理) \n 0.4-0.59表示指数等级高(差距较大) \n 0.6以上表示指数等级极高(差距悬殊) \n 0.4作为收入分配差距的“警戒线”',
                   left: 'center',
-                  top: 'top'
+                  top: 'top',
+                  subtextStyle: {
+                    fontWeight: 'bold',
+                    fontSize: 13,
+                    lineHeight: 20,
+                  }
               },
               tooltip: {
                  //X轴悬浮显示所有数据
@@ -209,12 +221,12 @@
               },
               legend: {
                   left: 'center',
-                  top: '50px'
+                  top: '27%'
               },
               grid: {
                   left: '1%',
                   right: '1%',
-                  top: '20%',
+                  top: '35%',
                   bottom: '1%',
                   containLabel: true
               },
@@ -228,7 +240,7 @@
                   {
                       name: '基尼系数',
                       type: this.chartsType,
-                      data: this.livingStandardsArr(this.LivingStandards_Coefficient.A0A0H03)
+                      data: this.livingStandardsArr(this.LivingStandards_Coefficient.A0A0G01)
                   }
               ]
           };

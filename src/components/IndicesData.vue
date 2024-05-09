@@ -81,8 +81,15 @@
           var priceIndicesOption = {
               title: {
                   text: '价格指数',
+                  subtext: 'CPI消费者物价指数反映一定时期内城乡居民所购买的 \n 生活消费品和服务项目价格变动趋势和程度的相对数 \n PPI生产者物价指数用来衡量制造商出厂价的平均变化 \n 生产者物价指数比预期数值高时，表明有通货膨胀的风险 \n 生产者物价指数比预期数值低时，则表明有通货紧缩的风险 ',
                   left: 'center',
-                  top: 'top'
+                  top: 'top',
+                  
+                  subtextStyle: {
+                    fontWeight: 'bold',
+                    fontSize: 13,
+                    lineHeight: 20,
+                  }
               },
               tooltip: {
                  //X轴悬浮显示所有数据
@@ -90,12 +97,12 @@
               },
               legend: {
                   left: 'center',
-                  top: '50px'
+                  top: '25%'
               },
               grid: {
                   left: '1%',
                   right: '1%',
-                  top: '20%',
+                  top: '35%',
                   bottom: '1%',
                   containLabel: true
               },
@@ -142,8 +149,14 @@
           var pmiOption = { 
               title: {
                   text: '采购经理指数',
+                  subtext: 'PMI是一套月度发布的、综合性的经济监测指标体系 \n PMI指数50%为荣枯分水线 \n PMI略大于50,说明经济在缓慢前进 \n PMI略小于50说明经济在慢慢走向衰退',
                   left: 'center',
-                  top: 'top'
+                  top: 'top',
+                  subtextStyle: {
+                    fontWeight: 'bold',
+                    fontSize: 13,
+                    lineHeight: 20,
+                  }
               },
               tooltip: {
                  //X轴悬浮显示所有数据
@@ -151,12 +164,12 @@
               },
               legend: {
                   left: 'center',
-                  top: '50px'
+                  top: '20%'
               },
               grid: {
                   left: '1%',
                   right: '1%',
-                  top: '20%',
+                  top: '35%',
                   bottom: '1%',
                   containLabel: true
               },
