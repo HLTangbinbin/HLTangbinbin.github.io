@@ -35,11 +35,12 @@
             A010807 : 'A010807', //   二手房住宅销售价格指数(上月=100)
             
          },
-         CityHouse_Code : {
+         CityCode : {
              BJ : '110000', //   北京
              SH : '310000', //   上海
              GZ : '440100', //   广州
              SZ : '440300', //   深圳
+             HZ: '330100', //    杭州
              CD : '510100', //   成都
              WH : '420100', //   武汉
              NJ : '320100', //   南京
@@ -158,7 +159,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.dataArr_HousePrice(this.CityHouse_Code.BJ,'sj')
+                  data: this.dataArr_HousePrice(this.CityCode.BJ,'sj')
               },
               yAxis: {
   
@@ -167,62 +168,62 @@
                   {
                       name: '北京',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.BJ)
+                      data: this.dataArr_HousePrice(this.CityCode.BJ)
                   },
                   {
                       name: '上海',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.SH)
+                      data: this.dataArr_HousePrice(this.CityCode.SH)
                   },
                   {
                       name: '广州',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.GZ)
+                      data: this.dataArr_HousePrice(this.CityCode.GZ)
                   },
                   {
                       name: '深圳',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.SZ)
+                      data: this.dataArr_HousePrice(this.CityCode.SZ)
                   },
                   {
                       name: '杭州',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.HZ)
+                      data: this.dataArr_HousePrice(this.CityCode.HZ)
                   },
                   {
                       name: '成都',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.CD)
+                      data: this.dataArr_HousePrice(this.CityCode.CD)
                   },
                   {
                       name: '武汉',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.WH)
+                      data: this.dataArr_HousePrice(this.CityCode.WH)
                   },
                   {
                       name: '南京',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.NJ)
+                      data: this.dataArr_HousePrice(this.CityCode.NJ)
                   },
                   {
                       name: '重庆',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.CQ)
+                      data: this.dataArr_HousePrice(this.CityCode.CQ)
                   },
                   {
                       name: '西安',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.XA)
+                      data: this.dataArr_HousePrice(this.CityCode.XA)
                   },
                   {
                       name: '合肥',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.HF)
+                      data: this.dataArr_HousePrice(this.CityCode.HF)
                   },
                   {
                       name: '郑州',
                       type: this.chartsType,
-                      data: this.dataArr_HousePrice(this.CityHouse_Code.ZZ)
+                      data: this.dataArr_HousePrice(this.CityCode.ZZ)
                   },
                   
               ]
@@ -259,7 +260,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.dataArr_NewHouse(this.CityHouse_Code.BJ,'sj')
+                  data: this.dataArr_NewHouse(this.CityCode.BJ,'sj')
               },
               yAxis: {
                 min: '98', // 这里不是0，所以最后一个月为0的时候折线图显示在上一个月落点处
@@ -269,67 +270,67 @@
                   {
                       name: '北京',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.BJ)
+                      data: this.dataArr_NewHouse(this.CityCode.BJ)
                   },
                   {
                       name: '上海',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.SH)
+                      data: this.dataArr_NewHouse(this.CityCode.SH)
                   },
                   {
                       name: '广州',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.GZ)
+                      data: this.dataArr_NewHouse(this.CityCode.GZ)
                   },
                   {
                       name: '深圳',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.SZ)
+                      data: this.dataArr_NewHouse(this.CityCode.SZ)
                   },
                   {
                       name: '杭州',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.HZ)
+                      data: this.dataArr_NewHouse(this.CityCode.HZ)
                   },
                   {
                       name: '成都',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.CD)
+                      data: this.dataArr_NewHouse(this.CityCode.CD)
                   },
                   {
                       name: '武汉',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.WH)
+                      data: this.dataArr_NewHouse(this.CityCode.WH)
                   },
                   {
                       name: '南京',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.NJ)
+                      data: this.dataArr_NewHouse(this.CityCode.NJ)
                   },
                   {
                       name: '重庆',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.CQ)
+                      data: this.dataArr_NewHouse(this.CityCode.CQ)
                   },
                   {
                       name: '西安',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.XA)
+                      data: this.dataArr_NewHouse(this.CityCode.XA)
                   },
                   {
                       name: '合肥',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.HF)
+                      data: this.dataArr_NewHouse(this.CityCode.HF)
                   },
                   {
                       name: '郑州',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.ZZ)
+                      data: this.dataArr_NewHouse(this.CityCode.ZZ)
                   },
                   {
                       name: '宜昌',
                       type: this.chartsType,
-                      data: this.dataArr_NewHouse(this.CityHouse_Code.YC)
+                      data: this.dataArr_NewHouse(this.CityCode.YC)
                   },
                   
               ]
@@ -366,7 +367,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.dataArr_OldHouse(this.CityHouse_Code.BJ,'sj')
+                  data: this.dataArr_OldHouse(this.CityCode.BJ,'sj')
               },
               yAxis: {
                 min: '98', // 这里不是0，所以最后一个月为0的时候折线图显示在上一个月落点处
@@ -376,67 +377,67 @@
                   {
                       name: '北京',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.BJ)
+                      data: this.dataArr_OldHouse(this.CityCode.BJ)
                   },
                   {
                       name: '上海',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.SH)
+                      data: this.dataArr_OldHouse(this.CityCode.SH)
                   },
                   {
                       name: '广州',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.GZ)
+                      data: this.dataArr_OldHouse(this.CityCode.GZ)
                   },
                   {
                       name: '深圳',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.SZ)
+                      data: this.dataArr_OldHouse(this.CityCode.SZ)
                   },
                   {
                       name: '杭州',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.HZ)
+                      data: this.dataArr_OldHouse(this.CityCode.HZ)
                   },
                   {
                       name: '成都',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.CD)
+                      data: this.dataArr_OldHouse(this.CityCode.CD)
                   },
                   {
                       name: '武汉',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.WH)
+                      data: this.dataArr_OldHouse(this.CityCode.WH)
                   },
                   {
                       name: '南京',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.NJ)
+                      data: this.dataArr_OldHouse(this.CityCode.NJ)
                   },
                   {
                       name: '重庆',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.CQ)
+                      data: this.dataArr_OldHouse(this.CityCode.CQ)
                   },
                   {
                       name: '西安',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.XA)
+                      data: this.dataArr_OldHouse(this.CityCode.XA)
                   },
                   {
                       name: '合肥',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.HF)
+                      data: this.dataArr_OldHouse(this.CityCode.HF)
                   },
                   {
                       name: '郑州',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.ZZ)
+                      data: this.dataArr_OldHouse(this.CityCode.ZZ)
                   },
                   {
                       name: '宜昌',
                       type: this.chartsType,
-                      data: this.dataArr_OldHouse(this.CityHouse_Code.YC)
+                      data: this.dataArr_OldHouse(this.CityCode.YC)
                   },
                   
               ]

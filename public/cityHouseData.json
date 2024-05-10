@@ -46,6 +46,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "北京",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 37420.1885411996,
+            "code": "A030C",
+            "cityCode": "110000",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "北京",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 34117.0,
+            "code": "A030C",
+            "cityCode": "110000",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "北京",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 28489.0,
+            "code": "A030C",
+            "cityCode": "110000",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "北京",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 22300.0,
+            "code": "A030C",
+            "cityCode": "110000",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "北京",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 18499.0,
+            "code": "A030C",
+            "cityCode": "110000",
+            "date": "2014"
+        },
+        {
             "cname_reg": "天津",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -89,6 +134,51 @@
             "code": "A030C",
             "cityCode": "120000",
             "date": "2019"
+        },
+        {
+            "cname_reg": "天津",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 15924.2605226787,
+            "code": "A030C",
+            "cityCode": "120000",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "天津",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 15139.0,
+            "code": "A030C",
+            "cityCode": "120000",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "天津",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 12870.0,
+            "code": "A030C",
+            "cityCode": "120000",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "天津",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 9931.0,
+            "code": "A030C",
+            "cityCode": "120000",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "天津",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8828.0,
+            "code": "A030C",
+            "cityCode": "120000",
+            "date": "2014"
         },
         {
             "cname_reg": "石家庄",
@@ -136,6 +226,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "石家庄",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 10398.9300200276,
+            "code": "A030C",
+            "cityCode": "130100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "石家庄",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 9738.0,
+            "code": "A030C",
+            "cityCode": "130100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "石家庄",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7354.0,
+            "code": "A030C",
+            "cityCode": "130100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "石家庄",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7798.0,
+            "code": "A030C",
+            "cityCode": "130100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "石家庄",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5562.0,
+            "code": "A030C",
+            "cityCode": "130100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "太原",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -179,6 +314,51 @@
             "code": "A030C",
             "cityCode": "140100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "太原",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 10840.4853698825,
+            "code": "A030C",
+            "cityCode": "140100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "太原",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8827.0,
+            "code": "A030C",
+            "cityCode": "140100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "太原",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7348.0,
+            "code": "A030C",
+            "cityCode": "140100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "太原",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7303.0,
+            "code": "A030C",
+            "cityCode": "140100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "太原",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7155.0,
+            "code": "A030C",
+            "cityCode": "140100",
+            "date": "2014"
         },
         {
             "cname_reg": "呼和浩特",
@@ -226,6 +406,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "呼和浩特",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8251.24024478992,
+            "code": "A030C",
+            "cityCode": "150100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "呼和浩特",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5662.0,
+            "code": "A030C",
+            "cityCode": "150100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "呼和浩特",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5196.0,
+            "code": "A030C",
+            "cityCode": "150100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "呼和浩特",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 4946.0,
+            "code": "A030C",
+            "cityCode": "150100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "呼和浩特",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5153.0,
+            "code": "A030C",
+            "cityCode": "150100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "沈阳",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -269,6 +494,51 @@
             "code": "A030C",
             "cityCode": "210100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "沈阳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8680.11371001584,
+            "code": "A030C",
+            "cityCode": "210100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "沈阳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7944.0,
+            "code": "A030C",
+            "cityCode": "210100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "沈阳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6838.0,
+            "code": "A030C",
+            "cityCode": "210100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "沈阳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6416.0,
+            "code": "A030C",
+            "cityCode": "210100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "沈阳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5865.0,
+            "code": "A030C",
+            "cityCode": "210100",
+            "date": "2014"
         },
         {
             "cname_reg": "大连",
@@ -316,6 +586,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "大连",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 11432.5522143416,
+            "code": "A030C",
+            "cityCode": "210200",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "大连",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 10019.0,
+            "code": "A030C",
+            "cityCode": "210200",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "大连",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 9119.0,
+            "code": "A030C",
+            "cityCode": "210200",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "大连",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8711.0,
+            "code": "A030C",
+            "cityCode": "210200",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "大连",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8921.0,
+            "code": "A030C",
+            "cityCode": "210200",
+            "date": "2014"
+        },
+        {
             "cname_reg": "长春",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -359,6 +674,51 @@
             "code": "A030C",
             "cityCode": "220100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "长春",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8091.84553824634,
+            "code": "A030C",
+            "cityCode": "220100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "长春",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6811.0,
+            "code": "A030C",
+            "cityCode": "220100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "长春",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6018.0,
+            "code": "A030C",
+            "cityCode": "220100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "长春",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6374.0,
+            "code": "A030C",
+            "cityCode": "220100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "长春",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5847.0,
+            "code": "A030C",
+            "cityCode": "220100",
+            "date": "2014"
         },
         {
             "cname_reg": "哈尔滨",
@@ -406,6 +766,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "哈尔滨",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8931.92445141931,
+            "code": "A030C",
+            "cityCode": "230100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "哈尔滨",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7861.0,
+            "code": "A030C",
+            "cityCode": "230100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "哈尔滨",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6338.0,
+            "code": "A030C",
+            "cityCode": "230100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "哈尔滨",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6124.0,
+            "code": "A030C",
+            "cityCode": "230100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "哈尔滨",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5751.0,
+            "code": "A030C",
+            "cityCode": "230100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "上海",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -449,6 +854,51 @@
             "code": "A030C",
             "cityCode": "310000",
             "date": "2019"
+        },
+        {
+            "cname_reg": "上海",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 28981.1057057744,
+            "code": "A030C",
+            "cityCode": "310000",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "上海",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 24866.0,
+            "code": "A030C",
+            "cityCode": "310000",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "上海",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 25910.0,
+            "code": "A030C",
+            "cityCode": "310000",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "上海",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 21501.0,
+            "code": "A030C",
+            "cityCode": "310000",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "上海",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 16415.0,
+            "code": "A030C",
+            "cityCode": "310000",
+            "date": "2014"
         },
         {
             "cname_reg": "南京",
@@ -496,6 +946,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "南京",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 19708.3270874809,
+            "code": "A030C",
+            "cityCode": "320100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "南京",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 15259.0,
+            "code": "A030C",
+            "cityCode": "320100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "南京",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 17884.0,
+            "code": "A030C",
+            "cityCode": "320100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "南京",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 11260.0,
+            "code": "A030C",
+            "cityCode": "320100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "南京",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 10964.0,
+            "code": "A030C",
+            "cityCode": "320100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "杭州",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -539,6 +1034,51 @@
             "code": "A030C",
             "cityCode": "330100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "杭州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 24360.2008781083,
+            "code": "A030C",
+            "cityCode": "330100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "杭州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 21225.0,
+            "code": "A030C",
+            "cityCode": "330100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "杭州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 16211.0,
+            "code": "A030C",
+            "cityCode": "330100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "杭州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 14748.0,
+            "code": "A030C",
+            "cityCode": "330100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "杭州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 14035.0,
+            "code": "A030C",
+            "cityCode": "330100",
+            "date": "2014"
         },
         {
             "cname_reg": "宁波",
@@ -586,6 +1126,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "宁波",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 16201.5778051833,
+            "code": "A030C",
+            "cityCode": "330200",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "宁波",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 14145.0,
+            "code": "A030C",
+            "cityCode": "330200",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "宁波",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 11738.0,
+            "code": "A030C",
+            "cityCode": "330200",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "宁波",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 11022.0,
+            "code": "A030C",
+            "cityCode": "330200",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "宁波",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 10890.0,
+            "code": "A030C",
+            "cityCode": "330200",
+            "date": "2014"
+        },
+        {
             "cname_reg": "合肥",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -629,6 +1214,51 @@
             "code": "A030C",
             "cityCode": "340100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "合肥",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 13068.6339121561,
+            "code": "A030C",
+            "cityCode": "340100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "合肥",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 11442.0,
+            "code": "A030C",
+            "cityCode": "340100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "合肥",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 9312.0,
+            "code": "A030C",
+            "cityCode": "340100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "合肥",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7512.0,
+            "code": "A030C",
+            "cityCode": "340100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "合肥",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6917.0,
+            "code": "A030C",
+            "cityCode": "340100",
+            "date": "2014"
         },
         {
             "cname_reg": "福州",
@@ -676,6 +1306,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "福州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 14381.2578812092,
+            "code": "A030C",
+            "cityCode": "350100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "福州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 10547.0,
+            "code": "A030C",
+            "cityCode": "350100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "福州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 11058.0,
+            "code": "A030C",
+            "cityCode": "350100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "福州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 11333.0,
+            "code": "A030C",
+            "cityCode": "350100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "福州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 10105.0,
+            "code": "A030C",
+            "cityCode": "350100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "厦门",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -719,6 +1394,51 @@
             "code": "A030C",
             "cityCode": "350200",
             "date": "2019"
+        },
+        {
+            "cname_reg": "厦门",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 33715.4275248665,
+            "code": "A030C",
+            "cityCode": "350200",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "厦门",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 28053.0,
+            "code": "A030C",
+            "cityCode": "350200",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "厦门",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 25251.0,
+            "code": "A030C",
+            "cityCode": "350200",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "厦门",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 18928.0,
+            "code": "A030C",
+            "cityCode": "350200",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "厦门",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 17778.0,
+            "code": "A030C",
+            "cityCode": "350200",
+            "date": "2014"
         },
         {
             "cname_reg": "南昌",
@@ -766,6 +1486,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "南昌",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8275.87187617107,
+            "code": "A030C",
+            "cityCode": "360100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "南昌",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8106.0,
+            "code": "A030C",
+            "cityCode": "360100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "南昌",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7707.0,
+            "code": "A030C",
+            "cityCode": "360100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "南昌",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6955.0,
+            "code": "A030C",
+            "cityCode": "360100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "南昌",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6225.0,
+            "code": "A030C",
+            "cityCode": "360100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "济南",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -809,6 +1574,51 @@
             "code": "A030C",
             "cityCode": "370100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "济南",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 12161.452730012,
+            "code": "A030C",
+            "cityCode": "370100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "济南",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 9712.0,
+            "code": "A030C",
+            "cityCode": "370100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "济南",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8405.0,
+            "code": "A030C",
+            "cityCode": "370100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "济南",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7527.0,
+            "code": "A030C",
+            "cityCode": "370100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "济南",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7158.0,
+            "code": "A030C",
+            "cityCode": "370100",
+            "date": "2014"
         },
         {
             "cname_reg": "青岛",
@@ -856,6 +1666,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "青岛",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 12373.4398931918,
+            "code": "A030C",
+            "cityCode": "370200",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "青岛",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 10052.0,
+            "code": "A030C",
+            "cityCode": "370200",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "青岛",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8997.0,
+            "code": "A030C",
+            "cityCode": "370200",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "青岛",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8437.0,
+            "code": "A030C",
+            "cityCode": "370200",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "青岛",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7855.0,
+            "code": "A030C",
+            "cityCode": "370200",
+            "date": "2014"
+        },
+        {
             "cname_reg": "郑州",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -899,6 +1754,51 @@
             "code": "A030C",
             "cityCode": "410100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "郑州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8155.94428623312,
+            "code": "A030C",
+            "cityCode": "410100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "郑州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8323.0,
+            "code": "A030C",
+            "cityCode": "410100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "郑州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8093.0,
+            "code": "A030C",
+            "cityCode": "410100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "郑州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7223.0,
+            "code": "A030C",
+            "cityCode": "410100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "郑州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6579.0,
+            "code": "A030C",
+            "cityCode": "410100",
+            "date": "2014"
         },
         {
             "cname_reg": "武汉",
@@ -946,6 +1846,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "武汉",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 12678.4774088261,
+            "code": "A030C",
+            "cityCode": "420100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "武汉",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 11453.0,
+            "code": "A030C",
+            "cityCode": "420100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "武汉",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 9819.0,
+            "code": "A030C",
+            "cityCode": "420100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "武汉",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8404.0,
+            "code": "A030C",
+            "cityCode": "420100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "武汉",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7399.0,
+            "code": "A030C",
+            "cityCode": "420100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "长沙",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -989,6 +1934,51 @@
             "code": "A030C",
             "cityCode": "430100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "长沙",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7796.1980582912,
+            "code": "A030C",
+            "cityCode": "430100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "长沙",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7287.0,
+            "code": "A030C",
+            "cityCode": "430100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "长沙",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6160.0,
+            "code": "A030C",
+            "cityCode": "430100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "长沙",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5544.0,
+            "code": "A030C",
+            "cityCode": "430100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "长沙",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5458.0,
+            "code": "A030C",
+            "cityCode": "430100",
+            "date": "2014"
         },
         {
             "cname_reg": "广州",
@@ -1036,6 +2026,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "广州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 21581.7793133817,
+            "code": "A030C",
+            "cityCode": "440100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "广州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 17685.0,
+            "code": "A030C",
+            "cityCode": "440100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "广州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 16346.0,
+            "code": "A030C",
+            "cityCode": "440100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "广州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 14083.0,
+            "code": "A030C",
+            "cityCode": "440100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "广州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 14739.0,
+            "code": "A030C",
+            "cityCode": "440100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "深圳",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -1079,6 +2114,51 @@
             "code": "A030C",
             "cityCode": "440300",
             "date": "2019"
+        },
+        {
+            "cname_reg": "深圳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 55441.0099034991,
+            "code": "A030C",
+            "cityCode": "440300",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "深圳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 48622.0,
+            "code": "A030C",
+            "cityCode": "440300",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "深圳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 45498.0,
+            "code": "A030C",
+            "cityCode": "440300",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "深圳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 33661.0,
+            "code": "A030C",
+            "cityCode": "440300",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "深圳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 24040.0,
+            "code": "A030C",
+            "cityCode": "440300",
+            "date": "2014"
         },
         {
             "cname_reg": "南宁",
@@ -1126,6 +2206,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "南宁",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7697.26554990307,
+            "code": "A030C",
+            "cityCode": "450100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "南宁",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7700.0,
+            "code": "A030C",
+            "cityCode": "450100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "南宁",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6767.0,
+            "code": "A030C",
+            "cityCode": "450100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "南宁",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6229.0,
+            "code": "A030C",
+            "cityCode": "450100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "南宁",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6103.0,
+            "code": "A030C",
+            "cityCode": "450100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "海口",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -1169,6 +2294,51 @@
             "code": "A030C",
             "cityCode": "460100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "海口",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 12644.4713573582,
+            "code": "A030C",
+            "cityCode": "460100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "海口",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 11694.0,
+            "code": "A030C",
+            "cityCode": "460100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "海口",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8868.0,
+            "code": "A030C",
+            "cityCode": "460100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "海口",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7636.0,
+            "code": "A030C",
+            "cityCode": "460100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "海口",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7473.0,
+            "code": "A030C",
+            "cityCode": "460100",
+            "date": "2014"
         },
         {
             "cname_reg": "重庆",
@@ -1216,6 +2386,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "重庆",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8189.97602218537,
+            "code": "A030C",
+            "cityCode": "500000",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "重庆",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6605.0,
+            "code": "A030C",
+            "cityCode": "500000",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "重庆",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5162.0,
+            "code": "A030C",
+            "cityCode": "500000",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "重庆",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5012.0,
+            "code": "A030C",
+            "cityCode": "500000",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "重庆",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5094.0,
+            "code": "A030C",
+            "cityCode": "500000",
+            "date": "2014"
+        },
+        {
             "cname_reg": "成都",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -1259,6 +2474,51 @@
             "code": "A030C",
             "cityCode": "510100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "成都",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 9783.15594508948,
+            "code": "A030C",
+            "cityCode": "510100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "成都",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8595.0,
+            "code": "A030C",
+            "cityCode": "510100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "成都",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7377.0,
+            "code": "A030C",
+            "cityCode": "510100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "成都",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6584.0,
+            "code": "A030C",
+            "cityCode": "510100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "成都",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6536.0,
+            "code": "A030C",
+            "cityCode": "510100",
+            "date": "2014"
         },
         {
             "cname_reg": "贵阳",
@@ -1306,6 +2566,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "贵阳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8842.95544974097,
+            "code": "A030C",
+            "cityCode": "520100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "贵阳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6552.0,
+            "code": "A030C",
+            "cityCode": "520100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "贵阳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5392.0,
+            "code": "A030C",
+            "cityCode": "520100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "贵阳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 4967.0,
+            "code": "A030C",
+            "cityCode": "520100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "贵阳",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 4904.0,
+            "code": "A030C",
+            "cityCode": "520100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "昆明",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -1351,6 +2656,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "昆明",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 11085.4783733039,
+            "code": "A030C",
+            "cityCode": "530100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "昆明",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8197.0,
+            "code": "A030C",
+            "cityCode": "530100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "昆明",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6851.0,
+            "code": "A030C",
+            "cityCode": "530100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "昆明",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7178.0,
+            "code": "A030C",
+            "cityCode": "530100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "昆明",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6067.0,
+            "code": "A030C",
+            "cityCode": "530100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "拉萨",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -1394,6 +2744,51 @@
             "code": "A030C",
             "cityCode": "540100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "拉萨",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 0.0,
+            "code": "A030C",
+            "cityCode": "540100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "拉萨",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 0.0,
+            "code": "A030C",
+            "cityCode": "540100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "拉萨",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 0.0,
+            "code": "A030C",
+            "cityCode": "540100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "拉萨",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 0.0,
+            "code": "A030C",
+            "cityCode": "540100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "拉萨",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 0.0,
+            "code": "A030C",
+            "cityCode": "540100",
+            "date": "2014"
         },
         {
             "cname_reg": "西安",
@@ -1441,6 +2836,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "西安",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 9984.53895311376,
+            "code": "A030C",
+            "cityCode": "610100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "西安",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 8166.0,
+            "code": "A030C",
+            "cityCode": "610100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "西安",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6385.0,
+            "code": "A030C",
+            "cityCode": "610100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "西安",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6221.0,
+            "code": "A030C",
+            "cityCode": "610100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "西安",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6105.0,
+            "code": "A030C",
+            "cityCode": "610100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "兰州",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -1484,6 +2924,51 @@
             "code": "A030C",
             "cityCode": "620100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "兰州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7231.86717146711,
+            "code": "A030C",
+            "cityCode": "620100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "兰州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7137.0,
+            "code": "A030C",
+            "cityCode": "620100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "兰州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6162.0,
+            "code": "A030C",
+            "cityCode": "620100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "兰州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6089.0,
+            "code": "A030C",
+            "cityCode": "620100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "兰州",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5860.0,
+            "code": "A030C",
+            "cityCode": "620100",
+            "date": "2014"
         },
         {
             "cname_reg": "西宁",
@@ -1531,6 +3016,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "西宁",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6733.36335529754,
+            "code": "A030C",
+            "cityCode": "630100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "西宁",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5890.0,
+            "code": "A030C",
+            "cityCode": "630100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "西宁",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5007.0,
+            "code": "A030C",
+            "cityCode": "630100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "西宁",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 4602.0,
+            "code": "A030C",
+            "cityCode": "630100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "西宁",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 4807.0,
+            "code": "A030C",
+            "cityCode": "630100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "银川",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -1576,6 +3106,51 @@
             "date": "2019"
         },
         {
+            "cname_reg": "银川",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5589.49274177867,
+            "code": "A030C",
+            "cityCode": "640100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "银川",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 4892.0,
+            "code": "A030C",
+            "cityCode": "640100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "银川",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 4448.0,
+            "code": "A030C",
+            "cityCode": "640100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "银川",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 4498.0,
+            "code": "A030C",
+            "cityCode": "640100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "银川",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 4111.0,
+            "code": "A030C",
+            "cityCode": "640100",
+            "date": "2014"
+        },
+        {
             "cname_reg": "乌鲁木齐",
             "cname_zb": "住宅商品房平均销售价格",
             "dbcode": "csnd",
@@ -1619,6 +3194,51 @@
             "code": "A030C",
             "cityCode": "650100",
             "date": "2019"
+        },
+        {
+            "cname_reg": "乌鲁木齐",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 7757.03433983886,
+            "code": "A030C",
+            "cityCode": "650100",
+            "date": "2018"
+        },
+        {
+            "cname_reg": "乌鲁木齐",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6188.0,
+            "code": "A030C",
+            "cityCode": "650100",
+            "date": "2017"
+        },
+        {
+            "cname_reg": "乌鲁木齐",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5829.0,
+            "code": "A030C",
+            "cityCode": "650100",
+            "date": "2016"
+        },
+        {
+            "cname_reg": "乌鲁木齐",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 6142.0,
+            "code": "A030C",
+            "cityCode": "650100",
+            "date": "2015"
+        },
+        {
+            "cname_reg": "乌鲁木齐",
+            "cname_zb": "住宅商品房平均销售价格",
+            "dbcode": "csnd",
+            "value": 5758.0,
+            "code": "A030C",
+            "cityCode": "650100",
+            "date": "2014"
         },
         {
             "cname_reg": "北京",
