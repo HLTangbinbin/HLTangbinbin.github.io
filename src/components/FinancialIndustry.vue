@@ -1,16 +1,20 @@
 <template>
   <div class="container">
     <div class="buttons">
-      <button class="button" :class="{ 'is-active': isBarActive_Currency }" @click="drawBarChart_Currency" style="margin-top: 50px;">柱状图</button>
-      <button class="button" :class="{ 'is-active': isLineActive_Currency }" @click="drawLineChart_Currency" style="margin-top: 50px;">折线图</button>
+      <button class="button" :class="{ 'is-active': isBarActive_Currency }" @click="drawBarChart_Currency"
+        style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Currency }" @click="drawLineChart_Currency"
+        style="margin-top: 50px;">折线图</button>
     </div>
 
     <div class="chart-container" id="currency"></div>
 
     <!-- 为下方的按钮添加上边距 style="margin-top -->
     <div class="buttons">
-      <button class="button" :class="{ 'is-active': isBarActive_ForeignCurrency }" @click="drawBarChart_ForeignCurrency" style="margin-top: 50px;">柱状图</button>
-      <button class="button" :class="{ 'is-active': isLineActive_ForeignCurrency }" @click="drawLineChart_ForeignCurrency" style="margin-top: 50px;">折线图</button>
+      <button class="button" :class="{ 'is-active': isBarActive_ForeignCurrency }" @click="drawBarChart_ForeignCurrency"
+        style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_ForeignCurrency }"
+        @click="drawLineChart_ForeignCurrency" style="margin-top: 50px;">折线图</button>
     </div>
     <div class="chart-container" id="foreigncurrency"></div>
   </div>
@@ -25,9 +29,7 @@ export default {
   data() {
     return {
       CurrencyType: {
-        A0L0301: 'A0L0301', //  货币和准货币(M2)供应量(亿元)
-        A0L0302: 'A0L0302', //  货币(M1)供应量(亿元)
-        A0L0303: 'A0L0303', //  流通中现金(M0)供应量(亿元)
+        A0D0101: 'A0D0101', //  货币(M2)供应量(亿元)
         A0L0401: 'A0L0401', //  黄金储备(万盎司)
         A0L0402: 'A0L0402', //  外汇储备(亿美元)
 
@@ -55,19 +57,24 @@ export default {
           // 处理数据绘制图表
           this.drawBarChart_Currency();
           this.drawBarChart_ForeignCurrency();
+
+          console.log('djajdjadkjadj:', this.dataArr_Currency(this.CurrencyType.A0L0402));
         })
         .catch(error => {
           console.error('Error fetching data:', error)
         })
     },
     // 按照类型与字段名称
-    dataArr_Currency(type, date='') {
+    dataArr_Currency(type, year = '') {
       return this.currencyDataList.filter(currencyDataListObj => {
-        return currencyDataListObj.code.search(type) != -1;
+        if (year != '') {
+          return currencyDataListObj.code.search(type) != -1 && currencyDataListObj.date.search(year) != -1 && currencyDataListObj.value != 0;
+        }
+        return currencyDataListObj.code.search(type) != -1 && currencyDataListObj.value != 0;
       }).sort(function (a, b) {
         return sortYearMonths(a.date, b.date);
       }).map(item => {
-        if (date == 'sj') {
+        if (year == '') {
           return Number(item.date);
         }
         return Number(item.value);
@@ -81,7 +88,7 @@ export default {
       // 指定图表的配置项和数据
       var currencyOption = {
         title: {
-          text: '货币供应量',
+          text: '货币(M2)供应量(亿元)',
           left: 'center',
           top: 'top',
         },
@@ -102,27 +109,48 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.dataArr_Currency(this.CurrencyType.A0L0301,'sj')
+          data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
         },
         yAxis: {
 
         },
         series: [
           {
-            name: '货币和准货币(M2)供应量(亿元)',
+            name: '2018',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0L0301)
+            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2018')
           },
           {
-            name: '货币(M1)供应量(亿元)',
+            name: '2019',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0L0302)
+            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2019')
           },
           {
-            name: '流通中现金(M0)供应量(亿元)',
+            name: '2020',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0L0303)
+            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2020')
           },
+          {
+            name: '2021',
+            type: this.chartsType,
+            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2021')
+          },
+          {
+            name: '2022',
+            type: this.chartsType,
+            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2022')
+          },
+          {
+            name: '2023',
+            type: this.chartsType,
+            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2023')
+          },
+          {
+            name: '2024',
+            type: this.chartsType,
+            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2024')
+          },
+
         ]
       };
       // 使用刚指定的配置项和数据显示图表。
@@ -156,7 +184,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.dataArr_Currency(this.CurrencyType.A0L0402, 'sj')
+          data: this.dataArr_Currency(this.CurrencyType.A0L0402)
         },
         yAxis: {
 
