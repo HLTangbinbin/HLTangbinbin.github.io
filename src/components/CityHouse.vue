@@ -200,11 +200,6 @@
                       type: this.chartsType,
                       data: this.dataArr(this.CityHouse_Type.A030C,this.CityHouse_Code.ZZ,this.CityHouse_Dbcode.csnd)
                   },
-                  {
-                      name: '宜昌',
-                      type: this.chartsType,
-                      data: this.dataArr(this.CityHouse_Type.A030C,this.CityHouse_Code.YC,this.CityHouse_Dbcode.csnd)
-                  },
                   
               ]
           };
@@ -430,7 +425,7 @@
           this.isLineActive_HousePrice = false;
           // 在这里绘制柱状图
           this.chartsType = "bar"
-          this.drawCityHouseNew()
+          this.drawCityHousePrice()
    
         },
         drawLineChart_HousePrice() {
@@ -445,7 +440,7 @@
           this.isLineActive_NewHouse = false;
           // 在这里绘制柱状图
           this.chartsType = "bar"
-          this.drawCityHousePrice()
+          this.drawCityHouseNew()
    
         },
         drawLineChart_NewHouse() {
