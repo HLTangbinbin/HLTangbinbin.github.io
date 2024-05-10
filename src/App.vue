@@ -4,14 +4,14 @@
     <h1 class="main-title">大唐统计局</h1>
     </div>
     <nav class="nav-container">
-      <router-link to="/newhouse" class="nav" :class="{ active: $route.path === '/newhouse' }">武汉新房</router-link>
-      <router-link to="/secondhand" class="nav" :class="{ active: $route.path === '/secondhand' }">武汉二手房</router-link>
-      <router-link to="/cityhouse" class="nav" :class="{ active: $route.path === '/cityhouse' }">一线房价</router-link>
-      <router-link to="/drossdomesticproduct" class="nav" :class="{ active: $route.path === '/drossdomesticproduct' }">GDP</router-link>
-      <router-link to="/currencyissue" class="nav" :class="{ active: $route.path === '/currencyissue' }">货币M2</router-link>
-      <router-link to="/populationcorrelation" class="nav" :class="{ active: $route.path === '/populationcorrelation' }">人口数据</router-link>
-      <router-link to="/indicesdata" class="nav" :class="{ active: $route.path === '/indicesdata' }">指数数据</router-link>
-      <router-link to="/livingstandards" class="nav" :class="{ active: $route.path === '/livingstandards' }">人民生活</router-link>
+      <router-link to="/NewHouse" class="nav" :class="{ active: $route.path === '/NewHouse' }">武汉新房</router-link>
+      <router-link to="/SecondHandHouse" class="nav" :class="{ active: $route.path === '/SecondHandHouse' }">武汉二手房</router-link>
+      <router-link to="/CityHouse" class="nav" :class="{ active: $route.path === '/CityHouse' }">一线房价</router-link>
+      <router-link to="/GrossDomesticProduct" class="nav" :class="{ active: $route.path === '/GrossDomesticProduct' }">GDP</router-link>
+      <router-link to="/FinancialIndustry" class="nav" :class="{ active: $route.path === '/FinancialIndustry' }">货币M2</router-link>
+      <router-link to="/PopulationCorrelation" class="nav" :class="{ active: $route.path === '/PopulationCorrelation' }">人口数据</router-link>
+      <router-link to="/IndicesData" class="nav" :class="{ active: $route.path === '/IndicesData' }">指数数据</router-link>
+      <router-link to="/LivingStandards" class="nav" :class="{ active: $route.path === '/LivingStandards' }">人民生活</router-link>
       
     </nav>
     <router-view></router-view>
