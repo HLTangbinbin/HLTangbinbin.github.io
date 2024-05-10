@@ -65,7 +65,7 @@ export default {
         })
     },
     // 按照类型与字段名称
-    dataArr_Currency(type, year = '') {
+    dataArr_Currency(type, year = '', xAxis = 0) {
       return this.currencyDataList.filter(currencyDataListObj => {
         if (year != '') {
           return currencyDataListObj.code.search(type) != -1 && currencyDataListObj.date.search(year) != -1 && currencyDataListObj.value != 0;
@@ -74,7 +74,7 @@ export default {
       }).sort(function (a, b) {
         return sortYearMonths(a.date, b.date);
       }).map(item => {
-        if (year == '') {
+        if (xAxis == 1) {
           return Number(item.date);
         }
         return Number(item.value);
@@ -112,7 +112,7 @@ export default {
           data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
         },
         yAxis: {
-
+          min: '1500000'
         },
         series: [
           {
@@ -184,7 +184,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.dataArr_Currency(this.CurrencyType.A0L0402)
+          data: this.dataArr_Currency(this.CurrencyType.A0L0402, 1)
         },
         yAxis: {
 
