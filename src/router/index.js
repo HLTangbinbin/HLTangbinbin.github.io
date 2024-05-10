@@ -2,7 +2,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'; 
 import NewHouse from '../components/NewHouse.vue';
 import SecondHandHouse from '../components/SecondHandHouse.vue';
-import SocialFinancing from '../components/SocialFinancing.vue';
+import GrossDomesticProduct from '../components/GrossDomesticProduct.vue';
 import CurrencyIssue from '../components/CurrencyIssue.vue';
 import PopulationCorrelation from '../components/PopulationCorrelation.vue';
 import IndicesData from '../components/IndicesData.vue';
@@ -13,7 +13,7 @@ const routes = [
   { path: '/', redirect: '/newhouse' }, 
   { path: '/newhouse', component: NewHouse },
   { path: '/secondhand', component: SecondHandHouse },
-  { path: '/socialfinancing', component: SocialFinancing },
+  { path: '/drossdomesticproduct', component: GrossDomesticProduct },
   { path: '/currencyissue', component: CurrencyIssue },
   { path: '/populationcorrelation', component: PopulationCorrelation },
   { path: '/indicesdata', component: IndicesData },
