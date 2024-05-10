@@ -84,7 +84,7 @@
         //按照年份与日期做筛选与排序
         populationArr(type) {
           return this.populationDataList.filter( populationDataListObj => {
-            return populationDataListObj.code.search(type) != -1;
+            return populationDataListObj.code.search(type) != -1 && populationDataListObj.value !=0;
         }).sort(function(a,b) {
             return sortYearMonths(a.date, b.date);
         }).map(item => {

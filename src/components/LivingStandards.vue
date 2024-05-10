@@ -81,7 +81,7 @@
         //按照年份与日期做筛选与排序
         livingStandardsArr(type) {
           return this.livingStandardsDataList.filter( livingStandardsDataListObj => {
-            return livingStandardsDataListObj.code.search(type) != -1;
+            return livingStandardsDataListObj.code.search(type) != -1 && livingStandardsDataListObj.value !=0;
         }).sort(function(a,b) {
             return sortYearMonths(a.date, b.date);
         }).map(item => {

@@ -90,7 +90,7 @@ export default {
     // 国内生产总值
     dataArr_GDP_HG(gdpType, date = '') {
       return this.gdpDatalistHG.filter(gdpDatalistHGObj => {
-        return gdpDatalistHGObj.code.search(gdpType) != -1;
+        return gdpDatalistHGObj.code.search(gdpType) != -1 && gdpDatalistHGObj.value != 0;
       }).sort(function (a, b) {
         return sortYearMonths(a.date, b.date);
       }).map(item => {
@@ -105,7 +105,7 @@ export default {
     // 地区生产总值
     dataArr_GDP_CS(cityCode, date = '') {
       return this.gdpDatalistCS.filter(gdpDatalistCSObj => {
-        return gdpDatalistCSObj.code.search(this.GDP_Type.A0101) != -1 && gdpDatalistCSObj.cityCode.search(cityCode) != -1;
+        return gdpDatalistCSObj.code.search(this.GDP_Type.A0101) != -1 && gdpDatalistCSObj.cityCode.search(cityCode) != -1 && gdpDatalistCSObj.value != 0;
       }).sort(function (a, b) {
         return sortYearMonths(a.date, b.date);
       }).map(item => {

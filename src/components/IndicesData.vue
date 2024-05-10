@@ -63,7 +63,7 @@
         // 按照类型与字段名称
         dataArr(type) {
           return this.indicesDataList.filter( indicesDataListObj => {
-                return indicesDataListObj.code.search(type) != -1;
+                return indicesDataListObj.code.search(type) != -1 && indicesDataListObj.value !=0;
             }).sort(function(a,b) {
               return sortYearMonths(a.date, b.date);
           }).map(item => {

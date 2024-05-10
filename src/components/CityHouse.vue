@@ -89,7 +89,7 @@
         // 住宅商品房平均销售价格
         dataArr_HousePrice(cityCode,date = '') {
           return this.cityHouseDataList.filter( cityHouseDataListObj => {
-                return cityHouseDataListObj.code.search(this.CityHouse_Type.A030C) != -1 && cityHouseDataListObj.dbcode.search(this.CityHouse_Dbcode.csnd) != -1 && cityHouseDataListObj.cityCode.search(cityCode) != -1 ;
+                return cityHouseDataListObj.code.search(this.CityHouse_Type.A030C) != -1 && cityHouseDataListObj.dbcode.search(this.CityHouse_Dbcode.csnd) != -1 && cityHouseDataListObj.cityCode.search(cityCode) != -1 && cityHouseDataListObj.value != 0;
             }).sort(function(a,b) {
                 return sortYearMonths(a.date, b.date);
             }).map(item => {
@@ -104,7 +104,7 @@
         // 新建商品住宅销售价格指数(上月=100)
         dataArr_NewHouse(cityCode,date = '') {
             return this.cityHouseDataList.filter( cityHouseDataListObj => {
-                return cityHouseDataListObj.code.search(this.CityHouse_Type.A010804) != -1 && cityHouseDataListObj.dbcode.search(this.CityHouse_Dbcode.csyd) != -1 && cityHouseDataListObj.cityCode.search(cityCode) != -1 ;
+                return cityHouseDataListObj.code.search(this.CityHouse_Type.A010804) != -1 && cityHouseDataListObj.dbcode.search(this.CityHouse_Dbcode.csyd) != -1 && cityHouseDataListObj.cityCode.search(cityCode) != -1 && cityHouseDataListObj.value != 0;
             }).sort(function(a,b) {
                 return sortYearMonths(a.date, b.date);
             }).map(item => {
@@ -119,7 +119,7 @@
         // 二手房住宅销售价格指数(上月=100)
         dataArr_OldHouse(cityCode,date = '') {
             return this.cityHouseDataList.filter( cityHouseDataListObj => {
-                return cityHouseDataListObj.code.search(this.CityHouse_Type.A010807) != -1 && cityHouseDataListObj.dbcode.search(this.CityHouse_Dbcode.csyd) != -1 && cityHouseDataListObj.cityCode.search(cityCode) != -1 ;
+                return cityHouseDataListObj.code.search(this.CityHouse_Type.A010807) != -1 && cityHouseDataListObj.dbcode.search(this.CityHouse_Dbcode.csyd) != -1 && cityHouseDataListObj.cityCode.search(cityCode) != -1 && cityHouseDataListObj.value != 0;
             }).sort(function(a,b) {
               return sortYearMonths(a.date, b.date);
             }).map(item => {
