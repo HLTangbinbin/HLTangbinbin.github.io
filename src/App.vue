@@ -8,7 +8,7 @@
       <router-link to="/SecondHandHouse" class="nav" :class="{ active: $route.path === '/SecondHandHouse' }">武汉二手房</router-link>
       <router-link to="/CityHouse" class="nav" :class="{ active: $route.path === '/CityHouse' }">一线房价</router-link>
       <router-link to="/GrossDomesticProduct" class="nav" :class="{ active: $route.path === '/GrossDomesticProduct' }">GDP</router-link>
-      <router-link to="/FinancialIndustry" class="nav" :class="{ active: $route.path === '/FinancialIndustry' }">货币M2</router-link>
+      <router-link to="/FinancialIndustry" class="nav" :class="{ active: $route.path === '/FinancialIndustry' }">金融</router-link>
       <router-link to="/PopulationCorrelation" class="nav" :class="{ active: $route.path === '/PopulationCorrelation' }">人口数据</router-link>
       <router-link to="/IndicesData" class="nav" :class="{ active: $route.path === '/IndicesData' }">指数数据</router-link>
       <router-link to="/LivingStandards" class="nav" :class="{ active: $route.path === '/LivingStandards' }">人民生活</router-link>
