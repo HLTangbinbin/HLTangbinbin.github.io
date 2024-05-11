@@ -70,7 +70,7 @@ export default {
             isLineActive_Import: false,
             isBarActive_Export: false,
             isLineActive_Export: false,
-            importAndExportList: null,
+            importAndExportData: null,
             chartsType: null
         };
     },
@@ -86,7 +86,7 @@ export default {
                 .then(data => {
                     console.log('请求成功对外贸易数据:', data);
                     // 列表数据
-                    this.importAndExportList = data;
+                    this.importAndExportData = data;
                     // 处理数据绘制图表
                     this.drawBarChart_ImportAndExport()
                     this.drawBarChart_Export()
@@ -99,8 +99,8 @@ export default {
         },
         //按照年份与日期做筛选与排序
         foreignTradeArr(type) {
-            return this.importAndExportList.data.filter(importAndExportListObj => {
-                return importAndExportListObj.code.search(type) != -1 && importAndExportListObj.value != 0;
+            return this.importAndExportData.data.filter(importAndExportDataObj => {
+                return importAndExportDataObj.code.search(type) != -1 && importAndExportDataObj.value != 0;
             }).sort(function (a, b) {
                 return sortYearMonths(a.date, b.date);
             }).map(item => {
@@ -137,9 +137,7 @@ export default {
                 },
                 xAxis: {
                     type: 'category',
-                    data: this.importAndExportList.sj.sort(function (a, b) {
-                        return sortYearMonths(a, b);
-                    })
+                    data: this.importAndExportData.sj.sort()
                 },
                 yAxis: {
                 },
@@ -200,9 +198,7 @@ export default {
                 },
                 xAxis: {
                     type: 'category',
-                    data: this.importAndExportList.sj.sort(function (a, b) {
-                        return sortYearMonths(a, b);
-                    })
+                    data: this.importAndExportData.sj.sort()
                 },
                 yAxis: {
 
@@ -286,9 +282,7 @@ export default {
                 },
                 xAxis: {
                     type: 'category',
-                    data: this.importAndExportList.sj.sort(function (a, b) {
-                        return sortYearMonths(a, b);
-                    })
+                    data: this.importAndExportData.sj.sort()
                 },
                 yAxis: {
 
