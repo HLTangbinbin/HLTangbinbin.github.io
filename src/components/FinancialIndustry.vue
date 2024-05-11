@@ -103,7 +103,7 @@ export default {
         grid: {
           left: '1%',
           right: '1%',
-          top: '20%',
+          top: '25%',
           bottom: '1%',
           containLabel: true
         },
@@ -178,7 +178,7 @@ export default {
         grid: {
           left: '1%',
           right: '1%',
-          top: '20%',
+          top: '25%',
           bottom: '1%',
           containLabel: true
         },

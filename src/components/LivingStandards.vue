@@ -107,12 +107,12 @@
               },
               legend: {
                   left: 'center',
-                  top: '50px'
+                  top: '10%'
               },
               grid: {
                   left: '1%',
                   right: '1%',
-                  top: '20%',
+                  top: '30%',
                   bottom: '1%',
                   containLabel: true
               },
@@ -186,7 +186,7 @@
               grid: {
                   left: '1%',
                   right: '1%',
-                  top: '30%',
+                  top: '35%',
                   bottom: '1%',
                   containLabel: true
               },
