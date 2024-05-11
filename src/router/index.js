@@ -5,6 +5,7 @@ import SecondHandHouse from '../components/SecondHandHouse.vue';
 import GrossDomesticProduct from '../components/GrossDomesticProduct.vue';
 import NationalFinance from '../components/NationalFinance.vue';
 import FinancialIndustry from '../components/FinancialIndustry.vue';
+import ForeignTrade from '../components/ForeignTrade.vue';
 import PopulationCorrelation from '../components/PopulationCorrelation.vue';
 import IndicesData from '../components/IndicesData.vue';
 import LivingStandards from '../components/LivingStandards.vue';
@@ -18,6 +19,7 @@ const routes = [
   { path: '/GrossDomesticProduct', component: GrossDomesticProduct },
   { path: '/NationalFinance', component: NationalFinance },
   { path: '/FinancialIndustry', component: FinancialIndustry },
+  { path: '/ForeignTrade', component: ForeignTrade },
   { path: '/PopulationCorrelation', component: PopulationCorrelation },
   { path: '/IndicesData', component: IndicesData },
   { path: '/LivingStandards', component: LivingStandards },
