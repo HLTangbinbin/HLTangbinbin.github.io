@@ -55,7 +55,7 @@
           isLineActive_Populationrate: false,
           isBarActive_Dependencyratio: false,
           isLineActive_Dependencyratio: false,
-          populationDataList: null,
+          returnData: null,
           chartsType: null
         };
       },
@@ -66,12 +66,12 @@
       methods: {
         loadData() {
           // 请求总人口公开数据
-          fetch('populationData.json')
+          fetch('population.json')
             .then(response => response.json())
             .then(data => {
-              console.log('请求成功人口数据:',data.populationData);
+              console.log('请求成功人口数据:',data);
               // 数组倒序处理
-              this.populationDataList = data.populationData;
+              this.returnData = data;
               // 处理数据绘制图表
               this.drawBarChart_Population()
               this.drawBarChart_Populationrate()
@@ -83,8 +83,8 @@
         },
         //按照年份与日期做筛选与排序
         populationArr(type) {
-          return this.populationDataList.filter( populationDataListObj => {
-            return populationDataListObj.code.search(type) != -1 && populationDataListObj.value !=0;
+          return this.returnData.dataList.filter( returnDataObj => {
+            return returnDataObj.code.search(type) != -1 && returnDataObj.value !=0;
         }).sort(function(a,b) {
             return sortYearMonths(a.date, b.date);
         }).map(item => {
@@ -121,7 +121,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
+                  data: this.returnData.sj.sort()
               },
               yAxis: {
               },
@@ -199,7 +199,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
+                  data: this.returnData.sj.sort()
               },
               yAxis: {
               },
@@ -252,7 +252,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
+                  data: this.returnData.sj.sort()
               },
               yAxis: {
               },

@@ -57,7 +57,7 @@ export default {
       isLineActive_Engel: false,
       isBarActive_Gini: false,
       isLineActive_Gini: false,
-      livingStandardsData: null,
+      returnData: null,
       sjList: null,
       chartsType: null
     };
@@ -74,7 +74,7 @@ export default {
         .then(data => {
           console.log('请求成功人民收入数据:', data);
           // 列表数据
-          this.livingStandardsData = data;
+          this.returnData = data;
           // 处理数据绘制图表
           this.drawBarChart_Income()
           this.drawBarChart_Engel()
@@ -86,8 +86,8 @@ export default {
     },
     //按照年份与日期做筛选与排序
     livingStandardsArr(type) {
-      return this.livingStandardsData.data.filter(livingStandardsDataObj => {
-        return livingStandardsDataObj.code.search(type) != -1 && livingStandardsDataObj.value != 0;
+      return this.returnData.dataList.filter(returnDataObj => {
+        return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
       }).sort(function (a, b) {
         return sortYearMonths(a.date, b.date);
       }).map(item => {
@@ -124,7 +124,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.livingStandardsData.sj.sort()
+          data: this.returnData.sj.sort()
         },
         yAxis: {
         },
@@ -198,7 +198,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.livingStandardsData.sj.sort()
+          data: this.returnData.sj.sort()
         },
         yAxis: {
           min: '25',
@@ -259,7 +259,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.livingStandardsData.sj.sort()
+          data: this.returnData.sj.sort()
         },
         yAxis: {
           min: '0.4',

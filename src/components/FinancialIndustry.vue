@@ -38,7 +38,7 @@ export default {
       isLineActive_Currency: false,
       isBarActive_ForeignCurrency: false,
       isLineActive_ForeignCurrency: false,
-      currencyDataList: null,
+      returnData: null,
       chartsType: null
     };
   },
@@ -49,34 +49,29 @@ export default {
   methods: {
     loadData() {
       // 请求currency数据
-      fetch('currencyData.json')
+      fetch('financialIndustry.json')
         .then(response => response.json())
         .then(data => {
-          this.currencyDataList = data.financialIndustryData
-          console.log('请求成功currency数据:', this.currencyDataList);
+          this.returnData = data
+          console.log('请求成功currency数据:', this.returnData);
           // 处理数据绘制图表
           this.drawBarChart_Currency();
           this.drawBarChart_ForeignCurrency();
-
-          console.log('djajdjadkjadj:', this.dataArr_Currency(this.CurrencyType.A0L0402));
         })
         .catch(error => {
           console.error('Error fetching data:', error)
         })
     },
     // 按照类型与字段名称
-    dataArr_Currency(type, year = '', xAxis = 0) {
-      return this.currencyDataList.filter(currencyDataListObj => {
+    dataArr_Currency(type, year = '') {
+      return this.returnData.dataList.filter(returnDataObj => {
         if (year != '') {
-          return currencyDataListObj.code.search(type) != -1 && currencyDataListObj.date.search(year) != -1 && currencyDataListObj.value != 0;
+          return returnDataObj.code.search(type) != -1 && returnDataObj.date.search(year) != -1 && returnDataObj.value != 0;
         }
-        return currencyDataListObj.code.search(type) != -1 && currencyDataListObj.value != 0;
+        return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
       }).sort(function (a, b) {
         return sortYearMonths(a.date, b.date);
       }).map(item => {
-        if (xAxis == 1) {
-          return Number(item.date);
-        }
         return Number(item.value);
       })
     },
@@ -184,7 +179,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.dataArr_Currency(this.CurrencyType.A0L0402, 1)
+          data: this.returnData.sj.sort()
         },
         yAxis: {
 

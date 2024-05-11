@@ -36,7 +36,7 @@
           isLineActive_Indices: false,
           isBarActive_PMI: false,
           isLineActive_PMI: false,
-          indicesDataList: null,
+          returnData: null,
           chartsType: null
         };
       },
@@ -47,11 +47,11 @@
       methods: {
         loadData() {
           // 请求priceIndices数据
-          fetch('indicesData.json')
+          fetch('indices.json')
             .then(response => response.json())
             .then(data => {
-              this.indicesDataList = data.indicesData
-              console.log('请求成功priceIndices数据:', this.indicesDataList);
+              this.returnData = data
+              console.log('请求成功priceIndices数据:', data);
               // 处理数据绘制图表
               this.drawBarChart_Indices();
               this.drawBarChart_PMI();
@@ -62,25 +62,14 @@
         },
         // 按照类型与字段名称
         dataArr(type) {
-          return this.indicesDataList.filter( indicesDataListObj => {
-                return indicesDataListObj.code.search(type) != -1 && indicesDataListObj.value !=0;
+          return this.returnData.dataList.filter( returnDataObj => {
+                return returnDataObj.code.search(type) != -1 && returnDataObj.value !=0;
             }).sort(function(a,b) {
               return sortYearMonths(a.date, b.date);
           }).map(item => {
                 return Number(item.value);
           })
         },
-       
-        // 获取时间横坐标数组数据
-        axisArr(type) {
-            return this.indicesDataList.filter(indicesDataListObj => {
-              return indicesDataListObj.code.search(type) != -1;
-          }).sort(function(a,b) {
-              return sortYearMonths(a.date, b.date);
-          }).map(item => {
-              return Number(item.date);
-            })
-          },
 
         // cpi图表
         drawPriceIndicesChat() {
@@ -117,7 +106,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.axisArr(this.IndicesType.CPI_A01010101)
+                  data: this.returnData.sj.sort()
               },
               yAxis: {
                 min: '94', // 这里不是0，所以最后一个月为0的时候折线图显示在上一个月落点处
@@ -184,7 +173,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.axisArr(this.IndicesType.PMI_A0B0101)
+                  data: this.returnData.sj.sort()
               },
               yAxis: {
                 min: '48',
