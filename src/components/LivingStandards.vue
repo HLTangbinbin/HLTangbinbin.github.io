@@ -124,7 +124,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.returnData.sj.sort()
+          data: this.returnData.sj[0].sort()
         },
         yAxis: {
         },
@@ -198,7 +198,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.returnData.sj.sort()
+          data: this.returnData.sj[0].sort()
         },
         yAxis: {
           min: '25',
@@ -259,7 +259,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.returnData.sj.sort()
+          data: this.returnData.sj[0].sort()
         },
         yAxis: {
           min: '0.4',

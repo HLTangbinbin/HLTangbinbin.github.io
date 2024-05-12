@@ -106,7 +106,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.returnData.sj.sort()
+                  data: this.returnData.sj[0].sort()
               },
               yAxis: {
                 min: '94', // 这里不是0，所以最后一个月为0的时候折线图显示在上一个月落点处
@@ -173,7 +173,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.returnData.sj.sort()
+                  data: this.returnData.sj[0].sort()
               },
               yAxis: {
                 min: '48',

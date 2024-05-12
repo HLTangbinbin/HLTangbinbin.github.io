@@ -61,7 +61,7 @@
           isLineActive_NewHouse: false,
           isBarActive_OldHouse: false,
           isLineActive_OldHouse: false,
-          cityHouseDataList: null,
+          returnData: null,
           chartsType: null
         };
       },
@@ -72,11 +72,11 @@
       methods: {
         loadData() {
           // 请求cityHouse数据
-          fetch('cityHouseData.json')
+          fetch('cityHouse.json')
             .then(response => response.json())
             .then(data => {
-              this.cityHouseDataList = data.cityHouseData
-              console.log('请求成功cityHouseNew数据:', this.cityHouseDataList);
+              this.returnData = data
+              console.log('请求成功cityHouseNew数据:', this.returnData);
               // 处理数据绘制图表
               this.drawBarChart_HousePrice();
               this.drawBarChart_NewHouse();
@@ -87,46 +87,34 @@
             })
         },
         // 住宅商品房平均销售价格
-        dataArr_HousePrice(cityCode,date = '') {
-          return this.cityHouseDataList.filter( cityHouseDataListObj => {
-                return cityHouseDataListObj.code.search(this.CityHouse_Type.A030C) != -1 && cityHouseDataListObj.dbcode.search(this.CityHouse_Dbcode.csnd) != -1 && cityHouseDataListObj.cityCode.search(cityCode) != -1 && cityHouseDataListObj.value != 0;
+        dataArr_HousePrice(cityCode) {
+          return this.returnData.dataList.filter( returnDataObj => {
+                return returnDataObj.code.search(this.CityHouse_Type.A030C) != -1 && returnDataObj.dbcode.search(this.CityHouse_Dbcode.csnd) != -1 && returnDataObj.cityCode.search(cityCode) != -1 && returnDataObj.value != 0;
             }).sort(function(a,b) {
                 return sortYearMonths(a.date, b.date);
             }).map(item => {
-                // 如果是时间，筛选横坐标：时间
-                if (date == 'sj') {
-                    return Number(item.date);
-                }
                  // 筛选纵坐标：value
                 return Number(item.value);
             })
         },
         // 新建商品住宅销售价格指数(上月=100)
-        dataArr_NewHouse(cityCode,date = '') {
-            return this.cityHouseDataList.filter( cityHouseDataListObj => {
-                return cityHouseDataListObj.code.search(this.CityHouse_Type.A010804) != -1 && cityHouseDataListObj.dbcode.search(this.CityHouse_Dbcode.csyd) != -1 && cityHouseDataListObj.cityCode.search(cityCode) != -1 && cityHouseDataListObj.value != 0;
+        dataArr_NewHouse(cityCode) {
+            return this.returnData.dataList.filter( returnDataObj => {
+                return returnDataObj.code.search(this.CityHouse_Type.A010804) != -1 && returnDataObj.dbcode.search(this.CityHouse_Dbcode.csyd) != -1 && returnDataObj.cityCode.search(cityCode) != -1 && returnDataObj.value != 0;
             }).sort(function(a,b) {
                 return sortYearMonths(a.date, b.date);
             }).map(item => {
-                // 如果是时间，筛选横坐标：时间
-                if (date == 'sj') {
-                    return Number(item.date);
-                }
                  // 筛选纵坐标：value
                 return Number(item.value);
             })
         },
         // 二手房住宅销售价格指数(上月=100)
-        dataArr_OldHouse(cityCode,date = '') {
-            return this.cityHouseDataList.filter( cityHouseDataListObj => {
-                return cityHouseDataListObj.code.search(this.CityHouse_Type.A010807) != -1 && cityHouseDataListObj.dbcode.search(this.CityHouse_Dbcode.csyd) != -1 && cityHouseDataListObj.cityCode.search(cityCode) != -1 && cityHouseDataListObj.value != 0;
+        dataArr_OldHouse(cityCode) {
+            return this.returnData.dataList.filter( returnDataObj => {
+                return returnDataObj.code.search(this.CityHouse_Type.A010807) != -1 && returnDataObj.dbcode.search(this.CityHouse_Dbcode.csyd) != -1 && returnDataObj.cityCode.search(cityCode) != -1 && returnDataObj.value != 0;
             }).sort(function(a,b) {
               return sortYearMonths(a.date, b.date);
             }).map(item => {
-                // 如果是时间，筛选横坐标：时间
-                if (date == 'sj') {
-                    return Number(item.date);
-                }
                  // 筛选纵坐标：value
                 return Number(item.value);
             })
@@ -159,7 +147,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.dataArr_HousePrice(this.CityCode.BJ,'sj')
+                  data: this.returnData.sj[0].sort()
               },
               yAxis: {
   
@@ -260,7 +248,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.dataArr_NewHouse(this.CityCode.BJ,'sj')
+                  data: this.returnData.sj[1].sort()
               },
               yAxis: {
                 min: '98', // 这里不是0，所以最后一个月为0的时候折线图显示在上一个月落点处
@@ -367,7 +355,7 @@
               },
               xAxis: {
                   type: 'category',
-                  data: this.dataArr_OldHouse(this.CityCode.BJ,'sj')
+                  data: this.returnData.sj[1].sort()
               },
               yAxis: {
                 min: '98', // 这里不是0，所以最后一个月为0的时候折线图显示在上一个月落点处

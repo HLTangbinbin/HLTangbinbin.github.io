@@ -61,8 +61,8 @@ export default {
       isLineActive_GDP_HG: false,
       isBarActive_GDP_CS: false,
       isLineActive_GDP_CS: false,
-      gdpDatalistHG: null,
-      gdpDatalistCS: null,
+      dataListHG: null,
+      dataListCS: null,
       chartsType: null
     };
   },
@@ -77,8 +77,8 @@ export default {
         .then(response => response.json())
         .then(data => {
           console.log('请求成功GDP数据:', data);
-          this.gdpDatalistHG = data.gdpDataListHG;
-          this.gdpDatalistCS = data.gdpDataListCS;
+          console.log('请adda数据:', data.sj);
+          this.returnData = data;
           // 处理数据绘制图表
           this.drawBarChart_GDP_HG();
           this.drawBarChart_GDP_CS();
@@ -88,31 +88,23 @@ export default {
         })
     },
     // 国内生产总值
-    dataArr_GDP_HG(gdpType, date = '') {
-      return this.gdpDatalistHG.filter(gdpDatalistHGObj => {
-        return gdpDatalistHGObj.code.search(gdpType) != -1 && gdpDatalistHGObj.value != 0;
+    dataArr_GDP_HG(gdpType) {
+      return this.returnData.dataListHG.filter(dataListHGObj => {
+        return dataListHGObj.code.search(gdpType) != -1 && dataListHGObj.value != 0;
       }).sort(function (a, b) {
         return sortYearMonths(a.date, b.date);
       }).map(item => {
-        // 如果是时间，筛选横坐标：时间
-        if (date == 'sj') {
-          return Number(item.date);
-        }
         // 筛选纵坐标：value
         return Number(item.value);
       })
     },
     // 地区生产总值
-    dataArr_GDP_CS(cityCode, date = '') {
-      return this.gdpDatalistCS.filter(gdpDatalistCSObj => {
-        return gdpDatalistCSObj.code.search(this.GDP_Type.A0101) != -1 && gdpDatalistCSObj.cityCode.search(cityCode) != -1 && gdpDatalistCSObj.value != 0;
+    dataArr_GDP_CS(cityCode) {
+      return this.returnData.dataListCS.filter(dataListCSObj => {
+        return dataListCSObj.code.search(this.GDP_Type.A0101) != -1 && dataListCSObj.cityCode.search(cityCode) != -1 && dataListCSObj.value != 0;
       }).sort(function (a, b) {
         return sortYearMonths(a.date, b.date);
       }).map(item => {
-        // 如果是时间，筛选横坐标：时间
-        if (date == 'sj') {
-          return Number(item.date);
-        }
         // 筛选纵坐标：value
         return Number(item.value);
       })
@@ -144,7 +136,7 @@ export default {
           containLabel: true
         },
         xAxis: {
-          data: this.dataArr_GDP_HG(this.GDP_Type.A020102,'sj')
+          data: this.returnData.sj[0].sort()
         },
         yAxis: {},
         series: [
@@ -202,7 +194,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.dataArr_GDP_CS(this.CityCode.BJ, 'sj')
+          data: this.returnData.sj[0].sort()
         },
         yAxis: {
 
