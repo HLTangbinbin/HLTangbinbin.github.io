@@ -73,11 +73,10 @@ export default {
   methods: {
     loadData() {
       // 读取本地的 JSON 文件
-      fetch('gdpData.json')
+      fetch('gdp.json')
         .then(response => response.json())
         .then(data => {
           console.log('请求成功GDP数据:', data);
-          console.log('请adda数据:', data.sj);
           this.returnData = data;
           // 处理数据绘制图表
           this.drawBarChart_GDP_HG();
@@ -89,8 +88,8 @@ export default {
     },
     // 国内生产总值
     dataArr_GDP_HG(gdpType) {
-      return this.returnData.dataListHG.filter(dataListHGObj => {
-        return dataListHGObj.code.search(gdpType) != -1 && dataListHGObj.value != 0;
+      return this.returnData.dataList.filter(dataListObj => {
+        return dataListObj.code.search(gdpType) != -1 && dataListObj.value != 0;
       }).sort(function (a, b) {
         return sortYearMonths(a.date, b.date);
       }).map(item => {
@@ -100,8 +99,8 @@ export default {
     },
     // 地区生产总值
     dataArr_GDP_CS(cityCode) {
-      return this.returnData.dataListCS.filter(dataListCSObj => {
-        return dataListCSObj.code.search(this.GDP_Type.A0101) != -1 && dataListCSObj.cityCode.search(cityCode) != -1 && dataListCSObj.value != 0;
+      return this.returnData.dataList.filter(dataListObj => {
+        return dataListObj.code.search(this.GDP_Type.A0101) != -1 && dataListObj.cityCode.search(cityCode) != -1 && dataListObj.value != 0;
       }).sort(function (a, b) {
         return sortYearMonths(a.date, b.date);
       }).map(item => {

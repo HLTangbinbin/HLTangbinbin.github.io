@@ -89,7 +89,7 @@
         // 住宅商品房平均销售价格
         dataArr_HousePrice(cityCode) {
           return this.returnData.dataList.filter( returnDataObj => {
-                return returnDataObj.code.search(this.CityHouse_Type.A030C) != -1 && returnDataObj.dbcode.search(this.CityHouse_Dbcode.csnd) != -1 && returnDataObj.cityCode.search(cityCode) != -1 && returnDataObj.value != 0;
+                return returnDataObj.code.search(this.CityHouse_Type.A030C) != -1 && returnDataObj.cityCode.search(cityCode) != -1 && returnDataObj.value != 0;
             }).sort(function(a,b) {
                 return sortYearMonths(a.date, b.date);
             }).map(item => {
@@ -100,7 +100,7 @@
         // 新建商品住宅销售价格指数(上月=100)
         dataArr_NewHouse(cityCode) {
             return this.returnData.dataList.filter( returnDataObj => {
-                return returnDataObj.code.search(this.CityHouse_Type.A010804) != -1 && returnDataObj.dbcode.search(this.CityHouse_Dbcode.csyd) != -1 && returnDataObj.cityCode.search(cityCode) != -1 && returnDataObj.value != 0;
+                return returnDataObj.code.search(this.CityHouse_Type.A010804) != -1 && returnDataObj.cityCode.search(cityCode) != -1 && returnDataObj.value != 0;
             }).sort(function(a,b) {
                 return sortYearMonths(a.date, b.date);
             }).map(item => {
@@ -111,7 +111,7 @@
         // 二手房住宅销售价格指数(上月=100)
         dataArr_OldHouse(cityCode) {
             return this.returnData.dataList.filter( returnDataObj => {
-                return returnDataObj.code.search(this.CityHouse_Type.A010807) != -1 && returnDataObj.dbcode.search(this.CityHouse_Dbcode.csyd) != -1 && returnDataObj.cityCode.search(cityCode) != -1 && returnDataObj.value != 0;
+                return returnDataObj.code.search(this.CityHouse_Type.A010807) != -1 && returnDataObj.cityCode.search(cityCode) != -1 && returnDataObj.value != 0;
             }).sort(function(a,b) {
               return sortYearMonths(a.date, b.date);
             }).map(item => {
