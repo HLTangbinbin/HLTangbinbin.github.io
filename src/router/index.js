@@ -7,6 +7,7 @@ import NationalFinance from '../components/NationalFinance.vue';
 import FinancialIndustry from '../components/FinancialIndustry.vue';
 import ForeignTrade from '../components/ForeignTrade.vue';
 import PopulationCorrelation from '../components/PopulationCorrelation.vue';
+import EducationSector from '../components/EducationSector.vue';
 import IndicesData from '../components/IndicesData.vue';
 import LivingStandards from '../components/LivingStandards.vue';
 import CityHouse from '../components/CityHouse.vue';
@@ -21,6 +22,7 @@ const routes = [
   { path: '/FinancialIndustry', component: FinancialIndustry },
   { path: '/ForeignTrade', component: ForeignTrade },
   { path: '/PopulationCorrelation', component: PopulationCorrelation },
+  { path: '/EducationSector', component: EducationSector },
   { path: '/IndicesData', component: IndicesData },
   { path: '/LivingStandards', component: LivingStandards },
   { path: '/CityHouse', component: CityHouse }
