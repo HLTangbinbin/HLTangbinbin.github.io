@@ -179,7 +179,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.returnData.sj[0].sort()
+          data: this.returnData.sj[1].sort()
         },
         yAxis: {
 
