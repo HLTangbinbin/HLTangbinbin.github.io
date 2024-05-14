@@ -13,6 +13,7 @@
       <router-link to="/ForeignTrade" class="nav" :class="{ active: $route.path === '/ForeignTrade' }">外贸</router-link>
       <router-link to="/PopulationCorrelation" class="nav" :class="{ active: $route.path === '/PopulationCorrelation' }">人口</router-link>
       <router-link to="/EducationSector" class="nav" :class="{ active: $route.path === '/EducationSector' }">教育</router-link>
+      <router-link to="/MedicalTreatment" class="nav" :class="{ active: $route.path === '/MedicalTreatment' }">医疗</router-link>
       <router-link to="/IndicesData" class="nav" :class="{ active: $route.path === '/IndicesData' }">指数</router-link>
       <router-link to="/LivingStandards" class="nav" :class="{ active: $route.path === '/LivingStandards' }">生活</router-link>
       
