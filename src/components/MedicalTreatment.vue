@@ -134,19 +134,19 @@ export default {
  
                 series: [
                     {
-                        name: '医疗卫生机构数',
+                        name: '医疗卫生机构数(个)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0501)
+                        data: this.medicalArr(this.Medical.A0O0101)
                     },
                     {
-                        name: '医院数',
+                        name: '医院数(个)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0502)
+                        data: this.medicalArr(this.Medical.A0O0102)
                     },
                     {
-                        name: '基础医疗卫生机构',
+                        name: '基础医疗卫生机构(个)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0506)
+                        data: this.medicalArr(this.Medical.A0O0106)
                     }
 
                 ]
@@ -190,22 +190,22 @@ export default {
 
                 series: [
                     {
-                        name: '卫生人员数',
+                        name: '卫生人员数(万人)',
                         type: this.chartsType,
                         data: this.medicalArr(this.Medical.A0O0201)
                     },
                     {
-                        name: '卫生技术人员数',
+                        name: '卫生技术人员数(万人)',
                         type: this.chartsType,
                         data: this.medicalArr(this.Medical.A0O0202)
                     },
                     {
-                        name: '执业医师数',
+                        name: '执业医师数(万人)',
                         type: this.chartsType,
                         data: this.medicalArr(this.Medical.A0O0204)
                     },
                     {
-                        name: '注册护士数',
+                        name: '注册护士数(万人)',
                         type: this.chartsType,
                         data: this.medicalArr(this.Medical.A0O0205)
                     }
@@ -250,19 +250,19 @@ export default {
                 },
                 series: [
                 {
-                        name: '卫生机构床位数',
+                        name: '卫生机构床位数(万张)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0101)
+                        data: this.medicalArr(this.Medical.A0O0501)
                     },
                     {
-                        name: '医院床位数',
+                        name: '医院床位数(万张)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0102)
+                        data: this.medicalArr(this.Medical.A0O0502)
                     },
                     {
-                        name: '基础医疗卫生机构床位数',
+                        name: '基础医疗卫生机构床位数(万张)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0106)
+                        data: this.medicalArr(this.Medical.A0O0506)
                     }
                 ]
             };
