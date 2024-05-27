@@ -30,6 +30,8 @@ export default {
     return {
       CurrencyType: {
         A0D0101: 'A0D0101', //  货币(M2)供应量(亿元)
+        A0D0103: 'A0D0103', //  货币(M1)供应量(亿元)
+        A0D0105: 'A0D0105', //  货币(M0)供应量(亿元)
         A0L0401: 'A0L0401', //  黄金储备(万盎司)
         A0L0402: 'A0L0402', //  外汇储备(亿美元)
 
@@ -83,9 +85,15 @@ export default {
       // 指定图表的配置项和数据
       var currencyOption = {
         title: {
-          text: '货币(M2)供应量(亿元)',
+          text: '货币供应量(亿元)',
           left: 'center',
           top: 'top',
+          subtext: 'M0：流通中的现金; \n M1：M0+企业活期存款; \n M2：M1+企业单位定期存款+城乡居民储蓄存款;',
+          subtextStyle: {
+            fontWeight: 'bold',
+            fontSize: 13,
+            lineHeight: 20,
+          }
         },
         tooltip: {
           //X轴悬浮显示所有数据
@@ -93,59 +101,38 @@ export default {
         },
         legend: {
           left: 'center',
-          top: '10%'
+          top: '20%'
         },
         grid: {
           left: '1%',
           right: '1%',
-          top: '25%',
+          top: '35%',
           bottom: '1%',
           containLabel: true
         },
         xAxis: {
           type: 'category',
-          data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+          data: this.returnData.sj[0].sort()
         },
         yAxis: {
-          min: '1500000'
+
         },
         series: [
           {
-            name: '2018',
+            name: 'M0',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2018')
+            data: this.dataArr_Currency(this.CurrencyType.A0D0105)
           },
           {
-            name: '2019',
+            name: 'M1',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2019')
+            data: this.dataArr_Currency(this.CurrencyType.A0D0103)
           },
           {
-            name: '2020',
+            name: 'M2',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2020')
-          },
-          {
-            name: '2021',
-            type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2021')
-          },
-          {
-            name: '2022',
-            type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2022')
-          },
-          {
-            name: '2023',
-            type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2023')
-          },
-          {
-            name: '2024',
-            type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0101, '2024')
-          },
-
+            data: this.dataArr_Currency(this.CurrencyType.A0D0101)
+          }
         ]
       };
       // 使用刚指定的配置项和数据显示图表。
