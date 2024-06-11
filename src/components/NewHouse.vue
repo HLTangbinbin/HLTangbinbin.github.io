@@ -11,7 +11,7 @@
       <button class="button" :class="{ 'is-active': isBarActive_VolumeMonthForArea }" @click="drawBarChart_VolumeMonthForArea" style="margin-top: 50px;">柱状图</button>
       <button class="button" :class="{ 'is-active': isLineActive_VolumeMonthForArea }" @click="drawLineChart_VolumeMonthForArea" style="margin-top: 50px;">折线图</button>
     </div>
-    <div class="chart-container" id="newHouseVolumeMonthForArea"></div>
+    <div class="chart-container-month" id="newHouseVolumeMonthForArea"></div>
   </div>
 </template>
   
@@ -179,40 +179,40 @@
         // 指定图表的配置项和数据
         setTimeout(function () {
           // 数据集处理，先把名字插入到数据数组第一个位置中
-          var arr_JA = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JA),'2023');
+          var arr_JA = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JA),'2024');
           arr_JA.unshift(_this.AreaName.JA);
-          var arr_JH = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JH),'2023');
+          var arr_JH = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JH),'2024');
           arr_JH.unshift(_this.AreaName.JH);
-          var arr_QK = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.QK),'2023');
+          var arr_QK = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.QK),'2024');
           arr_QK.unshift(_this.AreaName.QK);
-          var arr_HY = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HY),'2023');
+          var arr_HY = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HY),'2024');
           arr_HY.unshift(_this.AreaName.HY);
-          var arr_QS = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.QS),'2023');
+          var arr_QS = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.QS),'2024');
           arr_QS.unshift(_this.AreaName.QS);
-          var arr_WC = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.WC),'2023');
+          var arr_WC = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.WC),'2024');
           arr_WC.unshift(_this.AreaName.WC);
-          var arr_HS = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HS),'2023');
+          var arr_HS = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HS),'2024');
           arr_HS.unshift(_this.AreaName.HS);
-          var arr_DXH = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.DXH),'2023');
+          var arr_DXH = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.DXH),'2024');
           arr_DXH.unshift(_this.AreaName.DXH);
-          var arr_DHGX = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.DHGX),'2023');
+          var arr_DHGX = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.DHGX),'2024');
           arr_DHGX.unshift(_this.AreaName.DHGX);
-          var arr_JJKF = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JJKF),'2023');
+          var arr_JJKF = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JJKF),'2024');
           arr_JJKF.unshift(_this.AreaName.JJKF);
-          var arr_JX = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JX),'2023');
+          var arr_JX = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.JX),'2024');
           arr_JX.unshift(_this.AreaName.JX);
-          var arr_HP = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HP),'2023');
+          var arr_HP = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HP),'2024');
           arr_HP.unshift(_this.AreaName.HP);
-          var arr_CD = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.CD),'2023');
+          var arr_CD = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.CD),'2024');
           arr_CD.unshift(_this.AreaName.CD);
-          var arr_XZ = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.XZ),'2023');
+          var arr_XZ = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.XZ),'2024');
           arr_XZ.unshift(_this.AreaName.XZ);
-          var arr_HN = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HN),'2023');
+          var arr_HN = _this.selectMonthArr(_this.houseArrayWith(_this.AreaName.HN),'2024');
           arr_HN.unshift(_this.AreaName.HN);
 
           newHouseVolumeBarMonthOptionForArea = {
             title: {
-                text: '武汉各区域2023新房月成交量',
+                text: '武汉各区域2024新房月成交量',
                 left: 'center',
                 top: 'top'
             },
@@ -228,7 +228,7 @@
             grid: {
                 left: '1%',
                 right: '1%',
-                top: '70%',
+                top: '50%',
                 bottom: '1%',
                 containLabel: true
             },
@@ -341,7 +341,7 @@
                   type: 'pie',
                   id: 'pie',
                   radius: '30%',
-                  center: ['50%', '40%'],
+                  center: ['50%', '30%'],
                   emphasis: {
                     focus: 'self'
                   },
@@ -454,6 +454,14 @@
   margin-top: 30px; 
   width: 95%;
   height: 600px;
+}
+.chart-container-month {
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  margin-top: 30px; 
+  width: 95%;
+  height: 1000px;
 }
 
 </style>
