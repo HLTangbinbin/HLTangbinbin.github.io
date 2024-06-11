@@ -1,6 +1,15 @@
 <template>
     <div class="container">
         <div class="buttons">
+            <button class="button" :class="{ 'is-active': isBarActive_ImportAndExport_Month }"
+                @click="drawBarChart_ImportAndExport_Month" style="margin-top: 50px;">柱状图</button>
+            <button class="button" :class="{ 'is-active': isLineActive_ImportAndExport_Month }"
+                @click="drawLineChart_ImportAndExport_Month" style="margin-top: 50px;">折线图</button>
+        </div>
+        <div class="chart-container" id="importandexport-month"></div>
+
+        <!-- 为下方的按钮添加上边距 style="margin-top -->
+        <div class="buttons">
             <button class="button" :class="{ 'is-active': isBarActive_ImportAndExport }"
                 @click="drawBarChart_ImportAndExport" style="margin-top: 50px;">柱状图</button>
             <button class="button" :class="{ 'is-active': isLineActive_ImportAndExport }"
@@ -37,6 +46,7 @@ export default {
     data() {
         return {
             ForeignTrade_ImportAndExport: {
+                // 年度
                 A060105: 'A060105',                // 进出口总额(美元)
                 A060106: 'A060106',                // 出口总额(美元)
                 A060107: 'A060107',                // 进口总额(美元)
@@ -62,8 +72,15 @@ export default {
                 A0605030305: 'A0605030305',        // 中国向德国进口总额(美元)
                 A060503030A: 'A060503030A',        // 中国向荷兰进口总额(美元)
                 A0605030503: 'A0605030503',        // 中国向美国进口总额(美元)
-            },
 
+                // 月度
+                A080101: 'A080101',                // 进出口总额(美元)
+                A080105: 'A080105',                // 出口总额(美元)
+                A080109: 'A080109',                // 进口总额(美元)
+                A08010D: 'A08010D',                // 进出口差额(美元)
+            },
+            isBarActive_ImportAndExport_Month: false,
+            isLineActive_ImportAndExport_Month: false,
             isBarActive_ImportAndExport: false,
             isLineActive_ImportAndExport: false,
             isBarActive_Import: false,
@@ -88,6 +105,7 @@ export default {
                     // 列表数据
                     this.returnData = data;
                     // 处理数据绘制图表
+                    this.drawBarChart_ImportAndExport_Month()
                     this.drawBarChart_ImportAndExport()
                     this.drawBarChart_Export()
                     this.drawBarChart_Import()
@@ -109,14 +127,74 @@ export default {
                 return number;
             })
         },
-        // 进出口贸易总额图表
+        // 进出口贸易总额图表-月度
+        drawImportAndExportChartsMonth() {
+            // 基于准备好的dom，初始化echarts实例
+            var importAndExportChart = echarts.init(document.getElementById('importandexport-month'));
+            // 指定图表的配置项和数据
+            var importAndExportOption = {
+                title: {
+                    text: '货物进出口总额-月度(美元)(百万美元)',
+                    left: 'center',
+                    top: 'top'
+                },
+                tooltip: {
+                    //X轴悬浮显示所有数据
+                    trigger: 'axis'
+                },
+                legend: {
+                    left: 'center',
+                    top: '10%'
+                },
+                grid: {
+                    left: '1%',
+                    right: '1%',
+                    top: '25%',
+                    bottom: '1%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: this.returnData.sj[1].sort()
+                },
+                yAxis: {
+                },
+
+                series: [
+                    {
+                        name: '进出口总额(美元)',
+                        type: this.chartsType,
+                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A080101)
+                    },
+                    {
+                        name: '出口总额(美元)',
+                        type: this.chartsType,
+                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A080105)
+                    },
+                    {
+                        name: '进口总额(美元)',
+                        type: this.chartsType,
+                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A080109)
+                    }, {
+                        name: '进出口差额(美元)',
+                        type: this.chartsType,
+                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A08010D)
+                    },
+
+
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            importAndExportChart.setOption(importAndExportOption);
+        },
+        // 进出口贸易总额图表-年度
         drawImportAndExportCharts() {
             // 基于准备好的dom，初始化echarts实例
             var importAndExportChart = echarts.init(document.getElementById('importandexport'));
             // 指定图表的配置项和数据
             var importAndExportOption = {
                 title: {
-                    text: '货物进出口总额(美元)(百万美元)',
+                    text: '货物进出口总额-年度(美元)(百万美元)',
                     left: 'center',
                     top: 'top'
                 },
@@ -337,6 +415,20 @@ export default {
             };
             // 使用刚指定的配置项和数据显示图表。
             importChart.setOption(importOption);
+        },
+        drawBarChart_ImportAndExport_Month() {
+            this.isBarActive_ImportAndExport_Month = true;
+            this.isLineActive_ImportAndExport_Month = false;
+            this.chartsType = "bar"
+            this.drawImportAndExportChartsMonth()
+
+        },
+        drawLineChart_ImportAndExport_Month() {
+            this.isBarActive_ImportAndExport_Month = false;
+            this.isLineActive_ImportAndExport_Month = true;
+            // 在这里绘制折线图
+            this.chartsType = "line"
+            this.drawImportAndExportChartsMonth()
         },
         drawBarChart_ImportAndExport() {
             this.isBarActive_ImportAndExport = true;

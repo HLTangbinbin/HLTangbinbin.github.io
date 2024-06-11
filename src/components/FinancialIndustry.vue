@@ -1,6 +1,15 @@
 <template>
   <div class="container">
     <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_Currency_Month }" @click="drawBarChart_Currency_Month"
+        style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Currency_Month }" @click="drawLineChart_Currency_Month"
+        style="margin-top: 50px;">折线图</button>
+    </div>
+
+    <!-- 为下方的按钮添加上边距 style="margin-top -->
+    <div class="chart-container" id="currency-month"></div>
+    <div class="buttons">
       <button class="button" :class="{ 'is-active': isBarActive_Currency }" @click="drawBarChart_Currency"
         style="margin-top: 50px;">柱状图</button>
       <button class="button" :class="{ 'is-active': isLineActive_Currency }" @click="drawLineChart_Currency"
@@ -29,13 +38,21 @@ export default {
   data() {
     return {
       CurrencyType: {
+        // 年度
+        A0L0301: 'A0L0301', //  货币(M2)供应量(亿元)
+        A0L0302: 'A0L0302', //  货币(M1)供应量(亿元)
+        A0L0303: 'A0L0303', //  货币(M0)供应量(亿元)
+        // 月度
         A0D0101: 'A0D0101', //  货币(M2)供应量(亿元)
-        A0D0103: 'A0D0103', //  货币(M1)供应量(亿元)
-        A0D0105: 'A0D0105', //  货币(M0)供应量(亿元)
+        A0D0103: 'A0D0103', //  货币(M1)供应量(亿元)     
+        A0D0105: 'A0D0105', //  货币(M0)供应量(亿元)             
+
         A0L0401: 'A0L0401', //  黄金储备(万盎司)
         A0L0402: 'A0L0402', //  外汇储备(亿美元)
 
       },
+      isBarActive_Currency_Month: false,
+      isLineActive_Currency_Month: false,
       isBarActive_Currency: false,
       isLineActive_Currency: false,
       isBarActive_ForeignCurrency: false,
@@ -57,6 +74,7 @@ export default {
           this.returnData = data
           console.log('请求成功currency数据:', this.returnData);
           // 处理数据绘制图表
+          this.drawBarChart_Currency_Month();
           this.drawBarChart_Currency();
           this.drawBarChart_ForeignCurrency();
         })
@@ -77,8 +95,61 @@ export default {
         return Number(item.value);
       })
     },
+     // 货币供应量图表-月度
+     drawChat_Currency_Month() {
+      // 基于准备好的dom，初始化echarts实例
+      var currencyChart = echarts.init(document.getElementById('currency-month'));
+      // 指定图表的配置项和数据
+      var currencyOption = {
+        title: {
+          text: '货币供应量M2(亿元)',
+          left: 'center',
+          top: 'top',
+        },
+        tooltip: {
+          //X轴悬浮显示所有数据
+          trigger: 'axis'
+        },
+        legend: {
+          left: 'center',
+          top: '20%'
+        },
+        grid: {
+          left: '1%',
+          right: '1%',
+          top: '35%',
+          bottom: '1%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          data: this.returnData.sj[1].sort()
+        },
+        yAxis: {
 
-    // 货币供应量图表
+        },
+        series: [
+          {
+            name: 'M0',
+            type: this.chartsType,
+            data: this.dataArr_Currency(this.CurrencyType.A0D0105)
+          },
+          {
+            name: 'M1',
+            type: this.chartsType,
+            data: this.dataArr_Currency(this.CurrencyType.A0D0103)
+          },
+          {
+            name: 'M2',
+            type: this.chartsType,
+            data: this.dataArr_Currency(this.CurrencyType.A0D0101)
+          }
+        ]
+      };
+      // 使用刚指定的配置项和数据显示图表。
+      currencyChart.setOption(currencyOption);
+    },
+    // 货币供应量图表-年度
     drawChat_Currency() {
       // 基于准备好的dom，初始化echarts实例
       var currencyChart = echarts.init(document.getElementById('currency'));
@@ -121,17 +192,17 @@ export default {
           {
             name: 'M0',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0105)
+            data: this.dataArr_Currency(this.CurrencyType.A0L0303)
           },
           {
             name: 'M1',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0103)
+            data: this.dataArr_Currency(this.CurrencyType.A0L0302)
           },
           {
             name: 'M2',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0101)
+            data: this.dataArr_Currency(this.CurrencyType.A0L0301)
           }
         ]
       };
@@ -187,7 +258,21 @@ export default {
       // 使用刚指定的配置项和数据显示图表。
       forginCurrencyChart.setOption(forginCurrencyOption);
     },
+    drawBarChart_Currency_Month() {
+      this.isBarActive_Currency_Month = true;
+      this.isLineActive_Currency_Month = false;
+      // 在这里绘制柱状图
+      this.chartsType = "bar"
+      this.drawChat_Currency_Month();
 
+    },
+    drawLineChart_Currency_Month() {
+      this.isBarActive_Currency_Month = false;
+      this.isLineActive_Currency_Month = true;
+      // 在这里绘制折线图
+      this.chartsType = "line"
+      this.drawChat_Currency_Month();
+    },
     drawBarChart_Currency() {
       this.isBarActive_Currency = true;
       this.isLineActive_Currency = false;

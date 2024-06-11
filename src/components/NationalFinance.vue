@@ -1,6 +1,14 @@
 <template>
   <div class="container">
     <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_Finance_Month }" @click="drawBarChart_Finance_Month"
+        style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Finance_Month }" @click="drawLineChart_Finance_Month"
+        style="margin-top: 50px;">折线图</button>
+    </div>
+    <div class="chart-container" id="finance-month"></div>
+    <!-- 为下方的按钮添加上边距 style="margin-top -->
+    <div class="buttons">
       <button class="button" :class="{ 'is-active': isBarActive_Finance }" @click="drawBarChart_Finance"
         style="margin-top: 50px;">柱状图</button>
       <button class="button" :class="{ 'is-active': isLineActive_Finance }" @click="drawLineChart_Finance"
@@ -37,6 +45,7 @@ export default {
   data() {
     return {
       NationalFinance: {
+        // 年度数据
         A080201: 'A080201',        // 全国财政收入
         A080202: 'A080202',        // 中央财政收入
         A080203: 'A080203',        // 地方财政收入
@@ -62,8 +71,14 @@ export default {
         A0805010C: 'A0805010C',    // 医疗卫生支出
         A0805010G: 'A0805010G',    // 交通运输支出
 
-      },
+        // 月度数据
+        A0C0102: 'A0C0102',        // 国家财政收入
+        A0C0202: 'A0C0202',        // 国家财政支出
+        
 
+      },
+      isBarActive_Finance_Month: false,
+      isLineActive_Finance_Month: false,
       isBarActive_Finance: false,
       isLineActive_Finance: false,
       isBarActive_FiscalRevenue: false,
@@ -88,6 +103,7 @@ export default {
           // 列表数据
           this.returnData = data;
           // 处理数据绘制图表
+          this.drawBarChart_Finance_Month()
           this.drawBarChart_Finance()
           this.drawBarChart_FiscalRevenue()
           this.drawBarChart_FiscalExpenditure()
@@ -106,7 +122,56 @@ export default {
         return Number(item.value);
       })
     },
-    // 国家财政收支图表
+     // 国家财政收支图表-月度
+     drawFinanceChartsMonth() {
+      // 基于准备好的dom，初始化echarts实例
+      var financeChart = echarts.init(document.getElementById('finance-month'));
+      // 指定图表的配置项和数据
+      var financeOption = {
+        title: {
+          text: '国家财政收支-月度',
+          left: 'center',
+          top: 'top'
+        },
+        tooltip: {
+          //X轴悬浮显示所有数据
+          trigger: 'axis'
+        },
+        legend: {
+          left: 'center',
+          top: '10%'
+        },
+        grid: {
+          left: '1%',
+          right: '1%',
+          top: '30%',
+          bottom: '1%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          data: this.returnData.sj[1].sort()
+        },
+        yAxis: {
+        },
+        series: [
+          {
+            name: '国家财政收入累计值(亿元)',
+            type: this.chartsType,
+            data: this.nationalFinanceArr(this.NationalFinance.A0C0102)
+          },
+
+          {
+            name: '国家财政支出累计值(亿元)',
+            type: this.chartsType,
+            data: this.nationalFinanceArr(this.NationalFinance.A0C0202)
+          },
+        ]
+      };
+      // 使用刚指定的配置项和数据显示图表。
+      financeChart.setOption(financeOption);
+    },
+    // 国家财政收支图表-年度
     drawFinanceCharts() {
       // 基于准备好的dom，初始化echarts实例
       var financeChart = echarts.init(document.getElementById('finance'));
@@ -329,6 +394,20 @@ export default {
       };
       // 使用刚指定的配置项和数据显示图表。
       fiscalExpenditureChart.setOption(fiscalExpenditureOption);
+    },
+    drawBarChart_Finance_Month() {
+      this.isBarActive_Finance_Month = true;
+      this.isLineActive_Finance_Month = false;
+      this.chartsType = "bar"
+      this.drawFinanceChartsMonth()
+
+    },
+    drawLineChart_Finance_Month() {
+      this.isBarActive_Finance_Month = false;
+      this.isLineActive_Finance_Month = true;
+      // 在这里绘制折线图
+      this.chartsType = "line"
+      this.drawFinanceChartsMonth()
     },
     drawBarChart_Finance() {
       this.isBarActive_Finance = true;
