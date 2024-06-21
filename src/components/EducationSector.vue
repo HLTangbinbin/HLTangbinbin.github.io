@@ -38,32 +38,30 @@ export default {
         return {
             Education: {
                 // 招生数
-                A0M020119: 'A0M020119',   // 学前招生数
-                A0M020111: 'A0M020111',   // 普通小学招生数
-                A0M02010U: 'A0M02010U',   // 初级中学招生数
-                A0M02010I: 'A0M02010I',   // 普通高中招生数
-                A0M020107: 'A0M020107',   // 普通专科招生数
-                A0M020106: 'A0M020106',   // 普通本科招生数
-                A0M020104: 'A0M020104',   // 硕士招生数
-                A0M020103: 'A0M020103',   // 博士招生数
+                A0M020102: 'A0M020102',     // 研究生招生数
+                A0M0701: 'A0M0701',         // 普通高等学校招生数
+                A0M0703: 'A0M0703',         // 普通高中招生数
+                A0M0704: 'A0M0704',         // 初中学校招生数
+                A0M0706: 'A0M0706',         // 普通小学招生数
+                A0M020119: 'A0M020119',     // 学前招生数
+
+
                 // 在校人数
-                A0M02021A: 'A0M02021A',   // 学前在校学生数
-                A0M020212: 'A0M020212',   // 普通小学在校学生数
-                A0M02020V: 'A0M02020V',   // 初级中学在校学生数
-                A0M02020J: 'A0M02020J',   // 普通高中在校学生数
-                A0M020207: 'A0M020207',   // 普通专科在校学生数
-                A0M020206: 'A0M020206',   // 普通本科在校学生数
-                A0M020204: 'A0M020204',   // 硕士在校学生数
-                A0M020203: 'A0M020203',   // 博士在校学生数
+                A0M020202: 'A0M020202',     // 研究生在校学生数
+                A0M0801: 'A0M0801',         // 普通高等学校在校学生数
+                A0M0803: 'A0M0803',         // 普通高中在校学生数
+                A0M0804: 'A0M0804',         // 初中学校在校学生数
+                A0M0806: 'A0M0806',         // 普通小学在校学生数
+                A0M02021A: 'A0M02021A',     // 学前在校学生数
+
                 // 毕业生数
-                A0M02031A: 'A0M02031A',   // 学前毕业生数
-                A0M020312: 'A0M020312',   // 普通小学毕业生数
-                A0M02030V: 'A0M02030V',   // 初级中学毕业生数
-                A0M02030J: 'A0M02030J',   // 普通高中毕业生数
-                A0M020307: 'A0M020307',   // 普通专科毕业生数
-                A0M020306: 'A0M020306',   // 普通本科毕业生数
-                A0M020304: 'A0M020304',   // 硕士毕业生数
-                A0M020303: 'A0M020303',   // 博士毕业生数
+                A0M020302: 'A0M020302',     // 研究生毕业生数
+                A0M0901: 'A0M0901',         // 普通高等学校毕业生数
+                A0M0903: 'A0M0903',         // 普通高中毕业生数
+                A0M0904: 'A0M0904',         // 初中学校毕业生数
+                A0M0906: 'A0M0906',         // 普通小学毕业生数
+                A0M02031A: 'A0M02031A',     // 学前毕业生数
+
             },
 
             isBarActive_Entrants: false,
@@ -164,38 +162,28 @@ export default {
                     {
                         name: '普通小学(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020111)
+                        data: this.educationArr(this.Education.A0M0706)
                     },
                     {
                         name: '初级中学(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M02010U)
-                    }, {
+                        data: this.educationArr(this.Education.A0M0704)
+                    }, 
+                    {
                         name: '普通高中(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M02010I)
+                        data: this.educationArr(this.Education.A0M0703)
                     },
                     {
-                        name: '普通专科(万人)',
+                        name: '普通高等学校(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020107)
+                        data: this.educationArr(this.Education.A0M0701)
                     },
                     {
-                        name: '普通本科(万人)',
+                        name: '研究生(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020106)
+                        data: this.educationArr(this.Education.A0M020102)
                     },
-                    {
-                        name: '硕士(万人)',
-                        type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020104)
-                    },
-                    {
-                        name: '博士(万人)',
-                        type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020103)
-                    }
-
                 ]
             };
             // 使用刚指定的配置项和数据显示图表。
@@ -244,37 +232,27 @@ export default {
                     {
                         name: '普通小学(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020212)
+                        data: this.educationArr(this.Education.A0M0806)
                     },
                     {
                         name: '初级中学(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M02020V)
+                        data: this.educationArr(this.Education.A0M0804)
                     }, {
                         name: '普通高中(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M02020J)
+                        data: this.educationArr(this.Education.A0M0803)
                     },
                     {
-                        name: '普通专科(万人)',
+                        name: '普通高等学校(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020207)
+                        data: this.educationArr(this.Education.A0M0801)
                     },
                     {
-                        name: '普通本科(万人)',
+                        name: '研究生(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020206)
+                        data: this.educationArr(this.Education.A0M020202)
                     },
-                    {
-                        name: '硕士(万人)',
-                        type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020204)
-                    },
-                    {
-                        name: '博士(万人)',
-                        type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020203)
-                    }
                 ]
             };
             // 使用刚指定的配置项和数据显示图表。
@@ -313,6 +291,7 @@ export default {
                 yAxis: {
 
                 },
+
                 series: [
                     {
                         name: '学前数(万人)',
@@ -322,36 +301,26 @@ export default {
                     {
                         name: '普通小学数(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020312)
+                        data: this.educationArr(this.Education.A0M0906)
                     },
                     {
                         name: '初级中学数(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M02030V)
+                        data: this.educationArr(this.Education.A0M0904)
                     }, {
                         name: '普通高中数(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M02030J)
+                        data: this.educationArr(this.Education.A0M0903)
                     },
                     {
-                        name: '普通专科数(万人)',
+                        name: '普通高等学校(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020307)
+                        data: this.educationArr(this.Education.A0M0901)
                     },
                     {
-                        name: '普通本科数(万人)',
+                        name: '研究生(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020306)
-                    },
-                    {
-                        name: '硕士数(万人)',
-                        type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020304)
-                    },
-                    {
-                        name: '博士数(万人)',
-                        type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020303)
+                        data: this.educationArr(this.Education.A0M020302)
                     }
                 ]
             };

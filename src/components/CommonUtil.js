@@ -110,9 +110,16 @@ const params_population = [
 // 教育
 const params_education = [
     // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M0201"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 招生数
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M0202"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 在校学生数
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M0203"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 毕业生数
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M07"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 招生数
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M08"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 在校学生数
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M09"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 毕业生数
+    // 学前-硕士使用下方接口
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M020102"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 招生数-研究生
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M020119"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 招生数--学前
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M020202"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 在校学生数-研究生
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M02021A"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 在校学生数--学前
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M020302"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 毕业生数-研究生
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M02031A"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 毕业生数---学前
 ]
 // 医疗
 const params_medical = [
@@ -177,13 +184,11 @@ export async function sendRequest(specificParams) {
           const nodesArr_sj_nd = data.returndata.wdnodes.slice(-1)[0]?.nodes || [];
           //对于所有请求来说返回的城市数据都一样，所以不能合并数组
           nodesArr_sj_code_nd = nodesArr_sj_nd.map(item => item.code);
-          console.log("333333", nodesArr_sj_code_nd)
         }
         if (dbCode.includes('yd')) {
           const nodesArr_sj_yd = data.returndata.wdnodes.slice(-1)[0]?.nodes || [];
           //对于所有请求来说返回的时间太多组一样的，所以不能合并数组
           nodesArr_sj_code_yd = nodesArr_sj_yd.map(item => item.code);
-          console.log("4444444", nodesArr_sj_code_yd)
         }
       }
 
