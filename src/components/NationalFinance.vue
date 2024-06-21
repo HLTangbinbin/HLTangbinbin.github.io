@@ -39,7 +39,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { sortYearMonths } from './CommonUtil';
+import { params_nationalFinance , sendRequest , sortYearMonths } from './CommonUtil';
 export default {
 
   data() {
@@ -74,7 +74,7 @@ export default {
         // 月度数据
         A0C0102: 'A0C0102',        // 国家财政收入
         A0C0202: 'A0C0202',        // 国家财政支出
-        
+
 
       },
       isBarActive_Finance_Month: false,
@@ -94,23 +94,38 @@ export default {
   },
 
   methods: {
-    loadData() {
+    async loadData() {
       // 请求人民收入公开数据
-      fetch('nationalFinance.json')
-        .then(response => response.json())
-        .then(data => {
-          console.log('请求成功：财政收入与支出数据:', data);
-          // 列表数据
-          this.returnData = data;
+      // fetch('nationalFinance.json')
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     console.log('请求成功：财政收入与支出数据:', data);
+      //     // 列表数据
+      //     this.returnData = data;
+      //     // 处理数据绘制图表
+      //     this.drawBarChart_Finance_Month()
+      //     this.drawBarChart_Finance()
+      //     this.drawBarChart_FiscalRevenue()
+      //     this.drawBarChart_FiscalExpenditure()
+      //   })
+      //   .catch(error => {
+      //     console.error('Error fetching data:', error)
+      //   })
+
+      // 由本地改为请求接口
+      try {
+        this.returnData = await sendRequest(params_nationalFinance);
+        console.log("响应处理后的数据：", this.returnData)
+        if (this.returnData) {
           // 处理数据绘制图表
           this.drawBarChart_Finance_Month()
           this.drawBarChart_Finance()
           this.drawBarChart_FiscalRevenue()
           this.drawBarChart_FiscalExpenditure()
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error)
-        })
+        }
+      } catch (error) {
+        console.error('接口外部调用失败:', error);
+      }
     },
     //按照年份与日期做筛选与排序
     nationalFinanceArr(type) {
@@ -122,8 +137,8 @@ export default {
         return Number(item.value);
       })
     },
-     // 国家财政收支图表-月度
-     drawFinanceChartsMonth() {
+    // 国家财政收支图表-月度
+    drawFinanceChartsMonth() {
       // 基于准备好的dom，初始化echarts实例
       var financeChart = echarts.init(document.getElementById('finance-month'));
       // 指定图表的配置项和数据

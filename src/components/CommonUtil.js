@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 // 定义排序函数
 export function sortYearMonths(date1, date2) {
         // 自定义比较函数
@@ -24,3 +26,237 @@ export function sortYearMonths(date1, date2) {
         // 返回排序后的结果
         return compareYearMonth(date1, date2);
 }
+
+// const baseurl = 'https://data.stats.gov.cn/easyquery.htm';
+
+// 改为这种方式解决跨域报错问题
+const baseurl = 'api/easyquery.htm';
+
+const common_params = {
+  m: 'QueryData',
+  colcode: 'sj',
+  k1: String(Date.now()),
+  h: '1'
+};
+
+// 一线房价  
+const params_cityHousePrice = [
+    // 请求的数据指标与时间，
+    // 城市年度数据 'dbcode' : 'csnd 'wds'与dfwds一定分别设置，这个普通数据请求参数不同！！！！！
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A030C"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A030C 住宅商品房平均销售价格
+    // 城市月度数据 'dbcode' : 'csyd
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010804"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010804 新建商品住宅销售价格指数(上月=100)
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010805"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010805 新建商品住宅销售价格指数(上年同月=100)
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A01080S"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A01080S 新建商品住宅销售价格指数(上年同期=100)
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010807"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010807 二手住宅销售价格指数(上月=100)
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010808"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010808 二手住宅销售价格指数(上年同月=100)
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A01080T"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A01080T 二手住宅销售价格指数(上年同期=100)
+   
+]
+// GDP
+const params_gdp = [
+    // 国家年度数据---// A0201：A020102 国内生产总值  A020103 第一产值增加  A020104 第二产值增加  A020105 第三产值增加
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0201"},{"wdcode":"sj","valuecode":"LAST10"}]'},
+    // 城市年度数据 'dbcode' : 'csnd 'wds'与dfwds一定分别设置，这个普通数据请求参数不同！！！！！
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0101"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0101 国内生产总值
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0102"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0102 第一产值增加
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0103"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0103 第二产值增加
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0104"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0104 第三产值增加
+
+]
+// 财政
+const params_nationalFinance = [
+    // 年度数据
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0802"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 国家财政收入
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0803"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 国家财政支出
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A080401"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 国家财政收入-项目
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A080501"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 国家财政支出-项目
+    // 月度数据
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0C01"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // 国家财政收入-项目
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0C02"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // 国家财政支出-项目
+]
+// 金融
+const params_financialIndustry = [
+    // 年度数据-货币供应
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0L03"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 货币供应量(亿元)
+     // 年度数据-外汇
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0L0401"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 黄金储备(万盎司)
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0L0402"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 外汇储备(亿美元) 
+    // 月度数据-货币供应
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0D01"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // 货币供应量(亿元)
+]
+// 外贸
+const params_foreignTrade = [
+    // 年度数据
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0601"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 进出口总额
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050201"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向亚洲出口总额
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050203"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向欧洲出口总额
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050205"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向北美洲出口总额
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050301"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向亚洲进口总额
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050303"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向欧洲进口总额
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050305"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向北美洲进口总额 
+
+    // 月度数据 A0801
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0801"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // 进出口总额
+]
+// 人口
+const params_population = [
+    // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0301"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 301 总人口
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0302"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 302 增长率
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0303"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 303 年龄结构与抚养比
+]
+
+// 教育
+const params_education = [
+    // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M0201"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 招生数
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M0202"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 在校学生数
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M0203"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 毕业生数
+]
+// 医疗
+const params_medical = [
+    // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0O01"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 医疗卫生机构
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0O02"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 卫生人员
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0O05"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 医疗机构床位
+]
+// 指数数据
+const params_indices = [
+    // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，LAST13为最近13个月数据
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A01010101"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // CPI 上年同比
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A01030101"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // CPI 上月环比
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A01080101"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // PPI 上年同比
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A01080701"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // PPI 上月环比
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0B0101"},{"wdcode":"sj","valuecode":"LAST13"}]'},   // 制造业采购指数
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0B0201"},{"wdcode":"sj","valuecode":"LAST13"}]'},   // 非制造业采购指数
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0B0301"},{"wdcode":"sj","valuecode":"LAST13"}]'}    // 综合采购指数
+]
+// 生活水平
+const params_livingStandards = [
+    // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，LAST10为最近10年数据
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0A01"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 全国居民收入
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0A02"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 城镇居民收入
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0A03"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 农村居民收入
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0A0G"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 可支配收入基尼系数
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0A0H"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 居民恩格尔系数
+    
+]
+
+
+export async function sendRequest(specificParams) {
+
+  let datanodesArr = [];
+  let newDataArr = []
+  let nodesArr_zb = [];         // 城市指标描述数组
+  let nodesArr_reg = [];        // 城市指标描述数组
+  let nodesArr_sj_code_nd = [];
+  let nodesArr_sj_code_yd = [];
+
+  for (let params of specificParams) {
+    let mergedParams = { ...common_params, ...params };
+    try {
+      let response = await axios.get(baseurl, { params: mergedParams });
+      let data = response.data;
+      // console.log("请求返回数据：",data.returndata)
+      if (data && data.returndata) {
+        if (data.returndata.datanodes) {
+          datanodesArr = datanodesArr.concat(data.returndata.datanodes);
+        }
+        //获取wdnodes数组的第一个元素，包含cname的数据
+        if (data.returndata.wdnodes && data.returndata.wdnodes[0] && data.returndata.wdnodes[0].nodes) {
+          nodesArr_zb = nodesArr_zb.concat(data.returndata.wdnodes[0].nodes);
+        }
+        //对于所有请求来说返回的城市数据都一样，所以不能合并数组
+        //获取wdnodes数组的第二个元素，0: zb 1:reg 2:sj ,如果没有reg，则1: sj
+        if (data.returndata.wdnodes && data.returndata.wdnodes[1] && data.returndata.wdnodes[1].wdcode === 'reg') {
+          nodesArr_reg = data.returndata.wdnodes[1].nodes;
+        }
+        let dbCode = mergedParams.dbcode;
+        if (dbCode.includes('nd')) {
+          const nodesArr_sj_nd = data.returndata.wdnodes.slice(-1)[0]?.nodes || [];
+          //对于所有请求来说返回的城市数据都一样，所以不能合并数组
+          nodesArr_sj_code_nd = nodesArr_sj_nd.map(item => item.code);
+          console.log("333333", nodesArr_sj_code_nd)
+        }
+        if (dbCode.includes('yd')) {
+          const nodesArr_sj_yd = data.returndata.wdnodes.slice(-1)[0]?.nodes || [];
+          //对于所有请求来说返回的时间太多组一样的，所以不能合并数组
+          nodesArr_sj_code_yd = nodesArr_sj_yd.map(item => item.code);
+          console.log("4444444", nodesArr_sj_code_yd)
+        }
+      }
+
+    } catch (error) {
+      if (error.response && error.response.data) {
+        console.error(`JSON解码错误: 响应内容不是JSON格式,响应内容为: ${error.response.data}`);
+      } else {
+        console.error('请求错误:', error.message);
+      }
+      return;
+    }
+  }
+  datanodesArr.forEach(dataElement => {
+    let newJson = {};
+    newJson['value'] = dataElement['data']['data'];
+    newJson['code'] = dataElement['wds'][0]['valuecode'];
+
+    nodesArr_zb.forEach(nodesElement_zb => {
+      if (nodesElement_zb['code'] === dataElement['wds'][0]['valuecode']) {
+        newJson['cname'] = nodesElement_zb['cname'];
+        // 提取并组合字段
+        return false; // break the loop
+      }
+    });
+
+    // 如果有reg的话，['wds'][1]就不是sj是reg了，所以这里取wds的最后一个元素
+    newJson['date'] = dataElement['wds'][dataElement['wds'].length - 1]['valuecode'];
+
+    if (dataElement['wds'][1]['wdcode'] === "reg") {
+      let valueCode = dataElement['wds'][1]['valuecode'];
+
+      nodesArr_reg.forEach(nodesElement_reg => {
+        if (nodesElement_reg['code'] === valueCode) {
+          newJson['cityName'] = nodesElement_reg['cname'];
+          newJson['cityCode'] = dataElement['wds'][1]['valuecode'];
+          return false; // break the loop
+        }
+      });
+    }
+
+    newDataArr.push(newJson);
+  });
+
+  const newDataArr_zb = nodesArr_zb.map(item => ({ cname: item.cname, code: item.code }));
+  const newDataArr_reg = nodesArr_reg.map(item => ({ cname: item.cname, code: item.code }));
+  const newDataArr_sj = [];
+  if (nodesArr_sj_code_nd.length > 0) {
+    newDataArr_sj.push(nodesArr_sj_code_nd);
+  }
+  if (nodesArr_sj_code_yd.length > 0) {
+    newDataArr_sj.push(nodesArr_sj_code_yd);
+  }
+
+  const newData = {
+    dataList: newDataArr,
+    zb: newDataArr_zb,
+    reg: newDataArr_reg,
+    sj: newDataArr_sj
+  };
+
+  return newData;
+}
+
+// 导出模块
+export {
+  params_cityHousePrice,
+  params_gdp,
+  params_nationalFinance,
+  params_financialIndustry,
+  params_foreignTrade,
+  params_population,
+  params_education,
+  params_medical,
+  params_indices,
+  params_livingStandards,
+};

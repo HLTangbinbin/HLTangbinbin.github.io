@@ -40,7 +40,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { sortYearMonths } from './CommonUtil';
+import { params_foreignTrade, sendRequest, sortYearMonths } from './CommonUtil';
 export default {
 
     data() {
@@ -96,24 +96,37 @@ export default {
     },
 
     methods: {
-        loadData() {
+        async loadData() {
             // 请求人民收入公开数据
-            fetch('foreignTrade.json')
-                .then(response => response.json())
-                .then(data => {
-                    console.log('请求成功对外贸易数据:', data);
-                    // 列表数据
-                    this.returnData = data;
+            // fetch('foreignTrade.json')
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         console.log('请求成功对外贸易数据:', data);
+            //         // 列表数据
+            //         this.returnData = data;
+            //         // 处理数据绘制图表
+            //         this.drawBarChart_ImportAndExport_Month()
+            //         this.drawBarChart_ImportAndExport()
+            //         this.drawBarChart_Export()
+            //         this.drawBarChart_Import()
+
+            //     })
+            //     .catch(error => {
+            //         console.error('Error fetching data:', error)
+            //     })
+            try {
+                this.returnData = await sendRequest(params_foreignTrade);
+                console.log("响应处理后的数据：", this.returnData)
+                if (this.returnData) {
                     // 处理数据绘制图表
                     this.drawBarChart_ImportAndExport_Month()
                     this.drawBarChart_ImportAndExport()
                     this.drawBarChart_Export()
                     this.drawBarChart_Import()
-
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error)
-                })
+                }
+            } catch (error) {
+                console.error('接口外部调用失败:', error);
+            }
         },
         //按照年份与日期做筛选与排序
         foreignTradeArr(type) {

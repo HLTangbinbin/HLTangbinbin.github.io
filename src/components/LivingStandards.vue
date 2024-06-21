@@ -31,7 +31,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { sortYearMonths } from './CommonUtil';
+import { params_livingStandards, sendRequest, sortYearMonths } from './CommonUtil';
 export default {
 
   data() {
@@ -67,22 +67,34 @@ export default {
   },
 
   methods: {
-    loadData() {
-      // 请求人民收入公开数据
-      fetch('livingStandards.json')
-        .then(response => response.json())
-        .then(data => {
-          console.log('请求成功人民收入数据:', data);
-          // 列表数据
-          this.returnData = data;
-          // 处理数据绘制图表
+    async loadData() {
+      // // 请求人民收入公开数据
+      // fetch('livingStandards.json')
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     console.log('请求成功人民收入数据:', data);
+      //     // 列表数据
+      //     this.returnData = data;
+      //     // 处理数据绘制图表
+      //     this.drawBarChart_Income()
+      //     this.drawBarChart_Engel()
+      //     this.drawBarChart_Gini()
+      //   })
+      //   .catch(error => {
+      //     console.error('Error fetching data:', error)
+      //   })
+      // 由本地改为请求接口
+      try {
+        this.returnData = await sendRequest(params_livingStandards);
+        console.log("响应处理后的数据：", this.returnData)
+        if (this.returnData) {
           this.drawBarChart_Income()
           this.drawBarChart_Engel()
           this.drawBarChart_Gini()
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error)
-        })
+        }
+      } catch (error) {
+        console.error('接口外部调用失败:', error);
+      }
     },
     //按照年份与日期做筛选与排序
     livingStandardsArr(type) {

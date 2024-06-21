@@ -22,7 +22,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { sortYearMonths } from './CommonUtil';
+import { params_gdp, sendRequest, sortYearMonths } from './CommonUtil';
 
 export default {
 
@@ -71,20 +71,33 @@ export default {
   },
 
   methods: {
-    loadData() {
+    async loadData() {
       // 读取本地的 JSON 文件
-      fetch('gdp.json')
-        .then(response => response.json())
-        .then(data => {
-          console.log('请求成功GDP数据:', data);
-          this.returnData = data;
+      // fetch('gdp.json')
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     console.log('请求成功GDP数据:', data);
+      //     this.returnData = data;
+      //     // 处理数据绘制图表
+      //     this.drawBarChart_GDP_HG();
+      //     this.drawBarChart_GDP_CS();
+      //   })
+      //   .catch(error => {
+      //     console.error('Error fetching data:', error)
+      //   })
+
+      // 由本地改为请求接口
+      try {
+        this.returnData = await sendRequest(params_gdp);
+        console.log("响应处理后的数据：", this.returnData)
+        if (this.returnData) {
           // 处理数据绘制图表
           this.drawBarChart_GDP_HG();
           this.drawBarChart_GDP_CS();
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error)
-        })
+        }
+      } catch (error) {
+        console.error('接口外部调用失败:', error);
+      }
     },
     // 国内生产总值
     dataArr_GDP_HG(gdpType) {

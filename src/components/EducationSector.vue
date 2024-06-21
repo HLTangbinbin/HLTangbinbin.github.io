@@ -31,7 +31,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { sortYearMonths } from './CommonUtil';
+import { params_education, sendRequest, sortYearMonths } from './CommonUtil';
 export default {
 
     data() {
@@ -82,22 +82,33 @@ export default {
     },
 
     methods: {
-        loadData() {
+        async loadData() {
             // 请求人民收入公开数据
-            fetch('education.json')
-                .then(response => response.json())
-                .then(data => {
-                    console.log('请求成功教育数据:', data);
-                    // 列表数据
-                    this.returnData = data;
-                    // 处理数据绘制图表
+            // fetch('education.json')
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         console.log('请求成功教育数据:', data);
+            //         // 列表数据
+            //         this.returnData = data;
+            //         // 处理数据绘制图表
+            //         this.drawBarChart_Entrants()
+            //         this.drawBarChart_Enrollment()
+            //         this.drawBarChart_Graduates()
+            //     })
+            //     .catch(error => {
+            //         console.error('Error fetching data:', error)
+            //     })
+            try {
+                this.returnData = await sendRequest(params_education);
+                console.log("响应处理后的数据：", this.returnData)
+                if (this.returnData) {
                     this.drawBarChart_Entrants()
                     this.drawBarChart_Enrollment()
                     this.drawBarChart_Graduates()
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error)
-                })
+                }
+            } catch (error) {
+                console.error('接口外部调用失败:', error);
+            }
         },
         //按照年份与日期做筛选与排序
         educationArr(type) {
@@ -143,7 +154,7 @@ export default {
                 },
                 yAxis: {
                 },
- 
+
                 series: [
                     {
                         name: '学前(万人)',
@@ -221,7 +232,7 @@ export default {
                     data: this.returnData.sj[0].sort()
                 },
                 yAxis: {
-      
+
                 },
 
                 series: [
@@ -300,7 +311,7 @@ export default {
                     data: this.returnData.sj[0].sort()
                 },
                 yAxis: {
- 
+
                 },
                 series: [
                     {

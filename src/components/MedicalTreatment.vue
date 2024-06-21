@@ -31,7 +31,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { sortYearMonths } from './CommonUtil';
+import { params_medical, sendRequest, sortYearMonths } from './CommonUtil';
 export default {
 
     data() {
@@ -50,7 +50,7 @@ export default {
                 A0O0501: 'A0O0501',   // 卫生机构床位数
                 A0O0502: 'A0O0502',   // 医院床位数
                 A0O0506: 'A0O0506',   // 基层医疗卫生机构床位数
- 
+
             },
 
             isBarActive_Agency: false,
@@ -69,22 +69,35 @@ export default {
     },
 
     methods: {
-        loadData() {
+        async loadData() {
             // 请求医疗数据
-            fetch('medical.json')
-                .then(response => response.json())
-                .then(data => {
-                    console.log('请求成功医疗数据:', data);
-                    // 列表数据
-                    this.returnData = data;
-                    // 处理数据绘制图表
+            // fetch('medical.json')
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         console.log('请求成功医疗数据:', data);
+            //         // 列表数据
+            //         this.returnData = data;
+            //         // 处理数据绘制图表
+            //         this.drawBarChart_Agency()
+            //         this.drawBarChart_Officer()
+            //         this.drawBarChart_Bed()
+            //     })
+            //     .catch(error => {
+            //         console.error('Error fetching data:', error)
+            //     })
+
+            // 由本地改为请求接口
+            try {
+                this.returnData = await sendRequest(params_medical);
+                console.log("响应处理后的数据：", this.returnData)
+                if (this.returnData) {
                     this.drawBarChart_Agency()
                     this.drawBarChart_Officer()
                     this.drawBarChart_Bed()
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error)
-                })
+                }
+            } catch (error) {
+                console.error('接口外部调用失败:', error);
+            }
         },
         //按照年份与日期做筛选与排序
         medicalArr(type) {
@@ -131,7 +144,7 @@ export default {
                 },
                 yAxis: {
                 },
- 
+
                 series: [
                     {
                         name: '医疗卫生机构数(个)',
@@ -185,7 +198,7 @@ export default {
                     data: this.returnData.sj[0].sort()
                 },
                 yAxis: {
-      
+
                 },
 
                 series: [
@@ -209,7 +222,7 @@ export default {
                         type: this.chartsType,
                         data: this.medicalArr(this.Medical.A0O0205)
                     }
-      
+
                 ]
             };
             // 使用刚指定的配置项和数据显示图表。
@@ -246,10 +259,10 @@ export default {
                     data: this.returnData.sj[0].sort()
                 },
                 yAxis: {
- 
+
                 },
                 series: [
-                {
+                    {
                         name: '卫生机构床位数(万张)',
                         type: this.chartsType,
                         data: this.medicalArr(this.Medical.A0O0501)

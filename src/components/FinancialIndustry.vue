@@ -32,7 +32,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { sortYearMonths } from './CommonUtil';
+import { params_financialIndustry,sendRequest , sortYearMonths } from './CommonUtil';
 export default {
 
   data() {
@@ -66,21 +66,33 @@ export default {
   },
 
   methods: {
-    loadData() {
+    async loadData() {
       // 请求currency数据
-      fetch('financialIndustry.json')
-        .then(response => response.json())
-        .then(data => {
-          this.returnData = data
-          console.log('请求成功currency数据:', this.returnData);
+      // fetch('financialIndustry.json')
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     this.returnData = data
+      //     console.log('请求成功currency数据:', this.returnData);
+      //     // 处理数据绘制图表
+      //     this.drawBarChart_Currency_Month();
+      //     this.drawBarChart_Currency();
+      //     this.drawBarChart_ForeignCurrency();
+      //   })
+      //   .catch(error => {
+      //     console.error('Error fetching data:', error)
+      //   })
+      try {
+        this.returnData = await sendRequest(params_financialIndustry);
+        console.log("响应处理后的数据：", this.returnData)
+        if (this.returnData) {
           // 处理数据绘制图表
           this.drawBarChart_Currency_Month();
           this.drawBarChart_Currency();
           this.drawBarChart_ForeignCurrency();
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error)
-        })
+        }
+      } catch (error) {
+        console.error('接口外部调用失败:', error);
+      }
     },
     // 按照类型与字段名称
     dataArr_Currency(type, year = '') {
@@ -95,8 +107,8 @@ export default {
         return Number(item.value);
       })
     },
-     // 货币供应量图表-月度
-     drawChat_Currency_Month() {
+    // 货币供应量图表-月度
+    drawChat_Currency_Month() {
       // 基于准备好的dom，初始化echarts实例
       var currencyChart = echarts.init(document.getElementById('currency-month'));
       // 指定图表的配置项和数据
