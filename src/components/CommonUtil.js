@@ -163,10 +163,12 @@ export async function sendRequest(specificParams) {
 
   for (let params of specificParams) {
     let mergedParams = { ...common_params, ...params };
+    console.log("请求完整参数：", mergedParams)
     try {
+     
       let response = await axios.get(totalUrl, { params: mergedParams });
       let data = response.data;
-      // console.log("请求返回数据：",data.returndata)
+      console.log("请求返回数据：",data.returndata)
       if (data && data.returndata) {
         if (data.returndata.datanodes) {
           datanodesArr = datanodesArr.concat(data.returndata.datanodes);
