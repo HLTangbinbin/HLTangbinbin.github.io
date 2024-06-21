@@ -28,10 +28,11 @@ export function sortYearMonths(date1, date2) {
 }
 
 // const baseurl = 'https://data.stats.gov.cn/easyquery.htm';
+// const proxyServerUrl = 'https://githubproxy-592325394348.herokuapp.com/api'
+
 
 // 改为这种方式解决跨域报错问题
-const baseurl = 'api/easyquery.htm';
-
+const totalUrl = `${process.env.VUE_APP_API_BASE_URL}/easyquery.htm`;
 const common_params = {
   m: 'QueryData',
   colcode: 'sj',
@@ -163,7 +164,7 @@ export async function sendRequest(specificParams) {
   for (let params of specificParams) {
     let mergedParams = { ...common_params, ...params };
     try {
-      let response = await axios.get(baseurl, { params: mergedParams });
+      let response = await axios.get(totalUrl, { params: mergedParams });
       let data = response.data;
       // console.log("请求返回数据：",data.returndata)
       if (data && data.returndata) {
