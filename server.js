@@ -11,11 +11,17 @@ app.use(
             '^/api': '',
         },
         changeOrigin: true,
-        onProxyRes: (proxyRes, req, res) => {
+        onProxyRes: (proxyRes, req, res, next) => {
             console.log('proxy res here =====');
             proxyRes.headers['x-added'] = 'foobar';
+            res.header("Access-Control-Allow-Origin", "https://hltangbinbin.github.io");
+            res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+            res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+            next();
         },
+        
     }),
+    
 );
 
 // 启动服务器
