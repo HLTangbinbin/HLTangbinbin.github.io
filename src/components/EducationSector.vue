@@ -31,7 +31,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { params_education, sendRequest, sortYearMonths } from './CommonUtil';
+import { params_education, sendRequest, selectDataFromArr } from './CommonUtil';
 export default {
 
     data() {
@@ -117,18 +117,7 @@ export default {
                 console.error('接口外部调用失败:', error);
             }
         },
-        //按照年份与日期做筛选与排序
-        educationArr(type) {
-            return this.returnData.dataList.filter(returnDataObj => {
-                return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
-            }).sort(function (a, b) {
-                return sortYearMonths(a.date, b.date);
-            }).map(item => {
-                //取出某个字段数据
-                var number = Number(item.value)
-                return number;
-            })
-        },
+
         // 招生数图表
         drawentrantsCharts() {
             // 基于准备好的dom，初始化echarts实例
@@ -166,32 +155,32 @@ export default {
                     {
                         name: '学前(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020119)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M020119)
                     },
                     {
                         name: '普通小学(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0706)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0706)
                     },
                     {
                         name: '初级中学(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0704)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0704)
                     },
                     {
                         name: '普通高中(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0703)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0703)
                     },
                     {
                         name: '普通高等学校(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0701)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0701)
                     },
                     {
                         name: '研究生(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020102)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M020102)
                     },
                 ]
             };
@@ -236,31 +225,31 @@ export default {
                     {
                         name: '学前(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M02021A)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M02021A)
                     },
                     {
                         name: '普通小学(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0806)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0806)
                     },
                     {
                         name: '初级中学(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0804)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0804)
                     }, {
                         name: '普通高中(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0803)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0803)
                     },
                     {
                         name: '普通高等学校(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0801)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0801)
                     },
                     {
                         name: '研究生(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020202)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M020202)
                     },
                 ]
             };
@@ -305,31 +294,31 @@ export default {
                     {
                         name: '学前数(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M02031A)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M02031A)
                     },
                     {
                         name: '普通小学数(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0906)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0906)
                     },
                     {
                         name: '初级中学数(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0904)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0904)
                     }, {
                         name: '普通高中数(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0903)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0903)
                     },
                     {
                         name: '普通高等学校(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M0901)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M0901)
                     },
                     {
                         name: '研究生(万人)',
                         type: this.chartsType,
-                        data: this.educationArr(this.Education.A0M020302)
+                        data: selectDataFromArr(this.returnData, this.Education.A0M020302)
                     }
                 ]
             };

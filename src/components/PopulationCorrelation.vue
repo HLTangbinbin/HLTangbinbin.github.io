@@ -31,7 +31,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { params_population, sendRequest, sortYearMonths } from './CommonUtil';
+import { params_population, sendRequest, selectDataFromArr } from './CommonUtil';
 export default {
 
   data() {
@@ -107,18 +107,7 @@ export default {
         console.error('接口外部调用失败:', error);
       }
     },
-    //按照年份与日期做筛选与排序
-    populationArr(type) {
-      return this.returnData.dataList.filter(returnDataObj => {
-        return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
-      }).sort(function (a, b) {
-        return sortYearMonths(a.date, b.date);
-      }).map(item => {
-        //取出某个字段数据
-        var number = Number(item.value)
-        return number;
-      })
-    },
+
     // 总人口图表
     drawPopulationCharts() {
       // 基于准备好的dom，初始化echarts实例
@@ -155,41 +144,41 @@ export default {
           {
             name: '总人口(万人)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationType.Population_A030101)
+            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030101)
           },
           {
             name: '男性(万人)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationType.Population_A030102)
+            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030102)
           },
           {
             name: '女性(万人)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationType.Population_A030103)
+            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030103)
           }, {
             name: '城镇(万人)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationType.Population_A030104)
+            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030104)
           },
           {
             name: '农村(万人)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationType.Population_A030105)
+            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030105)
           },
           {
             name: '0-14岁(万人)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationType.Population_A030302)
+            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030302)
           },
           {
             name: '14-64岁(万人)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationType.Population_A030303)
+            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030303)
           },
           {
             name: '65岁以上(万人)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationType.Population_A030304)
+            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030304)
           }
 
         ]
@@ -233,17 +222,17 @@ export default {
           {
             name: '出生率(%)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationRateType.Population_A030201)
+            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030201)
           },
           {
             name: '死亡率(%)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationRateType.Population_A030202)
+            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030202)
           },
           {
             name: '自然增长率(%)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationRateType.Population_A030203)
+            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030203)
           }
         ]
       };
@@ -286,17 +275,17 @@ export default {
           {
             name: '总抚养比(%)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationRateType.Population_A030305)
+            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030305)
           },
           {
             name: '少儿抚养比(%)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationRateType.Population_A030306)
+            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030306)
           },
           {
             name: '老年抚养比(%)',
             type: this.chartsType,
-            data: this.populationArr(this.PopulationRateType.Population_A030307)
+            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030307)
           }
         ]
       };

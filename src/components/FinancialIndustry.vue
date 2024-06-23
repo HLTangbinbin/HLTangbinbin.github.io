@@ -32,7 +32,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { params_financialIndustry, sendRequest, sortYearMonths } from './CommonUtil';
+import { params_financialIndustry, sendRequest, selectDataFromArr } from './CommonUtil';
 export default {
 
   data() {
@@ -103,19 +103,6 @@ export default {
         console.error('接口外部调用失败:', error);
       }
     },
-    // 按照类型与字段名称
-    dataArr_Currency(type, year = '') {
-      return this.returnData.dataList.filter(returnDataObj => {
-        if (year != '') {
-          return returnDataObj.code.search(type) != -1 && returnDataObj.date.search(year) != -1 && returnDataObj.value != 0;
-        }
-        return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
-      }).sort(function (a, b) {
-        return sortYearMonths(a.date, b.date);
-      }).map(item => {
-        return Number(item.value);
-      })
-    },
     // 货币供应量图表-月度
     drawChat_Currency_Month() {
       // 基于准备好的dom，初始化echarts实例
@@ -153,17 +140,17 @@ export default {
           {
             name: 'M0',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0105)
+            data: selectDataFromArr(this.returnData, this.CurrencyType.A0D0105)
           },
           {
             name: 'M1',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0103)
+            data: selectDataFromArr(this.returnData, this.CurrencyType.A0D0103)
           },
           {
             name: 'M2',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0D0101)
+            data: selectDataFromArr(this.returnData, this.CurrencyType.A0D0101)
           }
         ]
       };
@@ -213,17 +200,17 @@ export default {
           {
             name: 'M0',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0L0303)
+            data: selectDataFromArr(this.returnData, this.CurrencyType.A0L0303)
           },
           {
             name: 'M1',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0L0302)
+            data: selectDataFromArr(this.returnData, this.CurrencyType.A0L0302)
           },
           {
             name: 'M2',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0L0301)
+            data: selectDataFromArr(this.returnData, this.CurrencyType.A0L0301)
           }
         ]
       };
@@ -267,12 +254,12 @@ export default {
           {
             name: '黄金储备(万盎司)',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0L0401)
+            data: selectDataFromArr(this.returnData, this.CurrencyType.A0L0401)
           },
           {
             name: '外汇储备(亿美元)',
             type: this.chartsType,
-            data: this.dataArr_Currency(this.CurrencyType.A0L0402)
+            data: selectDataFromArr(this.returnData, this.CurrencyType.A0L0402)
           },
         ]
       };

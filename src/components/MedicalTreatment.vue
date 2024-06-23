@@ -31,7 +31,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { params_medical, sendRequest, sortYearMonths } from './CommonUtil';
+import { params_medical, sendRequest, selectDataFromArr } from './CommonUtil';
 export default {
 
     data() {
@@ -106,19 +106,6 @@ export default {
                 console.error('接口外部调用失败:', error);
             }
         },
-        //按照年份与日期做筛选与排序
-        medicalArr(type) {
-            return this.returnData.dataList.filter(returnDataObj => {
-                return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
-            }).sort(function (a, b) {
-                return sortYearMonths(a.date, b.date);
-            }).map(item => {
-                //取出某个字段数据
-                var number = Number(item.value)
-                return number;
-            })
-        },
-
         // 卫生机构图表
         drawAgencyCharts() {
             // 基于准备好的dom，初始化echarts实例
@@ -156,17 +143,17 @@ export default {
                     {
                         name: '医疗卫生机构数(个)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0101)
+                        data: selectDataFromArr(this.returnData, this.Medical.A0O0101)
                     },
                     {
                         name: '医院数(个)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0102)
+                        data: selectDataFromArr(this.returnData, this.Medical.A0O0102)
                     },
                     {
                         name: '基础医疗卫生机构(个)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0106)
+                        data: selectDataFromArr(this.returnData, this.Medical.A0O0106)
                     }
 
                 ]
@@ -212,22 +199,22 @@ export default {
                     {
                         name: '卫生人员数(万人)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0201)
+                        data: selectDataFromArr(this.returnData, this.Medical.A0O0201)
                     },
                     {
                         name: '卫生技术人员数(万人)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0202)
+                        data: selectDataFromArr(this.returnData, this.Medical.A0O0202)
                     },
                     {
                         name: '执业医师数(万人)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0204)
+                        data: selectDataFromArr(this.returnData, this.Medical.A0O0204)
                     },
                     {
                         name: '注册护士数(万人)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0205)
+                        data: selectDataFromArr(this.returnData, this.Medical.A0O0205)
                     }
 
                 ]
@@ -272,17 +259,17 @@ export default {
                     {
                         name: '卫生机构床位数(万张)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0501)
+                        data: selectDataFromArr(this.returnData, this.Medical.A0O0501)
                     },
                     {
                         name: '医院床位数(万张)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0502)
+                        data: selectDataFromArr(this.returnData, this.Medical.A0O0502)
                     },
                     {
                         name: '基础医疗卫生机构床位数(万张)',
                         type: this.chartsType,
-                        data: this.medicalArr(this.Medical.A0O0506)
+                        data: selectDataFromArr(this.returnData, this.Medical.A0O0506)
                     }
                 ]
             };

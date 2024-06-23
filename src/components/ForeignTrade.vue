@@ -40,7 +40,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { params_foreignTrade, sendRequest, sortYearMonths } from './CommonUtil';
+import { params_foreignTrade, sendRequest, selectDataFromArr } from './CommonUtil';
 export default {
 
     data() {
@@ -136,18 +136,6 @@ export default {
             }
         },
 
-        //按照年份与日期做筛选与排序
-        foreignTradeArr(type) {
-            return this.returnData.dataList.filter(returnDataObj => {
-                return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
-            }).sort(function (a, b) {
-                return sortYearMonths(a.date, b.date);
-            }).map(item => {
-                //取出某个字段数据
-                var number = Number(item.value)
-                return number;
-            })
-        },
         // 进出口贸易总额图表-月度
         drawImportAndExportChartsMonth() {
             // 基于准备好的dom，初始化echarts实例
@@ -185,21 +173,21 @@ export default {
                     {
                         name: '进出口总额(美元)',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A080101)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A080101)
                     },
                     {
                         name: '出口总额(美元)',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A080105)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A080105)
                     },
                     {
                         name: '进口总额(美元)',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A080109)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A080109)
                     }, {
                         name: '进出口差额(美元)',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A08010D)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A08010D)
                     },
 
 
@@ -245,21 +233,21 @@ export default {
                     {
                         name: '进出口总额(美元)',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060105)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060105)
                     },
                     {
                         name: '出口总额(美元)',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060106)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060106)
                     },
                     {
                         name: '进口总额(美元)',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060107)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060107)
                     }, {
                         name: '进出口差额(美元)',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060108)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060108)
                     },
 
 
@@ -306,47 +294,47 @@ export default {
                     {
                         name: '日本',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060502010H)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060502010H)
                     },
                     {
                         name: '韩国',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060502010Y)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060502010Y)
                     },
                     {
                         name: '越南',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A0605020115)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A0605020115)
                     },
                     {
                         name: '俄罗斯',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A0605020313)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A0605020313)
                     },
                     {
                         name: '印度',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060502010C)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060502010C)
                     },
                     {
                         name: '英国',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A0605020304)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A0605020304)
                     },
                     {
                         name: '德国',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A0605020305)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A0605020305)
                     },
                     {
                         name: '荷兰',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060502030A)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060502030A)
                     },
                     {
                         name: '美国',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A0605020503)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A0605020503)
                     }
                 ]
             };
@@ -390,47 +378,47 @@ export default {
                     {
                         name: '日本',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060503010H)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060503010H)
                     },
                     {
                         name: '韩国',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060503010Y)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060503010Y)
                     },
                     {
                         name: '越南',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A0605030115)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A0605030115)
                     },
                     {
                         name: '俄罗斯',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A0605030313)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A0605030313)
                     },
                     {
                         name: '印度',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060503010C)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060503010C)
                     },
                     {
                         name: '英国',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A0605030304)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A0605030304)
                     },
                     {
                         name: '德国',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A0605030305)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A0605030305)
                     },
                     {
                         name: '荷兰',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A060503030A)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A060503030A)
                     },
                     {
                         name: '美国',
                         type: this.chartsType,
-                        data: this.foreignTradeArr(this.ForeignTrade_ImportAndExport.A0605030503)
+                        data: selectDataFromArr(this.returnData, this.ForeignTrade_ImportAndExport.A0605030503)
                     }
                 ]
             };

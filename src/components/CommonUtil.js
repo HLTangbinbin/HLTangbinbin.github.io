@@ -26,6 +26,18 @@ export function sortYearMonths(date1, date2) {
         // 返回排序后的结果
         return compareYearMonth(date1, date2);
 }
+// //按照年份与日期做筛选与排序
+export function selectDataFromArr(arr,type) {
+  return arr.dataList.filter(returnDataObj => {
+    return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
+  }).sort(function (a, b) {
+    return sortYearMonths(a.date, b.date);
+  }).map(item => {
+    //取出某个字段数据
+    var number = Number(item.value)
+    return number;
+  })
+}
 
 // const baseurl = 'https://data.stats.gov.cn/easyquery.htm';
 // const proxyServerUrl = 'https://githubproxy-592325394348.herokuapp.com/api'

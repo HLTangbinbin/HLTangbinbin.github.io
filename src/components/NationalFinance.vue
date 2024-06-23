@@ -39,7 +39,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { params_nationalFinance, sendRequest, sortYearMonths } from './CommonUtil';
+import { params_nationalFinance, sendRequest, selectDataFromArr } from './CommonUtil';
 export default {
 
   data() {
@@ -133,16 +133,7 @@ export default {
         console.error('接口外部调用失败:', error);
       }
     },
-    //按照年份与日期做筛选与排序
-    nationalFinanceArr(type) {
-      return this.returnData.dataList.filter(returnDataObj => {
-        return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
-      }).sort(function (a, b) {
-        return sortYearMonths(a.date, b.date);
-      }).map(item => {
-        return Number(item.value);
-      })
-    },
+
     // 国家财政收支图表-月度
     drawFinanceChartsMonth() {
       // 基于准备好的dom，初始化echarts实例
@@ -179,13 +170,13 @@ export default {
           {
             name: '国家财政收入累计值(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A0C0102)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A0C0102)
           },
 
           {
             name: '国家财政支出累计值(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A0C0202)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A0C0202)
           },
         ]
       };
@@ -228,32 +219,32 @@ export default {
           {
             name: '全国财政收入(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A080201)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A080201)
           },
           {
             name: '中央财政收入(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A080202)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A080202)
           },
           {
             name: '地方财政收入(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A080203)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A080203)
           },
           {
             name: '全国财政支出(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A080301)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A080301)
           },
           {
             name: '中央财政支出(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A080302)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A080302)
           },
           {
             name: '地方财政支出(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A080303)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A080303)
           },
 
         ]
@@ -300,37 +291,37 @@ export default {
           {
             name: '增值税(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A08040103)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A08040103)
           },
           {
             name: '消费税(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A08040104)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A08040104)
           },
           {
             name: '企业所得税(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A08040108)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A08040108)
           },
           {
             name: '个人所得税(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A08040109)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A08040109)
           },
           {
             name: '土地增值税(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A0804010G)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A0804010G)
           },
           {
             name: '关税(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A0804010K)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A0804010K)
           },
           {
             name: '罚没收入(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A0804010S)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A0804010S)
           },
 
         ]
@@ -374,42 +365,42 @@ export default {
           {
             name: '一般公共服务(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A08050102)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A08050102)
           },
           {
             name: '国防(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A08050105)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A08050105)
           },
           {
             name: '公共安全(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A08050106)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A08050106)
           },
           {
             name: '教育(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A08050108)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A08050108)
           },
           {
             name: '科学技术(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A08050109)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A08050109)
           },
           {
             name: '社会保障和就业(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A0805010B)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A0805010B)
           },
           {
             name: '医疗卫生(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A0805010C)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A0805010C)
           },
           {
             name: '交通运输(亿元)',
             type: this.chartsType,
-            data: this.nationalFinanceArr(this.NationalFinance.A0805010G)
+            data: selectDataFromArr(this.returnData, this.NationalFinance.A0805010G)
           },
         ]
       };

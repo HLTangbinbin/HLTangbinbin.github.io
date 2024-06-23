@@ -31,7 +31,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { params_livingStandards, sendRequest, sortYearMonths } from './CommonUtil';
+import { params_livingStandards, sendRequest, selectDataFromArr } from './CommonUtil';
 export default {
 
   data() {
@@ -104,18 +104,7 @@ export default {
         console.error('接口外部调用失败:', error);
       }
     },
-    //按照年份与日期做筛选与排序
-    livingStandardsArr(type) {
-      return this.returnData.dataList.filter(returnDataObj => {
-        return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
-      }).sort(function (a, b) {
-        return sortYearMonths(a.date, b.date);
-      }).map(item => {
-        //取出某个字段数据
-        var number = Number(item.value)
-        return number;
-      })
-    },
+
     // 平均收入图表
     drawIncomeCharts() {
       // 基于准备好的dom，初始化echarts实例
@@ -152,31 +141,31 @@ export default {
           {
             name: '人均收入(万)',
             type: this.chartsType,
-            data: this.livingStandardsArr(this.LivingStandards_Income.A0A0101)
+            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0101)
           },
           {
             name: '人均收入中位数(万)',
             type: this.chartsType,
-            data: this.livingStandardsArr(this.LivingStandards_Income.A0A0103)
+            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0103)
           },
           {
             name: '城镇人均收入(万)',
             type: this.chartsType,
-            data: this.livingStandardsArr(this.LivingStandards_Income.A0A0201)
+            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0201)
           }, {
             name: '城镇人均收入中位数(万)',
             type: this.chartsType,
-            data: this.livingStandardsArr(this.LivingStandards_Income.A0A0203)
+            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0203)
           },
           {
             name: '农村人均收入(万)',
             type: this.chartsType,
-            data: this.livingStandardsArr(this.LivingStandards_Income.A0A0301)
+            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0301)
           },
           {
             name: '农村人均收入中位数(万)',
             type: this.chartsType,
-            data: this.livingStandardsArr(this.LivingStandards_Income.A0A0303)
+            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0303)
           }
 
         ]
@@ -228,17 +217,17 @@ export default {
           {
             name: '居民恩格尔系数',
             type: this.chartsType,
-            data: this.livingStandardsArr(this.LivingStandards_Coefficient.A0A0H01)
+            data: selectDataFromArr(this.returnData, this.LivingStandards_Coefficient.A0A0H01)
           },
           {
             name: '城镇居民恩格尔系数',
             type: this.chartsType,
-            data: this.livingStandardsArr(this.LivingStandards_Coefficient.A0A0H02)
+            data: selectDataFromArr(this.returnData, this.LivingStandards_Coefficient.A0A0H02)
           },
           {
             name: '农村居民恩格尔系数',
             type: this.chartsType,
-            data: this.livingStandardsArr(this.LivingStandards_Coefficient.A0A0H03)
+            data: selectDataFromArr(this.returnData, this.LivingStandards_Coefficient.A0A0H03)
           }
         ]
       };
@@ -289,7 +278,7 @@ export default {
           {
             name: '基尼系数',
             type: this.chartsType,
-            data: this.livingStandardsArr(this.LivingStandards_Coefficient.A0A0G01)
+            data: selectDataFromArr(this.returnData, this.LivingStandards_Coefficient.A0A0G01)
           }
         ]
       };

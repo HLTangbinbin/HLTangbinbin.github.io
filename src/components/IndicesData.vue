@@ -22,7 +22,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { params_indices, sendRequest, sortYearMonths } from './CommonUtil';
+import { params_indices, sendRequest, selectDataFromArr } from './CommonUtil';
 export default {
 
   data() {
@@ -84,16 +84,6 @@ export default {
         console.error('接口外部调用失败:', error);
       }
     },
-    // 按照类型与字段名称
-    dataArr(type) {
-      return this.returnData.dataList.filter(returnDataObj => {
-        return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
-      }).sort(function (a, b) {
-        return sortYearMonths(a.date, b.date);
-      }).map(item => {
-        return Number(item.value);
-      })
-    },
 
     // cpi图表
     drawPriceIndicesChat() {
@@ -140,22 +130,22 @@ export default {
           {
             name: 'CPI同比(上年=100)',
             type: this.chartsType,
-            data: this.dataArr(this.IndicesType.CPI_A01010101)
+            data: selectDataFromArr(this.returnData, this.IndicesType.CPI_A01010101)
           },
           {
             name: 'CPI环比(上月=100)',
             type: this.chartsType,
-            data: this.dataArr(this.IndicesType.CPI_A01030101)
+            data: selectDataFromArr(this.returnData, this.IndicesType.CPI_A01030101)
           },
           {
             name: 'PPI同比(上年=100)',
             type: this.chartsType,
-            data: this.dataArr(this.IndicesType.PPI_A01080101)
+            data: selectDataFromArr(this.returnData, this.IndicesType.PPI_A01080101)
           },
           {
             name: 'PPI环比(上月=100)',
             type: this.chartsType,
-            data: this.dataArr(this.IndicesType.PPI_A01080701)
+            data: selectDataFromArr(this.returnData, this.IndicesType.PPI_A01080701)
           }
         ]
       };
@@ -207,17 +197,17 @@ export default {
           {
             name: '制造业PMI',
             type: this.chartsType,
-            data: this.dataArr(this.IndicesType.PMI_A0B0101)
+            data: selectDataFromArr(this.returnData, this.IndicesType.PMI_A0B0101)
           },
           {
             name: '非制造业PMI',
             type: this.chartsType,
-            data: this.dataArr(this.IndicesType.PMI_A0B0201)
+            data: selectDataFromArr(this.returnData, this.IndicesType.PMI_A0B0201)
           },
           {
             name: '综合PMI',
             type: this.chartsType,
-            data: this.dataArr(this.IndicesType.PMI_A0B0301)
+            data: selectDataFromArr(this.returnData, this.IndicesType.PMI_A0B0301)
           }
         ]
       };
