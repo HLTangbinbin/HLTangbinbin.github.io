@@ -166,7 +166,7 @@ export async function sendRequest(specificParams) {
     console.log("请求完整参数：", mergedParams)
     try {
      
-      let response = await axios.get(totalUrl, { params: mergedParams });
+      let response = await axios.get(totalUrl, { params: mergedParams, timeout: 30000 } );
       let data = response.data;
       console.log("请求返回数据：",data.returndata)
       if (data && data.returndata) {
