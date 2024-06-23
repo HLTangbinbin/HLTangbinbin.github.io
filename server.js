@@ -1,15 +1,25 @@
 import express from 'express';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 
-app.use('/api', createProxyMiddleware({
-  target: 'https://data.stats.gov.cn',
-  changeOrigin: true,
-  pathRewrite: { '^/api': '' },
-}));
+app.use(
+    '/api',
+    createProxyMiddleware({
+      target: 'https://data.stats.gov.cn',
+        pathRewrite: {
+            '^/api': '',
+        },
+        changeOrigin: true,
+        onProxyRes: (proxyRes, req, res) => {
+            console.log('proxy res here =====');
+            proxyRes.headers['x-added'] = 'foobar';
+        },
+    }),
+);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// 启动服务器
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
