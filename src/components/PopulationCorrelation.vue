@@ -70,22 +70,31 @@ export default {
   },
 
   methods: {
-    async loadData() {
-      // 请求总人口公开数据
-      // fetch('population.json')
-      //   .then(response => response.json())
-      //   .then(data => {
-      //     console.log('请求成功人口数据:',data);
-      //     // 数组倒序处理
-      //     this.returnData = data;
-      //     // 处理数据绘制图表
-      //     this.drawBarChart_Population()
-      //     this.drawBarChart_Populationrate()
-      //     this.drawBarChart_Dependencyratio()
-      //   })
-      //   .catch(error => {
-      //     console.error('Error fetching data:', error)
-      //   })
+    loadData() {
+      if (process.env.VUE_APP_REQUEST_IS_LOCAL === 'true') {
+        this.requestWithLocalJson()
+      } else {
+        this.requestWithAPI()
+      }
+    },
+    requestWithLocalJson() {
+      // 读取本地人口数据
+      fetch('population.json')
+        .then(response => response.json())
+        .then(data => {
+          console.log('读取本地成功人口数据:', data);
+          // 列表数据
+          this.returnData = data;
+          // 处理数据绘制图表
+          this.drawBarChart_Population()
+          this.drawBarChart_Populationrate()
+          this.drawBarChart_Dependencyratio()
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error)
+        })
+    },
+    async requestWithAPI() {
       try {
         this.returnData = await sendRequest(params_population);
         console.log("响应处理后的数据：", this.returnData)

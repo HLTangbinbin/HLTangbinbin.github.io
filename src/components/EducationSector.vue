@@ -80,22 +80,31 @@ export default {
     },
 
     methods: {
-        async loadData() {
-            // 请求人民收入公开数据
-            // fetch('education.json')
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         console.log('请求成功教育数据:', data);
-            //         // 列表数据
-            //         this.returnData = data;
-            //         // 处理数据绘制图表
-            //         this.drawBarChart_Entrants()
-            //         this.drawBarChart_Enrollment()
-            //         this.drawBarChart_Graduates()
-            //     })
-            //     .catch(error => {
-            //         console.error('Error fetching data:', error)
-            //     })
+        loadData() {
+            if (process.env.VUE_APP_REQUEST_IS_LOCAL === 'true') {
+                this.requestWithLocalJson()
+            } else {
+                this.requestWithAPI()
+            }
+        },
+        requestWithLocalJson() {
+            // 读取本地教育公开数据
+            fetch('education.json')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('读取本地成功教育数据:', data);
+                    // 列表数据
+                    this.returnData = data;
+                    // 处理数据绘制图表
+                    this.drawBarChart_Entrants()
+                    this.drawBarChart_Enrollment()
+                    this.drawBarChart_Graduates()
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error)
+                })
+        },
+        async requestWithAPI() {
             try {
                 this.returnData = await sendRequest(params_education);
                 console.log("响应处理后的数据：", this.returnData)
@@ -120,7 +129,7 @@ export default {
                 return number;
             })
         },
-        // 平均收入图表
+        // 招生数图表
         drawentrantsCharts() {
             // 基于准备好的dom，初始化echarts实例
             var entrantsChart = echarts.init(document.getElementById('entrants'));
@@ -168,7 +177,7 @@ export default {
                         name: '初级中学(万人)',
                         type: this.chartsType,
                         data: this.educationArr(this.Education.A0M0704)
-                    }, 
+                    },
                     {
                         name: '普通高中(万人)',
                         type: this.chartsType,

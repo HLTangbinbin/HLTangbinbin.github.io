@@ -69,24 +69,31 @@ export default {
     },
 
     methods: {
-        async loadData() {
-            // 请求医疗数据
-            // fetch('medical.json')
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         console.log('请求成功医疗数据:', data);
-            //         // 列表数据
-            //         this.returnData = data;
-            //         // 处理数据绘制图表
-            //         this.drawBarChart_Agency()
-            //         this.drawBarChart_Officer()
-            //         this.drawBarChart_Bed()
-            //     })
-            //     .catch(error => {
-            //         console.error('Error fetching data:', error)
-            //     })
-
-            // 由本地改为请求接口
+        loadData() {
+            if (process.env.VUE_APP_REQUEST_IS_LOCAL === 'true') {
+                this.requestWithLocalJson()
+            } else {
+                this.requestWithAPI()
+            }
+        },
+        requestWithLocalJson() {
+            // 读取本地医疗数据
+            fetch('medical.json')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('读取本地成功医疗数据:', data);
+                    // 列表数据
+                    this.returnData = data;
+                    // 处理数据绘制图表
+                    this.drawBarChart_Agency()
+                    this.drawBarChart_Officer()
+                    this.drawBarChart_Bed()
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error)
+                })
+        },
+        async requestWithAPI() {
             try {
                 this.returnData = await sendRequest(params_medical);
                 console.log("响应处理后的数据：", this.returnData)

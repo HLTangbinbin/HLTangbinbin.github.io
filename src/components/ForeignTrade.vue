@@ -96,29 +96,36 @@ export default {
     },
 
     methods: {
-        async loadData() {
-            // 请求人民收入公开数据
-            // fetch('foreignTrade.json')
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         console.log('请求成功对外贸易数据:', data);
-            //         // 列表数据
-            //         this.returnData = data;
-            //         // 处理数据绘制图表
-            //         this.drawBarChart_ImportAndExport_Month()
-            //         this.drawBarChart_ImportAndExport()
-            //         this.drawBarChart_Export()
-            //         this.drawBarChart_Import()
-
-            //     })
-            //     .catch(error => {
-            //         console.error('Error fetching data:', error)
-            //     })
+        loadData() {
+            if (process.env.VUE_APP_REQUEST_IS_LOCAL === 'true') {
+                this.requestWithLocalJson()
+            } else {
+                this.requestWithAPI()
+            }
+        },
+        requestWithLocalJson() {
+            // 读取本地外贸数据
+            fetch('foreignTrade.json')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('读取本地成功外贸数据:', data);
+                    // 列表数据
+                    this.returnData = data;
+                    // 处理数据绘制图表
+                    this.drawBarChart_ImportAndExport_Month()
+                    this.drawBarChart_ImportAndExport()
+                    this.drawBarChart_Export()
+                    this.drawBarChart_Import()
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error)
+                })
+        },
+        async requestWithAPI() {
             try {
                 this.returnData = await sendRequest(params_foreignTrade);
                 console.log("响应处理后的数据：", this.returnData)
                 if (this.returnData) {
-                    // 处理数据绘制图表
                     this.drawBarChart_ImportAndExport_Month()
                     this.drawBarChart_ImportAndExport()
                     this.drawBarChart_Export()
@@ -128,6 +135,7 @@ export default {
                 console.error('接口外部调用失败:', error);
             }
         },
+
         //按照年份与日期做筛选与排序
         foreignTradeArr(type) {
             return this.returnData.dataList.filter(returnDataObj => {

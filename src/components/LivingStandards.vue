@@ -67,23 +67,31 @@ export default {
   },
 
   methods: {
-    async loadData() {
-      // // 请求人民收入公开数据
-      // fetch('livingStandards.json')
-      //   .then(response => response.json())
-      //   .then(data => {
-      //     console.log('请求成功人民收入数据:', data);
-      //     // 列表数据
-      //     this.returnData = data;
-      //     // 处理数据绘制图表
-      //     this.drawBarChart_Income()
-      //     this.drawBarChart_Engel()
-      //     this.drawBarChart_Gini()
-      //   })
-      //   .catch(error => {
-      //     console.error('Error fetching data:', error)
-      //   })
-      // 由本地改为请求接口
+    loadData() {
+      if (process.env.VUE_APP_REQUEST_IS_LOCAL === 'true') {
+        this.requestWithLocalJson()
+      } else {
+        this.requestWithAPI()
+      }
+    },
+    requestWithLocalJson() {
+      // 读取本地人民收入数据
+      fetch('livingStandards.json')
+        .then(response => response.json())
+        .then(data => {
+          console.log('读取本地成功人民收入数据:', data);
+          // 列表数据
+          this.returnData = data;
+          // 处理数据绘制图表
+          this.drawBarChart_Income()
+          this.drawBarChart_Engel()
+          this.drawBarChart_Gini()
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error)
+        })
+    },
+    async requestWithAPI() {
       try {
         this.returnData = await sendRequest(params_livingStandards);
         console.log("响应处理后的数据：", this.returnData)

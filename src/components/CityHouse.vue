@@ -31,6 +31,7 @@
 <script>
 import * as echarts from 'echarts';
 import { params_cityHousePrice, sendRequest, sortYearMonths } from './CommonUtil';
+
 export default {
 
     data() {
@@ -76,23 +77,30 @@ export default {
     },
 
     methods: {
-        async loadData() {
-            // 请求cityHouse数据
-            // fetch('cityHouse.json')
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         this.returnData = data
-            //         console.log('请求成功cityHouseNew数据:', this.returnData);
-            //         // 处理数据绘制图表
-            //         this.drawBarChart_HousePrice();
-            //         this.drawBarChart_NewHouse();
-            //         this.drawBarChart_OldHouse();
-            //     })
-            //     .catch(error => {
-            //         console.error('Error fetching data:', error)
-            //     })
-
-            // 由本地改为请求接口
+        loadData() {
+            if (process.env.VUE_APP_REQUEST_IS_LOCAL === 'true') {
+                this.requestWithLocalJson()
+            } else {
+                this.requestWithAPI()
+            }
+        },
+        requestWithLocalJson() {
+            // 本地cityHouse数据
+            fetch('cityHouse.json')
+                .then(response => response.json())
+                .then(data => {
+                    this.returnData = data
+                    console.log('本地cityHouseNew数据:', this.returnData);
+                    // 处理数据绘制图表
+                    this.drawBarChart_HousePrice();
+                    this.drawBarChart_NewHouse();
+                    this.drawBarChart_OldHouse();
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error)
+                })
+        },
+        async requestWithAPI() {
             try {
                 this.returnData = await sendRequest(params_cityHousePrice);
                 console.log("响应处理后的数据：", this.returnData)
