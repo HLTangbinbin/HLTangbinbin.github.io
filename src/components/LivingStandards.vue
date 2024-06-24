@@ -30,26 +30,16 @@
 </template>
 
 <script>
-import * as echarts from 'echarts';
-import { params_livingStandards, sendRequest, selectDataFromArr } from './CommonUtil';
+
+import { params_livingStandards, sendRequest, drawCommonChart } from './CommonUtil';
 export default {
 
   data() {
     return {
-      LivingStandards_Income: {
-        A0A0101: 'A0A0101',   // 居民人均可支配收入
-        A0A0103: 'A0A0103',   // 居民人均可支配收入中位数
-        A0A0201: 'A0A0201',   // 城镇居民人均可支配收入
-        A0A0203: 'A0A0203',   // 城镇居民人均可支配收入中位数
-        A0A0301: 'A0A0301',   // 农村居民人均可支配收入
-        A0A0303: 'A0A0303',   // 农村居民人均可支配收入中位数
-      },
-      LivingStandards_Coefficient: {
-        A0A0G01: 'A0A0G01',   // 居民人均可支配收入基尼系数
-        A0A0H01: 'A0A0H01',   // 居民恩格尔系数
-        A0A0H02: 'A0A0H02',   // 城镇居民恩格尔系数
-        A0A0H03: 'A0A0H03',   // 农村居民恩格尔系数
-
+      EChartType_LivingStandards: {
+        IC: 'income',
+        EC: 'engelcoefficient',
+        GC: 'ginicoefficient'
       },
       isBarActive_Income: false,
       isLineActive_Income: false,
@@ -59,7 +49,7 @@ export default {
       isLineActive_Gini: false,
       returnData: null,
       sjList: null,
-      chartsType: null
+      chartType: null
     };
   },
   mounted() {
@@ -83,9 +73,7 @@ export default {
           // 列表数据
           this.returnData = data;
           // 处理数据绘制图表
-          this.drawBarChart_Income()
-          this.drawBarChart_Engel()
-          this.drawBarChart_Gini()
+          this.drawChartWithBtn()
         })
         .catch(error => {
           console.error('Error fetching data:', error)
@@ -95,239 +83,87 @@ export default {
       try {
         this.returnData = await sendRequest(params_livingStandards);
         console.log("响应处理后的数据：", this.returnData)
-        if (this.returnData) {
-          this.drawBarChart_Income()
-          this.drawBarChart_Engel()
-          this.drawBarChart_Gini()
-        }
+        this.drawChartWithBtn()
       } catch (error) {
         console.error('接口外部调用失败:', error);
       }
     },
-
-    // 平均收入图表
-    drawIncomeCharts() {
-      // 基于准备好的dom，初始化echarts实例
-      var incomeChart = echarts.init(document.getElementById('income'));
-      // 指定图表的配置项和数据
-      var incomeOption = {
-        title: {
-          text: '居民人均收入数据',
-          left: 'center',
-          top: 'top'
-        },
-        tooltip: {
-          //X轴悬浮显示所有数据
-          trigger: 'axis'
-        },
-        legend: {
-          left: 'center',
-          top: '10%'
-        },
-        grid: {
-          left: '1%',
-          right: '1%',
-          top: '30%',
-          bottom: '1%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          data: this.returnData.sj[0].sort()
-        },
-        yAxis: {
-        },
-        series: [
-          {
-            name: '人均收入(万)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0101)
-          },
-          {
-            name: '人均收入中位数(万)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0103)
-          },
-          {
-            name: '城镇人均收入(万)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0201)
-          }, {
-            name: '城镇人均收入中位数(万)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0203)
-          },
-          {
-            name: '农村人均收入(万)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0301)
-          },
-          {
-            name: '农村人均收入中位数(万)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.LivingStandards_Income.A0A0303)
-          }
-
-        ]
-      };
-      // 使用刚指定的配置项和数据显示图表。
-      incomeChart.setOption(incomeOption);
-    },
-    // 恩格尔系数
-    drawEngelCoefficientCharts() {
-      // 基于准备好的dom，初始化echarts实例
-      var engelCoefficientChart = echarts.init(document.getElementById('engelcoefficient'));
-      // 指定图表的配置项和数据
-      var engelCoefficientOption = {
-        title: {
-          text: '恩格尔系数',
-          subtext: '恩格尔系数是食品支出总额占个人消费支出总额的比重 \n 59%以上为贫困 50~59%为温饱 \n 40~50%为小康 30~40%为相对富裕 \n 20~30%为富裕 低于20%为及其富裕',
-          left: 'center',
-          top: 'top',
-          subtextStyle: {
-            fontWeight: 'bold',
-            fontSize: 13,
-            lineHeight: 20,
-          }
-        },
-        tooltip: {
-          //X轴悬浮显示所有数据
-          trigger: 'axis'
-        },
-        legend: {
-          left: 'center',
-          top: '20%'
-        },
-        grid: {
-          left: '1%',
-          right: '1%',
-          top: '35%',
-          bottom: '1%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          data: this.returnData.sj[0].sort()
-        },
-        yAxis: {
-          min: '25',
-          max: '50'
-        },
-        series: [
-          {
-            name: '居民恩格尔系数',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.LivingStandards_Coefficient.A0A0H01)
-          },
-          {
-            name: '城镇居民恩格尔系数',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.LivingStandards_Coefficient.A0A0H02)
-          },
-          {
-            name: '农村居民恩格尔系数',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.LivingStandards_Coefficient.A0A0H03)
-          }
-        ]
-      };
-      // 使用刚指定的配置项和数据显示图表。
-      engelCoefficientChart.setOption(engelCoefficientOption);
-    },
-    // 基尼系数图表
-    drawGiniCoefficientCharts() {
-      // 基于准备好的dom，初始化echarts实例
-      var giniCoefficientChart = echarts.init(document.getElementById('ginicoefficient'));
-      // 指定图表的配置项和数据
-      var giniCoefficientOption = {
-        title: {
-          text: '基尼系数',
-          subtext: '衡量一个国家或地区居民收入差距的常用指标之一 \n 0.2-0.29表示指数等级低(比较平均) \n 0.3-0.39表示指数等级中(相对合理) \n 0.4-0.59表示指数等级高(差距较大) \n 0.6以上表示指数等级极高(差距悬殊) \n 0.4作为收入分配差距的“警戒线”',
-          left: 'center',
-          top: 'top',
-          subtextStyle: {
-            fontWeight: 'bold',
-            fontSize: 13,
-            lineHeight: 20,
-          }
-        },
-        tooltip: {
-          //X轴悬浮显示所有数据
-          trigger: 'axis'
-        },
-        legend: {
-          left: 'center',
-          top: '27%'
-        },
-        grid: {
-          left: '1%',
-          right: '1%',
-          top: '35%',
-          bottom: '1%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          data: this.returnData.sj[0].sort()
-        },
-        yAxis: {
-          min: '0.4',
-          max: '0.5'
-        },
-        series: [
-          {
-            name: '基尼系数',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.LivingStandards_Coefficient.A0A0G01)
-          }
-        ]
-      };
-      // 使用刚指定的配置项和数据显示图表。
-      giniCoefficientChart.setOption(giniCoefficientOption);
+    drawChartWithBtn() {
+      if (this.returnData) {
+        this.drawBarChart_Income()
+        this.drawBarChart_Engel()
+        this.drawBarChart_Gini()
+      }
     },
     drawBarChart_Income() {
       this.isBarActive_Income = true;
       this.isLineActive_Income = false;
-      this.chartsType = "bar"
-      this.drawIncomeCharts()
-
+      this.chartType = "bar"
+      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.IC, title: '人均收入数据',exceptName: '居民可支配', unit: '(万元)' })
     },
     drawLineChart_Income() {
       this.isBarActive_Income = false;
       this.isLineActive_Income = true;
       // 在这里绘制折线图
-      this.chartsType = "line"
-      this.drawIncomeCharts()
+      this.chartType = "line"
+      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.IC, title: '人均收入数据',exceptName: '居民可支配', unit: '(万元)' })
     },
     drawBarChart_Engel() {
       this.isBarActive_Engel = true;
       this.isLineActive_Engel = false;
-      this.chartsType = "bar"
-      this.drawEngelCoefficientCharts()
-
+      this.chartType = "bar"
+      const subtitle = '恩格尔系数是食品支出总额占个人消费支出总额的比重 \n 59%以上为贫困 50~59%为温饱 \n 40~50%为小康 30~40%为相对富裕 \n 20~30%为富裕 低于20%为及其富裕'
+      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.EC, title: '恩格尔系数', subtitle: subtitle})
     },
     drawLineChart_Engel() {
       this.isBarActive_Engel = false;
       this.isLineActive_Engel = true;
       // 在这里绘制折线图
-      this.chartsType = "line"
-      this.drawEngelCoefficientCharts()
+      this.chartType = "line"
+      const subtitle = '恩格尔系数是食品支出总额占个人消费支出总额的比重 \n 59%以上为贫困 50~59%为温饱 \n 40~50%为小康 30~40%为相对富裕 \n 20~30%为富裕 低于20%为及其富裕'
+      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.EC, title: '恩格尔系数', subtitle: subtitle})
     },
     drawBarChart_Gini() {
       this.isBarActive_Gini = true;
       this.isLineActive_Gini = false;
-      this.chartsType = "bar"
-      this.drawGiniCoefficientCharts()
-
+      this.chartType = "bar"
+      const subtitle = '衡量一个国家或地区居民收入差距的常用指标之一 \n 0.2-0.29表示指数等级低(比较平均) \n 0.3-0.39表示指数等级中(相对合理) \n 0.4-0.59表示指数等级高(差距较大) \n 0.6以上表示指数等级极高(差距悬殊) \n 0.4作为收入分配差距的“警戒线”'
+      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.GC, title: '基尼系数', subtitle: subtitle})
     },
     drawLineChart_Gini() {
       this.isBarActive_Gini = false;
       this.isLineActive_Gini = true;
       // 在这里绘制折线图
-      this.chartsType = "line"
-      this.drawGiniCoefficientCharts()
+      this.chartType = "line"
+      const subtitle = '衡量一个国家或地区居民收入差距的常用指标之一 \n 0.2-0.29表示指数等级低(比较平均) \n 0.3-0.39表示指数等级中(相对合理) \n 0.4-0.59表示指数等级高(差距较大) \n 0.6以上表示指数等级极高(差距悬殊) \n 0.4作为收入分配差距的“警戒线”'
+      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.GC, title: '基尼系数', subtitle: subtitle})
+    },
+    drawChartWithParams({ echrtId, title, exceptName = '', unit = '', subtitle = '', sj = '0' } = {}) {
+      // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
+      let basicParams = {};
+      let typeArr = [];
+      switch (echrtId) {
+        case this.EChartType_LivingStandards.IC:
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '10%', gridTop: '30%', sj: sj }
+          // A0A0101-居民人均可支配收入 A0A0103-居民人均可支配收入中位数 A0A0201-城镇居民人均可支配收入   
+          // A0A0203-城镇居民人均可支配收入中位数 A0A0301-农村居民人均可支配收入 A0A0303-农村居民人均可支配收入中位数
+          typeArr = ['A0A0101', 'A0A0103', 'A0A0201','A0A0203', 'A0A0301', 'A0A0303'];
+          break;
+        case this.EChartType_LivingStandards.EC:
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '20%', gridTop: '35%', sj: sj }
+          // A0A0H01-居民恩格尔系数 A0A0H02-城镇居民恩格尔系数 A0A0H03-农村居民恩格尔系数  
+          typeArr = ['A0A0H01', 'A0A0H02', 'A0A0H03'];
+          break;
+        case this.EChartType_LivingStandards.GC:
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '27%', gridTop: '35%', sj: sj }
+          // A0A0G01-居民人均可支配收入基尼系数
+          typeArr = ['A0A0G01'];
+          break;
+        default:
+          break;
+      }
+      drawCommonChart(basicParams, typeArr, this.returnData)
     }
-
   }
 };
 </script>

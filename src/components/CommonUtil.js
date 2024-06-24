@@ -88,13 +88,14 @@ export function drawCommonChart(basicParams, typeArr, returnData) {
     },
     xAxis: {
       type: 'category',
-      data: returnData.sj[basicParams.sj || 0].sort()
+      data: returnData.sj[basicParams.sj].sort()
     },
     yAxis: {
 
     },
-
     series: seriesData
+   
+    
   };
   // 使用刚指定的配置项和数据显示图表。
   chart.setOption(option);
