@@ -49,8 +49,8 @@ export function drawCommonChart(basicParams, typeArr, returnData) {
   const seriesData = typeArr.map(item => {
     // 调用 selectDataFromArr 并处理返回的数据
      // 截取不包含title的字段作为name
-    const cname = selectDataFromArr(returnData, item, 'cname')[0];
-    const name = cname.split(basicParams.title).join('');
+    let cname = selectDataFromArr(returnData, item, 'cname')[0];
+    const name = cname.replace(basicParams.exceptName, '') + basicParams.unit;
     const valueArr = selectDataFromArr(returnData, item, 'value');
     const seriesJson = { name: name, type: type, data: valueArr };
     return seriesJson;
@@ -77,18 +77,18 @@ export function drawCommonChart(basicParams, typeArr, returnData) {
     },
     legend: {
       left: 'center',
-      top: basicParams.legendTop
+      top: basicParams.legendTop || '10%'
     },
     grid: {
       left: '1%',
       right: '1%',
-      top: basicParams.gridTop,
+      top: basicParams.gridTop || '25%',
       bottom: '1%',
       containLabel: true
     },
     xAxis: {
       type: 'category',
-      data: basicParams.xAxisDataArr
+      data: returnData.sj[basicParams.sj || 0].sort()
     },
     yAxis: {
 

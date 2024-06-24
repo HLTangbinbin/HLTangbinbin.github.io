@@ -99,41 +99,41 @@ export default {
             this.isBarActive_Entrants = true;
             this.isLineActive_Entrants = false;
             this.chartType = "bar";
-            this.drawChartWithParams(this.EChartType_Education.ZS, '招生数')
+            this.drawChartWithParams({echrtId: this.EChartType_Education.ZS, title: '招生数', exceptName: '招生数', unit: '(万人)'})
         },
         drawLineChart_Entrants() {
             this.isBarActive_Entrants = false;
             this.isLineActive_Entrants = true;
             this.chartType = "line"
-            this.drawChartWithParams(this.EChartType_Education.ZS, '招生数')
+            this.drawChartWithParams({echrtId: this.EChartType_Education.ZS, title: '招生数', exceptName: '招生数', unit: '(万人)'})
         },
         drawBarChart_Enrollment() {
             this.isBarActive_Enrollment = true;
             this.isLineActive_Enrollment = false;
             this.chartType = "bar"
-            this.drawChartWithParams(this.EChartType_Education.ZX, '在校学生数')
+            this.drawChartWithParams({echrtId: this.EChartType_Education.ZX, title: '在校学生数', exceptName: '在校学生数', unit: '(万人)'})
         },
         drawLineChart_Enrollment() {
             this.isBarActive_Enrollment = false;
             this.isLineActive_Enrollment = true;
             this.chartType = "line"
-            this.drawChartWithParams(this.EChartType_Education.ZX, '在校学生数')
+            this.drawChartWithParams({echrtId: this.EChartType_Education.ZX, title: '在校学生数', exceptName: '在校学生数', unit: '(万人)'})
         },
         drawBarChart_Graduates() {
             this.isBarActive_Graduates = true;
             this.isLineActive_Graduates = false;
             this.chartType = "bar"
-            this.drawChartWithParams(this.EChartType_Education.BY, '毕业生数')
+            this.drawChartWithParams({echrtId: this.EChartType_Education.BY, title: '毕业生数', exceptName: '毕业生数', unit: '(万人)'})
         },
         drawLineChart_Graduates() {
             this.isBarActive_Graduates = false;
             this.isLineActive_Graduates = true;
             this.chartType = "line"
-            this.drawChartWithParams(this.EChartType_Education.BY, '毕业生数')
+            this.drawChartWithParams({echrtId: this.EChartType_Education.BY, title: '毕业生数', exceptName: '毕业生数', unit: '(万人)'})
         },
-        drawChartWithParams(echrtId, title, subtitle) {
-            // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
-            let basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle:subtitle, legendTop: '10%', gridTop: '20%', xAxisDataArr: this.returnData.sj[0].sort() }
+        drawChartWithParams({echrtId, title, exceptName = '', unit = '', subtitle = '', sj = '0' } = {}) {
+            // basicParams-包含echrtId、title、exceptName、unit、legendTop、gridTop、xAxisDataArr
+            let basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle:subtitle, exceptName: exceptName, unit: unit, sj: sj}
             let typeArr = [];
             switch (echrtId) {
                 case this.EChartType_Education.ZS:

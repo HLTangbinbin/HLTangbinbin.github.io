@@ -102,16 +102,14 @@ export default {
       this.isLineActive_Currency_Month = false;
       // 在这里绘制柱状图
       this.chartType = "bar"
-      this.drawChartWithParams(this.EChartType_Currency.CM, '货币供应量')
-
+      this.drawChartWithParams({ echrtId: this.EChartType_Currency.CM, title: '货币供应量', exceptName: '供应量_期末值', unit: '(万亿)' })
     },
     drawLineChart_Currency_Month() {
       this.isBarActive_Currency_Month = false;
       this.isLineActive_Currency_Month = true;
       // 在这里绘制折线图
       this.chartType = "line"
-      
-      this.drawChartWithParams(this.EChartType_Currency.CM, '货币供应量')
+      this.drawChartWithParams({ echrtId: this.EChartType_Currency.CM, title: '货币供应量', exceptName: '供应量_期末值', unit: '(万亿)' })
     },
     drawBarChart_Currency() {
       this.isBarActive_Currency = true;
@@ -119,8 +117,7 @@ export default {
       // 在这里绘制柱状图
       this.chartType = "bar"
       const subtitle = 'M0：流通中的现金; \n M1：M0+企业活期存款; \n M2：M1+企业单位定期存款+城乡居民储蓄存款;'
-      this.drawChartWithParams(this.EChartType_Currency.CY, '货币供应量', subtitle)
-
+      this.drawChartWithParams({ echrtId: this.EChartType_Currency.CY, title: '货币供应量', exceptName: '供应量', unit: '(万亿)', subtitle: subtitle })
     },
     drawLineChart_Currency() {
       this.isBarActive_Currency = false;
@@ -128,48 +125,47 @@ export default {
       // 在这里绘制折线图
       this.chartType = "line"
       const subtitle = 'M0：流通中的现金; \n M1：M0+企业活期存款; \n M2：M1+企业单位定期存款+城乡居民储蓄存款;'
-      this.drawChartWithParams(this.EChartType_Currency.CY, '货币供应量', subtitle)
+      this.drawChartWithParams({ echrtId: this.EChartType_Currency.CY, title: '货币供应量', exceptName: '供应量', unit: '(万亿)', subtitle: subtitle })
     },
     drawBarChart_ForeignCurrency() {
       this.isBarActive_ForeignCurrency = true;
       this.isLineActive_ForeignCurrency = false;
       // 在这里绘制柱状图
       this.chartType = "bar"
-      this.drawChartWithParams(this.EChartType_Currency.FC, '储备')
-
+      this.drawChartWithParams({ echrtId: this.EChartType_Currency.FC, title: '黄金与外汇储备', unit: '(亿美元)' })
     },
     drawLineChart_ForeignCurrency() {
       this.isBarActive_ForeignCurrency = false;
       this.isLineActive_ForeignCurrency = true;
       // 在这里绘制折线图
       this.chartType = "line"
-      this.drawChartWithParams(this.EChartType_Currency.FC, '储备')
+      this.drawChartWithParams({ echrtId: this.EChartType_Currency.FC, title: '黄金与外汇储备', unit: '(亿美元)' })
     },
-    drawChartWithParams(echrtId, title, subtitle = '') {
-            // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
-            let basicParams = {};
-            let typeArr = [];
-            switch (echrtId) {
-                case this.EChartType_Currency.CM:
-                basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, legendTop: '20%', gridTop: '35%', xAxisDataArr: this.returnData.sj[1].sort() }
-                    // A0D0101-货币(M2)供应量(亿元) A0D0103-货币(M1)供应量(亿元) A0D0105-货币(M0)供应量(亿元)    
-                    typeArr = ['A0D0105', 'A0D0103', 'A0D0101'];
-                    break;
-                case this.EChartType_Currency.CY:
-                basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, legendTop: '20%', gridTop: '35%', xAxisDataArr: this.returnData.sj[0].sort() }
-                    // A0L0301-货币(M2)供应量(亿元) A0L0302-货币(M1)供应量(亿元) A0L0303-货币(M0)供应量(亿元)   
-                    typeArr = ['A0L0301', 'A0L0302', 'A0L0303'];
-                    break;
-                case this.EChartType_Currency.FC:
-                basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, legendTop: '10%', gridTop: '25%', xAxisDataArr: this.returnData.sj[0].sort() }
-                    // A0L0401-黄金储备(万盎司) A0L0402-外汇储备(亿美元)
-                    typeArr = ['A0L0401', 'A0L0402'];
-                    break;
-                default:
-                    break;
-            }
-            drawCommonChart(basicParams, typeArr, this.returnData)
-        }
+    drawChartWithParams({ echrtId, title, exceptName = '', unit = '', subtitle = '', sj = '0' } = {}) {
+      // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
+      let basicParams = {};
+      let typeArr = [];
+      switch (echrtId) {
+        case this.EChartType_Currency.CM:
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '10%', gridTop: '25%', sj: sj }
+          // A0D0101-货币(M2)供应量(亿元) A0D0103-货币(M1)供应量(亿元) A0D0105-货币(M0)供应量(亿元)    
+          typeArr = ['A0D0105', 'A0D0103', 'A0D0101'];
+          break;
+        case this.EChartType_Currency.CY:
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '20%', gridTop: '35%', sj: sj }
+          // A0L0301-货币(M2)供应量(亿元) A0L0302-货币(M1)供应量(亿元) A0L0303-货币(M0)供应量(亿元)   
+          typeArr = ['A0L0303', 'A0L0302', 'A0L0301'];
+          break;
+        case this.EChartType_Currency.FC:
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '10%', gridTop: '25%', sj: sj }
+          // A0L0401-黄金储备(万盎司) A0L0402-外汇储备(亿美元)
+          typeArr = ['A0L0401', 'A0L0402'];
+          break;
+        default:
+          break;
+      }
+      drawCommonChart(basicParams, typeArr, this.returnData)
+    }
   }
 };
 </script>
