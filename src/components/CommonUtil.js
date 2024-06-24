@@ -1,48 +1,107 @@
 import axios from 'axios'
+import * as echarts from 'echarts';
+
 
 // 定义排序函数
 export function sortYearMonths(date1, date2) {
-        // 自定义比较函数
-        function compareYearMonth(a, b) {
-          // 将日期字符串转换为统一的格式
-          a = a.replace('-', '');
-          b = b.replace('-', '');
-  
-          // 将年份和月份解析为整数
-          var aYear = parseInt(a.substring(0, 4));
-          var aMonth = parseInt(a.substring(4));
-          var bYear = parseInt(b.substring(0, 4));
-          var bMonth = parseInt(b.substring(4));
-  
-          // 首先按照年份升序排序
-          if (aYear !== bYear) {
-            return aYear - bYear;
-          } else {
-            // 如果年份相同，则按照月份升序排序
-            return aMonth - bMonth;
-          }
-        }
-        
-        // 返回排序后的结果
-        return compareYearMonth(date1, date2);
+  // 自定义比较函数
+  function compareYearMonth(a, b) {
+    // 将日期字符串转换为统一的格式
+    a = a.replace('-', '');
+    b = b.replace('-', '');
+
+    // 将年份和月份解析为整数
+    var aYear = parseInt(a.substring(0, 4));
+    var aMonth = parseInt(a.substring(4));
+    var bYear = parseInt(b.substring(0, 4));
+    var bMonth = parseInt(b.substring(4));
+
+    // 首先按照年份升序排序
+    if (aYear !== bYear) {
+      return aYear - bYear;
+    } else {
+      // 如果年份相同，则按照月份升序排序
+      return aMonth - bMonth;
+    }
+  }
+
+  // 返回排序后的结果
+  return compareYearMonth(date1, date2);
 }
 // //按照年份与日期做筛选与排序
-export function selectDataFromArr(arr,type) {
-  return arr.dataList.filter(returnDataObj => {
-    return returnDataObj.code.search(type) != -1 && returnDataObj.value != 0;
+export function selectDataFromArr(returnData, productCode, field) {
+  return returnData.dataList.filter(returnDataObj => {
+    return returnDataObj.code.search(productCode) != -1 && returnDataObj.value != 0;
   }).sort(function (a, b) {
     return sortYearMonths(a.date, b.date);
   }).map(item => {
     //取出某个字段数据
-    var number = Number(item.value)
-    return number;
+    return item[field];
   })
+}
+
+// 图表统一绘制方法
+// basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
+// typeArr所有的请求代码数组 [A0M020202,A0M020302]
+// returnData 本地或者请求返回来的数据
+export function drawCommonChart(basicParams, typeArr, returnData) {
+  const type = basicParams.chartType;
+  const seriesData = typeArr.map(item => {
+    // 调用 selectDataFromArr 并处理返回的数据
+     // 截取不包含title的字段作为name
+    const cname = selectDataFromArr(returnData, item, 'cname')[0];
+    const name = cname.split(basicParams.title).join('');
+    const valueArr = selectDataFromArr(returnData, item, 'value');
+    const seriesJson = { name: name, type: type, data: valueArr };
+    return seriesJson;
+  })
+
+  // 基于准备好的dom，初始化echarts实例
+  var chart = echarts.init(document.getElementById(basicParams.echrtId));
+  // 指定图表的配置项和数据
+  var option = {
+    title: {
+      text: basicParams.title,
+      left: 'center',
+      top: 'top',
+      subtext: basicParams.subtitle,
+      subtextStyle: {
+        fontWeight: 'bold',
+        fontSize: 13,
+        lineHeight: 20,
+      }
+    },
+    tooltip: {
+      //X轴悬浮显示所有数据
+      trigger: 'axis'
+    },
+    legend: {
+      left: 'center',
+      top: basicParams.legendTop
+    },
+    grid: {
+      left: '1%',
+      right: '1%',
+      top: basicParams.gridTop,
+      bottom: '1%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'category',
+      data: basicParams.xAxisDataArr
+    },
+    yAxis: {
+
+    },
+
+    series: seriesData
+  };
+  // 使用刚指定的配置项和数据显示图表。
+  chart.setOption(option);
 }
 
 // const baseurl = 'https://data.stats.gov.cn/easyquery.htm';
 // const proxyServerUrl = 'https://githubproxy-592325394348.herokuapp.com/api'
-
-
 // 改为这种方式解决跨域报错问题
 const totalUrl = `${process.env.VUE_APP_API_BASE_URL}/easyquery.htm`;
 const common_params = {
@@ -54,113 +113,113 @@ const common_params = {
 
 // 一线房价  
 const params_cityHousePrice = [
-    // 请求的数据指标与时间，
-    // 城市年度数据 'dbcode' : 'csnd 'wds'与dfwds一定分别设置，这个普通数据请求参数不同！！！！！
-    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A030C"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A030C 住宅商品房平均销售价格
-    // 城市月度数据 'dbcode' : 'csyd
-    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010804"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010804 新建商品住宅销售价格指数(上月=100)
-    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010805"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010805 新建商品住宅销售价格指数(上年同月=100)
-    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A01080S"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A01080S 新建商品住宅销售价格指数(上年同期=100)
-    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010807"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010807 二手住宅销售价格指数(上月=100)
-    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010808"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010808 二手住宅销售价格指数(上年同月=100)
-    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A01080T"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A01080T 二手住宅销售价格指数(上年同期=100)
-   
+  // 请求的数据指标与时间，
+  // 城市年度数据 'dbcode' : 'csnd 'wds'与dfwds一定分别设置，这个普通数据请求参数不同！！！！！
+  { 'dbcode': 'csnd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A030C"}]', 'dfwds': '[{"wdcode":"sj","valuecode":"LAST10"}]' },  // A030C 住宅商品房平均销售价格
+  // 城市月度数据 'dbcode' : 'csyd
+  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A010804"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A010804 新建商品住宅销售价格指数(上月=100)
+  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A010805"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A010805 新建商品住宅销售价格指数(上年同月=100)
+  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A01080S"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A01080S 新建商品住宅销售价格指数(上年同期=100)
+  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A010807"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A010807 二手住宅销售价格指数(上月=100)
+  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A010808"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A010808 二手住宅销售价格指数(上年同月=100)
+  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A01080T"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A01080T 二手住宅销售价格指数(上年同期=100)
+
 ]
 // GDP
 const params_gdp = [
-    // 国家年度数据---// A0201：A020102 国内生产总值  A020103 第一产值增加  A020104 第二产值增加  A020105 第三产值增加
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0201"},{"wdcode":"sj","valuecode":"LAST10"}]'},
-    // 城市年度数据 'dbcode' : 'csnd 'wds'与dfwds一定分别设置，这个普通数据请求参数不同！！！！！
-    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0101"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0101 国内生产总值
-    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0102"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0102 第一产值增加
-    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0103"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0103 第二产值增加
-    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0104"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0104 第三产值增加
+  // 国家年度数据---// A0201：A020102 国内生产总值  A020103 第一产值增加  A020104 第二产值增加  A020105 第三产值增加
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0201"},{"wdcode":"sj","valuecode":"LAST10"}]' },
+  // 城市年度数据 'dbcode' : 'csnd 'wds'与dfwds一定分别设置，这个普通数据请求参数不同！！！！！
+  { 'dbcode': 'csnd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A0101"}]', 'dfwds': '[{"wdcode":"sj","valuecode":"LAST10"}]' },  // A0101 国内生产总值
+  { 'dbcode': 'csnd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A0102"}]', 'dfwds': '[{"wdcode":"sj","valuecode":"LAST10"}]' },  // A0102 第一产值增加
+  { 'dbcode': 'csnd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A0103"}]', 'dfwds': '[{"wdcode":"sj","valuecode":"LAST10"}]' },  // A0103 第二产值增加
+  { 'dbcode': 'csnd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A0104"}]', 'dfwds': '[{"wdcode":"sj","valuecode":"LAST10"}]' },  // A0104 第三产值增加
 
 ]
 // 财政
 const params_nationalFinance = [
-    // 年度数据
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0802"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 国家财政收入
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0803"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 国家财政支出
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A080401"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 国家财政收入-项目
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A080501"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 国家财政支出-项目
-    // 月度数据
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0C01"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // 国家财政收入-项目
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0C02"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // 国家财政支出-项目
+  // 年度数据
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0802"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 国家财政收入
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0803"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 国家财政支出
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A080401"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 国家财政收入-项目
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A080501"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 国家财政支出-项目
+  // 月度数据
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0C01"},{"wdcode":"sj","valuecode":"LAST13"}]' }, // 国家财政收入-项目
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0C02"},{"wdcode":"sj","valuecode":"LAST13"}]' }, // 国家财政支出-项目
 ]
 // 金融
 const params_financialIndustry = [
-    // 年度数据-货币供应
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0L03"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 货币供应量(亿元)
-     // 年度数据-外汇
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0L0401"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 黄金储备(万盎司)
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0L0402"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 外汇储备(亿美元) 
-    // 月度数据-货币供应
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0D01"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // 货币供应量(亿元)
+  // 年度数据-货币供应
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0L03"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 货币供应量(亿元)
+  // 年度数据-外汇
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0L0401"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 黄金储备(万盎司)
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0L0402"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 外汇储备(亿美元) 
+  // 月度数据-货币供应
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0D01"},{"wdcode":"sj","valuecode":"LAST13"}]' }, // 货币供应量(亿元)
 ]
 // 外贸
 const params_foreignTrade = [
-    // 年度数据
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0601"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 进出口总额
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050201"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向亚洲出口总额
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050203"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向欧洲出口总额
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050205"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向北美洲出口总额
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050301"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向亚洲进口总额
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050303"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向欧洲进口总额
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A06050305"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 向北美洲进口总额 
+  // 年度数据
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0601"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 进出口总额
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A06050201"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 向亚洲出口总额
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A06050203"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 向欧洲出口总额
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A06050205"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 向北美洲出口总额
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A06050301"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 向亚洲进口总额
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A06050303"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 向欧洲进口总额
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A06050305"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 向北美洲进口总额 
 
-    // 月度数据 A0801
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0801"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // 进出口总额
+  // 月度数据 A0801
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0801"},{"wdcode":"sj","valuecode":"LAST13"}]' }, // 进出口总额
 ]
 // 人口
 const params_population = [
-    // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0301"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 301 总人口
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0302"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 302 增长率
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0303"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 303 年龄结构与抚养比
+  // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0301"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 301 总人口
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0302"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 302 增长率
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0303"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 303 年龄结构与抚养比
 ]
 
 // 教育
 const params_education = [
-    // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M07"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 招生数
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M08"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 在校学生数
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M09"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 毕业生数
-    // 学前-硕士使用下方接口
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M020102"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 招生数-研究生
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M020119"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 招生数--学前
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M020202"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 在校学生数-研究生
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M02021A"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 在校学生数--学前
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M020302"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 毕业生数-研究生
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0M02031A"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 毕业生数---学前
+  // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0M07"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 招生数
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0M08"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 在校学生数
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0M09"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 毕业生数
+  // 学前-硕士使用下方接口
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0M020102"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 招生数-研究生
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0M020119"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 招生数--学前
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0M020202"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 在校学生数-研究生
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0M02021A"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 在校学生数--学前
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0M020302"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 毕业生数-研究生
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0M02031A"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 毕业生数---学前
 ]
 // 医疗
 const params_medical = [
-    // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0O01"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 医疗卫生机构
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0O02"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 卫生人员
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0O05"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 医疗机构床位
+  // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0O01"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 医疗卫生机构
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0O02"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 卫生人员
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0O05"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 医疗机构床位
 ]
 // 指数数据
 const params_indices = [
-    // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，LAST13为最近13个月数据
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A01010101"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // CPI 上年同比
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A01030101"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // CPI 上月环比
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A01080101"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // PPI 上年同比
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A01080701"},{"wdcode":"sj","valuecode":"LAST13"}]'}, // PPI 上月环比
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0B0101"},{"wdcode":"sj","valuecode":"LAST13"}]'},   // 制造业采购指数
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0B0201"},{"wdcode":"sj","valuecode":"LAST13"}]'},   // 非制造业采购指数
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0B0301"},{"wdcode":"sj","valuecode":"LAST13"}]'}    // 综合采购指数
+  // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，LAST13为最近13个月数据
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A01010101"},{"wdcode":"sj","valuecode":"LAST13"}]' }, // CPI 上年同比
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A01030101"},{"wdcode":"sj","valuecode":"LAST13"}]' }, // CPI 上月环比
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A01080101"},{"wdcode":"sj","valuecode":"LAST13"}]' }, // PPI 上年同比
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A01080701"},{"wdcode":"sj","valuecode":"LAST13"}]' }, // PPI 上月环比
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0B0101"},{"wdcode":"sj","valuecode":"LAST13"}]' },   // 制造业采购指数
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0B0201"},{"wdcode":"sj","valuecode":"LAST13"}]' },   // 非制造业采购指数
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0B0301"},{"wdcode":"sj","valuecode":"LAST13"}]' }    // 综合采购指数
 ]
 // 生活水平
 const params_livingStandards = [
-    // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，LAST10为最近10年数据
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0A01"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 全国居民收入
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0A02"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 城镇居民收入
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0A03"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 农村居民收入
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0A0G"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 可支配收入基尼系数
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0A0H"},{"wdcode":"sj","valuecode":"LAST10"}]'}, // 居民恩格尔系数
-    
+  // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，LAST10为最近10年数据
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0A01"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 全国居民收入
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0A02"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 城镇居民收入
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0A03"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 农村居民收入
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0A0G"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 可支配收入基尼系数
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0A0H"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 居民恩格尔系数
+
 ]
 
 
@@ -177,10 +236,10 @@ export async function sendRequest(specificParams) {
     let mergedParams = { ...common_params, ...params };
     console.log("请求完整参数：", mergedParams)
     try {
-     
-      let response = await axios.get(totalUrl, { params: mergedParams, timeout: 30000 } );
+
+      let response = await axios.get(totalUrl, { params: mergedParams, timeout: 30000 });
       let data = response.data;
-      console.log("请求返回数据：",data.returndata)
+      console.log("请求返回数据：", data.returndata)
       if (data && data.returndata) {
         if (data.returndata.datanodes) {
           datanodesArr = datanodesArr.concat(data.returndata.datanodes);
