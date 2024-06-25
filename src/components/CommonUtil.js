@@ -48,9 +48,12 @@ export function drawCommonChart(basicParams, typeArr, returnData) {
   const type = basicParams.chartType;
   const seriesData = typeArr.map(item => {
     // 调用 selectDataFromArr 并处理返回的数据
-     // 截取不包含title的字段作为name
+    // 截取不包含title的字段作为name
     let cname = selectDataFromArr(returnData, item, 'cname')[0];
-    const name = cname.replace(basicParams.exceptName, '') + basicParams.unit;
+    for (let char of basicParams.exceptName) {
+      cname = cname.replace(char, '');
+    }
+    const name = cname + basicParams.unit;
     const valueArr = selectDataFromArr(returnData, item, 'value');
     const seriesJson = { name: name, type: type, data: valueArr };
     return seriesJson;
@@ -94,8 +97,8 @@ export function drawCommonChart(basicParams, typeArr, returnData) {
 
     },
     series: seriesData
-   
-    
+
+
   };
   // 使用刚指定的配置项和数据显示图表。
   chart.setOption(option);
