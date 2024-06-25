@@ -150,12 +150,12 @@ export default {
           typeArr = ['A0A0101', 'A0A0103', 'A0A0201','A0A0203', 'A0A0301', 'A0A0303'];
           break;
         case this.EChartType_LivingStandards.EC:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '20%', gridTop: '35%', sj: sj }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '20%', gridTop: '35%', sj: sj, min: '25', max: '50' }
           // A0A0H01-居民恩格尔系数 A0A0H02-城镇居民恩格尔系数 A0A0H03-农村居民恩格尔系数  
           typeArr = ['A0A0H01', 'A0A0H02', 'A0A0H03'];
           break;
         case this.EChartType_LivingStandards.GC:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '27%', gridTop: '35%', sj: sj }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '27%', gridTop: '35%', sj: sj, min: '0.4', max: '0.5' }
           // A0A0G01-居民人均可支配收入基尼系数
           typeArr = ['A0A0G01'];
           break;

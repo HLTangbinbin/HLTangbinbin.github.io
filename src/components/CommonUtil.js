@@ -94,7 +94,8 @@ export function drawCommonChart(basicParams, typeArr, returnData) {
       data: returnData.sj[basicParams.sj].sort()
     },
     yAxis: {
-
+      ... (basicParams.min !== undefined && basicParams.min !== null ? { min: basicParams.min } : {}),
+      ... (basicParams.max !== undefined && basicParams.max !== null ? { max: basicParams.max } : {})
     },
     series: seriesData
 
