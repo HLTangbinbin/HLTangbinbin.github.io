@@ -14,7 +14,7 @@
       <button class="button" :class="{ 'is-active': isLineActive_Finance }" @click="drawLineChart_Finance"
         style="margin-top: 50px;">折线图</button>
     </div>
-    <div class="chart-container" id="finance"></div>
+    <div class="chart-container" id="finance-year"></div>
 
     <!-- 为下方的按钮添加上边距 style="margin-top -->
     <div class="buttons">
@@ -32,51 +32,25 @@
       <button class="button" :class="{ 'is-active': isLineActive_FiscalExpenditure }"
         @click="drawLineChart_FiscalExpenditure" style="margin-top: 50px;">折线图</button>
     </div>
-    <div class="chart-container" id="fiscalexpenditure "></div>
+    <div class="chart-container" id="fiscalexpenditure"></div>
 
   </div>
 </template>
 
 <script>
-import * as echarts from 'echarts';
-import { params_nationalFinance, sendRequest, selectDataFromArr } from './CommonUtil';
+
+import { params_nationalFinance, sendRequest, drawCommonChart } from './CommonUtil';
 export default {
 
   data() {
     return {
-      NationalFinance: {
-        // 年度数据
-        A080201: 'A080201',        // 全国财政收入
-        A080202: 'A080202',        // 中央财政收入
-        A080203: 'A080203',        // 地方财政收入
-        A080301: 'A080301',        // 全国财政收入
-        A080302: 'A080302',        // 中央财政收入
-        A080303: 'A080303',        // 地方财政收入
-
-        A08040102: 'A08040102',    // 国家税收收入
-        A08040103: 'A08040103',    // 国内增值税
-        A08040104: 'A08040104',    // 国内消费税
-        A08040108: 'A08040108',    // 企业所得税
-        A08040109: 'A08040109',    // 个人所得税
-        A0804010G: 'A0804010G',    // 国家土地增值税
-        A0804010K: 'A0804010K',    // 关税
-        A0804010S: 'A0804010S',    // 国家罚没收入
-
-        A08050102: 'A08050102',    // 一般公共服务支出
-        A08050105: 'A08050105',    // 国防支出
-        A08050106: 'A08050106',    // 公共安全支出
-        A08050108: 'A08050108',    // 教育支出
-        A08050109: 'A08050109',    // 科学技术支出
-        A0805010B: 'A0805010B',    // 社会保障和就业支出
-        A0805010C: 'A0805010C',    // 医疗卫生支出
-        A0805010G: 'A0805010G',    // 交通运输支出
-
-        // 月度数据
-        A0C0102: 'A0C0102',        // 国家财政收入
-        A0C0202: 'A0C0202',        // 国家财政支出
-
-
+      EChartType_NationalFinance: {
+        FM: 'finance-month',
+        FY: 'finance-year',
+        FR: 'fiscalrevenue',
+        FE: 'fiscalexpenditure'
       },
+
       isBarActive_Finance_Month: false,
       isLineActive_Finance_Month: false,
       isBarActive_Finance: false,
@@ -86,7 +60,7 @@ export default {
       isBarActive_FiscalExpenditure: false,
       isLineActive_FiscalExpenditure: false,
       returnData: null,
-      chartsType: null
+      chartType: null
     };
   },
   mounted() {
@@ -110,10 +84,7 @@ export default {
           // 列表数据
           this.returnData = data;
           // 处理数据绘制图表
-          this.drawBarChart_Finance_Month()
-          this.drawBarChart_Finance()
-          this.drawBarChart_FiscalRevenue()
-          this.drawBarChart_FiscalExpenditure()
+          this.drawChartWithBtn()
         })
         .catch(error => {
           console.error('Error fetching data:', error)
@@ -123,345 +94,109 @@ export default {
       try {
         this.returnData = await sendRequest(params_nationalFinance);
         console.log("响应处理后的数据：", this.returnData)
-        if (this.returnData) {
-          this.drawBarChart_Finance_Month()
-          this.drawBarChart_Finance()
-          this.drawBarChart_FiscalRevenue()
-          this.drawBarChart_FiscalExpenditure()
-        }
+        this.drawChartWithBtn()
       } catch (error) {
         console.error('接口外部调用失败:', error);
       }
     },
-
-    // 国家财政收支图表-月度
-    drawFinanceChartsMonth() {
-      // 基于准备好的dom，初始化echarts实例
-      var financeChart = echarts.init(document.getElementById('finance-month'));
-      // 指定图表的配置项和数据
-      var financeOption = {
-        title: {
-          text: '国家财政收支-月度',
-          left: 'center',
-          top: 'top'
-        },
-        tooltip: {
-          //X轴悬浮显示所有数据
-          trigger: 'axis'
-        },
-        legend: {
-          left: 'center',
-          top: '10%'
-        },
-        grid: {
-          left: '1%',
-          right: '1%',
-          top: '30%',
-          bottom: '1%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          data: this.returnData.sj[1].sort()
-        },
-        yAxis: {
-        },
-        series: [
-          {
-            name: '国家财政收入累计值(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A0C0102)
-          },
-
-          {
-            name: '国家财政支出累计值(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A0C0202)
-          },
-        ]
-      };
-      // 使用刚指定的配置项和数据显示图表。
-      financeChart.setOption(financeOption);
-    },
-    // 国家财政收支图表-年度
-    drawFinanceCharts() {
-      // 基于准备好的dom，初始化echarts实例
-      var financeChart = echarts.init(document.getElementById('finance'));
-      // 指定图表的配置项和数据
-      var financeOption = {
-        title: {
-          text: '中央与地方财政收支',
-          left: 'center',
-          top: 'top'
-        },
-        tooltip: {
-          //X轴悬浮显示所有数据
-          trigger: 'axis'
-        },
-        legend: {
-          left: 'center',
-          top: '10%'
-        },
-        grid: {
-          left: '1%',
-          right: '1%',
-          top: '30%',
-          bottom: '1%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          data: this.returnData.sj[0].sort()
-        },
-        yAxis: {
-        },
-        series: [
-          {
-            name: '全国财政收入(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A080201)
-          },
-          {
-            name: '中央财政收入(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A080202)
-          },
-          {
-            name: '地方财政收入(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A080203)
-          },
-          {
-            name: '全国财政支出(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A080301)
-          },
-          {
-            name: '中央财政支出(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A080302)
-          },
-          {
-            name: '地方财政支出(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A080303)
-          },
-
-        ]
-      };
-      // 使用刚指定的配置项和数据显示图表。
-      financeChart.setOption(financeOption);
-    },
-
-    // 财政支出
-    drawFiscalRevenueCharts() {
-      // 基于准备好的dom，初始化echarts实例
-      var fiscalRevenueChart = echarts.init(document.getElementById('fiscalrevenue'));
-      // 指定图表的配置项和数据
-      var fiscalRevenueOption = {
-        title: {
-          text: '国家财政主要收入项目',
-          left: 'center',
-        },
-        tooltip: {
-          //X轴悬浮显示所有数据
-          trigger: 'axis'
-        },
-        legend: {
-          left: 'center',
-          top: '10%'
-        },
-        grid: {
-          left: '1%',
-          right: '1%',
-          top: '30%',
-          bottom: '1%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          data: this.returnData.sj[0].sort()
-        },
-        yAxis: {
-
-        },
-
-        series: [
-
-          {
-            name: '增值税(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A08040103)
-          },
-          {
-            name: '消费税(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A08040104)
-          },
-          {
-            name: '企业所得税(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A08040108)
-          },
-          {
-            name: '个人所得税(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A08040109)
-          },
-          {
-            name: '土地增值税(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A0804010G)
-          },
-          {
-            name: '关税(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A0804010K)
-          },
-          {
-            name: '罚没收入(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A0804010S)
-          },
-
-        ]
-      };
-      // 使用刚指定的配置项和数据显示图表。
-      fiscalRevenueChart.setOption(fiscalRevenueOption);
-    },
-    // 基尼系数图表
-    drawFiscalExpenditureCharts() {
-      // 基于准备好的dom，初始化echarts实例
-      var fiscalExpenditureChart = echarts.init(document.getElementById('fiscalexpenditure '));
-      // 指定图表的配置项和数据
-      var fiscalExpenditureOption = {
-        title: {
-          text: '国家财政主要支出项目',
-          left: 'center'
-        },
-        tooltip: {
-          //X轴悬浮显示所有数据
-          trigger: 'axis'
-        },
-        legend: {
-          left: 'center',
-          top: '10%'
-        },
-        grid: {
-          left: '1%',
-          right: '1%',
-          top: '30%',
-          bottom: '1%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          data: this.returnData.sj[0].sort()
-        },
-        yAxis: {
-
-        },
-        series: [
-          {
-            name: '一般公共服务(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A08050102)
-          },
-          {
-            name: '国防(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A08050105)
-          },
-          {
-            name: '公共安全(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A08050106)
-          },
-          {
-            name: '教育(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A08050108)
-          },
-          {
-            name: '科学技术(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A08050109)
-          },
-          {
-            name: '社会保障和就业(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A0805010B)
-          },
-          {
-            name: '医疗卫生(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A0805010C)
-          },
-          {
-            name: '交通运输(亿元)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.NationalFinance.A0805010G)
-          },
-        ]
-      };
-      // 使用刚指定的配置项和数据显示图表。
-      fiscalExpenditureChart.setOption(fiscalExpenditureOption);
+    drawChartWithBtn() {
+      if (this.returnData) {
+        this.drawBarChart_Finance_Month()
+        this.drawBarChart_Finance()
+        this.drawBarChart_FiscalRevenue()
+        this.drawBarChart_FiscalExpenditure()
+      }
     },
     drawBarChart_Finance_Month() {
       this.isBarActive_Finance_Month = true;
       this.isLineActive_Finance_Month = false;
-      this.chartsType = "bar"
-      this.drawFinanceChartsMonth()
+      this.chartType = "bar"
+      this.drawChartWithParams(this.EChartType_NationalFinance.FM)
 
     },
     drawLineChart_Finance_Month() {
       this.isBarActive_Finance_Month = false;
       this.isLineActive_Finance_Month = true;
       // 在这里绘制折线图
-      this.chartsType = "line"
-      this.drawFinanceChartsMonth()
+      this.chartType = "line"
+      this.drawChartWithParams(this.EChartType_NationalFinance.FM)
     },
     drawBarChart_Finance() {
       this.isBarActive_Finance = true;
       this.isLineActive_Finance = false;
-      this.chartsType = "bar"
-      this.drawFinanceCharts()
+      this.chartType = "bar"
+      this.drawChartWithParams(this.EChartType_NationalFinance.FY)
 
     },
     drawLineChart_Finance() {
       this.isBarActive_Finance = false;
       this.isLineActive_Finance = true;
       // 在这里绘制折线图
-      this.chartsType = "line"
-      this.drawFinanceCharts()
+      this.chartType = "line"
+      this.drawChartWithParams(this.EChartType_NationalFinance.FY)
     },
     drawBarChart_FiscalRevenue() {
       this.isBarActive_FiscalRevenue = true;
       this.isLineActive_FiscalRevenue = false;
-      this.chartsType = "bar"
-      this.drawFiscalRevenueCharts()
+      this.chartType = "bar"
+      this.drawChartWithParams(this.EChartType_NationalFinance.FR)
 
     },
     drawLineChart_FiscalRevenue() {
       this.isBarActive_FiscalRevenue = false;
       this.isLineActive_FiscalRevenue = true;
       // 在这里绘制折线图
-      this.chartsType = "line"
-      this.drawFiscalRevenueCharts()
+      this.chartType = "line"
+      this.drawChartWithParams(this.EChartType_NationalFinance.FR)
     },
     drawBarChart_FiscalExpenditure() {
       this.isBarActive_FiscalExpenditure = true;
       this.isLineActive_FiscalExpenditure = false;
-      this.chartsType = "bar"
-      this.drawFiscalExpenditureCharts()
+      this.chartType = "bar"
+      this.drawChartWithParams(this.EChartType_NationalFinance.FE)
 
     },
     drawLineChart_FiscalExpenditure() {
       this.isBarActive_FiscalExpenditure = false;
       this.isLineActive_FiscalExpenditure = true;
       // 在这里绘制折线图
-      this.chartsType = "line"
-      this.drawFiscalExpenditureCharts()
+      this.chartType = "line"
+      this.drawChartWithParams(this.EChartType_NationalFinance.FE)
+    },
+    drawChartWithParams(echrtId) {
+      // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
+      let basicParams = {};
+      let typeArr = [];
+      // 年度数据
+      switch (echrtId) {
+        case this.EChartType_NationalFinance.FM:
+          // A0C0102-国家财政收入 A0C0202-国家财政支出  
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国家财政收支累计值', subtitle: '', exceptName: '国家财政(不含债务还本)_累计值', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '1' }
+          typeArr = ['A0C0102', 'A0C0202'];
+          break;
+        case this.EChartType_NationalFinance.FY:
+          // A080201-全国财政收入 A080202-中央财政收入 A080203-地方财政收入 A080301-全国财政收入  A080302-中央财政收入  A080303-地方财政收入
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '中央与地方财政收支', subtitle: '', exceptName: '', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '0' }
+          typeArr = ['A080201', 'A080202', 'A080203', 'A080301', 'A080302', 'A080303'];
+          break;
+        case this.EChartType_NationalFinance.FR:
+          // A08040102- 国家税收收入 A08040103-国内增值税 A08040104-国内消费税 A08040108-企业所得税
+          // A08040109-个人所得税 A0804010G-国家土地增值税 A0804010K-关税 A0804010S-国家罚没收入
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国家财政主要收入项目', subtitle: '', exceptName: '', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '0' }
+          typeArr = ['A08040102', 'A08040103', 'A08040104', 'A08040108',
+            'A08040109', 'A0804010G', 'A0804010K', 'A0804010S'];
+          break;
+        case this.EChartType_NationalFinance.FE:
+          console.log("谁带回家啊点喝酒啊回到大海");
+          // A08050102-一般公共服务支出 A08050105-国防支出 A08050106-公共安全支出 A08050108-教育支出
+          // A08050109-科学技术支出 A0805010B-社会保障和就业支出 A0805010C-医疗卫生支出 A0805010G-交通运输支出       
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国家财政主要支出项目', subtitle: '', exceptName: '', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '0' }
+          typeArr = ['A08050102', 'A08050105', 'A08050106', 'A08050108', 'A08050109', 'A0805010B', 'A0805010C', 'A0805010G'];
+          break;
+        default:
+          break;
+      }
+      drawCommonChart(basicParams, typeArr, this.returnData)
     }
 
   }

@@ -30,30 +30,16 @@
 </template>
 
 <script>
-import * as echarts from 'echarts';
-import { params_population, sendRequest, selectDataFromArr } from './CommonUtil';
+
+import { params_population, sendRequest, drawCommonChart } from './CommonUtil';
 export default {
 
   data() {
     return {
-      PopulationType: {
-        Population_A030101: 'A030101',   // 总人口
-        Population_A030102: 'A030102',   // 男性
-        Population_A030103: 'A030103',   // 女性
-        Population_A030104: 'A030104',   // 城市
-        Population_A030105: 'A030105',   // 农村
-        Population_A030302: 'A030302',   // 0-14岁
-        Population_A030303: 'A030303',   // 15-64岁
-        Population_A030304: 'A030304'    // 65岁以上
-      },
-      PopulationRateType: {
-        Population_A030201: 'A030201',   // 出生率
-        Population_A030202: 'A030202',   // 死亡率
-        Population_A030203: 'A030203',   // 自然增长率
-        Population_A030305: 'A030305',   // 总抚养比
-        Population_A030306: 'A030306',   // 少儿抚养比
-        Population_A030307: 'A030307'    // 老年抚养比
-
+      EChartType_Population: {
+        PL: 'population',
+        PR: 'populationrate',
+        DC: 'dependencyratio'
       },
       isBarActive_Population: false,
       isLineActive_Population: false,
@@ -62,7 +48,7 @@ export default {
       isBarActive_Dependencyratio: false,
       isLineActive_Dependencyratio: false,
       returnData: null,
-      chartsType: null
+      chartType: null
     };
   },
   mounted() {
@@ -86,9 +72,7 @@ export default {
           // 列表数据
           this.returnData = data;
           // 处理数据绘制图表
-          this.drawBarChart_Population()
-          this.drawBarChart_Populationrate()
-          this.drawBarChart_Dependencyratio()
+          this.drawChartWithBtn()
         })
         .catch(error => {
           console.error('Error fetching data:', error)
@@ -98,241 +82,86 @@ export default {
       try {
         this.returnData = await sendRequest(params_population);
         console.log("响应处理后的数据：", this.returnData)
-        if (this.returnData) {
-          this.drawBarChart_Population()
-          this.drawBarChart_Populationrate()
-          this.drawBarChart_Dependencyratio()
-        }
+        this.drawChartWithBtn()
       } catch (error) {
         console.error('接口外部调用失败:', error);
       }
     },
-
-    // 总人口图表
-    drawPopulationCharts() {
-      // 基于准备好的dom，初始化echarts实例
-      var populationChart = echarts.init(document.getElementById('population'));
-      // 指定图表的配置项和数据
-      var populationOption = {
-        title: {
-          text: '人口数据',
-          left: 'center',
-          top: 'top'
-        },
-        tooltip: {
-          //X轴悬浮显示所有数据
-          trigger: 'axis'
-        },
-        legend: {
-          left: 'center',
-          top: '10%'
-        },
-        grid: {
-          left: '1%',
-          right: '1%',
-          top: '25%',
-          bottom: '1%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          data: this.returnData.sj[0].sort()
-        },
-        yAxis: {
-        },
-        series: [
-          {
-            name: '总人口(万人)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030101)
-          },
-          {
-            name: '男性(万人)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030102)
-          },
-          {
-            name: '女性(万人)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030103)
-          }, {
-            name: '城镇(万人)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030104)
-          },
-          {
-            name: '农村(万人)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030105)
-          },
-          {
-            name: '0-14岁(万人)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030302)
-          },
-          {
-            name: '14-64岁(万人)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030303)
-          },
-          {
-            name: '65岁以上(万人)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationType.Population_A030304)
-          }
-
-        ]
-      };
-      // 使用刚指定的配置项和数据显示图表。
-      populationChart.setOption(populationOption);
-    },
-    // 出生率/死亡率/增长率图表
-    drawPopulationRateCharts() {
-      // 基于准备好的dom，初始化echarts实例
-      var populationrateChart = echarts.init(document.getElementById('populationrate'));
-      // 指定图表的配置项和数据
-      var populationrateOption = {
-        title: {
-          text: '人口率',
-          left: 'center',
-          top: 'top'
-        },
-        tooltip: {
-          //X轴悬浮显示所有数据
-          trigger: 'axis'
-        },
-        legend: {
-          left: 'center',
-          top: '50px'
-        },
-        grid: {
-          left: '1%',
-          right: '1%',
-          top: '20%',
-          bottom: '1%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          data: this.returnData.sj[0].sort()
-        },
-        yAxis: {
-        },
-        series: [
-          {
-            name: '出生率(%)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030201)
-          },
-          {
-            name: '死亡率(%)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030202)
-          },
-          {
-            name: '自然增长率(%)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030203)
-          }
-        ]
-      };
-      // 使用刚指定的配置项和数据显示图表。
-      populationrateChart.setOption(populationrateOption);
-    },
-    // 抚养比图表
-    drawDependencyRatioCharts() {
-      // 基于准备好的dom，初始化echarts实例
-      var dependencyratioChart = echarts.init(document.getElementById('dependencyratio'));
-      // 指定图表的配置项和数据
-      var dependencyratioOption = {
-        title: {
-          text: '抚养比',
-          left: 'center',
-          top: 'top'
-        },
-        tooltip: {
-          //X轴悬浮显示所有数据
-          trigger: 'axis'
-        },
-        legend: {
-          left: 'center',
-          top: '50px'
-        },
-        grid: {
-          left: '1%',
-          right: '1%',
-          top: '20%',
-          bottom: '1%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          data: this.returnData.sj[0].sort()
-        },
-        yAxis: {
-        },
-        series: [
-          {
-            name: '总抚养比(%)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030305)
-          },
-          {
-            name: '少儿抚养比(%)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030306)
-          },
-          {
-            name: '老年抚养比(%)',
-            type: this.chartsType,
-            data: selectDataFromArr(this.returnData, this.PopulationRateType.Population_A030307)
-          }
-        ]
-      };
-      // 使用刚指定的配置项和数据显示图表。
-      dependencyratioChart.setOption(dependencyratioOption);
+    drawChartWithBtn() {
+      if (this.returnData) {
+        this.drawBarChart_Population()
+        this.drawBarChart_Populationrate()
+        this.drawBarChart_Dependencyratio()
+      }
     },
     drawBarChart_Population() {
       this.isBarActive_Population = true;
       this.isLineActive_Population = false;
-      this.chartsType = "bar"
-      this.drawPopulationCharts()
+      this.chartType = "bar"
+      this.drawChartWithParams(this.EChartType_Population.PL)
 
     },
     drawLineChart_Population() {
       this.isBarActive_Population = false;
       this.isLineActive_Population = true;
       // 在这里绘制折线图
-      this.chartsType = "line"
-      this.drawPopulationCharts()
+      this.chartType = "line"
+      this.drawChartWithParams(this.EChartType_Population.PL)
     },
     drawBarChart_Populationrate() {
       this.isBarActive_Populationrate = true;
       this.isLineActive_Populationrate = false;
-      this.chartsType = "bar"
-      this.drawPopulationRateCharts()
+      this.chartType = "bar"
+      this.drawChartWithParams(this.EChartType_Population.PR)
 
     },
     drawLineChart_Populationrate() {
       this.isBarActive_Populationrate = false;
       this.isLineActive_Populationrate = true;
       // 在这里绘制折线图
-      this.chartsType = "line"
-      this.drawPopulationRateCharts()
+      this.chartType = "line"
+      this.drawChartWithParams(this.EChartType_Population.PR)
     },
     drawBarChart_Dependencyratio() {
       this.isBarActive_Dependencyratio = true;
       this.isLineActive_Dependencyratio = false;
-      this.chartsType = "bar"
-      this.drawDependencyRatioCharts()
+      this.chartType = "bar"
+      this.drawChartWithParams(this.EChartType_Population.DC)
 
     },
     drawLineChart_Dependencyratio() {
       this.isBarActive_Dependencyratio = false;
       this.isLineActive_Dependencyratio = true;
       // 在这里绘制折线图
-      this.chartsType = "line"
-      this.drawDependencyRatioCharts()
+      this.chartType = "line"
+      this.drawChartWithParams(this.EChartType_Population.DC)
+    },
+    drawChartWithParams(echrtId) {
+      // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
+      let basicParams = {};
+      let typeArr = [];
+
+      switch (echrtId) {
+        case this.EChartType_Population.PL:
+          // A030101-总人口 A030102-男性 A030103-女性 A030104-城市 A030105-农村
+          // A030302-0-14岁 A030303-15-64岁 A030304-65岁以上
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口数据', subtitle: '', exceptName: '人口', unit: '(万人)', legendTop: '10%', gridTop: '20%', sj: '0' }
+          typeArr = ['A030101', 'A030102', 'A030103', 'A030104', 'A030105', 'A030302', 'A030303', 'A030304'];
+          break;
+        case this.EChartType_Population.PR:
+          // A030201-出生率 A030202-死亡率 A030203-自然增长率  
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口率', subtitle: '', exceptName: '人口', unit: '(%)', legendTop: '10%', gridTop: '20%', sj: '0' }
+          typeArr = ['A030201', 'A030202', 'A030203'];
+          break;
+        case this.EChartType_Population.DC:
+          // A030305-总抚养比 A030306-少儿抚养比 A030307-老年抚养比
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口抚养比', subtitle: '', exceptName: '', unit: '(%)', legendTop: '10%', gridTop: '20%', sj: '0' }
+          typeArr = ['A030305', 'A030306', 'A030307'];
+          break;
+        default:
+          break;
+      }
+      drawCommonChart(basicParams, typeArr, this.returnData)
     }
   }
 };

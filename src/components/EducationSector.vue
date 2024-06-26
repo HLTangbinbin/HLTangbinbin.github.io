@@ -99,56 +99,59 @@ export default {
             this.isBarActive_Entrants = true;
             this.isLineActive_Entrants = false;
             this.chartType = "bar";
-            this.drawChartWithParams({echrtId: this.EChartType_Education.ZS, title: '招生数', exceptName: '招生数', unit: '(万人)'})
+            this.drawChartWithParams(this.EChartType_Education.ZS)
         },
         drawLineChart_Entrants() {
             this.isBarActive_Entrants = false;
             this.isLineActive_Entrants = true;
             this.chartType = "line"
-            this.drawChartWithParams({echrtId: this.EChartType_Education.ZS, title: '招生数', exceptName: '招生数', unit: '(万人)'})
+            this.drawChartWithParams(this.EChartType_Education.ZS)
         },
         drawBarChart_Enrollment() {
             this.isBarActive_Enrollment = true;
             this.isLineActive_Enrollment = false;
             this.chartType = "bar"
-            this.drawChartWithParams({echrtId: this.EChartType_Education.ZX, title: '在校学生数', exceptName: '在校学生数', unit: '(万人)'})
+            this.drawChartWithParams(this.EChartType_Education.ZX)
         },
         drawLineChart_Enrollment() {
             this.isBarActive_Enrollment = false;
             this.isLineActive_Enrollment = true;
             this.chartType = "line"
-            this.drawChartWithParams({echrtId: this.EChartType_Education.ZX, title: '在校学生数', exceptName: '在校学生数', unit: '(万人)'})
+            this.drawChartWithParams(this.EChartType_Education.ZX)
         },
         drawBarChart_Graduates() {
             this.isBarActive_Graduates = true;
             this.isLineActive_Graduates = false;
             this.chartType = "bar"
-            this.drawChartWithParams({echrtId: this.EChartType_Education.BY, title: '毕业生数', exceptName: '毕业生数', unit: '(万人)'})
+            this.drawChartWithParams(this.EChartType_Education.BY)
         },
         drawLineChart_Graduates() {
             this.isBarActive_Graduates = false;
             this.isLineActive_Graduates = true;
             this.chartType = "line"
-            this.drawChartWithParams({echrtId: this.EChartType_Education.BY, title: '毕业生数', exceptName: '毕业生数', unit: '(万人)'})
+            this.drawChartWithParams(this.EChartType_Education.BY)
         },
-        drawChartWithParams({echrtId, title, exceptName = '', unit = '', subtitle = '', sj = '0' } = {}) {
+        drawChartWithParams(echrtId) {
             // basicParams-包含echrtId、title、exceptName、unit、legendTop、gridTop、xAxisDataArr
-            let basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle:subtitle, exceptName: exceptName, unit: unit, sj: sj}
+            let basicParams = {}
             let typeArr = [];
             switch (echrtId) {
                 case this.EChartType_Education.ZS:
                     // A0M020119-学前招生数 A0M0706-普通小学招生数 A0M0704-初中学校招生数
                     // A0M0703-普通高中招生数 A0M0701-普通高等学校招生数 A0M020102-研究生招生数
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '招生数', subtitle: '', exceptName: '招生数', unit: '(万人)', sj: '0' }
                     typeArr = ['A0M020119', 'A0M0706', 'A0M0704', 'A0M0703', 'A0M0701', 'A0M020102'];
                     break;
                 case this.EChartType_Education.ZX:
                     // A0M02021A-学前在校学生数 A0M0806-普通小学在校学生数 A0M0804-初中学校在校学生数
                     // A0M0803-普通高中在校学生数 A0M0801-普通高等学校在校学生数 A0M020202-研究生在校学生数
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '在校学生数', subtitle: '', exceptName: '在校学生数', unit: '(万人)', sj: '0' }
                     typeArr = ['A0M02021A', 'A0M0806', 'A0M0804', 'A0M0803', 'A0M0801', 'A0M020202'];
                     break;
                 case this.EChartType_Education.BY:
                     // A0M02031A-学前毕业生数 A0M0906-普通小学毕业生数 A0M0904-初中学校毕业生数
                     // A0M0903-普通高中毕业生数 A0M0901-普通高等学校毕业生数 A0M020302-研究生毕业生数
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '毕业生数', subtitle: '', exceptName: '毕业生数', unit: '(万人)', sj: '0' }
                     typeArr = ['A0M02031A', 'A0M0906', 'A0M0904', 'A0M0903', 'A0M0901', 'A0M020302'];
                     break;
                 default:

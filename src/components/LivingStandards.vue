@@ -99,63 +99,63 @@ export default {
       this.isBarActive_Income = true;
       this.isLineActive_Income = false;
       this.chartType = "bar"
-      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.IC, title: '人均收入数据',exceptName: '居民可支配', unit: '(万元)' })
+      this.drawChartWithParams(this.EChartType_LivingStandards.IC)
     },
     drawLineChart_Income() {
       this.isBarActive_Income = false;
       this.isLineActive_Income = true;
       // 在这里绘制折线图
       this.chartType = "line"
-      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.IC, title: '人均收入数据',exceptName: '居民可支配', unit: '(万元)' })
+      this.drawChartWithParams(this.EChartType_LivingStandards.IC)
     },
     drawBarChart_Engel() {
       this.isBarActive_Engel = true;
       this.isLineActive_Engel = false;
       this.chartType = "bar"
-      const subtitle = '恩格尔系数是食品支出总额占个人消费支出总额的比重 \n 59%以上为贫困 50~59%为温饱 \n 40~50%为小康 30~40%为相对富裕 \n 20~30%为富裕 低于20%为及其富裕'
-      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.EC, title: '恩格尔系数', subtitle: subtitle})
+      this.drawChartWithParams(this.EChartType_LivingStandards.EC)
     },
     drawLineChart_Engel() {
       this.isBarActive_Engel = false;
       this.isLineActive_Engel = true;
       // 在这里绘制折线图
       this.chartType = "line"
-      const subtitle = '恩格尔系数是食品支出总额占个人消费支出总额的比重 \n 59%以上为贫困 50~59%为温饱 \n 40~50%为小康 30~40%为相对富裕 \n 20~30%为富裕 低于20%为及其富裕'
-      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.EC, title: '恩格尔系数', subtitle: subtitle})
+      this.drawChartWithParams(this.EChartType_LivingStandards.EC)
     },
     drawBarChart_Gini() {
       this.isBarActive_Gini = true;
       this.isLineActive_Gini = false;
       this.chartType = "bar"
-      const subtitle = '衡量一个国家或地区居民收入差距的常用指标之一 \n 0.2-0.29表示指数等级低(比较平均) \n 0.3-0.39表示指数等级中(相对合理) \n 0.4-0.59表示指数等级高(差距较大) \n 0.6以上表示指数等级极高(差距悬殊) \n 0.4作为收入分配差距的“警戒线”'
-      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.GC, title: '基尼系数', subtitle: subtitle})
+
+      this.drawChartWithParams(this.EChartType_LivingStandards.GC)
     },
     drawLineChart_Gini() {
       this.isBarActive_Gini = false;
       this.isLineActive_Gini = true;
       // 在这里绘制折线图
       this.chartType = "line"
-      const subtitle = '衡量一个国家或地区居民收入差距的常用指标之一 \n 0.2-0.29表示指数等级低(比较平均) \n 0.3-0.39表示指数等级中(相对合理) \n 0.4-0.59表示指数等级高(差距较大) \n 0.6以上表示指数等级极高(差距悬殊) \n 0.4作为收入分配差距的“警戒线”'
-      this.drawChartWithParams({ echrtId: this.EChartType_LivingStandards.GC, title: '基尼系数', subtitle: subtitle})
+      this.drawChartWithParams(this.EChartType_LivingStandards.GC)
     },
-    drawChartWithParams({ echrtId, title, exceptName = '', unit = '', subtitle = '', sj = '0' } = {}) {
+    drawChartWithParams(echrtId) {
       // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
       let basicParams = {};
       let typeArr = [];
+      let subtitle = ''
       switch (echrtId) {
         case this.EChartType_LivingStandards.IC:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '10%', gridTop: '30%', sj: sj }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人均收入数据', subtitle: '', exceptName: '居民可支配', unit: '(万元)', legendTop: '10%', gridTop: '30%', sj: '0' }
           // A0A0101-居民人均可支配收入 A0A0103-居民人均可支配收入中位数 A0A0201-城镇居民人均可支配收入   
           // A0A0203-城镇居民人均可支配收入中位数 A0A0301-农村居民人均可支配收入 A0A0303-农村居民人均可支配收入中位数
-          typeArr = ['A0A0101', 'A0A0103', 'A0A0201','A0A0203', 'A0A0301', 'A0A0303'];
+          typeArr = ['A0A0101', 'A0A0103', 'A0A0201', 'A0A0203', 'A0A0301', 'A0A0303'];
           break;
         case this.EChartType_LivingStandards.EC:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '20%', gridTop: '35%', sj: sj, min: '25', max: '50' }
+          subtitle = '衡量一个国家或地区居民收入差距的常用指标之一 \n 0.2-0.29表示指数等级低(比较平均) \n 0.3-0.39表示指数等级中(相对合理) \n 0.4-0.59表示指数等级高(差距较大) \n 0.6以上表示指数等级极高(差距悬殊) \n 0.4作为收入分配差距的“警戒线”'
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '恩格尔系数', subtitle: subtitle, exceptName: '', unit: '', legendTop: '27%', gridTop: '35%', sj: '0', min: '25', max: '35' }
           // A0A0H01-居民恩格尔系数 A0A0H02-城镇居民恩格尔系数 A0A0H03-农村居民恩格尔系数  
           typeArr = ['A0A0H01', 'A0A0H02', 'A0A0H03'];
           break;
         case this.EChartType_LivingStandards.GC:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: title, subtitle: subtitle, exceptName: exceptName, unit: unit, legendTop: '27%', gridTop: '35%', sj: sj, min: '0.4', max: '0.5' }
+          subtitle = '衡量一个国家或地区居民收入差距的常用指标之一 \n 0.2-0.29表示指数等级低(比较平均) \n 0.3-0.39表示指数等级中(相对合理) \n 0.4-0.59表示指数等级高(差距较大) \n 0.6以上表示指数等级极高(差距悬殊) \n 0.4作为收入分配差距的“警戒线”'
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '基尼系数', subtitle: subtitle, exceptName: '', unit: '', legendTop: '27%', gridTop: '35%', sj: '0', min: '0.4', max: '0.5' }
           // A0A0G01-居民人均可支配收入基尼系数
           typeArr = ['A0A0G01'];
           break;

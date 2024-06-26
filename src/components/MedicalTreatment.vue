@@ -30,27 +30,16 @@
 </template>
 
 <script>
-import * as echarts from 'echarts';
-import { params_medical, sendRequest, selectDataFromArr } from './CommonUtil';
+
+import { params_medical, sendRequest, drawCommonChart } from './CommonUtil';
 export default {
 
     data() {
         return {
-            Medical: {
-                // 卫生机构数
-                A0O0101: 'A0O0101',   // 医疗卫生机构数
-                A0O0102: 'A0O0102',   // 医院数
-                A0O0106: 'A0O0106',   // 基层医疗卫生机构
-                // 在校人数
-                A0O0201: 'A0O0201',   // 卫生人员数
-                A0O0202: 'A0O0202',   // 卫生技术人员数
-                A0O0204: 'A0O0204',   // 执业医师数
-                A0O0205: 'A0O0205',   // 注册护士数
-                // 卫生机构床位数
-                A0O0501: 'A0O0501',   // 卫生机构床位数
-                A0O0502: 'A0O0502',   // 医院床位数
-                A0O0506: 'A0O0506',   // 基层医疗卫生机构床位数
-
+            EChartType_Medical: {
+                AG: 'agency',
+                OF: 'officer',
+                BD: 'bed'
             },
 
             isBarActive_Agency: false,
@@ -61,7 +50,7 @@ export default {
             isLineActive_Bed: false,
             returnData: null,
             sjList: null,
-            chartsType: null
+            chartType: null
         };
     },
     mounted() {
@@ -85,9 +74,7 @@ export default {
                     // 列表数据
                     this.returnData = data;
                     // 处理数据绘制图表
-                    this.drawBarChart_Agency()
-                    this.drawBarChart_Officer()
-                    this.drawBarChart_Bed()
+                    this.drawChartWithBtn()
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error)
@@ -97,228 +84,88 @@ export default {
             try {
                 this.returnData = await sendRequest(params_medical);
                 console.log("响应处理后的数据：", this.returnData)
-                if (this.returnData) {
-                    this.drawBarChart_Agency()
-                    this.drawBarChart_Officer()
-                    this.drawBarChart_Bed()
-                }
+                this.drawChartWithBtn()
             } catch (error) {
                 console.error('接口外部调用失败:', error);
             }
         },
-        // 卫生机构图表
-        drawAgencyCharts() {
-            // 基于准备好的dom，初始化echarts实例
-            var agencyChart = echarts.init(document.getElementById('agency'));
-            // 指定图表的配置项和数据
-            var agencyOption = {
-                title: {
-                    text: '医疗卫生机构数',
-                    left: 'center',
-                    top: 'top'
-                },
-                tooltip: {
-                    //X轴悬浮显示所有数据
-                    trigger: 'axis'
-                },
-                legend: {
-                    left: 'center',
-                    top: '10%'
-                },
-                grid: {
-                    left: '1%',
-                    right: '1%',
-                    top: '20%',
-                    bottom: '1%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'category',
-                    data: this.returnData.sj[0].sort()
-                },
-                yAxis: {
-                },
-
-                series: [
-                    {
-                        name: '医疗卫生机构数(个)',
-                        type: this.chartsType,
-                        data: selectDataFromArr(this.returnData, this.Medical.A0O0101)
-                    },
-                    {
-                        name: '医院数(个)',
-                        type: this.chartsType,
-                        data: selectDataFromArr(this.returnData, this.Medical.A0O0102)
-                    },
-                    {
-                        name: '基础医疗卫生机构(个)',
-                        type: this.chartsType,
-                        data: selectDataFromArr(this.returnData, this.Medical.A0O0106)
-                    }
-
-                ]
-            };
-            // 使用刚指定的配置项和数据显示图表。
-            agencyChart.setOption(agencyOption);
+        drawChartWithBtn() {
+            if (this.returnData) {
+                this.drawBarChart_Agency()
+                this.drawBarChart_Officer()
+                this.drawBarChart_Bed()
+            }
         },
-        // 卫生人员数
-        drawOfficerCharts() {
-            // 基于准备好的dom，初始化echarts实例
-            var officerChart = echarts.init(document.getElementById('officer'));
-            // 指定图表的配置项和数据
-            var officerOption = {
-                title: {
-                    text: '卫生人员数',
-                    left: 'center',
-                    top: 'top',
-                },
-                tooltip: {
-                    //X轴悬浮显示所有数据
-                    trigger: 'axis'
-                },
-                legend: {
-                    left: 'center',
-                    top: '10%'
-                },
-                grid: {
-                    left: '1%',
-                    right: '1%',
-                    top: '20%',
-                    bottom: '1%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'category',
-                    data: this.returnData.sj[0].sort()
-                },
-                yAxis: {
 
-                },
-
-                series: [
-                    {
-                        name: '卫生人员数(万人)',
-                        type: this.chartsType,
-                        data: selectDataFromArr(this.returnData, this.Medical.A0O0201)
-                    },
-                    {
-                        name: '卫生技术人员数(万人)',
-                        type: this.chartsType,
-                        data: selectDataFromArr(this.returnData, this.Medical.A0O0202)
-                    },
-                    {
-                        name: '执业医师数(万人)',
-                        type: this.chartsType,
-                        data: selectDataFromArr(this.returnData, this.Medical.A0O0204)
-                    },
-                    {
-                        name: '注册护士数(万人)',
-                        type: this.chartsType,
-                        data: selectDataFromArr(this.returnData, this.Medical.A0O0205)
-                    }
-
-                ]
-            };
-            // 使用刚指定的配置项和数据显示图表。
-            officerChart.setOption(officerOption);
-        },
-        // 医疗卫生机构床位数
-        drawBedCharts() {
-            // 基于准备好的dom，初始化echarts实例
-            var bedChart = echarts.init(document.getElementById('bed'));
-            // 指定图表的配置项和数据
-            var bedOption = {
-                title: {
-                    text: '医疗卫生机构床位数',
-                    left: 'center',
-                    top: 'top',
-                },
-                tooltip: {
-                    //X轴悬浮显示所有数据
-                    trigger: 'axis'
-                },
-                legend: {
-                    left: 'center',
-                    top: '10%'
-                },
-                grid: {
-                    left: '1%',
-                    right: '1%',
-                    top: '20%',
-                    bottom: '1%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'category',
-                    data: this.returnData.sj[0].sort()
-                },
-                yAxis: {
-
-                },
-                series: [
-                    {
-                        name: '卫生机构床位数(万张)',
-                        type: this.chartsType,
-                        data: selectDataFromArr(this.returnData, this.Medical.A0O0501)
-                    },
-                    {
-                        name: '医院床位数(万张)',
-                        type: this.chartsType,
-                        data: selectDataFromArr(this.returnData, this.Medical.A0O0502)
-                    },
-                    {
-                        name: '基础医疗卫生机构床位数(万张)',
-                        type: this.chartsType,
-                        data: selectDataFromArr(this.returnData, this.Medical.A0O0506)
-                    }
-                ]
-            };
-            // 使用刚指定的配置项和数据显示图表。
-            bedChart.setOption(bedOption);
-        },
         drawBarChart_Agency() {
             this.isBarActive_Agency = true;
             this.isLineActive_Agency = false;
-            this.chartsType = "bar"
-            this.drawAgencyCharts()
+            this.chartType = "bar"
+            this.drawChartWithParams(this.EChartType_Medical.AG)
 
         },
         drawLineChart_Agency() {
             this.isBarActive_Agency = false;
             this.isLineActive_Agency = true;
             // 在这里绘制折线图
-            this.chartsType = "line"
-            this.drawAgencyCharts()
+            this.chartType = "line"
+            this.drawChartWithParams(this.EChartType_Medical.AG)
         },
         drawBarChart_Officer() {
             this.isBarActive_Officer = true;
             this.isLineActive_Officer = false;
-            this.chartsType = "bar"
-            this.drawOfficerCharts()
+            this.chartType = "bar"
+            this.drawChartWithParams(this.EChartType_Medical.OF)
 
         },
         drawLineChart_Officer() {
             this.isBarActive_Officer = false;
             this.isLineActive_Officer = true;
             // 在这里绘制折线图
-            this.chartsType = "line"
-            this.drawOfficerCharts()
+            this.chartType = "line"
+            this.drawChartWithParams(this.EChartType_Medical.OF)
         },
         drawBarChart_Bed() {
             this.isBarActive_Bed = true;
             this.isLineActive_Bed = false;
-            this.chartsType = "bar"
-            this.drawBedCharts()
+            this.chartType = "bar"
+            this.drawChartWithParams(this.EChartType_Medical.BD)
 
         },
         drawLineChart_Bed() {
             this.isBarActive_Bed = false;
             this.isLineActive_Bed = true;
             // 在这里绘制折线图
-            this.chartsType = "line"
-            this.drawBedCharts()
+            this.chartType = "line"
+            this.drawChartWithParams(this.EChartType_Medical.BD)
+        },
+        drawChartWithParams(echrtId) {
+            // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
+            let basicParams = {};
+            let typeArr = [];
+
+            switch (echrtId) {
+                case this.EChartType_Medical.AG:
+                    // A0O0101-医疗卫生机构数 A0O0102-医院数 A0O0106-基层医疗卫生机构   
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗卫生机构数', subtitle: '', exceptName: '数', unit: '(个)', legendTop: '10%', gridTop: '20%', sj: '0' }
+                    typeArr = ['A0O0101', 'A0O0102', 'A0O0106'];
+                    break;
+                case this.EChartType_Medical.OF:
+                    // A0O0201-卫生人员数 A0O0202-卫生技术人员数 A0O0204-执业医师数 A0O0205-注册护士数   
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗卫生人员数', subtitle: '', exceptName: '数', unit: '(万人)', legendTop: '10%', gridTop: '20%', sj: '0' }
+                    typeArr = ['A0O0201', 'A0O0202', 'A0O0204', 'A0O0205'];
+                    break;
+                case this.EChartType_Medical.BD:
+                    // A0O0501-卫生机构床位数 A0O0502-医院床位数 A0O0506-基层医疗卫生机构床位数
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗卫生机构床位数', subtitle: '', exceptName: '床位数', unit: '(万张)', legendTop: '10%', gridTop: '20%', sj: '0' }
+                    typeArr = ['A0O0501', 'A0O0502', 'A0O0506'];
+                    break;
+                default:
+                    break;
+            }
+            drawCommonChart(basicParams, typeArr, this.returnData)
         }
 
     }
 };
-</script>
+</script>ß
