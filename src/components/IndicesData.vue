@@ -121,13 +121,13 @@ export default {
       switch (echrtId) {
         case this.EChartType_Indices.PI:
           subtitle = 'CPI消费者物价指数反映一定时期内城乡居民所购买的 \n 生活消费品和服务项目价格变动趋势和程度的相对数 \n PPI生产者物价指数用来衡量制造商出厂价的平均变化 \n 生产者物价指数比预期数值高时，表明有通货膨胀的风险 \n 生产者物价指数比预期数值低时，则表明有通货紧缩的风险 ',
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '价格指数', subtitle: subtitle, exceptName: '价格指数', unit: '', legendTop: '25%', gridTop: '40%', sj: '0', min: '94', max: '101' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '价格指数', subtitle: subtitle, exceptName: '价格指数', unit: '', legendTop: '25%', gridTop: '40%', sj: '0', min: '94', max: '101' }
           // A01010101-CPI 上年同比 A01030101-CPI 上月环比 A01080101-PPI 上年同比  A01080701-PPI 上月环比
           typeArr = ['A01010101', 'A01030101', 'A01080101', 'A01080701'];
           break;
         case this.EChartType_Indices.PM:
           subtitle = 'PMI是一套月度发布的、综合性的经济监测指标体系 \n PMI指数50%为荣枯分水线 \n PMI略大于50,说明经济在缓慢前进 \n PMI略小于50说明经济在慢慢走向衰退',
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '采购经理指数', subtitle: subtitle, exceptName: '采购经理指数商务活动产出', unit: '', legendTop: '20%', gridTop: '35%', sj: '0', min: '48', max: '57' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '采购经理指数', subtitle: subtitle, exceptName: '采购经理指数商务活动产出', unit: '', legendTop: '20%', gridTop: '35%', sj: '0', min: '48', max: '57' }
           // A0B0101-制造业采购指数 A0B0201-非制造业采购指数 A0B0301-综合采购指数
           typeArr = ['A0B0101', 'A0B0201', 'A0B0301'];
           break;

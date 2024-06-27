@@ -29,35 +29,63 @@ export function sortYearMonths(date1, date2) {
   return compareYearMonth(date1, date2);
 }
 // //按照年份与日期做筛选与排序
-export function selectDataFromArr(returnData, productCode, field) {
+export function selectDataFromArr(returnData, zbCode, fieldKey, cityCode = '') {
   return returnData.dataList.filter(returnDataObj => {
-    return returnDataObj.code.search(productCode) != -1 && returnDataObj.value != 0;
+    if (cityCode == '') {
+      return returnDataObj.code.search(zbCode) != -1 && returnDataObj.value != 0;
+    } else {
+      return returnDataObj.code.search(zbCode) != -1 && returnDataObj.cityCode.search(cityCode) != -1 && returnDataObj.value != 0;
+    }
+
   }).sort(function (a, b) {
     return sortYearMonths(a.date, b.date);
   }).map(item => {
     //取出某个字段数据
-    return item[field];
+    return item[fieldKey];
   })
 }
 
 // 图表统一绘制方法
 // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
-// typeArr所有的请求代码数组 [A0M020202,A0M020302]
+// zbcodeArr所有的请求代码数组 [A0M020202,A0M020302]
 // returnData 本地或者请求返回来的数据
-export function drawCommonChart(basicParams, typeArr, returnData) {
+export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []) {
+  // 通用查询
   const type = basicParams.chartType;
-  const seriesData = typeArr.map(item => {
-    // 调用 selectDataFromArr 并处理返回的数据
-    // 截取不包含title的字段作为name
-    let cname = selectDataFromArr(returnData, item, 'cname')[0];
-    for (let char of basicParams.exceptName) {
-      cname = cname.replace(char, '');
-    }
-    const name = cname + basicParams.unit;
-    const valueArr = selectDataFromArr(returnData, item, 'value');
-    const seriesJson = { name: name, type: type, data: valueArr };
-    return seriesJson;
-  })
+  let cname = ''
+  let name = ''
+  let valueArr = []
+  let seriesData = []
+  if (cityCodeArr.length < 1) {
+    zbArr.map(zbCode => {
+      // 调用 selectDataFromArr 并处理返回的数据
+      // 截取不包含title的字段作为name
+      cname = selectDataFromArr(returnData, zbCode, 'cname')[0];
+      for (let char of basicParams.exceptName) {
+        cname = cname.replace(char, '');
+      }
+      name = cname + basicParams.unit;
+      valueArr = selectDataFromArr(returnData, zbCode, 'value');
+      const seriesJson = { name: name, type: type, data: valueArr };
+      seriesData.push(seriesJson)
+    })
+  } else {
+    // 循环查询某个城市的数据--此时的zbArr只会有一个值
+    cityCodeArr.map(cityCode => {
+      // 对于城市来说，图标的legent的name取城市名字就行
+      const result = returnData.reg.filter(item => item.code == cityCode)[0]
+      if (result == undefined) {
+        // 防止result为空
+        name = ''
+      } else {
+        name = result.cname
+      }
+      valueArr = selectDataFromArr(returnData, zbArr[0], 'value', cityCode)
+      const seriesJson = { name: name, type: type, data: valueArr };
+      seriesData.push(seriesJson)
+    })
+  }
+
 
   // 基于准备好的dom，初始化echarts实例
   var chart = echarts.init(document.getElementById(basicParams.echrtId));
@@ -97,10 +125,12 @@ export function drawCommonChart(basicParams, typeArr, returnData) {
       ... (basicParams.min !== undefined && basicParams.min !== null ? { min: basicParams.min } : {}),
       ... (basicParams.max !== undefined && basicParams.max !== null ? { max: basicParams.max } : {})
     },
-    series: seriesData
+    series: seriesData,
+
 
 
   };
+  console.log(seriesData)
   // 使用刚指定的配置项和数据显示图表。
   chart.setOption(option);
 }
