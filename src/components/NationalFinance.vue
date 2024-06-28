@@ -182,7 +182,7 @@ export default {
         case this.EChartType_NationalFinance.FR:
           // A08040102- 国家税收收入 A08040103-国内增值税 A08040104-国内消费税 A08040108-企业所得税
           // A08040109-个人所得税 A0804010G-国家土地增值税 A0804010K-关税 A0804010S-国家罚没收入
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国家财政主要收入项目', subtitle: '', exceptName: '', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '0' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国家财政主要收入项目', subtitle: '', exceptName: '国家国内财政收入', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '0' }
           typeArr = ['A08040102', 'A08040103', 'A08040104', 'A08040108',
             'A08040109', 'A0804010G', 'A0804010K', 'A0804010S'];
           break;
@@ -190,7 +190,7 @@ export default {
           console.log("谁带回家啊点喝酒啊回到大海");
           // A08050102-一般公共服务支出 A08050105-国防支出 A08050106-公共安全支出 A08050108-教育支出
           // A08050109-科学技术支出 A0805010B-社会保障和就业支出 A0805010C-医疗卫生支出 A0805010G-交通运输支出       
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国家财政主要支出项目', subtitle: '', exceptName: '', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '0' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国家财政主要支出项目', subtitle: '', exceptName: '国家国内财政支出', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '0' }
           typeArr = ['A08050102', 'A08050105', 'A08050106', 'A08050108', 'A08050109', 'A0805010B', 'A0805010C', 'A0805010G'];
           break;
         default:

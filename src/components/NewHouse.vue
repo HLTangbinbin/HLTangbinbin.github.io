@@ -219,7 +219,7 @@
             tooltip: {
               //X轴悬浮显示所有数据
               trigger: 'axis',
-              position: ['90%', '20%']
+              position: ['80%', '40%']
             },
             legend: {
                 left: 'center',
