@@ -146,7 +146,7 @@ export default {
       let subtitle = ''
       switch (echrtId) {
         case this.EChartType_Currency.CM:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货币供应量', subtitle: '', exceptName: '供应量_期末值', unit: '(万亿)', legendTop: '10%', gridTop: '25%', sj: '0' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货币供应量', subtitle: '', exceptName: '供应量_期末值', unit: '(万亿)', legendTop: '10%', gridTop: '25%', sj: '1' }
           // A0D0101-货币(M2)供应量(亿元) A0D0103-货币(M1)供应量(亿元) A0D0105-货币(M0)供应量(亿元)    
           typeArr = ['A0D0105', 'A0D0103', 'A0D0101'];
           break;
