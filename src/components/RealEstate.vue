@@ -182,7 +182,7 @@ export default {
                     break;
                 case this.EChartType_RealEstate.SM:
                     // A060B01-商品住宅销售额_累计值 A060B03-商品住宅现房销售额_累计值 A060B05-商品住宅期房销售额_累计值
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品住宅销售额累计值', subtitle: '', exceptName: '销售额_累计值', unit: '亿元', legendTop: '10%', gridTop: '30%', sj: '1' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品住宅销售额累计值', subtitle: '', exceptName: '销售额_累计值', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '1' }
                     typeArr = ['A060B01', 'A060B03', 'A060B05'];
                     break;
                 case this.EChartType_RealEstate.SAY:
@@ -192,7 +192,7 @@ export default {
                     break;
                 case this.EChartType_RealEstate.SY:
                     // A051601-住宅商品房销售额 A051602-住宅商品房销售额 A051603-别墅、高档公寓销售额 A051604-办公楼销售额 A051605-商业营业用房销售额
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品房销售额', subtitle: '', exceptName: '销售额', unit: '亿元', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品房销售额', subtitle: '', exceptName: '销售额', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '0' }
                     typeArr = ['A051601', 'A051602', 'A051603', 'A051604', 'A051605'];
                     break;
                 default:
