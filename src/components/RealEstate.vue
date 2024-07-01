@@ -169,7 +169,6 @@ export default {
         },
 
         drawChartWithParams(echrtId) {
-            console.log('的环境好的哈等哈',echrtId)
             // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
             let basicParams = {};
             let typeArr = [];

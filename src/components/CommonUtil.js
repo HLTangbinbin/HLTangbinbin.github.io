@@ -30,19 +30,30 @@ export function sortYearMonths(date1, date2) {
 }
 // //按照年份与日期做筛选与排序
 export function selectDataFromArr(returnData, zbCode, fieldKey, cityCode = '') {
-  return returnData.dataList.filter(returnDataObj => {
-    if (cityCode == '') {
-      return returnDataObj.code.search(zbCode) != -1 && returnDataObj.value != 0;
-    } else {
-      return returnDataObj.code.search(zbCode) != -1 && returnDataObj.cityCode.search(cityCode) != -1 && returnDataObj.value != 0;
-    }
+  const filteredData = returnData.dataList
+    .filter(returnDataObj => {
+      // 首先筛选出符合指标代码的数据
+      if (cityCode == '') {
+        return returnDataObj.code.search(zbCode) !== -1;
+      }else {
+        return returnDataObj.code.search(zbCode) !== -1 && returnDataObj.cityCode.search(cityCode) !== -1;
+      }
+    })
+    .sort((a, b) => {
+      // 根据日期排序
+      return sortYearMonths(a.date, b.date);
+    })
+    .filter((returnDataObj, index, array) => {
+      // 然后再判断是否为数组中的最后一条数据且值不为0
+      const isLastItem = index === array.length - 1;
+      return !(isLastItem && returnDataObj.value === 0);
+    })
+    .map(item => {
+      // 提取指定字段的值
+      return item[fieldKey];
+    });
 
-  }).sort(function (a, b) {
-    return sortYearMonths(a.date, b.date);
-  }).map(item => {
-    //取出某个字段数据
-    return item[fieldKey];
-  })
+  return filteredData;
 }
 
 // 图表统一绘制方法
@@ -162,12 +173,12 @@ const params_cityHousePrice = [
 ]
 //房地产
 const params_realEstate = [
-      //年度数据
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0515"},{"wdcode":"sj","valuecode":"LAST10"}]'}, //A0516 商品住宅面积
-    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0516"},{"wdcode":"sj","valuecode":"LAST10"}]'}, //A0516 商品住宅销售额
-    //月度数据
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A060A"},{"wdcode":"sj","valuecode":"LAST13"}]'},//A060A 商品住宅面积
-    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A060B"},{"wdcode":"sj","valuecode":"LAST13"}]'}, //A060B 商品住宅销售额
+  //年度数据
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0515"},{"wdcode":"sj","valuecode":"LAST10"}]' }, //A0516 商品住宅面积
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0516"},{"wdcode":"sj","valuecode":"LAST10"}]' }, //A0516 商品住宅销售额
+  //月度数据
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A060A"},{"wdcode":"sj","valuecode":"LAST13"}]' },//A060A 商品住宅面积
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A060B"},{"wdcode":"sj","valuecode":"LAST13"}]' }, //A060B 商品住宅销售额
 ]
 // GDP
 const params_gdp = [
