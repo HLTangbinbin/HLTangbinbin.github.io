@@ -160,6 +160,15 @@ const params_cityHousePrice = [
   { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A01080T"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A01080T 二手住宅销售价格指数(上年同期=100)
 
 ]
+//房地产
+const params_realEstate = [
+      //年度数据
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0515"},{"wdcode":"sj","valuecode":"LAST10"}]'}, //A0516 商品住宅面积
+    {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A0516"},{"wdcode":"sj","valuecode":"LAST10"}]'}, //A0516 商品住宅销售额
+    //月度数据
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A060A"},{"wdcode":"sj","valuecode":"LAST13"}]'},//A060A 商品住宅面积
+    {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A060B"},{"wdcode":"sj","valuecode":"LAST13"}]'}, //A060B 商品住宅销售额
+]
 // GDP
 const params_gdp = [
   // 国家年度数据---// A0201：A020102 国内生产总值  A020103 第一产值增加  A020104 第二产值增加  A020105 第三产值增加
@@ -364,6 +373,7 @@ export async function sendRequest(specificParams) {
 // 导出模块
 export {
   params_cityHousePrice,
+  params_realEstate,
   params_gdp,
   params_nationalFinance,
   params_financialIndustry,
