@@ -140,6 +140,7 @@ export default {
       // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
       let basicParams = {};
       let typeArr = [];
+      let subtitle = ''
 
       switch (echrtId) {
         case this.EChartType_Population.PL:
@@ -155,7 +156,8 @@ export default {
           break;
         case this.EChartType_Population.DC:
           // A030305-总抚养比 A030306-少儿抚养比 A030307-老年抚养比
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口抚养比', subtitle: '', exceptName: '', unit: '(%)', legendTop: '10%', gridTop: '20%', sj: '0' }
+          subtitle = '总体人口中非劳动年龄人口数与劳动年龄人口数之比\n 每100名劳动年龄人口负担多少名非劳动年龄人口'
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口抚养比', subtitle: subtitle, exceptName: '', unit: '(%)', legendTop: '20%', gridTop: '35%', sj: '0' }
           typeArr = ['A030305', 'A030306', 'A030307'];
           break;
         default:
