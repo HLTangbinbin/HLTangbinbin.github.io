@@ -171,8 +171,19 @@ const params_cityHousePrice = [
   { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A01080T"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A01080T 二手住宅销售价格指数(上年同期=100)
 
 ]
-//房地产
-const params_realEstate = [
+//房地产-投资
+const params_realEstate_invest = [
+  //年度数据
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A051102"},{"wdcode":"sj","valuecode":"LAST10"}]' }, //A051102 房地产开发住宅投资额
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A051104"},{"wdcode":"sj","valuecode":"LAST10"}]' }, //A051104 房地产开发办公楼投资额
+  //月度数据
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A060105"},{"wdcode":"sj","valuecode":"LAST13"}]' },//A060105 房地产住宅投资累计值
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A06010D"},{"wdcode":"sj","valuecode":"LAST13"}]' }, //A06010D 房地产办公楼投资累计值
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A06010R"},{"wdcode":"sj","valuecode":"LAST13"}]' }, //A06010R 房地产土地购置投资累计值
+  
+]
+//房地产-销售
+const params_realEstate_sell = [
   //年度数据
   { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0515"},{"wdcode":"sj","valuecode":"LAST10"}]' }, //A0516 商品住宅面积
   { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0516"},{"wdcode":"sj","valuecode":"LAST10"}]' }, //A0516 商品住宅销售额
@@ -384,7 +395,8 @@ export async function sendRequest(specificParams) {
 // 导出模块
 export {
   params_cityHousePrice,
-  params_realEstate,
+  params_realEstate_invest,
+  params_realEstate_sell,
   params_gdp,
   params_nationalFinance,
   params_financialIndustry,

@@ -3,6 +3,8 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import NewHouse from '../components/NewHouse.vue';
 import SecondHandHouse from '../components/SecondHandHouse.vue';
 import RealEstate from '../components/RealEstate.vue';
+import RealEstateInvest from '../components/RealEstateInvest.vue';
+import RealEstateSell from '../components/RealEstateSell.vue';
 import GrossDomesticProduct from '../components/GrossDomesticProduct.vue';
 import NationalFinance from '../components/NationalFinance.vue';
 import FinancialIndustry from '../components/FinancialIndustry.vue';
@@ -19,7 +21,13 @@ const routes = [
   { path: '/', redirect: '/newhouse' }, 
   { path: '/NewHouse', component: NewHouse },
   { path: '/SecondHandHouse', component: SecondHandHouse },
-  { path: '/RealEstate', component: RealEstate },
+  { path: '/RealEstate', component: RealEstate,
+    redirect: '/RealEstate/invest', // 默认显示投资页面
+    children: [
+      { path: 'invest', component: RealEstateInvest },
+      { path: 'sell', component: RealEstateSell }
+    ]
+  },
   { path: '/GrossDomesticProduct', component: GrossDomesticProduct },
   { path: '/NationalFinance', component: NationalFinance },
   { path: '/FinancialIndustry', component: FinancialIndustry },
