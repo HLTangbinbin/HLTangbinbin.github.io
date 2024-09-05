@@ -4,8 +4,7 @@
     <h1 class="main-title">大唐统计局</h1>
     </div>
     <nav class="nav-container">
-      <router-link to="/NewHouse" class="nav" :class="{ active: $route.path === '/NewHouse' }">武汉新房</router-link>
-      <router-link to="/SecondHandHouse" class="nav" :class="{ active: $route.path === '/SecondHandHouse' }">武汉二手房</router-link>
+      <router-link to="/WH" class="nav" :class="{ active: $route.path.startsWith ('/WH')}">武汉</router-link>
       <router-link to="/CityHouse" class="nav" :class="{ active: $route.path === '/CityHouse' }">一线房价</router-link>
       <!-- startsWith 解决主导航栏和子导航栏联动问题 -->
       <router-link to="/RealEstate" class="nav" :class="{ active: $route.path.startsWith ('/RealEstate') }">房地产</router-link>

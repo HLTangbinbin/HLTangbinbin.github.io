@@ -1,7 +1,13 @@
 
 import { createRouter, createWebHashHistory } from 'vue-router'; 
-import NewHouse from '../components/NewHouse.vue';
-import SecondHandHouse from '../components/SecondHandHouse.vue';
+import WH from '../components/WH/WH.vue';
+import NewHouse from '../components/WH/NewHouse.vue';
+import SecondHandHouse from '../components/WH/SecondHandHouse.vue';
+import WHGDP from '../components/WH/WHGDP.vue';
+import WHPopulation from '../components/WH/WHPopulation.vue';
+import WHRealEstate from '../components/WH/WHRealEstate.vue';
+import WHNationalFinance from '../components/WH/WHNationalFinance.vue';
+import WHEHC from '../components/WH/WHEHC.vue';
 import RealEstate from '../components/RealEstate.vue';
 import RealEstateInvest from '../components/RealEstateInvest.vue';
 import RealEstateSell from '../components/RealEstateSell.vue';
@@ -18,9 +24,19 @@ import CityHouse from '../components/CityHouse.vue';
 
 
 const routes = [
-  { path: '/', redirect: '/newhouse' }, 
-  { path: '/NewHouse', component: NewHouse },
-  { path: '/SecondHandHouse', component: SecondHandHouse },
+  { path: '/', redirect: '/WH' }, 
+  { path: '/WH', component: WH,
+    redirect: '/WH/newhouse', // 默认显示投资页面
+    children: [
+      { path: 'newhouse', component: NewHouse },
+      { path: 'secondhandhouse', component: SecondHandHouse },
+      { path: 'gdp', component: WHGDP },
+      { path: 'population', component: WHPopulation },
+      { path: 'realestate', component: WHRealEstate },
+      { path: 'nationalfinance', component: WHNationalFinance },
+      { path: 'ehc', component: WHEHC }
+    ]
+  },
   { path: '/RealEstate', component: RealEstate,
     redirect: '/RealEstate/invest', // 默认显示投资页面
     children: [

@@ -156,7 +156,16 @@ const common_params = {
   k1: String(Date.now()),
   h: '1'
 };
-
+// 武汉相关
+// GDP
+const params_wh = [
+    // 城市年度数据 'dbcode' : 'csnd 'wds'与dfwds一定分别设置，这个普通数据请求参数不同！！！！！
+    {'dbcode' : 'csnd','rowcode' : 'zb','wds' : '[{"wdcode":"reg","valuecode":"420100"}]', 'dfwds' : '[{"wdcode":"zb","valuecode":"A01"},{"wdcode":"sj","valuecode":"LAST10"}]'},  // A01 地区生产总值
+    {'dbcode' : 'csnd','rowcode' : 'zb','wds' : '[{"wdcode":"reg","valuecode":"420100"}]', 'dfwds' : '[{"wdcode":"zb","valuecode":"A02"},{"wdcode":"sj","valuecode":"LAST10"}]'},  // A02 人口和就业
+    {'dbcode' : 'csnd','rowcode' : 'zb','wds' : '[{"wdcode":"reg","valuecode":"420100"}]', 'dfwds' : '[{"wdcode":"zb","valuecode":"A03"},{"wdcode":"sj","valuecode":"LAST10"}]'},  // A03 房地产
+    {'dbcode' : 'csnd','rowcode' : 'zb','wds' : '[{"wdcode":"reg","valuecode":"420100"}]', 'dfwds' : '[{"wdcode":"zb","valuecode":"A04"},{"wdcode":"sj","valuecode":"LAST10"}]'},  // A04 财政和金融
+    {'dbcode' : 'csnd','rowcode' : 'zb','wds' : '[{"wdcode":"reg","valuecode":"420100"}]', 'dfwds' : '[{"wdcode":"zb","valuecode":"A08"},{"wdcode":"sj","valuecode":"LAST10"}]'},  // A08 教育、卫生、文化
+]
 // 一线房价  
 const params_cityHousePrice = [
   // 请求的数据指标与时间，
@@ -394,6 +403,7 @@ export async function sendRequest(specificParams) {
 
 // 导出模块
 export {
+  params_wh,
   params_cityHousePrice,
   params_realEstate_invest,
   params_realEstate_sell,
