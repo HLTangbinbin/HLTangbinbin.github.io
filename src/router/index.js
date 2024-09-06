@@ -7,11 +7,22 @@ import WHSecondHandHouse from '../components/WH/WHSecondHandHouse.vue';
 import WHGDP from '../components/WH/WHGDP.vue';
 import WHPopulation from '../components/WH/WHPopulation.vue';
 import WHRealEstate from '../components/WH/WHRealEstate.vue';
+import WHRealEstateInvest from '../components/WH/WHRealEstateInvest.vue';
+import WHRealEstateSell from '../components/WH/WHRealEstateSell.vue';
+
 import WHNationalFinance from '../components/WH/WHNationalFinance.vue';
 import WHEHC from '../components/WH/WHEHC.vue';
 // 一线城市
 import FirstTierCity from '../components/FirstTierCity/FirstTierCity.vue';
-import CityNewHouse from '../components/FirstTierCity/CityNewHouse.vue';
+import CityRealEstatePriceIndices from '../components/FirstTierCity/CityRealEstatePriceIndices.vue';
+import CityGDP from '../components/FirstTierCity/CityGDP.vue';
+import CityPopulation from '../components/FirstTierCity/CityPopulation.vue';
+import CityRealEstate from '../components/FirstTierCity/CityRealEstate.vue';
+import CityRealEstateInvest from '../components/FirstTierCity/CityRealEstateInvest.vue';
+import CityRealEstateSell from '../components/FirstTierCity/CityRealEstateSell.vue';
+import CityNationalFinance from '../components/FirstTierCity/CityNationalFinance.vue';
+import CityEHC from '../components/FirstTierCity/CityEHC.vue';
+
 
 // 全国
 import NationWide from '../components/NationWide/NationWide.vue';
@@ -38,15 +49,52 @@ const routes = [
       { path: 'WHSecondHandHouse', component: WHSecondHandHouse },
       { path: 'WHGDP', component: WHGDP },
       { path: 'WHPopulation', component: WHPopulation },
-      { path: 'WHRealEstate', component: WHRealEstate },
+      {
+        path: 'WHRealEstate',
+        redirect: '/WH/WHRealEstate/WHRealEstateInvest', // 默认显示房价
+        component: WHRealEstate,
+        children: [
+          {
+            path: 'WHRealEstateInvest',
+            component: WHRealEstateInvest,
+          },
+          {
+            path: 'WHRealEstateSell',
+            component: WHRealEstateSell,
+          }
+        ]
+      },
       { path: 'WHNationalFinance', component: WHNationalFinance },
       { path: 'WHEHC', component: WHEHC }
     ]
   },
   { path: '/FirstTierCity', component: FirstTierCity,
-    redirect: '/FirstTierCity/CityNewHouse', // 默认显示房价
+    redirect: '/FirstTierCity/CityGDP', // 默认显示房价
     children: [
-      { path: 'CityNewHouse', component: CityNewHouse },
+      { path: 'CityGDP', component: CityGDP },
+      { path: 'CityPopulation', component: CityPopulation },
+      {
+        path: 'CityRealEstate',
+        redirect: '/FirstTierCity/CityRealEstate/CityRealEstateInvest', // 默认显示房价
+        component: CityRealEstate,
+        children: [
+          {
+            path: 'CityRealEstateInvest',
+            component: CityRealEstateInvest,
+          },
+          {
+            path: 'CityRealEstateSell',
+            component: CityRealEstateSell,
+          },
+          {
+            path: 'CityRealEstatePriceIndices',
+            component: CityRealEstatePriceIndices,
+          }
+        ]
+      },
+      { path: 'CityNationalFinance', component: CityNationalFinance },
+      { path: 'CityEHC', component: CityEHC },
+
     ]
   },
   {

@@ -1,7 +1,11 @@
 <template>
     <div>
       <nav class="sub-nav-container">
-        <router-link to="/FirstTierCity/CityNewHouse" class="sub-nav" :class="{ active: $route.path.startsWith('/FirstTierCity/CityNewHouse') }">新房</router-link>
+        <router-link to="/FirstTierCity/CityGDP" class="sub-nav" :class="{ active: $route.path === '/FirstTierCity/CityGDP' }">GDP</router-link>
+        <router-link to="/FirstTierCity/CityPopulation" class="sub-nav" :class="{ active: $route.path === '/FirstTierCity/CityPopulation' }">人口</router-link>
+        <router-link to="/FirstTierCity/CityRealEstate" class="sub-nav" :class="{ active: $route.path.startsWith('/FirstTierCity/CityRealEstate') }">房地产</router-link>
+        <router-link to="/FirstTierCity/CityNationalFinance" class="sub-nav" :class="{ active: $route.path === '/FirstTierCity/CityNationalFinance' }">财政</router-link>
+        <router-link to="/FirstTierCity/CityEHC" class="sub-nav" :class="{ active: $route.path === '/FirstTierCity/CityEHC' }">教卫文</router-link>
       </nav>
       <router-view></router-view> <!-- 用于显示子路由的内容 -->
     </div>

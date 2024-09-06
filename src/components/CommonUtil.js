@@ -43,10 +43,10 @@ export function selectDataFromArr(returnData, zbCode, fieldKey, cityCode = '') {
       // 根据日期排序
       return sortYearMonths(a.date, b.date);
     })
-    .filter((returnDataObj, index, array) => {
-      // 然后再判断是否为数组中的最后一条数据且值不为0
-      const isLastItem = index === array.length - 1;
-      return !(isLastItem && returnDataObj.value === 0);
+    .filter((returnDataObj) => {
+      // 剔除数组中为0和空的数据，避免图表显示为0
+
+      return !(returnDataObj.value === '' || returnDataObj.value === 0);
     })
     .map(item => {
       // 提取指定字段的值

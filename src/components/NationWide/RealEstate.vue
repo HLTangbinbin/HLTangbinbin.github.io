@@ -1,16 +1,8 @@
 <template>
     <div>
       <nav class="sub-nav-container">
-        <router-link
-          to="/NationWide/RealEstate/RealEstateInvest"
-          class="sub-nav"
-          :class="{ active: $route.path === '/NationWide/RealEstate/RealEstateInvest' }"
-        >投资</router-link>
-        <router-link
-          to="/NationWide/RealEstate/RealEstateSell"
-          class="sub-nav"
-          :class="{ active: $route.path === '/NationWide/RealEstate/RealEstateSell' }"
-        >销售</router-link>
+        <router-link to="/NationWide/RealEstate/RealEstateInvest" class="sub-nav" :class="{ active: $route.path === '/NationWide/RealEstate/RealEstateInvest' }">投资</router-link>
+        <router-link to="/NationWide/RealEstate/RealEstateSell" class="sub-nav" :class="{ active: $route.path === '/NationWide/RealEstate/RealEstateSell' }" >销售</router-link>
       </nav>
       <router-view></router-view> <!-- 用于显示子路由的内容 -->
     </div>

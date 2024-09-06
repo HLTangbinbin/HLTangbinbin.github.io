@@ -5,7 +5,7 @@
         <router-link to="/WH/WHSecondHandHouse" class="sub-nav" :class="{ active: $route.path === '/WH/WHSecondHandHouse' }">二手房</router-link>
         <router-link to="/WH/WHGDP" class="sub-nav" :class="{ active: $route.path === '/WH/WHGDP' }">GDP</router-link>
         <router-link to="/WH/WHPopulation" class="sub-nav" :class="{ active: $route.path === '/WH/WHPopulation' }">人口</router-link>
-        <router-link to="/WH/WHRealEstate" class="sub-nav" :class="{ active: $route.path === '/WH/WHRealEstate' }">房地产</router-link>
+        <router-link to="/WH/WHRealEstate" class="sub-nav" :class="{ active: $route.path.startsWith('/WH/WHRealEstate') }">房地产</router-link>
         <router-link to="/WH/WHNationalFinance" class="sub-nav" :class="{ active: $route.path === '/WH/WHNationalFinance' }">财政</router-link>
         <router-link to="/WH/WHEHC" class="sub-nav" :class="{ active: $route.path === '/WH/WHEHC' }">教卫文</router-link>
       </nav>

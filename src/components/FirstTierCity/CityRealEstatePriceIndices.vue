@@ -17,15 +17,7 @@
                 style="margin-top: 50px;">折线图</button>
         </div>
         <div class="chart-container" id="cityHouseOld"></div>
-        
-        <!-- 为下方的按钮添加上边距 style="margin-top -->
-        <div class="buttons">
-            <button class="button" :class="{ 'is-active': isBarActive_HousePrice }" @click="drawBarChart_HousePrice"
-                style="margin-top: 50px;">柱状图</button>
-            <button class="button" :class="{ 'is-active': isLineActive_HousePrice }" @click="drawLineChart_HousePrice"
-                style="margin-top: 50px;">折线图</button>
-        </div>
-        <div class="chart-container" id="cityHousePrice"></div>
+
     </div>
 </template>
 
@@ -37,14 +29,10 @@ export default {
 
     data() {
         return {
-            EChartType_CityHouse: {
-                CHP: 'cityHousePrice',
+            EChartType_RealEstate_City: {
                 CHN: 'cityHouseNew',
                 CHO: 'cityHouseOld'
             },
-
-            isBarActive_HousePrice: false,
-            isLineActive_HousePrice: false,
             isBarActive_NewHouse: false,
             isLineActive_NewHouse: false,
             isBarActive_OldHouse: false,
@@ -67,7 +55,7 @@ export default {
         },
         requestWithLocalJson() {
             // 本地cityHouse数据
-            fetch('cityHouse.json')
+            fetch('city.json')
                 .then(response => response.json())
                 .then(data => {
                     this.returnData = data
@@ -90,32 +78,17 @@ export default {
         },
         drawChartWithBtn() {
             if (this.returnData) {
-                this.drawBarChart_HousePrice();
                 this.drawBarChart_NewHouse();
                 this.drawBarChart_OldHouse();
             }
         },
-        drawBarChart_HousePrice() {
-            this.isBarActive_HousePrice = true;
-            this.isLineActive_HousePrice = false;
-            // 在这里绘制柱状图
-            this.chartType = "bar"
-            this.drawChartWithParams(this.EChartType_CityHouse.CHP)
 
-        },
-        drawLineChart_HousePrice() {
-            this.isBarActive_HousePrice = false;
-            this.isLineActive_HousePrice = true;
-            // 在这里绘制折线图
-            this.chartType = "line"
-            this.drawChartWithParams(this.EChartType_CityHouse.CHP)
-        },
         drawBarChart_NewHouse() {
             this.isBarActive_NewHouse = true;
             this.isLineActive_NewHouse = false;
             // 在这里绘制柱状图
             this.chartType = "bar"
-            this.drawChartWithParams(this.EChartType_CityHouse.CHN)
+            this.drawChartWithParams(this.EChartType_RealEstate_City.CHN)
 
         },
         drawLineChart_NewHouse() {
@@ -123,21 +96,21 @@ export default {
             this.isLineActive_NewHouse = true;
             // 在这里绘制折线图
             this.chartType = "line"
-            this.drawChartWithParams(this.EChartType_CityHouse.CHN)
+            this.drawChartWithParams(this.EChartType_RealEstate_City.CHN)
         },
         drawBarChart_OldHouse() {
             this.isBarActive_OldHouse = true;
             this.isLineActive_OldHouse = false;
             // 在这里绘制柱状图
             this.chartType = "bar"
-            this.drawChartWithParams(this.EChartType_CityHouse.CHO)
+            this.drawChartWithParams(this.EChartType_RealEstate_City.CHO)
         },
         drawLineChart_OldHouse() {
             this.isBarActive_OldHouse = false;
             this.isLineActive_OldHouse = true;
             // 在这里绘制折线图
             this.chartType = "line"
-            this.drawChartWithParams(this.EChartType_CityHouse.CHO)
+            this.drawChartWithParams(this.EChartType_RealEstate_City.CHO)
         },
         drawChartWithParams(echrtId) {
             // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
@@ -145,17 +118,12 @@ export default {
             let typeArr = [];
             let cityCodeArr = [];
             switch (echrtId) {
-                case this.EChartType_CityHouse.CHP:
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房平均销售价格', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '25%', sj: '0' }
-                    // A030C-住宅商品房平均销售价格
-                    typeArr = ['A030C'];
-                    break;
-                case this.EChartType_CityHouse.CHN:
+                case this.EChartType_RealEstate_City.CHN:
                     basicParams = { echrtId: echrtId, chartType: this.chartType, title: '新建商品住宅销售价格指数(上月=100)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '25%', sj: '1', min: '98', max: '101' }
                     // A010804-新建商品住宅销售价格指数(上月=100)
                     typeArr = ['A010804'];
                     break;
-                case this.EChartType_CityHouse.CHO:
+                case this.EChartType_RealEstate_City.CHO:
                     basicParams = { echrtId: echrtId, chartType: this.chartType, title: '二手房住宅销售价格指数(上月=100)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '25%', sj: '1', min: '98', max: '101' }
                     // A010807-二手房住宅销售价格指数(上月=100)
                     typeArr = ['A010807'];
