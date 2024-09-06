@@ -45,7 +45,6 @@ export function selectDataFromArr(returnData, zbCode, fieldKey, cityCode = '') {
     })
     .filter((returnDataObj) => {
       // 剔除数组中为0和空的数据，避免图表显示为0
-
       return !(returnDataObj.value === '' || returnDataObj.value === 0);
     })
     .map(item => {
