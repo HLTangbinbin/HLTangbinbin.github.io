@@ -31,7 +31,7 @@
 
 <script>
 
-import { params_medical, sendRequest, drawCommonChart } from './CommonUtil';
+import { params_medical, sendRequest, drawCommonChart } from '../CommonUtil';
 export default {
 
     data() {

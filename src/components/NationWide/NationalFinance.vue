@@ -39,7 +39,7 @@
 
 <script>
 
-import { params_nationalFinance, sendRequest, drawCommonChart } from './CommonUtil';
+import { params_nationalFinance, sendRequest, drawCommonChart } from '../CommonUtil';
 export default {
 
   data() {

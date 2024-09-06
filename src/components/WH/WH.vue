@@ -1,41 +1,13 @@
 <template>
     <div>
       <nav class="sub-nav-container">
-        <router-link
-          to="/WH/newhouse"
-          class="sub-nav"
-          :class="{ active: $route.path === '/WH/newhouse' }"
-        >新房</router-link>
-        <router-link
-          to="/WH/secondhandhouse"
-          class="sub-nav"
-          :class="{ active: $route.path === '/WH/secondhandhouse' }"
-        >二手房</router-link>
-        <router-link
-          to="/WH/gdp"
-          class="sub-nav"
-          :class="{ active: $route.path === '/WH/gdp' }"
-        >GDP</router-link>
-        <router-link
-          to="/WH/population"
-          class="sub-nav"
-          :class="{ active: $route.path === '/WH/population' }"
-        >人口</router-link>
-        <router-link
-          to="/WH/realestate"
-          class="sub-nav"
-          :class="{ active: $route.path === '/WH/realestate' }"
-        >房地产</router-link>
-        <router-link
-          to="/WH/nationalfinance"
-          class="sub-nav"
-          :class="{ active: $route.path === '/WH/nationalfinance' }"
-        >财政</router-link>
-        <router-link
-          to="/WH/ehc"
-          class="sub-nav"
-          :class="{ active: $route.path === '/WH/ehc' }"
-        >教卫文</router-link>
+        <router-link to="/WH/WHNewHouse" class="sub-nav" :class="{ active: $route.path.startsWith('/WH/WHNewHouse') }">新房</router-link>
+        <router-link to="/WH/WHSecondHandHouse" class="sub-nav" :class="{ active: $route.path === '/WH/WHSecondHandHouse' }">二手房</router-link>
+        <router-link to="/WH/WHGDP" class="sub-nav" :class="{ active: $route.path === '/WH/WHGDP' }">GDP</router-link>
+        <router-link to="/WH/WHPopulation" class="sub-nav" :class="{ active: $route.path === '/WH/WHPopulation' }">人口</router-link>
+        <router-link to="/WH/WHRealEstate" class="sub-nav" :class="{ active: $route.path === '/WH/WHRealEstate' }">房地产</router-link>
+        <router-link to="/WH/WHNationalFinance" class="sub-nav" :class="{ active: $route.path === '/WH/WHNationalFinance' }">财政</router-link>
+        <router-link to="/WH/WHEHC" class="sub-nav" :class="{ active: $route.path === '/WH/WHEHC' }">教卫文</router-link>
       </nav>
       <router-view></router-view> <!-- 用于显示子路由的内容 -->
     </div>
@@ -50,3 +22,35 @@
   };
   </script>
   
+
+<style>
+
+  .sub-nav-container {
+    display: flex; /* 使用 flex 布局 */
+    justify-content: center; /* 居中子元素 */
+    align-items: center;
+    background-color: #fff;
+    border-radius: 50px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin: 20px auto; /* 使容器整体居中 */
+    width: fit-content; /* 根据子元素内容自适应宽度 */
+  }
+  
+  .sub-nav {
+    text-decoration: none;
+    color: #000;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-weight: bold;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .sub-nav.active {
+    color: #fff;
+    background-color: #0bc2d6;
+  }
+
+
+</style>

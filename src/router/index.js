@@ -1,59 +1,85 @@
 
 import { createRouter, createWebHashHistory } from 'vue-router'; 
+// 武汉
 import WH from '../components/WH/WH.vue';
-import NewHouse from '../components/WH/NewHouse.vue';
-import SecondHandHouse from '../components/WH/SecondHandHouse.vue';
+import WHNewHouse from '../components/WH/WHNewHouse.vue';
+import WHSecondHandHouse from '../components/WH/WHSecondHandHouse.vue';
 import WHGDP from '../components/WH/WHGDP.vue';
 import WHPopulation from '../components/WH/WHPopulation.vue';
 import WHRealEstate from '../components/WH/WHRealEstate.vue';
 import WHNationalFinance from '../components/WH/WHNationalFinance.vue';
 import WHEHC from '../components/WH/WHEHC.vue';
-import RealEstate from '../components/RealEstate.vue';
-import RealEstateInvest from '../components/RealEstateInvest.vue';
-import RealEstateSell from '../components/RealEstateSell.vue';
-import GrossDomesticProduct from '../components/GrossDomesticProduct.vue';
-import NationalFinance from '../components/NationalFinance.vue';
-import FinancialIndustry from '../components/FinancialIndustry.vue';
-import ForeignTrade from '../components/ForeignTrade.vue';
-import PopulationCorrelation from '../components/PopulationCorrelation.vue';
-import EducationSector from '../components/EducationSector.vue';
-import MedicalTreatment from '../components/MedicalTreatment.vue';
-import IndicesData from '../components/IndicesData.vue';
-import LivingStandards from '../components/LivingStandards.vue';
-import CityHouse from '../components/CityHouse.vue';
+// 一线城市
+import FirstTierCity from '../components/FirstTierCity/FirstTierCity.vue';
+import CityNewHouse from '../components/FirstTierCity/CityNewHouse.vue';
+
+// 全国
+import NationWide from '../components/NationWide/NationWide.vue';
+import RealEstate from '../components/NationWide/RealEstate.vue';
+import RealEstateInvest from '../components/NationWide/RealEstateInvest.vue';
+import RealEstateSell from '../components/NationWide/RealEstateSell.vue';
+import GrossDomesticProduct from '../components/NationWide/GrossDomesticProduct.vue';
+import NationalFinance from '../components/NationWide/NationalFinance.vue';
+import FinancialIndustry from '../components/NationWide/FinancialIndustry.vue';
+import ForeignTrade from '../components/NationWide/ForeignTrade.vue';
+import PopulationCorrelation from '../components/NationWide/PopulationCorrelation.vue';
+import EducationSector from '../components/NationWide/EducationSector.vue';
+import MedicalTreatment from '../components/NationWide/MedicalTreatment.vue';
+import IndicesData from '../components/NationWide/IndicesData.vue';
+import LivingStandards from '../components/NationWide/LivingStandards.vue';
 
 
 const routes = [
   { path: '/', redirect: '/WH' }, 
   { path: '/WH', component: WH,
-    redirect: '/WH/newhouse', // 默认显示投资页面
+    redirect: '/WH/WHNewHouse', // 默认显示投资页面
     children: [
-      { path: 'newhouse', component: NewHouse },
-      { path: 'secondhandhouse', component: SecondHandHouse },
-      { path: 'gdp', component: WHGDP },
-      { path: 'population', component: WHPopulation },
-      { path: 'realestate', component: WHRealEstate },
-      { path: 'nationalfinance', component: WHNationalFinance },
-      { path: 'ehc', component: WHEHC }
+      { path: 'WHNewHouse', component: WHNewHouse },
+      { path: 'WHSecondHandHouse', component: WHSecondHandHouse },
+      { path: 'WHGDP', component: WHGDP },
+      { path: 'WHPopulation', component: WHPopulation },
+      { path: 'WHRealEstate', component: WHRealEstate },
+      { path: 'WHNationalFinance', component: WHNationalFinance },
+      { path: 'WHEHC', component: WHEHC }
     ]
   },
-  { path: '/RealEstate', component: RealEstate,
-    redirect: '/RealEstate/invest', // 默认显示投资页面
+  { path: '/FirstTierCity', component: FirstTierCity,
+    redirect: '/FirstTierCity/CityNewHouse', // 默认显示房价
     children: [
-      { path: 'invest', component: RealEstateInvest },
-      { path: 'sell', component: RealEstateSell }
+      { path: 'CityNewHouse', component: CityNewHouse },
     ]
   },
-  { path: '/GrossDomesticProduct', component: GrossDomesticProduct },
-  { path: '/NationalFinance', component: NationalFinance },
-  { path: '/FinancialIndustry', component: FinancialIndustry },
-  { path: '/ForeignTrade', component: ForeignTrade },
-  { path: '/PopulationCorrelation', component: PopulationCorrelation },
-  { path: '/EducationSector', component: EducationSector },
-  { path: '/MedicalTreatment', component: MedicalTreatment },
-  { path: '/IndicesData', component: IndicesData },
-  { path: '/LivingStandards', component: LivingStandards },
-  { path: '/CityHouse', component: CityHouse }
+  {
+    path: '/NationWide',
+    component: NationWide,
+    redirect: '/NationWide/RealEstate', // 默认显示投资页面
+    children: [
+      {
+        path: 'RealEstate',
+        redirect: '/NationWide/RealEstate/RealEstateInvest', // 默认显示房价
+        component: RealEstate,
+        children: [
+          {
+            path: 'RealEstateInvest',
+            component: RealEstateInvest,
+          },
+          {
+            path: 'RealEstateSell',
+            component: RealEstateSell,
+          }
+        ]
+      },
+      { path: 'GrossDomesticProduct', component: GrossDomesticProduct },
+      { path: 'NationalFinance', component: NationalFinance },
+      { path: 'FinancialIndustry', component: FinancialIndustry },
+      { path: 'ForeignTrade', component: ForeignTrade },
+      { path: 'PopulationCorrelation', component: PopulationCorrelation },
+      { path: 'EducationSector', component: EducationSector },
+      { path: 'MedicalTreatment', component: MedicalTreatment },
+      { path: 'IndicesData', component: IndicesData },
+      { path: 'LivingStandards', component: LivingStandards },
+    ]
+  },
   
 ];
 

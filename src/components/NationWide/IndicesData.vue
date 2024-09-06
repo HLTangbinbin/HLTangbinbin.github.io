@@ -22,7 +22,7 @@
 
 <script>
 
-import { params_indices, sendRequest, drawCommonChart } from './CommonUtil';
+import { params_indices, sendRequest, drawCommonChart } from '../CommonUtil';
 export default {
 
   data() {

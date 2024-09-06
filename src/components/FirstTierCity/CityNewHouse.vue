@@ -31,7 +31,7 @@
 
 <script>
 
-import { params_cityHousePrice, sendRequest, drawCommonChart } from './CommonUtil';
+import { params_cityHousePrice, sendRequest, drawCommonChart } from '../CommonUtil';
 
 export default {
 

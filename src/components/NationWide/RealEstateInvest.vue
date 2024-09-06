@@ -22,7 +22,7 @@
 
 <script>
 
-import { params_realEstate_invest, sendRequest, drawCommonChart } from './CommonUtil';
+import { params_realEstate_invest, sendRequest, drawCommonChart } from '../CommonUtil';
 export default {
 
     data() {

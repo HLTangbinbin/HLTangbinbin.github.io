@@ -4,20 +4,10 @@
     <h1 class="main-title">大唐统计局</h1>
     </div>
     <nav class="nav-container">
+            <!-- startsWith 解决主导航栏和子导航栏联动问题 -->
       <router-link to="/WH" class="nav" :class="{ active: $route.path.startsWith ('/WH')}">武汉</router-link>
-      <router-link to="/CityHouse" class="nav" :class="{ active: $route.path === '/CityHouse' }">一线房价</router-link>
-      <!-- startsWith 解决主导航栏和子导航栏联动问题 -->
-      <router-link to="/RealEstate" class="nav" :class="{ active: $route.path.startsWith ('/RealEstate') }">房地产</router-link>
-      <router-link to="/GrossDomesticProduct" class="nav" :class="{ active: $route.path === '/GrossDomesticProduct' }">经济</router-link>
-      <router-link to="/NationalFinance" class="nav" :class="{ active: $route.path === '/NationalFinance' }">财政</router-link>
-      <router-link to="/FinancialIndustry" class="nav" :class="{ active: $route.path === '/FinancialIndustry' }">金融</router-link>
-      <router-link to="/ForeignTrade" class="nav" :class="{ active: $route.path === '/ForeignTrade' }">外贸</router-link>
-      <router-link to="/PopulationCorrelation" class="nav" :class="{ active: $route.path === '/PopulationCorrelation' }">人口</router-link>
-      <router-link to="/EducationSector" class="nav" :class="{ active: $route.path === '/EducationSector' }">教育</router-link>
-      <router-link to="/MedicalTreatment" class="nav" :class="{ active: $route.path === '/MedicalTreatment' }">医疗</router-link>
-      <router-link to="/IndicesData" class="nav" :class="{ active: $route.path === '/IndicesData' }">指数</router-link>
-      <router-link to="/LivingStandards" class="nav" :class="{ active: $route.path === '/LivingStandards' }">生活</router-link>
-      
+      <router-link to="/FirstTierCity" class="nav" :class="{ active: $route.path.startsWith ('/FirstTierCity') }">一线城市</router-link>
+      <router-link to="/NationWide" class="nav" :class="{ active: $route.path.startsWith ('/NationWide')}">全国</router-link>
     </nav>
     <router-view></router-view>
   </div>
@@ -68,30 +58,5 @@ export default {
   background-color: #0bc2d6 !important; /* 使用 !important 提高优先级 */
 }
 
-.sub-nav-container {
-  display: flex; /* 使用 flex 布局 */
-  justify-content: center; /* 居中子元素 */
-  align-items: center;
-  background-color: #fff;
-  border-radius: 50px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  margin: 20px auto; /* 使容器整体居中 */
-  width: fit-content; /* 根据子元素内容自适应宽度 */
-}
 
-.sub-nav {
-  text-decoration: none;
-  color: #000;
-  padding: 10px 20px;
-  margin: 0 10px;
-  font-weight: bold;
-  border-radius: 20px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.sub-nav.active {
-  color: #fff;
-  background-color: #0bc2d6;
-}
 </style>

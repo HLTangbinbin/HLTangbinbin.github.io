@@ -2,14 +2,14 @@
     <div>
       <nav class="sub-nav-container">
         <router-link
-          to="/RealEstate/invest"
+          to="/NationWide/RealEstate/RealEstateInvest"
           class="sub-nav"
-          :class="{ active: $route.path === '/RealEstate/invest' }"
+          :class="{ active: $route.path === '/NationWide/RealEstate/RealEstateInvest' }"
         >投资</router-link>
         <router-link
-          to="/RealEstate/sell"
+          to="/NationWide/RealEstate/RealEstateSell"
           class="sub-nav"
-          :class="{ active: $route.path === '/RealEstate/sell' }"
+          :class="{ active: $route.path === '/NationWide/RealEstate/RealEstateSell' }"
         >销售</router-link>
       </nav>
       <router-view></router-view> <!-- 用于显示子路由的内容 -->

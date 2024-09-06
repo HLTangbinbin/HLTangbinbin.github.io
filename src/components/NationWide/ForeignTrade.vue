@@ -40,7 +40,7 @@
 
 <script>
 
-import { params_foreignTrade, sendRequest, drawCommonChart } from './CommonUtil';
+import { params_foreignTrade, sendRequest, drawCommonChart } from '../CommonUtil';
 export default {
 
     data() {

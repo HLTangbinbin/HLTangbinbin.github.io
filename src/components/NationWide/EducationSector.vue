@@ -31,7 +31,7 @@
 
 <script>
 
-import { params_education, sendRequest, drawCommonChart } from './CommonUtil';
+import { params_education, sendRequest, drawCommonChart } from '../CommonUtil';
 export default {
 
     data() {

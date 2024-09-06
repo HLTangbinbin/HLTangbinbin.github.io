@@ -22,7 +22,7 @@
 
 <script>
 
-import { params_gdp, sendRequest, drawCommonChart } from './CommonUtil';
+import { params_gdp, sendRequest, drawCommonChart } from '../CommonUtil';
 
 export default {
 

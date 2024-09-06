@@ -32,7 +32,7 @@
 
 <script>
 
-import { params_financialIndustry, sendRequest, drawCommonChart } from './CommonUtil';
+import { params_financialIndustry, sendRequest, drawCommonChart } from '../CommonUtil';
 export default {
 
   data() {
