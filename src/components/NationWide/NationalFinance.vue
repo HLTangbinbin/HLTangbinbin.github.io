@@ -76,11 +76,11 @@ export default {
       }
     },
     requestWithLocalJson() {
-      // 读取本地财政收入数据
+      // 读取本地数据
       fetch('nationalFinance.json')
         .then(response => response.json())
         .then(data => {
-          console.log('读取本地成功财政收入数据:', data);
+          console.log('读取本地数据:', data);
           // 列表数据
           this.returnData = data;
           // 处理数据绘制图表

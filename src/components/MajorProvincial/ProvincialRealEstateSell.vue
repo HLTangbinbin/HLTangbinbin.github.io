@@ -22,12 +22,12 @@
 
 <script>
 
-import { params_city, sendRequest, drawCommonChart } from '../CommonUtil';
+import { params_province, sendRequest, drawCommonChart } from '../CommonUtil';
 export default {
 
     data() {
         return {
-            EChartType_RealEstate_City: {
+            EChartType_RealEstate_Provincial: {
                 SAY: 'salesarea-year',
                 SY: 'sales-year'  
             },
@@ -55,7 +55,7 @@ export default {
         },
         requestWithLocalJson() {
             // 读取本地房地产数据
-            fetch('city.json')
+            fetch('province.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('读取本地数据房地产数据:', data);
@@ -70,7 +70,7 @@ export default {
         },
         async requestWithAPI() {
             try {
-                this.returnData = await sendRequest(params_city);
+                this.returnData = await sendRequest(params_province);
                 console.log("响应处理后的数据：", this.returnData)
                 this.drawChartWithBtn()
             } catch (error) {
@@ -88,7 +88,7 @@ export default {
             this.isBarActive_SalesArea_Year = true;
             this.isLineActive_SalesArea_Year = false;
             this.chartType = "bar"
-            this.drawChartWithParams(this.EChartType_RealEstate_City.SAY)
+            this.drawChartWithParams(this.EChartType_RealEstate_Provincial.SAY)
 
         },
         drawLineChart_SalesArea_Year() {
@@ -96,14 +96,14 @@ export default {
             this.isLineActive_SalesArea_Year = true;
             // 在这里绘制折线图
             this.chartType = "line"
-            this.drawChartWithParams(this.EChartType_RealEstate_City.SAY)
+            this.drawChartWithParams(this.EChartType_RealEstate_Provincial.SAY)
         },
 
         drawBarChart_Sales_Year() {
             this.isBarActive_Sales_Year = true;
             this.isLineActive_Sales_Year = false;
             this.chartType = "bar"
-            this.drawChartWithParams(this.EChartType_RealEstate_City.SY)
+            this.drawChartWithParams(this.EChartType_RealEstate_Provincial.SY)
 
         },
         drawLineChart_Sales_Year() {
@@ -111,7 +111,7 @@ export default {
             this.isLineActive_Sales_Year = true;
             // 在这里绘制折线图
             this.chartType = "line"
-            this.drawChartWithParams(this.EChartType_RealEstate_City.SY)
+            this.drawChartWithParams(this.EChartType_RealEstate_Provincial.SY)
         },
 
 
@@ -119,24 +119,29 @@ export default {
             // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
             let basicParams = {};
             let typeArr = []; 
-            let cityCodeArr = [];
+            let provinceCodeArr = [];
             // 年度/月度数据
             switch (echrtId) {
-                case this.EChartType_RealEstate_City.SAY:
-                    // A030A-房地产销售面积
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产销售面积(万平方米)', subtitle: '', exceptName: '', unit: '(万平方米)', legendTop: '10%', gridTop: '30%', sj: '0' }
-                    typeArr = ['A030A'];
+                case this.EChartType_RealEstate_Provincial.SAY:
+                    // A050H02-住宅商品房销售面积
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房销售面积(万平方米)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    typeArr = ['A050H02'];
                     break;
-                    case this.EChartType_RealEstate_City.SY:
-                    //  A030C-住宅商品房平均销售价格
+                    case this.EChartType_RealEstate_Provincial.SY:
+                    //  A050J02-住宅商品房平均销售价格
                     basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房平均销售价格(元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
-                    typeArr = ['A030C'];
+                    typeArr = ['A050J02'];
                     break;
                 default:
                     break;
             }
-            cityCodeArr = ['110000', '310000', '440100', '440300', '330100', '510100', '420100', '320100', '500000', '610100', '410100', '340100']
-            drawCommonChart(basicParams, typeArr, this.returnData, cityCodeArr)
+            provinceCodeArr = ['110000', '120000', '130000', '140000', 
+                            '150000', '210000', '220000', '230000', 
+                            '310000', '320000', '330000', '340000', '350000','360000', '370000', 
+                            '410000', '420000', '430000','440000', '450000', '460000',
+                            '500000', '510000', '520000','530000', '510000', '540000',
+                            '610000', '620000', '630000','640000', '650000']
+            drawCommonChart(basicParams, typeArr, this.returnData, provinceCodeArr)
         }
 
     }

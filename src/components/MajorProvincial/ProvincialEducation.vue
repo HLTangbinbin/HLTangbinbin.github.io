@@ -8,33 +8,22 @@
       </div>
       <div class="chart-container" id="education"></div>
 
-      <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive_Medical_Year }" @click="drawBarChart_Medical_Year"
-          style="margin-top: 50px;">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive_Medical_Year }" @click="drawLineChart_Medical_Year"
-          style="margin-top: 50px;">折线图</button>
-      </div>
-      <div class="chart-container" id="medical"></div>
-
     </div>
   </template>
   
   <script>
   
-  import { params_wh, sendRequest, drawCommonChart } from '../CommonUtil';
+  import { params_province, sendRequest, drawCommonChart } from '../CommonUtil';
   export default {
   
     data() {
       return {
-        EChartType_EHC_WH: {
+        EChartType_Education_Provincial: {
           EC: 'education',
-          MD: 'medical',
         },
   
         isBarActive_Education_Year: false,
         isLineActive_Education_Year: false,
-        isBarActive_Medical_Year: false,
-        isLineActive_Medical_Year: false,
 
         returnData: null,
         chartType: null
@@ -53,11 +42,11 @@
         }
       },
       requestWithLocalJson() {
-        // 读取本地财政收入数据
-        fetch('wh.json')
+        // 读取本地数据
+        fetch('province.json')
           .then(response => response.json())
           .then(data => {
-            console.log('读取本地成功财政收入数据:', data);
+            console.log('读取本地数据:', data);
             // 列表数据
             this.returnData = data;
             // 处理数据绘制图表
@@ -69,7 +58,7 @@
       },
       async requestWithAPI() {
         try {
-          this.returnData = await sendRequest(params_wh);
+          this.returnData = await sendRequest(params_province);
           console.log("响应处理后的数据：", this.returnData)
           this.drawChartWithBtn()
         } catch (error) {
@@ -79,7 +68,6 @@
       drawChartWithBtn() {
         if (this.returnData) {
           this.drawBarChart_Education_Year()
-          this.drawBarChart_Medical_Year()
 
         }
       },
@@ -87,7 +75,7 @@
         this.isBarActive_Education_Year = true;
         this.isLineActive_Education_Year = false;
         this.chartType = "bar"
-        this.drawChartWithParams(this.EChartType_EHC_WH.EC)
+        this.drawChartWithParams(this.EChartType_Education_Provincial.EC)
   
       },
       drawLineChart_Education_Year() {
@@ -95,43 +83,32 @@
         this.isLineActive_Education_Year = true;
         // 在这里绘制折线图
         this.chartType = "line"
-        this.drawChartWithParams(this.EChartType_EHC_WH.EC)
+        this.drawChartWithParams(this.EChartType_Education_Provincial.EC)
       },
-      drawBarChart_Medical_Year() {
-        this.isBarActive_Medical_Year = true;
-        this.isLineActive_Medical_Year = false;
-        this.chartType = "bar"
-        this.drawChartWithParams(this.EChartType_EHC_WH.MD)
-  
-      },
-      drawLineChart_Medical_Year() {
-        this.isBarActive_Medical_Year = false;
-        this.isLineActive_Medical_Year = true;
-        // 在这里绘制折线图
-        this.chartType = "line"
-        this.drawChartWithParams(this.EChartType_EHC_WH.MD)
-      },
+
      
       drawChartWithParams(echrtId) {
         // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
         let basicParams = {};
         let typeArr = [];
+        let provinceCodeArr = [];
         // 年度数据
         switch (echrtId) {
-          case this.EChartType_EHC_WH.EC:
-            // A0801-在校本专科生数
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '教育', subtitle: '', exceptName: '', unit: '(万人)', legendTop: '10%', gridTop: '30%', sj: '0' }
-            typeArr = ['A0801'];
-            break;
-        case this.EChartType_EHC_WH.MD:
-            // A0802-医院个数
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗', subtitle: '', exceptName: '', unit: '(个)', legendTop: '10%', gridTop: '30%', sj: '0' }
-            typeArr = ['A0802'];
+          case this.EChartType_Education_Provincial.EC:
+            // A0M0108-普通高等学校预计毕业生数
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '普通高等学校毕业生数(万人)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            typeArr = ['A0M0108'];
             break;
           default:
             break;
         }
-        drawCommonChart(basicParams, typeArr, this.returnData)
+        provinceCodeArr = ['110000', '120000', '130000', '140000', 
+                            '150000', '210000', '220000', '230000', 
+                            '310000', '320000', '330000', '340000', '350000','360000', '370000', 
+                            '410000', '420000', '430000','440000', '450000', '460000',
+                            '500000', '510000', '520000','530000', '510000', '540000',
+                            '610000', '620000', '630000','640000', '650000']
+        drawCommonChart(basicParams, typeArr, this.returnData, provinceCodeArr)
       }
   
     }

@@ -11,9 +11,10 @@
         :class="{ active: $route.path === '/WH/WHPopulation' }">人口</router-link>
       <router-link to="/WH/WHRealEstate" class="sub-nav"
         :class="{ active: $route.path.startsWith('/WH/WHRealEstate') }">房地产</router-link>
-      <router-link to="/WH/WHNationalFinance" class="sub-nav"
-        :class="{ active: $route.path === '/WH/WHNationalFinance' }">财政</router-link>
-      <router-link to="/WH/WHEHC" class="sub-nav" :class="{ active: $route.path === '/WH/WHEHC' }">教卫文</router-link>
+      <router-link to="/WH/WHFinance" class="sub-nav"
+        :class="{ active: $route.path === '/WH/WHFinance' }">财政</router-link>
+      <router-link to="/WH/WHEducation" class="sub-nav" :class="{ active: $route.path === '/WH/WHEducation' }">教育</router-link>
+      <router-link to="/WH/WHMedical" class="sub-nav" :class="{ active: $route.path === '/WH/WHMedical' }">医疗</router-link>
     </nav>
     </div>
 

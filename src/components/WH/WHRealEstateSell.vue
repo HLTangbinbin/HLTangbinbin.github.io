@@ -61,7 +61,7 @@ export default {
             fetch('wh.json')
                 .then(response => response.json())
                 .then(data => {
-                    console.log('读取本地成功房地产数据:', data);
+                    console.log('读取本地数据房地产数据:', data);
                     // 列表数据
                     this.returnData = data;
                     // 处理数据绘制图表
@@ -125,12 +125,12 @@ export default {
             switch (echrtId) {
                 case this.EChartType_RealEstate_WH.SAY:
                     // A030A-住宅商品房销售面积
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品房销售面积(万平方米)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房销售面积(万平方米)', subtitle: '', exceptName: '商品房销售面积(万平方米)', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
                     typeArr = ['A030A'];
                     break;
                 case this.EChartType_RealEstate_WH.SY:
                     //  A030C-住宅商品房平均销售价格
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房平均销售价格(元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房平均销售价格(元)', subtitle: '', exceptName: '商品房平均销售价格(元)', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
                     typeArr = ['A030C'];
                     break;
                 default:

@@ -1,15 +1,6 @@
 <template>
     <div class="container">
         <div class="buttons">
-            <button class="button" :class="{ 'is-active': isBarActive_Investment_Month }"
-                @click="drawBarChart_Investment_Month" style="margin-top: 50px;">柱状图</button>
-            <button class="button" :class="{ 'is-active': isLineActive_Investment_Month }"
-                @click="drawLineChart_Investment_Month" style="margin-top: 50px;">折线图</button>
-        </div>
-        <div class="chart-container" id="investment-month"></div>
-
-        <!-- 为下方的按钮添加上边距 style="margin-top -->
-        <div class="buttons">
             <button class="button" :class="{ 'is-active': isBarActive_Investment_Year }"
                 @click="drawBarChart_Investment_Year" style="margin-top: 50px;">柱状图</button>
             <button class="button" :class="{ 'is-active': isLineActive_Investment_Year }"
@@ -17,23 +8,21 @@
         </div>
         <div class="chart-container" id="investment-year"></div>
 
+
     </div>
 </template>
 
 <script>
 
-import { params_realEstate_invest, sendRequest, drawCommonChart } from '../CommonUtil';
+import { params_province, sendRequest, drawCommonChart } from '../CommonUtil';
 export default {
 
     data() {
         return {
-            EChartType_RealEstate_Invest: {
-                IM: 'investment-month',
+            EChartType_RealEstate_Provincial: {
                 IY: 'investment-year',
             },
 
-            isBarActive_Investment_Month: false,
-            isLineActive_Investment_Month: false,
             isBarActive_Investment_Year: false,
             isLineActive_Investment_Year: false,
 
@@ -55,7 +44,7 @@ export default {
         },
         requestWithLocalJson() {
             // 读取本地房地产数据
-            fetch('realEstate_invest.json')
+            fetch('province.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('读取本地数据房地产数据:', data);
@@ -70,7 +59,7 @@ export default {
         },
         async requestWithAPI() {
             try {
-                this.returnData = await sendRequest(params_realEstate_invest);
+                this.returnData = await sendRequest(params_province);
                 console.log("响应处理后的数据：", this.returnData)
                 this.drawChartWithBtn()
             } catch (error) {
@@ -79,31 +68,14 @@ export default {
         },
         drawChartWithBtn() {
             if (this.returnData) {
-                this.drawBarChart_Investment_Month()
                 this.drawBarChart_Investment_Year()
-
             }
         },
-        drawBarChart_Investment_Month() {
-            this.isBarActive_Investment_Month = true;
-            this.isLineActive_Investment_Month = false;
-            this.chartType = "bar"
-            this.drawChartWithParams(this.EChartType_RealEstate_Invest.IM)
-
-        },
-        drawLineChart_Investment_Month() {
-            this.isBarActive_Investment_Month = false;
-            this.isLineActive_Investment_Month = true;
-            // 在这里绘制折线图
-            this.chartType = "line"
-            this.drawChartWithParams(this.EChartType_RealEstate_Invest.IM)
-        },
-
         drawBarChart_Investment_Year() {
             this.isBarActive_Investment_Year = true;
             this.isLineActive_Investment_Year = false;
             this.chartType = "bar"
-            this.drawChartWithParams(this.EChartType_RealEstate_Invest.IY)
+            this.drawChartWithParams(this.EChartType_RealEstate_Provincial.IY)
 
         },
         drawLineChart_Investment_Year() {
@@ -111,7 +83,7 @@ export default {
             this.isLineActive_Investment_Year = true;
             // 在这里绘制折线图
             this.chartType = "line"
-            this.drawChartWithParams(this.EChartType_RealEstate_Invest.IY)
+            this.drawChartWithParams(this.EChartType_RealEstate_Provincial.IY)
         },
 
 
@@ -119,23 +91,24 @@ export default {
             // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
             let basicParams = {};
             let typeArr = []; 
-
+            let provinceCodeArr = [];
             // 年度/月度数据
             switch (echrtId) {
-                case this.EChartType_RealEstate_Invest.IY:
-                    // A060A01-商品住宅销售面积_累计值 A060A03-商品住宅现房销售面积_累计值 A060A05-商品住宅期房销售面积_累计值
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产开发投资额', subtitle: '', exceptName: '房地产开发投资额', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '0' }
-                    typeArr = ['A051102', 'A051104'];
-                    break;
-                case this.EChartType_RealEstate_Invest.IM:
-                    // A060105-商品住宅投资额_累计值 A06010D-商品住宅现房投资额_累计值 A06010R-土地购置费投资额_累计值
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产投资累计值', subtitle: '', exceptName: '房地产_投资累计值', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '1' }
-                    typeArr = ['A060105', 'A06010D', 'A06010R'];
+                case this.EChartType_RealEstate_Provincial.IY:
+                    // A050D02-房地产开发住宅投资额 
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房开发投资额(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    typeArr = ['A050D02'];
                     break;
                 default:
                     break;
             }
-            drawCommonChart(basicParams, typeArr, this.returnData)
+            provinceCodeArr = ['110000', '120000', '130000', '140000', 
+                            '150000', '210000', '220000', '230000', 
+                            '310000', '320000', '330000', '340000', '350000','360000', '370000', 
+                            '410000', '420000', '430000','440000', '450000', '460000',
+                            '500000', '510000', '520000','530000', '510000', '540000',
+                            '610000', '620000', '630000','640000', '650000']
+            drawCommonChart(basicParams, typeArr, this.returnData, provinceCodeArr)
         }
 
     }

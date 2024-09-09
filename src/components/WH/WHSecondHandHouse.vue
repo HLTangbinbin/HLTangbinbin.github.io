@@ -40,7 +40,7 @@
         fetch('houseTradingInfo.json')
           .then(response => response.json())
           .then(data => {
-            console.log('读取本地成功二手房数据:', data.houseList);
+            console.log('读取本地数据二手房数据:', data.houseList);
             this.houseList = data.houseList;
             this.handleData();
             // 处理数据绘制图表

@@ -9,6 +9,8 @@
         <router-link to="/WH" class="nav" :class="{ active: $route.path.startsWith('/WH') }">武汉</router-link>
         <router-link to="/FirstTierCity" class="nav"
           :class="{ active: $route.path.startsWith('/FirstTierCity') }">一线城市</router-link>
+        <router-link to="/MajorProvincial" class="nav"
+          :class="{ active: $route.path.startsWith('/MajorProvincial') }">省份</router-link>
         <router-link to="/NationWide" class="nav"
           :class="{ active: $route.path.startsWith('/NationWide') }">全国</router-link>
       </nav>

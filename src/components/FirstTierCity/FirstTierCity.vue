@@ -8,10 +8,12 @@
         :class="{ active: $route.path === '/FirstTierCity/CityPopulation' }">人口</router-link>
       <router-link to="/FirstTierCity/CityRealEstate" class="sub-nav"
         :class="{ active: $route.path.startsWith('/FirstTierCity/CityRealEstate') }">房地产</router-link>
-      <router-link to="/FirstTierCity/CityNationalFinance" class="sub-nav"
-        :class="{ active: $route.path === '/FirstTierCity/CityNationalFinance' }">财政</router-link>
-      <router-link to="/FirstTierCity/CityEHC" class="sub-nav"
-        :class="{ active: $route.path === '/FirstTierCity/CityEHC' }">教卫文</router-link>
+      <router-link to="/FirstTierCity/CityFinance" class="sub-nav"
+        :class="{ active: $route.path === '/FirstTierCity/CityFinance' }">财政</router-link>
+      <router-link to="/FirstTierCity/CityEducation" class="sub-nav"
+        :class="{ active: $route.path === '/FirstTierCity/CityEducation' }">教育</router-link>
+      <router-link to="/FirstTierCity/CityMedical" class="sub-nav"
+        :class="{ active: $route.path === '/FirstTierCity/CityMedical' }">医疗</router-link>
     </nav>
     </div>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="container">
       <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive_FinanceIncome_Year }" @click="drawBarChart_FinanceIncomeIncome_Year"
+        <button class="button" :class="{ 'is-active': isBarActive_FinanceIncome_Year }" @click="drawBarChart_FinanceIncome_Year"
           style="margin-top: 50px;">柱状图</button>
         <button class="button" :class="{ 'is-active': isLineActive_FinanceIncome_Year }" @click="drawLineChart_FinanceIncome_Year"
           style="margin-top: 50px;">折线图</button>
@@ -16,28 +16,20 @@
       </div>
       <div class="chart-container" id="financeoutput-year"></div>
 
-      <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive_FinanceDeposit_Year }" @click="drawBarChart_FinanceDeposit_Year"
-          style="margin-top: 50px;">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive_FinanceDepositYear }" @click="drawLineChart_FinanceDeposit_Year"
-          style="margin-top: 50px;">折线图</button>
-      </div>
-      <div class="chart-container" id="financedeposit-year"></div>
 
     </div>
   </template>
   
   <script>
   
-  import { params_city, sendRequest, drawCommonChart } from '../CommonUtil';
+  import { params_province, sendRequest, drawCommonChart } from '../CommonUtil';
   export default {
   
     data() {
       return {
-        EChartType_NationalFinance_City: {
+        EChartType_Finance_Provincial: {
           FIY: 'financeincome-year',
           FOY: 'financeoutput-year',
-          FDY: 'financedeposit-year'
         },
   
         isBarActive_FinanceIncome_Year: false,
@@ -46,8 +38,6 @@
         isBarActive_FinanceOutput_Year: false,
         isLineActive_FinanceOutput_Year: false,
 
-        isBarActive_FinanceDeposit_Year: false,
-        isLineActive_FinanceDeposit_Year: false,
 
         returnData: null,
         chartType: null
@@ -66,11 +56,11 @@
         }
       },
       requestWithLocalJson() {
-        // 读取本地财政收入数据
-        fetch('city.json')
+        // 读取本地数据
+        fetch('province.json')
           .then(response => response.json())
           .then(data => {
-            console.log('读取本地成功财政收入数据:', data);
+            console.log('读取本地数据:', data);
             // 列表数据
             this.returnData = data;
             // 处理数据绘制图表
@@ -82,7 +72,7 @@
       },
       async requestWithAPI() {
         try {
-          this.returnData = await sendRequest(params_city);
+          this.returnData = await sendRequest(params_province);
           console.log("响应处理后的数据：", this.returnData)
           this.drawChartWithBtn()
         } catch (error) {
@@ -93,7 +83,6 @@
         if (this.returnData) {
           this.drawBarChart_FinanceIncome_Year()
           this.drawBarChart_FinanceOutput_Year()
-          this.drawBarChart_FinanceDeposit_Year()
 
         }
       },
@@ -101,7 +90,7 @@
         this.isBarActive_FinanceIncome_Year = true;
         this.isLineActive_FinanceIncome_Year = false;
         this.chartType = "bar"
-        this.drawChartWithParams(this.EChartType_NationalFinance_City.FIY)
+        this.drawChartWithParams(this.EChartType_Finance_Provincial.FIY)
   
       },
       drawLineChart_FinanceIncome_Year() {
@@ -109,13 +98,13 @@
         this.isLineActive_FinanceIncome_Year = true;
         // 在这里绘制折线图
         this.chartType = "line"
-        this.drawChartWithParams(this.EChartType_NationalFinance_City.FIY)
+        this.drawChartWithParams(this.EChartType_Finance_Provincial.FIY)
       },
       drawBarChart_FinanceOutput_Year() {
         this.isBarActive_FinanceOutput_Year = true;
         this.isLineActive_FinanceOutput_Year = false;
         this.chartType = "bar"
-        this.drawChartWithParams(this.EChartType_NationalFinance_City.FOY)
+        this.drawChartWithParams(this.EChartType_Finance_Provincial.FOY)
   
       },
       drawLineChart_FinanceOutput_Year() {
@@ -123,49 +112,37 @@
         this.isLineActive_FinanceOutput_Year = true;
         // 在这里绘制折线图
         this.chartType = "line"
-        this.drawChartWithParams(this.EChartType_NationalFinance_City.FOY)
+        this.drawChartWithParams(this.EChartType_Finance_Provincial.FOY)
       },
-      drawBarChart_FinanceDeposit_Year() {
-        this.isBarActive_FinanceDeposit_Year = true;
-        this.isLineActive_FinanceDeposit_Year = false;
-        this.chartType = "bar"
-        this.drawChartWithParams(this.EChartType_NationalFinance_City.FDY)
-      },
-      drawLineChart_FinanceDeposit_Year() {
-        this.isBarActive_FinanceDeposit_Year = false;
-        this.isLineActive_FinanceDeposit_Year = true;
-        // 在这里绘制折线图
-        this.chartType = "line"
-        this.drawChartWithParams(this.EChartType_NationalFinance_City.FDY)
-      },
+
      
       drawChartWithParams(echrtId) {
         // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
         let basicParams = {};
         let typeArr = [];
-        let cityCodeArr = [];
+        let provinceCodeArr = [];
         // 年度数据
         switch (echrtId) {
-          case this.EChartType_NationalFinance_City.FIY:
-            // A0401-地方一般公共预算收入 A0402-地方一般公共预算支出 A0403-住户存款余额 
+          case this.EChartType_Finance_Provincial.FIY:
+            // A080101-地方一般公共预算收入
             basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政收入(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
-            typeArr = ['A0401'];
+            typeArr = ['A080101'];
             break;
-          case this.EChartType_NationalFinance_City.FOY:
-            // A0401-地方一般公共预算收入 A0402-地方一般公共预算支出 A0403-住户存款余额 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政支出', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
-            typeArr = ['A0402'];
-            break;
-          case this.EChartType_NationalFinance_City.FDY:
-            // A0401-地方一般公共预算收入 A0402-地方一般公共预算支出 A0403-住户存款余额 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住户存款余额(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
-            typeArr = ['A0403'];
+          case this.EChartType_Finance_Provincial.FOY:
+            // A080201-地方一般公共预算支出 
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政支出(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            typeArr = ['A080201'];
             break;
           default:
             break;
         }
-        cityCodeArr = ['110000', '310000', '440100', '440300', '330100', '510100', '420100', '320100', '500000', '610100', '410100', '340100', '420500']
-        drawCommonChart(basicParams, typeArr, this.returnData, cityCodeArr)
+        provinceCodeArr = ['110000', '120000', '130000', '140000', 
+                            '150000', '210000', '220000', '230000', 
+                            '310000', '320000', '330000', '340000', '350000','360000', '370000', 
+                            '410000', '420000', '430000','440000', '450000', '460000',
+                            '500000', '510000', '520000','530000', '510000', '540000',
+                            '610000', '620000', '630000','640000', '650000']
+        drawCommonChart(basicParams, typeArr, this.returnData, provinceCodeArr)
       }
   
     }

@@ -165,20 +165,49 @@ const params_wh = [
     {'dbcode' : 'csnd','rowcode' : 'zb','wds' : '[{"wdcode":"reg","valuecode":"420100"}]', 'dfwds' : '[{"wdcode":"zb","valuecode":"A04"},{"wdcode":"sj","valuecode":"LAST10"}]'},  // A04 财政和金融
     {'dbcode' : 'csnd','rowcode' : 'zb','wds' : '[{"wdcode":"reg","valuecode":"420100"}]', 'dfwds' : '[{"wdcode":"zb","valuecode":"A08"},{"wdcode":"sj","valuecode":"LAST10"}]'},  // A08 教育、卫生、文化
 ]
-// 一线房价  
-const params_cityHousePrice = [
-  // 请求的数据指标与时间，
-  // 城市年度数据 'dbcode' : 'csnd 'wds'与dfwds一定分别设置，这个普通数据请求参数不同！！！！！
-  { 'dbcode': 'csnd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A030C"}]', 'dfwds': '[{"wdcode":"sj","valuecode":"LAST10"}]' },  // A030C 住宅商品房平均销售价格
-  // 城市月度数据 'dbcode' : 'csyd
-  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A010804"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A010804 新建商品住宅销售价格指数(上月=100)
-  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A010805"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A010805 新建商品住宅销售价格指数(上年同月=100)
-  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A01080S"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A01080S 新建商品住宅销售价格指数(上年同期=100)
-  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A010807"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A010807 二手住宅销售价格指数(上月=100)
-  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A010808"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A010808 二手住宅销售价格指数(上年同月=100)
-  { 'dbcode': 'csyd', 'rowcode': 'reg', 'wds': '[{"wdcode":"zb","valuecode":"A01080T"},{"wdcode":"sj","valuecode":"LAST13"}]', 'dfwds': '[]' }, // A01080T 二手住宅销售价格指数(上年同期=100)
+// 一线城市
+const params_city = [
+    // 请求的数据指标与时间，
+    // 城市年度数据 'dbcode' : 'csnd 'wds'与dfwds一定分别设置，这个普通数据请求参数不同！！！！！
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0101"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0101 地区生产总值
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0201"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0201 年末户籍人口
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0303"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0303 房地产住宅投资额
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A030A"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A030A 房地产住宅销售面积
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A030C"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A030C 房地产住宅平均销售价格
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0401"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0401 地方公共预算收入
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0402"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0402 地方公共收预算支出
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0403"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0403 住户存款余额
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0801"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0801 普通本专科在校学生数
+    {'dbcode' : 'csnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0802"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},  // A0802 医院个数
 
+        // 城市月度数据 'dbcode' : 'csyd
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010804"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010804 新建商品住宅销售价格指数(上月=100)
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010805"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010805 新建商品住宅销售价格指数(上年同月=100)
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A01080S"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A01080S 新建商品住宅销售价格指数(上年同期=100)
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010807"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010807 二手住宅销售价格指数(上月=100)
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A010808"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A010808 二手住宅销售价格指数(上年同月=100)
+    {'dbcode' : 'csyd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A01080T"},{"wdcode":"sj","valuecode":"LAST13"}]','dfwds' : '[]'}, // A01080T 二手住宅销售价格指数(上年同期=100)
+       
 ]
+
+// 主要省份
+const params_province = [
+    // 请求的数据指标与时间，
+    // 年度数据 'dbcode' : 'csnd 'wds'与dfwds一定分别设置，这个普通数据请求参数不同！！！！！
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A020101"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A020101 地区生产总值
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A030101"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A030101 年末常住人口
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A030201"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A030201 出生率
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A030202"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A030202 死亡率
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A030203"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A030203 增长率
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A050D01"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A050D01 房地产投资额
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A050H02"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A050H02 房地产住宅销售面积
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A050J02"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A030C 房地产住宅平均销售价格
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A080101"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A080101 地方财政收入
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A080201"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A080201 地方财政支出
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0A0101"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A0A0101 居民人均可支配收入
+    {'dbcode' : 'fsnd','rowcode' : 'reg','wds' : '[{"wdcode":"zb","valuecode":"A0M0108"}]', 'dfwds' : '[{"wdcode":"sj","valuecode":"LAST10"}]'},        // A0403 普通高等学校预计毕业生数
+]
+
 //房地产-投资
 const params_realEstate_invest = [
   //年度数据
@@ -403,7 +432,8 @@ export async function sendRequest(specificParams) {
 // 导出模块
 export {
   params_wh,
-  params_cityHousePrice,
+  params_city,
+  params_province,
   params_realEstate_invest,
   params_realEstate_sell,
   params_gdp,

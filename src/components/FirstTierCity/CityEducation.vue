@@ -1,31 +1,32 @@
 <template>
     <div class="container">
-  
-      <!-- 为下方的按钮添加上边距 style="margin-top -->
       <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive_GDP_City }" @click="drawBarChart_GDP_City"
+        <button class="button" :class="{ 'is-active': isBarActive_Education_Year }" @click="drawBarChart_Education_Year"
           style="margin-top: 50px;">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive_GDP_City }" @click="drawLineChart_GDP_City"
+        <button class="button" :class="{ 'is-active': isLineActive_Education_Year }" @click="drawLineChart_Education_Year"
           style="margin-top: 50px;">折线图</button>
       </div>
-      <div class="chart-container" id="gdp_city"></div>
+      <div class="chart-container" id="education"></div>
+
+
     </div>
   </template>
   
   <script>
   
   import { params_city, sendRequest, drawCommonChart } from '../CommonUtil';
-  
   export default {
   
     data() {
       return {
-        EChartType_GDP_City: {
-          GW: 'gdp_city',
+        EChartType_Education_Provincial: {
+          EC: 'education',
         },
-        isBarActive_GDP_City: false,
-        isLineActive_GDP_City: false,
-        dataListCity: null,
+  
+        isBarActive_Education_Year: false,
+        isLineActive_Education_Year: false,
+
+        returnData: null,
         chartType: null
       };
     },
@@ -42,11 +43,11 @@
         }
       },
       requestWithLocalJson() {
-        // 读取本地GDP数据
+        // 读取本地数据
         fetch('city.json')
           .then(response => response.json())
           .then(data => {
-            console.log('读取本地数据GDP数据:', data);
+            console.log('读取本地数据:', data);
             // 列表数据
             this.returnData = data;
             // 处理数据绘制图表
@@ -67,35 +68,36 @@
       },
       drawChartWithBtn() {
         if (this.returnData) {
-          this.drawBarChart_GDP_City();
+          this.drawBarChart_Education_Year()
+
         }
       },
-  
-      drawBarChart_GDP_City() {
-        this.isBarActive_GDP_City = true;
-        this.isLineActive_GDP_City = false;
-        // 在这里绘制柱状图
+      drawBarChart_Education_Year() {
+        this.isBarActive_Education_Year = true;
+        this.isLineActive_Education_Year = false;
         this.chartType = "bar"
-        this.drawChartWithParams(this.EChartType_GDP_City.GW)
+        this.drawChartWithParams(this.EChartType_Education_Provincial.EC)
   
       },
-      drawLineChart_GDP_City() {
-        this.isBarActive_GDP_City = false;
-        this.isLineActive_GDP_City = true;
+      drawLineChart_Education_Year() {
+        this.isBarActive_Education_Year = false;
+        this.isLineActive_Education_Year = true;
         // 在这里绘制折线图
         this.chartType = "line"
-        this.drawChartWithParams(this.EChartType_GDP_City.GW)
+        this.drawChartWithParams(this.EChartType_Education_Provincial.EC)
       },
+     
       drawChartWithParams(echrtId) {
         // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
         let basicParams = {};
         let typeArr = [];
         let cityCodeArr = [];
+        // 年度数据
         switch (echrtId) {
-          case this.EChartType_GDP_City.GW:
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '一线城市GDP(亿元)', subtitle: '', exceptName: '', unit: '(亿元)', legendTop: '10%', gridTop: '25%', sj: '0' }
-            // A0101- 国内生产总值 A0102-第一产业增加值 A0103-第二产业增加值  A0104-第三产业增加值
-            typeArr = ['A0101'];
+          case this.EChartType_Education_Provincial.EC:
+            // A0801-在校本专科生数
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '普通本专科在校学生数(万人)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            typeArr = ['A0801'];
             break;
           default:
             break;
@@ -103,7 +105,7 @@
         cityCodeArr = ['110000', '310000', '440100', '440300', '330100', '510100', '420100', '320100', '500000', '610100', '410100', '340100']
         drawCommonChart(basicParams, typeArr, this.returnData, cityCodeArr)
       }
+  
     }
   };
   </script>
-  

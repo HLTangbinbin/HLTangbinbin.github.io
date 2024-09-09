@@ -59,7 +59,7 @@
         fetch('house.json')
           .then(response => response.json())
           .then(data => {
-            console.log('读取本地成功新房数据:', data.houseList);
+            console.log('读取本地数据新房数据:', data.houseList);
             this.houseList = data.houseList;
             // 每年每月合计数据
             this.handleTotalData();

@@ -1,29 +1,30 @@
 <template>
     <div class="container">
       <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive_Population }" @click="drawBarChart_Population"
+        <button class="button" :class="{ 'is-active': isBarActive_Education_Year }" @click="drawBarChart_Education_Year"
           style="margin-top: 50px;">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive_Population }" @click="drawLineChart_Population"
+        <button class="button" :class="{ 'is-active': isLineActive_Education_Year }" @click="drawLineChart_Education_Year"
           style="margin-top: 50px;">折线图</button>
       </div>
-      <div class="chart-container" id="population"></div>
-  
+      <div class="chart-container" id="education"></div>
+
     </div>
   </template>
   
   <script>
   
-  import { params_city, sendRequest, drawCommonChart } from '../CommonUtil';
+  import { params_wh, sendRequest, drawCommonChart } from '../CommonUtil';
   export default {
   
     data() {
       return {
-        EChartType_Population_City: {
-          PL: 'population',
-
+        EChartType_Education_WH: {
+          EC: 'education',
         },
-        isBarActive_Population: false,
-        isLineActive_Population: false,
+  
+        isBarActive_Education_Year: false,
+        isLineActive_Education_Year: false,
+
         returnData: null,
         chartType: null
       };
@@ -41,11 +42,11 @@
         }
       },
       requestWithLocalJson() {
-        // 读取本地人口数据
-        fetch('city.json')
+        // 读取本地数据
+        fetch('wh.json')
           .then(response => response.json())
           .then(data => {
-            console.log('读取本地数据人口数据:', data);
+            console.log('读取本地数据:', data);
             // 列表数据
             this.returnData = data;
             // 处理数据绘制图表
@@ -57,7 +58,7 @@
       },
       async requestWithAPI() {
         try {
-          this.returnData = await sendRequest(params_city);
+          this.returnData = await sendRequest(params_wh);
           console.log("响应处理后的数据：", this.returnData)
           this.drawChartWithBtn()
         } catch (error) {
@@ -66,41 +67,42 @@
       },
       drawChartWithBtn() {
         if (this.returnData) {
-          this.drawBarChart_Population()
+          this.drawBarChart_Education_Year()
+
         }
       },
-      drawBarChart_Population() {
-        this.isBarActive_Population = true;
-        this.isLineActive_Population = false;
+      drawBarChart_Education_Year() {
+        this.isBarActive_Education_Year = true;
+        this.isLineActive_Education_Year = false;
         this.chartType = "bar"
-        this.drawChartWithParams(this.EChartType_Population_City.PL)
+        this.drawChartWithParams(this.EChartType_Education_WH.EC)
   
       },
-      drawLineChart_Population() {
-        this.isBarActive_Population = false;
-        this.isLineActive_Population = true;
+      drawLineChart_Education_Year() {
+        this.isBarActive_Education_Year = false;
+        this.isLineActive_Education_Year = true;
         // 在这里绘制折线图
         this.chartType = "line"
-        this.drawChartWithParams(this.EChartType_Population_City.PL)
+        this.drawChartWithParams(this.EChartType_Education_WH.EC)
       },
      
       drawChartWithParams(echrtId) {
         // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
         let basicParams = {};
         let typeArr = [];
-        let cityCodeArr = [];
+        // 年度数据
         switch (echrtId) {
-          case this.EChartType_Population_City.PL:
-            // A0201-年末户籍人口 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '年末户籍人口(万人)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
-            typeArr = ['A0201'];
+          case this.EChartType_Education_WH.EC:
+            // A0801-在校本专科生数
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '教育', subtitle: '', exceptName: '', unit: '(万人)', legendTop: '10%', gridTop: '30%', sj: '0' }
+            typeArr = ['A0801'];
             break;
           default:
             break;
         }
-        cityCodeArr = ['110000', '310000', '440100', '440300', '330100', '510100', '420100', '320100', '500000', '610100', '410100', '340100']
-        drawCommonChart(basicParams, typeArr, this.returnData, cityCodeArr)
+        drawCommonChart(basicParams, typeArr, this.returnData)
       }
+  
     }
   };
   </script>

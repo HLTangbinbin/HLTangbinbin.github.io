@@ -70,7 +70,7 @@ export default {
             fetch('medical.json')
                 .then(response => response.json())
                 .then(data => {
-                    console.log('读取本地成功医疗数据:', data);
+                    console.log('读取本地数据医疗数据:', data);
                     // 列表数据
                     this.returnData = data;
                     // 处理数据绘制图表

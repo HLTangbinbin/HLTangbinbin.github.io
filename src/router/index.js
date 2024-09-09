@@ -10,8 +10,10 @@ import WHRealEstate from '../components/WH/WHRealEstate.vue';
 import WHRealEstateInvest from '../components/WH/WHRealEstateInvest.vue';
 import WHRealEstateSell from '../components/WH/WHRealEstateSell.vue';
 
-import WHNationalFinance from '../components/WH/WHNationalFinance.vue';
-import WHEHC from '../components/WH/WHEHC.vue';
+import WHFinance from '../components/WH/WHFinance.vue';
+import WHEducation from '../components/WH/WHEducation.vue';
+import WHMedical from '../components/WH/WHMedical.vue';
+
 // 一线城市
 import FirstTierCity from '../components/FirstTierCity/FirstTierCity.vue';
 import CityRealEstatePriceIndices from '../components/FirstTierCity/CityRealEstatePriceIndices.vue';
@@ -20,9 +22,21 @@ import CityPopulation from '../components/FirstTierCity/CityPopulation.vue';
 import CityRealEstate from '../components/FirstTierCity/CityRealEstate.vue';
 import CityRealEstateInvest from '../components/FirstTierCity/CityRealEstateInvest.vue';
 import CityRealEstateSell from '../components/FirstTierCity/CityRealEstateSell.vue';
-import CityNationalFinance from '../components/FirstTierCity/CityNationalFinance.vue';
-import CityEHC from '../components/FirstTierCity/CityEHC.vue';
+import CityFinance from '../components/FirstTierCity/CityFinance.vue';
+import CityEducation from '../components/FirstTierCity/CityEducation.vue';
+import CityMedical from '../components/FirstTierCity/CityMedical.vue';
 
+// 省份
+import MajorProvincial from '../components/MajorProvincial/MajorProvincial.vue';
+import ProvincialGDP from '../components/MajorProvincial/ProvincialGDP.vue';
+import ProvincialPopulation from '../components/MajorProvincial/ProvincialPopulation.vue';
+import ProvincialRealEstate from '../components/MajorProvincial/ProvincialRealEstate.vue';
+import ProvincialRealEstateInvest from '../components/MajorProvincial/ProvincialRealEstateInvest.vue';
+import ProvincialRealEstateSell from '../components/MajorProvincial/ProvincialRealEstateSell.vue';
+import ProvincialFinance from '../components/MajorProvincial/ProvincialFinance.vue';
+import ProvincialLiving from '../components/MajorProvincial/ProvincialLiving.vue';
+import ProvincialEducation from '../components/MajorProvincial/ProvincialEducation.vue';
+import ProvincialMedical from '../components/MajorProvincial/ProvincialMedical.vue';
 
 // 全国
 import NationWide from '../components/NationWide/NationWide.vue';
@@ -38,6 +52,7 @@ import EducationSector from '../components/NationWide/EducationSector.vue';
 import MedicalTreatment from '../components/NationWide/MedicalTreatment.vue';
 import IndicesData from '../components/NationWide/IndicesData.vue';
 import LivingStandards from '../components/NationWide/LivingStandards.vue';
+
 
 
 const routes = [
@@ -64,8 +79,9 @@ const routes = [
           }
         ]
       },
-      { path: 'WHNationalFinance', component: WHNationalFinance },
-      { path: 'WHEHC', component: WHEHC }
+      { path: 'WHFinance', component: WHFinance },
+      { path: 'WHEducation', component: WHEducation },
+      { path: 'WHMedical', component: WHMedical }
     ]
   },
   { path: '/FirstTierCity', component: FirstTierCity,
@@ -92,8 +108,37 @@ const routes = [
           }
         ]
       },
-      { path: 'CityNationalFinance', component: CityNationalFinance },
-      { path: 'CityEHC', component: CityEHC },
+      { path: 'CityFinance', component: CityFinance },
+      { path: 'CityEducation', component: CityEducation },
+      { path: 'CityMedical', component: CityMedical },
+
+    ]
+  },
+  // 省份
+  { path: '/MajorProvincial', component: MajorProvincial,
+    redirect: '/MajorProvincial/ProvincialGDP', // 默认显示GDP
+    children: [
+      { path: 'ProvincialGDP', component: ProvincialGDP },
+      { path: 'ProvincialPopulation', component: ProvincialPopulation },
+      {
+        path: 'ProvincialRealEstate',
+        redirect: '/MajorProvincial/ProvincialRealEstate/ProvincialRealEstateInvest', // 默认显示房价
+        component: ProvincialRealEstate,
+        children: [
+          {
+            path: 'ProvincialRealEstateInvest',
+            component: ProvincialRealEstateInvest,
+          },
+          {
+            path: 'ProvincialRealEstateSell',
+            component: ProvincialRealEstateSell,
+          }
+        ]
+      },
+      { path: 'ProvincialFinance', component: ProvincialFinance },
+      { path: 'ProvincialLiving', component: ProvincialLiving },
+      { path: 'ProvincialEducation', component: ProvincialEducation },
+      { path: 'ProvincialMedical', component: ProvincialMedical },
 
     ]
   },
