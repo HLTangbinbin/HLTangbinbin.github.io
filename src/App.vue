@@ -8,9 +8,9 @@
         <!-- startsWith 解决主导航栏和子导航栏联动问题 -->
         <router-link to="/WH" class="nav" :class="{ active: $route.path.startsWith('/WH') }">武汉</router-link>
         <router-link to="/FirstTierCity" class="nav"
-          :class="{ active: $route.path.startsWith('/FirstTierCity') }">一线城市</router-link>
+          :class="{ active: $route.path.startsWith('/FirstTierCity') }">城市</router-link>
         <router-link to="/MajorProvincial" class="nav"
-          :class="{ active: $route.path.startsWith('/MajorProvincial') }">省份</router-link>
+          :class="{ active: $route.path.startsWith('/MajorProvincial') }">省市</router-link>
         <router-link to="/NationWide" class="nav"
           :class="{ active: $route.path.startsWith('/NationWide') }">全国</router-link>
       </nav>
