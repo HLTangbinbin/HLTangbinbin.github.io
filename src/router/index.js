@@ -136,16 +136,16 @@ const routes = [
         ]
       },
       { path: 'ProvincialFinance', component: ProvincialFinance },
-      { path: 'ProvincialLiving', component: ProvincialLiving },
       { path: 'ProvincialEducation', component: ProvincialEducation },
       { path: 'ProvincialMedical', component: ProvincialMedical },
+      { path: 'ProvincialLiving', component: ProvincialLiving },
 
     ]
   },
   {
     path: '/NationWide',
     component: NationWide,
-    redirect: '/NationWide/RealEstate', // 默认显示投资页面
+    redirect: '/NationWide/GrossDomesticProduct', // 默认显示投资页面
     children: [
       {
         path: 'RealEstate',

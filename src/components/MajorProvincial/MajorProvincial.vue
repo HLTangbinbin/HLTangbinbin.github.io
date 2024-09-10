@@ -9,10 +9,10 @@
           :class="{ active: $route.path.startsWith('/MajorProvincial/ProvincialRealEstate') }">房地产</router-link>
         <router-link to="/MajorProvincial/ProvincialFinance" class="sub-nav"
           :class="{ active: $route.path === '/MajorProvincial/ProvincialFinance' }">财政</router-link>
-        <router-link to="/MajorProvincial/ProvincialLiving" class="sub-nav"
-          :class="{ active: $route.path === '/MajorProvincial/ProvincialLiving' }">生活</router-link>
         <router-link to="/MajorProvincial/ProvincialEducation" class="sub-nav" :class="{ active: $route.path === '/MajorProvincial/ProvincialEducation' }">教育</router-link>
         <router-link to="/MajorProvincial/ProvincialMedical" class="sub-nav" :class="{ active: $route.path === '/MajorProvincial/ProvincialMedical' }">医疗</router-link>
+        <router-link to="/MajorProvincial/ProvincialLiving" class="sub-nav"
+        :class="{ active: $route.path === '/MajorProvincial/ProvincialLiving' }">生活</router-link>
       </nav>
       </div>
   

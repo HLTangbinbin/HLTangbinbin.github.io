@@ -4,12 +4,12 @@
     <div>
     <div class="nav-wrapper">
       <nav class="sub-nav-container">
-        <router-link to="/NationWide/RealEstate" class="sub-nav" :class="{ active: $route.path.startsWith('/NationWide/RealEstate') }">房地产</router-link>
-        <router-link to="/NationWide/GrossDomesticProduct" class="nav" :class="{ active: $route.path === '/NationWide/GrossDomesticProduct' }">经济</router-link>
+        <router-link to="/NationWide/GrossDomesticProduct" class="nav" :class="{ active: $route.path.startsWith('/NationWide/GrossDomesticProduct') }">GDP</router-link>
         <router-link to="/NationWide/NationalFinance" class="nav" :class="{ active: $route.path === '/NationWide/NationalFinance' }">财政</router-link>
         <router-link to="/NationWide/FinancialIndustry" class="nav" :class="{ active: $route.path === '/NationWide/FinancialIndustry' }">金融</router-link>
         <router-link to="/NationWide/ForeignTrade" class="nav" :class="{ active: $route.path === '/NationWide/ForeignTrade' }">外贸</router-link>
         <router-link to="/NationWide/PopulationCorrelation" class="nav" :class="{ active: $route.path === '/NationWide/PopulationCorrelation' }">人口</router-link>
+        <router-link to="/NationWide/RealEstate" class="sub-nav" :class="{ active: $route.path.startsWith('/NationWide/RealEstate') }">房地产</router-link>
         <router-link to="/NationWide/EducationSector" class="nav" :class="{ active: $route.path === '/NationWide/EducationSector' }">教育</router-link>
         <router-link to="/NationWide/MedicalTreatment" class="nav" :class="{ active: $route.path === '/NationWide/MedicalTreatment' }">医疗</router-link>
         <router-link to="/NationWide/IndicesData" class="nav" :class="{ active: $route.path === '/NationWide/IndicesData' }">指数</router-link>

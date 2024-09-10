@@ -93,7 +93,7 @@
         let provinceCodeArr = [];
         switch (echrtId) {
           case this.EChartType_GDP_Province.GW:
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '各省市GDP', subtitle: '', exceptName: '', unit: '(亿元)', legendTop: '10%', gridTop: '25%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '各省市GDP(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '25%', sj: '0' }
             // A020101- 生产总值 
             typeArr = ['A020101'];
             break;

@@ -95,7 +95,7 @@
         switch (echrtId) {
         case this.EChartType_Medical_WH.MD:
             // A0802-医院个数
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗', subtitle: '', exceptName: '', unit: '(个)', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗', subtitle: '', exceptName: '', unit: '(个)', legendTop: '10%', gridTop: '30%', sj: '0' , min: '200', max: '500'}
             typeArr = ['A0802'];
             break;
           default:

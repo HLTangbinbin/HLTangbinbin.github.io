@@ -174,7 +174,7 @@
         switch (echrtId) {
           case this.EChartType_Population_Province.PP:
             // A0201-年末户籍人口 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '年末户籍人口', subtitle: '', exceptName: '人口', unit: '(万人)', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '年末常住人口(万人)', subtitle: '', exceptName: '人口', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
             typeArr = ['A030101'];
             break;
         case this.EChartType_Population_Province.PRB:

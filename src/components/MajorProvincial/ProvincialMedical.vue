@@ -1,12 +1,19 @@
 <template>
     <div class="container">
       <div class="buttons">
-        <button class="button" :class="{ 'is-active': isBarActive_Medical_Year }" @click="drawBarChart_Medical_Year"
+        <button class="button" :class="{ 'is-active': isBarActive_Medical_Hospital }" @click="drawBarChart_Medical_Hospital"
           style="margin-top: 50px;">柱状图</button>
-        <button class="button" :class="{ 'is-active': isLineActive_Medical_Year }" @click="drawLineChart_Medical_Year"
+        <button class="button" :class="{ 'is-active': isLineActive_Medical_Hospital }" @click="drawLineChart_Medical_Hospital"
           style="margin-top: 50px;">折线图</button>
       </div>
-      <div class="chart-container" id="Medical"></div>
+      <div class="chart-container" id="hospital"></div>
+      <div class="buttons">
+        <button class="button" :class="{ 'is-active': isBarActive_Medical_BedsPer }" @click="drawBarChart_Medical_BedsPer"
+          style="margin-top: 50px;">柱状图</button>
+        <button class="button" :class="{ 'is-active': isLineActive_Medical_BedsPer }" @click="drawLineChart_Medical_BedsPer"
+          style="margin-top: 50px;">折线图</button>
+      </div>
+      <div class="chart-container" id="bedsper"></div>
 
     </div>
   </template>
@@ -19,11 +26,14 @@
     data() {
       return {
         EChartType_Medical_Provincial: {
-          MD: 'Medical',
+          HP: 'hospital',
+          BP: 'bedsper',
         },
   
-        isBarActive_Medical_Year: false,
-        isLineActive_Medical_Year: false,
+        isBarActive_Medical_Hospital: false,
+        isLineActive_Medical_Hospital: false,
+        isBarActive_Medical_BedsPer: false,
+        isLineActive_Medical_BedsPer: false,
 
         returnData: null,
         chartType: null
@@ -67,25 +77,39 @@
       },
       drawChartWithBtn() {
         if (this.returnData) {
-          this.drawBarChart_Medical_Year()
+          this.drawBarChart_Medical_Hospital()
+          this.drawBarChart_Medical_BedsPer()
 
         }
       },
-      drawBarChart_Medical_Year() {
-        this.isBarActive_Medical_Year = true;
-        this.isLineActive_Medical_Year = false;
+      drawBarChart_Medical_Hospital() {
+        this.isBarActive_Medical_Hospital = true;
+        this.isLineActive_Medical_Hospital = false;
         this.chartType = "bar"
-        this.drawChartWithParams(this.EChartType_Medical_Provincial.MD)
+        this.drawChartWithParams(this.EChartType_Medical_Provincial.HP)
   
       },
-      drawLineChart_Medical_Year() {
-        this.isBarActive_Medical_Year = false;
-        this.isLineActive_Medical_Year = true;
+      drawLineChart_Medical_Hospital() {
+        this.isBarActive_Medical_Hospital = false;
+        this.isLineActive_Medical_Hospital = true;
         // 在这里绘制折线图
         this.chartType = "line"
-        this.drawChartWithParams(this.EChartType_Medical_Provincial.MD)
+        this.drawChartWithParams(this.EChartType_Medical_Provincial.HP)
       },
-
+      drawBarChart_Medical_BedsPer() {
+        this.isBarActive_Medical_BedsPer = true;
+        this.isLineActive_Medical_BedsPer = false;
+        this.chartType = "bar"
+        this.drawChartWithParams(this.EChartType_Medical_Provincial.BP)
+  
+      },
+      drawLineChart_Medical_BedsPer() {
+        this.isBarActive_Medical_BedsPer = false;
+        this.isLineActive_Medical_BedsPer = true;
+        // 在这里绘制折线图
+        this.chartType = "line"
+        this.drawChartWithParams(this.EChartType_Medical_Provincial.BP)
+      },
      
       drawChartWithParams(echrtId) {
         // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
@@ -94,10 +118,15 @@
         let provinceCodeArr = [];
         // 年度数据
         switch (echrtId) {
-          case this.EChartType_Medical_Provincial.MD:
-            // A0M0108-普通高等学校预计毕业生数
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '普通高等学校毕业生数(万人)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
-            typeArr = ['A0M0108'];
+          case this.EChartType_Medical_Provincial.HP:
+            // A0O0102-医院个数
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医院个数(个)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            typeArr = ['A0O0102'];
+            break;
+        case this.EChartType_Medical_Provincial.BP:
+            // A0O0604-每万人医疗机构床位数
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '每万人医疗机构床位数(个)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' , min: '35', max: '90'}
+            typeArr = ['A0O0604'];
             break;
           default:
             break;
