@@ -45,6 +45,10 @@ export default {
   box-sizing: border-box; /* 确保 padding 不影响元素宽度 */
   -webkit-overflow-scrolling: touch; /* 启用惯性滚动 */
 }
+.nav-wrapper::-webkit-scrollbar {
+  display: none;
+  /* 隐藏滚动条 */
+}
 
 .sub-nav-container {
   display: inline-flex;
