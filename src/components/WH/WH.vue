@@ -37,7 +37,7 @@ export default {
 /* 外层容器，允许滑动但不会强制撑满全屏 */
 .nav-wrapper {
   display: flex;
-  justify-content: safe center;
+  justify-content: flex-start;
   overflow-x: auto; /* 允许水平滚动 */
   white-space: nowrap; /* 防止子元素换行 */
   width: 100%; /* 占满可用宽度 */

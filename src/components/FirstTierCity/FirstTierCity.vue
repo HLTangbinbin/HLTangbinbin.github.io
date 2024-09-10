@@ -51,7 +51,7 @@ export default {
 .sub-nav-container {
   display: inline-flex;
   /* 保证子元素水平排列并自适应宽度 */
-  justify-content: safe center;
+  justify-content: flex-start;
   align-items: center;
   background-color: #fff;
   border-radius: 50px;
