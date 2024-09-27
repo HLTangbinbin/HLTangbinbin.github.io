@@ -116,16 +116,17 @@
         let basicParams = {};
         let typeArr = [];
         let provinceCodeArr = [];
+
         // 年度数据
         switch (echrtId) {
           case this.EChartType_Medical_Provincial.HP:
             // A0O0102-医院个数
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医院个数(个)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医院个数(个)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A0O0102'];
             break;
         case this.EChartType_Medical_Provincial.BP:
             // A0O0604-每万人医疗机构床位数
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '每万人医疗机构床位数(个)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' , min: '35', max: '90'}
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '每万人医疗机构床位数(个)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' , min: '35', max: '90'}
             typeArr = ['A0O0604'];
             break;
           default:

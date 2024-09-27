@@ -120,16 +120,17 @@ export default {
             let basicParams = {};
             let typeArr = []; 
             let provinceCodeArr = [];
+
             // 年度/月度数据
             switch (echrtId) {
                 case this.EChartType_RealEstate_Provincial.SAY:
                     // A050H02-住宅商品房销售面积
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房销售面积(万平方米)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房销售面积(万平方米)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
                     typeArr = ['A050H02'];
                     break;
                     case this.EChartType_RealEstate_Provincial.SY:
                     //  A050J02-住宅商品房平均销售价格
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房平均销售价格(元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房平均销售价格(元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
                     typeArr = ['A050J02'];
                     break;
                 default:

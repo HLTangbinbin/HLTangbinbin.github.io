@@ -8,15 +8,6 @@
         style="margin-top: 50px;">折线图</button>
     </div>
     <div class="chart-container" id="gdp_hg"></div>
-
-    <!-- 为下方的按钮添加上边距 style="margin-top -->
-    <div class="buttons">
-      <button class="button" :class="{ 'is-active': isBarActive_GDP_CS }" @click="drawBarChart_GDP_CS"
-        style="margin-top: 50px;">柱状图</button>
-      <button class="button" :class="{ 'is-active': isLineActive_GDP_CS }" @click="drawLineChart_GDP_CS"
-        style="margin-top: 50px;">折线图</button>
-    </div>
-    <div class="chart-container" id="gdp_cs"></div>
   </div>
 </template>
 
@@ -30,15 +21,12 @@ export default {
     return {
       EChartType_GDP: {
         GH: 'gdp_hg',
-        GC: 'gdp_cs',
       },
 
       isBarActive_GDP_HG: false,
       isLineActive_GDP_HG: false,
-      isBarActive_GDP_CS: false,
-      isLineActive_GDP_CS: false,
+
       dataListHG: null,
-      dataListCS: null,
       chartType: null
     };
   },
@@ -56,7 +44,7 @@ export default {
     },
     requestWithLocalJson() {
       // 读取本地GDP数据
-      fetch('gdp.json')
+      fetch('nation.json')
         .then(response => response.json())
         .then(data => {
           console.log('读取本地数据GDP数据:', data);
@@ -81,7 +69,6 @@ export default {
     drawChartWithBtn() {
       if (this.returnData) {
         this.drawBarChart_GDP_HG();
-        this.drawBarChart_GDP_CS();
       }
     },
 
@@ -100,21 +87,7 @@ export default {
       this.chartType = "line"
       this.drawChartWithParams(this.EChartType_GDP.GH)
     },
-    drawBarChart_GDP_CS() {
-      this.isBarActive_GDP_CS = true;
-      this.isLineActive_GDP_CS = false;
-      // 在这里绘制柱状图
-      this.chartType = "bar"
-      this.drawChartWithParams(this.EChartType_GDP.GC)
 
-    },
-    drawLineChart_GDP_CS() {
-      this.isBarActive_GDP_CS = false;
-      this.isLineActive_GDP_CS = true;
-      // 在这里绘制折线图
-      this.chartType = "line"
-      this.drawChartWithParams(this.EChartType_GDP.GC)
-    },
     drawChartWithParams(echrtId) {
       // basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
       let basicParams = {};
@@ -122,17 +95,9 @@ export default {
       let cityCodeArr = [];
       switch (echrtId) {
         case this.EChartType_GDP.GH:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国民经济核算', subtitle: '', exceptName: '', unit: '(亿元)', legendTop: '10%', gridTop: '25%', sj: '0' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国民经济核算', subtitle: '', exceptName: '', unit: '(亿元)', legendTop: '10%', gridTop: '25%', dbCode: 'nd' }
           // A020102-CPI 国内生产总值 A020103-第一产业增加值 A020104-第二产业增加值  A020105-第三产业增加值
           typeArr = ['A020102', 'A020103', 'A020104', 'A020105'];
-          break;
-        case this.EChartType_GDP.GC:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地区生产总值（当年价格）', subtitle: '', exceptName: '', unit: '(亿元)', legendTop: '10%', gridTop: '25%', sj: '0' }
-          // A0101-地区生产总值
-          typeArr = ['A0101'];
-          // 110000-北京 440100-上海 440100-广州 440300-深圳 330100-杭州 510100-成都 420100-武汉 320100-南京
-          // 500000-重庆 610100-西安 410100-郑州 340100-合肥 420500-宜昌
-          cityCodeArr = ['110000', '310000', '440100', '440300', '330100', '510100', '420100', '320100', '500000', '610100', '410100', '340100', '420500']
           break;
         default:
           break;

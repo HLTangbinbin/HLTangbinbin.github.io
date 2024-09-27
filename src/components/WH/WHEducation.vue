@@ -94,7 +94,7 @@
         switch (echrtId) {
           case this.EChartType_Education_WH.EC:
             // A0801-在校本专科生数
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '教育', subtitle: '', exceptName: '', unit: '(万人)', legendTop: '10%', gridTop: '30%', sj: '0' , min: '80', max: '150'}
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '教育', subtitle: '', exceptName: '', unit: '(万人)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' , min: '80', max: '150'}
             typeArr = ['A0801'];
             break;
           default:

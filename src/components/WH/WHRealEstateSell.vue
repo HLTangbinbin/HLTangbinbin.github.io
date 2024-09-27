@@ -125,12 +125,12 @@ export default {
             switch (echrtId) {
                 case this.EChartType_RealEstate_WH.SAY:
                     // A030A-住宅商品房销售面积
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房销售面积(万平方米)', subtitle: '', exceptName: '商品房销售面积(万平方米)', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房销售面积(万平方米)', subtitle: '', exceptName: '商品房销售面积(万平方米)', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
                     typeArr = ['A030A'];
                     break;
                 case this.EChartType_RealEstate_WH.SY:
                     //  A030C-住宅商品房平均销售价格
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房平均销售价格(元)', subtitle: '', exceptName: '商品房平均销售价格(元)', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住宅商品房平均销售价格(元)', subtitle: '', exceptName: '商品房平均销售价格(元)', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
                     typeArr = ['A030C'];
                     break;
                 default:

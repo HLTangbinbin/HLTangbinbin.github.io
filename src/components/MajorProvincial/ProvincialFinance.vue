@@ -125,12 +125,12 @@
         switch (echrtId) {
           case this.EChartType_Finance_Provincial.FIY:
             // A080101-地方一般公共预算收入
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政收入(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政收入(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A080101'];
             break;
           case this.EChartType_Finance_Provincial.FOY:
             // A080201-地方一般公共预算支出 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政支出(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政支出(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A080201'];
             break;
           default:

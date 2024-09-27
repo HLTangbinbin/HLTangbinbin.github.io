@@ -140,17 +140,17 @@ export default {
       switch (echrtId) {
         case this.EChartType_Education.ZS:
           // A0M0103-普通高等学校招生数
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '普通高等学校本科招生数(万人)', subtitle: '', exceptName: '', unit: '', sj: '0' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '普通高等学校本科招生数(万人)', subtitle: '', exceptName: '', unit: '', dbCode: 'nd' }
           typeArr = ['A0M0103'];
           break;
         case this.EChartType_Education.ZX:
           // A0M0106-普通高等学校在校学生数
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '普通高等学校本科在校学生数(万人)', subtitle: '', exceptName: '', unit: '', sj: '0' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '普通高等学校本科在校学生数(万人)', subtitle: '', exceptName: '', unit: '', dbCode: 'nd' }
           typeArr = ['A0M0106'];
           break;
         case this.EChartType_Education.BY:
           // A0M010C-普通高等学校毕业生数
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '普通高等学校本科毕业生数(万人)', subtitle: '', exceptName: '', unit: '', sj: '0' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '普通高等学校本科毕业生数(万人)', subtitle: '', exceptName: '', unit: '', dbCode: 'nd' }
           typeArr = ['A0M010C'];
           break;
         default:
@@ -163,7 +163,7 @@ export default {
         '500000', '510000', '520000', '530000', '510000', '540000',
         '610000', '620000', '630000', '640000', '650000']
 
-      drawCommonChart(basicParams, typeArr, this.returnData, provinceCodeArr)
+      drawCommonChart(basicParams, typeArr, this.returnData,  provinceCodeArr)
     }
 
   }

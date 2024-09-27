@@ -96,7 +96,7 @@
         switch (echrtId) {
           case this.EChartType_Education_Provincial.EC:
             // A0801-在校本专科生数
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '普通本专科在校学生数(万人)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '普通本专科在校学生数(万人)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A0801'];
             break;
           default:

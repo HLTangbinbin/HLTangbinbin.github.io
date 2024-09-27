@@ -119,12 +119,12 @@ export default {
             let cityCodeArr = [];
             switch (echrtId) {
                 case this.EChartType_RealEstate_City.CHN:
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '新建商品住宅销售价格指数(上月=100)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '25%', sj: '1', min: '98', max: '101' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '新建商品住宅销售价格指数(上月=100)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'yd', min: '98', max: '101' }
                     // A010804-新建商品住宅销售价格指数(上月=100)
                     typeArr = ['A010804'];
                     break;
                 case this.EChartType_RealEstate_City.CHO:
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '二手房住宅销售价格指数(上月=100)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '25%', sj: '1', min: '98', max: '101' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '二手房住宅销售价格指数(上月=100)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'yd', min: '98', max: '101' }
                     // A010807-二手房住宅销售价格指数(上月=100)
                     typeArr = ['A010807'];
                     break;

@@ -29,8 +29,8 @@ export function sortYearMonths(date1, date2) {
   return compareYearMonth(date1, date2);
 }
 // //按照年份与日期做筛选与排序
-export function selectDataFromArr(returnData, zbCode, fieldKey, cityCode = '') {
-  const filteredData = returnData.dataList
+export function selectDataFromArr(returnData, zbCode, fieldKey, dbCode = 'nd', cityCode = '') {
+  const filteredData = returnData.dataList[dbCode]
     .filter(returnDataObj => {
       // 首先筛选出符合指标代码的数据
       if (cityCode == '') {
@@ -82,12 +82,12 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
     zbArr.map(zbCode => {
       // 调用 selectDataFromArr 并处理返回的数据
       // 截取不包含title的字段作为name
-      cname = selectDataFromArr(returnData, zbCode, 'cname')[0];
+      cname = selectDataFromArr(returnData, zbCode, 'cname', basicParams.dbCode)[0];
       for (let char of basicParams.exceptName) {
         cname = cname.replace(char, '');
       }
       name = cname + basicParams.unit;
-      valueArr = selectDataFromArr(returnData, zbCode, 'value');
+      valueArr = selectDataFromArr(returnData, zbCode, 'value', basicParams.dbCode);
       const seriesJson = { name: name, type: type, data: valueArr };
       seriesData.push(seriesJson)
     })
@@ -102,7 +102,7 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
       } else {
         name = result.cname
       }
-      valueArr = selectDataFromArr(returnData, zbArr[0], 'value', cityCode)
+      valueArr = selectDataFromArr(returnData, zbArr[0], 'value', basicParams.dbCode, cityCode)
       const seriesJson = { name: name, type: type, data: valueArr };
       seriesData.push(seriesJson)
     })
@@ -141,7 +141,7 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
     },
     xAxis: {
       type: 'category',
-      data: returnData.sj[basicParams.sj].sort()
+      data: returnData.sj[basicParams.dbCode].sort()
     },
     yAxis: {
       ... (basicParams.min !== undefined && basicParams.min !== null ? { min: basicParams.min } : {}),

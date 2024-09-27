@@ -66,7 +66,7 @@ export default {
     },
     requestWithLocalJson() {
       // 读取本地人民收入数据
-      fetch('livingStandards.json')
+      fetch('nation.json')
         .then(response => response.json())
         .then(data => {
           console.log('读取本地数据人民收入数据:', data);
@@ -142,20 +142,20 @@ export default {
       let subtitle = ''
       switch (echrtId) {
         case this.EChartType_LivingStandards.IC:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人均收入数据', subtitle: '', exceptName: '居民可支配收入', unit: '(万元)', legendTop: '10%', gridTop: '30%', sj: '0' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人均收入数据', subtitle: '', exceptName: '居民可支配收入', unit: '(万元)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
           // A0A0101-居民人均可支配收入 A0A0103-居民人均可支配收入中位数 A0A0201-城镇居民人均可支配收入   
           // A0A0203-城镇居民人均可支配收入中位数 A0A0301-农村居民人均可支配收入 A0A0303-农村居民人均可支配收入中位数
           typeArr = ['A0A0101', 'A0A0103', 'A0A0201', 'A0A0203', 'A0A0301', 'A0A0303'];
           break;
         case this.EChartType_LivingStandards.EC:
           subtitle = '食品支出总额占个人消费支出总额的比重 \n 大于60%为贫穷 50%~60%为温饱\n 40%~50%为小康 30%~40%属于相对富裕\n 20%~30%为富足 20%以下为极其富裕 \n '
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '恩格尔系数', subtitle: subtitle, exceptName: '恩格尔系数', unit: '', legendTop: '27%', gridTop: '35%', sj: '0', min: '25', max: '35' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '恩格尔系数', subtitle: subtitle, exceptName: '恩格尔系数', unit: '', legendTop: '27%', gridTop: '35%', dbCode: 'nd', min: '25', max: '35' }
           // A0A0H01-居民恩格尔系数 A0A0H02-城镇居民恩格尔系数 A0A0H03-农村居民恩格尔系数  
           typeArr = ['A0A0H01', 'A0A0H02', 'A0A0H03'];
           break;
         case this.EChartType_LivingStandards.GC:
           subtitle = '衡量一个国家或地区居民收入差距的常用指标之一 \n 0.2-0.29表示指数等级低(比较平均) \n 0.3-0.39表示指数等级中(相对合理) \n 0.4-0.59表示指数等级高(差距较大) \n 0.6以上表示指数等级极高(差距悬殊) \n 0.4作为收入分配差距的“警戒线”'
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '基尼系数', subtitle: subtitle, exceptName: '基尼系数', unit: '', legendTop: '27%', gridTop: '35%', sj: '0', min: '0.4', max: '0.5' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '基尼系数', subtitle: subtitle, exceptName: '基尼系数', unit: '', legendTop: '27%', gridTop: '35%', dbCode: 'nd', min: '0.4', max: '0.5' }
           // A0A0G01-居民人均可支配收入基尼系数
           typeArr = ['A0A0G01'];
           break;

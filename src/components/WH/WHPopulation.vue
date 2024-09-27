@@ -92,7 +92,7 @@
         switch (echrtId) {
           case this.EChartType_Population_WH.PL:
             // A0201-年末户籍人口 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '年末户籍人口', subtitle: '', exceptName: '人口', unit: '(万人)', legendTop: '10%', gridTop: '30%', sj: '0' , min: '800', max: '1000'}
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '年末户籍人口', subtitle: '', exceptName: '人口', unit: '(万人)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' , min: '800', max: '1000'}
             typeArr = ['A0201'];
             break;
           default:

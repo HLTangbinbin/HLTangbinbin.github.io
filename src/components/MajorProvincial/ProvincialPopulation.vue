@@ -171,25 +171,26 @@
         let basicParams = {};
         let typeArr = [];
         let provinceCodeArr = [];
+
         switch (echrtId) {
           case this.EChartType_Population_Province.PP:
             // A0201-年末户籍人口 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '年末常住人口(万人)', subtitle: '', exceptName: '人口', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '年末常住人口(万人)', subtitle: '', exceptName: '人口', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A030101'];
             break;
         case this.EChartType_Population_Province.PRB:
             // A030201-出生率
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口出生率', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口出生率', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A030201'];
             break;
         case this.EChartType_Population_Province.PRD:
             // A030202-死亡率
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口死亡率', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口死亡率', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A030202'];
             break;
         case this.EChartType_Population_Province.PRI:
             // A030203-出生率
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口自然增长率', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口自然增长率', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A030203'];
             break;
           default:

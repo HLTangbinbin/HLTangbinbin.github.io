@@ -89,10 +89,11 @@
         let basicParams = {};
         let typeArr = [];
         let cityCodeArr = [];
+
         switch (echrtId) {
           case this.EChartType_Population_City.PL:
             // A0201-年末户籍人口 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '年末户籍人口(万人)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '年末户籍人口(万人)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A0201'];
             break;
           default:

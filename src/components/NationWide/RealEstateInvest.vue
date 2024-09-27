@@ -55,7 +55,7 @@ export default {
         },
         requestWithLocalJson() {
             // 读取本地房地产数据
-            fetch('realEstate_invest.json')
+            fetch('nation.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('读取本地数据房地产数据:', data);
@@ -124,12 +124,12 @@ export default {
             switch (echrtId) {
                 case this.EChartType_RealEstate_Invest.IY:
                     // A060A01-商品住宅销售面积_累计值 A060A03-商品住宅现房销售面积_累计值 A060A05-商品住宅期房销售面积_累计值
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产开发投资额', subtitle: '', exceptName: '房地产开发投资额', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产开发投资额', subtitle: '', exceptName: '房地产开发投资额', unit: '(亿元)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
                     typeArr = ['A051102', 'A051104'];
                     break;
                 case this.EChartType_RealEstate_Invest.IM:
                     // A060105-商品住宅投资额_累计值 A06010D-商品住宅现房投资额_累计值 A06010R-土地购置费投资额_累计值
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产投资累计值', subtitle: '', exceptName: '房地产_投资累计值', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '1' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产投资累计值', subtitle: '', exceptName: '房地产_投资累计值', unit: '(亿元)', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
                     typeArr = ['A060105', 'A06010D', 'A06010R'];
                     break;
                 default:

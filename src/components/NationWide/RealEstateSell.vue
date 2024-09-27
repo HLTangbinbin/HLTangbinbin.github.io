@@ -80,7 +80,7 @@ export default {
         },
         requestWithLocalJson() {
             // 读取本地房地产数据
-            fetch('realEstate_sell.json')
+            fetch('nation.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('读取本地数据房地产数据:', data);
@@ -176,22 +176,22 @@ export default {
             switch (echrtId) {
                 case this.EChartType_RealEstate.SAM:
                     // A060A01-商品住宅销售面积_累计值 A060A03-商品住宅现房销售面积_累计值 A060A05-商品住宅期房销售面积_累计值
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品住宅销售面积累计值', subtitle: '', exceptName: '销售面积_累计值', unit: '(万平方米)', legendTop: '10%', gridTop: '30%', sj: '1' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品住宅销售面积累计值', subtitle: '', exceptName: '销售面积_累计值', unit: '(万平方米)', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
                     typeArr = ['A060A01', 'A060A03', 'A060A05'];
                     break;
                 case this.EChartType_RealEstate.SM:
                     // A060B01-商品住宅销售额_累计值 A060B03-商品住宅现房销售额_累计值 A060B05-商品住宅期房销售额_累计值
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品住宅销售额累计值', subtitle: '', exceptName: '销售额_累计值', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '1' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品住宅销售额累计值', subtitle: '', exceptName: '销售额_累计值', unit: '(亿元)', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
                     typeArr = ['A060B01', 'A060B03', 'A060B05'];
                     break;
                 case this.EChartType_RealEstate.SAY:
                     // A051501-商品房销售面积 A051502-住宅商品房销售面积 A051503-别墅、高档公寓销售面积 A051504-办公楼商品房销售面积 A051505-商业营业用房销售面积
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品房销售面积', subtitle: '', exceptName: '销售面积', unit: '(万平方米)', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品房销售面积', subtitle: '', exceptName: '销售面积', unit: '(万平方米)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
                     typeArr = ['A051501', 'A051502', 'A051503', 'A051504', 'A051505'];
                     break;
                 case this.EChartType_RealEstate.SY:
                     // A051601-住宅商品房销售额 A051602-住宅商品房销售额 A051603-别墅、高档公寓销售额 A051604-办公楼销售额 A051605-商业营业用房销售额
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品房销售额', subtitle: '', exceptName: '销售额', unit: '(亿元)', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品房销售额', subtitle: '', exceptName: '销售额', unit: '(亿元)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
                     typeArr = ['A051601', 'A051602', 'A051603', 'A051604', 'A051605'];
                     break;
                 default:

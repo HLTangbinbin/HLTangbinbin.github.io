@@ -92,11 +92,12 @@ export default {
             let basicParams = {};
             let typeArr = []; 
             let cityCodeArr = [];
-            // 年度/月度数据
+
+            // 年度数据
             switch (echrtId) {
                 case this.EChartType_RealEstate_City.IY:
                     // A0303-房地产开发住宅投资额 
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产开发投资额(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产开发投资额(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
                     typeArr = ['A0303'];
                     break;
                 default:

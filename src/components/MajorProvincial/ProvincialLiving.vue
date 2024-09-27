@@ -94,7 +94,7 @@
         switch (echrtId) {
           case this.EChartType_Finance_Provincial.FDY:
             // A0A0101-居民人均可支配收入
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '居民人均可支配收入(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '居民人均可支配收入(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A0A0101'];
             break;
           default:

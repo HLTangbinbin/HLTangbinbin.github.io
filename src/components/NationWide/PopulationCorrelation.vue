@@ -65,7 +65,7 @@ export default {
     },
     requestWithLocalJson() {
       // 读取本地人口数据
-      fetch('population.json')
+      fetch('nation.json')
         .then(response => response.json())
         .then(data => {
           console.log('读取本地数据人口数据:', data);
@@ -146,18 +146,18 @@ export default {
         case this.EChartType_Population.PL:
           // A030101-总人口 A030102-男性 A030103-女性 A030104-城市 A030105-农村
           // A030302-0-14岁 A030303-15-64岁 A030304-65岁以上
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口数据', subtitle: '', exceptName: '人口', unit: '(万人)', legendTop: '10%', gridTop: '30%', sj: '0' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口数据', subtitle: '', exceptName: '人口', unit: '(万人)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
           typeArr = ['A030101', 'A030102', 'A030103', 'A030104', 'A030105', 'A030302', 'A030303', 'A030304'];
           break;
         case this.EChartType_Population.PR:
           // A030201-出生率 A030202-死亡率 A030203-自然增长率  
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口率', subtitle: '', exceptName: '人口', unit: '(%)', legendTop: '10%', gridTop: '20%', sj: '0' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口率', subtitle: '', exceptName: '人口', unit: '(%)', legendTop: '10%', gridTop: '20%', dbCode: 'nd' }
           typeArr = ['A030201', 'A030202', 'A030203'];
           break;
         case this.EChartType_Population.DC:
           // A030305-总抚养比 A030306-少儿抚养比 A030307-老年抚养比
           subtitle = '总体人口中非劳动年龄人口数与劳动年龄人口数之比\n 每100名劳动年龄人口负担多少名非劳动年龄人口'
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口抚养比', subtitle: subtitle, exceptName: '', unit: '(%)', legendTop: '20%', gridTop: '35%', sj: '0' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口抚养比', subtitle: subtitle, exceptName: '', unit: '(%)', legendTop: '20%', gridTop: '35%', dbCode: 'nd' }
           typeArr = ['A030305', 'A030306', 'A030307'];
           break;
         default:

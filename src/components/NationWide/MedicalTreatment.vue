@@ -67,7 +67,7 @@ export default {
         },
         requestWithLocalJson() {
             // 读取本地医疗数据
-            fetch('medical.json')
+            fetch('nation.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('读取本地数据医疗数据:', data);
@@ -147,17 +147,17 @@ export default {
             switch (echrtId) {
                 case this.EChartType_Medical.AG:
                     // A0O0101-医疗卫生机构数 A0O0102-医院数 A0O0106-基层医疗卫生机构   
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗卫生机构数', subtitle: '', exceptName: '数', unit: '(个)', legendTop: '10%', gridTop: '20%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗卫生机构数', subtitle: '', exceptName: '数', unit: '(个)', legendTop: '10%', gridTop: '20%', dbCode: 'nd'}
                     typeArr = ['A0O0101', 'A0O0102', 'A0O0106'];
                     break;
                 case this.EChartType_Medical.OF:
                     // A0O0201-卫生人员数 A0O0202-卫生技术人员数 A0O0204-执业医师数 A0O0205-注册护士数   
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗卫生人员数', subtitle: '', exceptName: '数', unit: '(万人)', legendTop: '10%', gridTop: '20%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗卫生人员数', subtitle: '', exceptName: '数', unit: '(万人)', legendTop: '10%', gridTop: '20%', dbCode: 'nd' }
                     typeArr = ['A0O0201', 'A0O0202', 'A0O0204', 'A0O0205'];
                     break;
                 case this.EChartType_Medical.BD:
                     // A0O0501-卫生机构床位数 A0O0502-医院床位数 A0O0506-基层医疗卫生机构床位数
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗卫生机构床位数', subtitle: '', exceptName: '床位数', unit: '(万张)', legendTop: '10%', gridTop: '20%', sj: '0' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '医疗卫生机构床位数', subtitle: '', exceptName: '床位数', unit: '(万张)', legendTop: '10%', gridTop: '20%', dbCode: 'nd' }
                     typeArr = ['A0O0501', 'A0O0502', 'A0O0506'];
                     break;
                 default:

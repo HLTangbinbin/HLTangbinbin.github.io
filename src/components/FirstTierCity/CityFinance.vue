@@ -148,17 +148,17 @@
         switch (echrtId) {
           case this.EChartType_Finance_City.FIY:
             // A0401-地方一般公共预算收入 A0402-地方一般公共预算支出 A0403-住户存款余额 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政收入(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政收入(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A0401'];
             break;
           case this.EChartType_Finance_City.FOY:
             // A0401-地方一般公共预算收入 A0402-地方一般公共预算支出 A0403-住户存款余额 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政支出(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政支出(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A0402'];
             break;
           case this.EChartType_Finance_City.FDY:
             // A0401-地方一般公共预算收入 A0402-地方一般公共预算支出 A0403-住户存款余额 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住户存款余额(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', sj: '0' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '住户存款余额(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A0403'];
             break;
           default:
