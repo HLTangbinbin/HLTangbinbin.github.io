@@ -29,12 +29,12 @@ export function sortYearMonths(date1, date2) {
   return compareYearMonth(date1, date2);
 }
 // //按照年份与日期做筛选与排序
-export function selectDataFromArr(returnData, zbCode, fieldKey, dbCode = 'nd', cityCode = '') {
-  const filteredData = returnData.dataList[dbCode]
+export function selectDataFromArr(returnData, zbCode, cname, fieldKey, dbCode = 'nd', cityCode = '') {
+  const filteredData = returnData.dataList.data[dbCode]
     .filter(returnDataObj => {
       // 首先筛选出符合指标代码的数据
       if (cityCode == '') {
-        return returnDataObj.code.search(zbCode) !== -1;
+        return returnDataObj.code.search(zbCode) !== -1
       } else {
         return returnDataObj.code.search(zbCode) !== -1 && returnDataObj.cityCode.search(cityCode) !== -1;
       }
@@ -82,12 +82,12 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
     zbArr.map(zbCode => {
       // 调用 selectDataFromArr 并处理返回的数据
       // 截取不包含title的字段作为name
-      cname = selectDataFromArr(returnData, zbCode, 'cname', basicParams.dbCode)[0];
+      cname = selectDataFromArr(returnData, zbCode, basicParams.exceptName, 'cname', basicParams.dbCode)[0];
       for (let char of basicParams.exceptName) {
         cname = cname.replace(char, '');
       }
       name = cname + basicParams.unit;
-      valueArr = selectDataFromArr(returnData, zbCode, 'value', basicParams.dbCode);
+      valueArr = selectDataFromArr(returnData, zbCode, basicParams.exceptName, 'value', basicParams.dbCode);
       const seriesJson = { name: name, type: type, data: valueArr };
       seriesData.push(seriesJson)
     })
@@ -95,14 +95,14 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
     // 循环查询某个城市的数据--此时的zbArr只会有一个值
     cityCodeArr.map(cityCode => {
       // 对于城市来说，图标的legent的name取城市名字就行
-      const result = returnData.reg.filter(item => item.code == cityCode)[0]
+      const result = returnData.dataList.reg.filter(item => item.code == cityCode)[0]
       if (result == undefined) {
         // 防止result为空
         name = ''
       } else {
         name = result.cname
       }
-      valueArr = selectDataFromArr(returnData, zbArr[0], 'value', basicParams.dbCode, cityCode)
+      valueArr = selectDataFromArr(returnData, zbArr[0], basicParams.exceptName,'value', basicParams.dbCode, cityCode)
       const seriesJson = { name: name, type: type, data: valueArr };
       seriesData.push(seriesJson)
     })
@@ -141,7 +141,7 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
     },
     xAxis: {
       type: 'category',
-      data: returnData.sj[basicParams.dbCode].sort()
+      data: returnData.dataList.sj[basicParams.dbCode].sort()
     },
     yAxis: {
       ... (basicParams.min !== undefined && basicParams.min !== null ? { min: basicParams.min } : {}),
