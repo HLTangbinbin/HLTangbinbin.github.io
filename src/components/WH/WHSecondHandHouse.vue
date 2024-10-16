@@ -37,7 +37,7 @@
     methods: {
       loadData() {
         // 读取本地的 JSON 文件
-        fetch('houseTradingInfo.json')
+        fetch('whhouseTradingInfo.json')
           .then(response => response.json())
           .then(data => {
             console.log('读取本地数据二手房数据:', data.houseList);

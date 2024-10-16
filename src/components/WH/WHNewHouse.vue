@@ -56,7 +56,7 @@
       
       loadData() {
         // 读取本地的 JSON 文件
-        fetch('house.json')
+        fetch('whnewhouse.json')
           .then(response => response.json())
           .then(data => {
             console.log('读取本地数据新房数据:', data.houseList);
