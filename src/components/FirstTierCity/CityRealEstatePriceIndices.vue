@@ -55,7 +55,7 @@ export default {
         },
         requestWithLocalJson() {
             // 本地cityHouse数据
-            fetch('city.json')
+            fetch('json/city.json')
                 .then(response => response.json())
                 .then(data => {
                     this.returnData = data

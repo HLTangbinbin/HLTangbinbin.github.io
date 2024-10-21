@@ -54,7 +54,7 @@ export default {
     },
     requestWithLocalJson() {
       // 读取本地指数数据
-      fetch('nation.json')
+      fetch('json/nation.json')
         .then(response => response.json())
         .then(data => {
           console.log('读取本地数据指数数据:', data);

@@ -67,7 +67,7 @@ export default {
         },
         requestWithLocalJson() {
             // 读取本地医疗数据
-            fetch('nation.json')
+            fetch('json/nation.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('读取本地数据医疗数据:', data);

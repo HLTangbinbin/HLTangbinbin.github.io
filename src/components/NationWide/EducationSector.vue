@@ -67,7 +67,7 @@ export default {
         },
         requestWithLocalJson() {
             // 读取本地教育公开数据
-            fetch('nation.json')
+            fetch('json/nation.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('读取本地数据教育数据:', data);

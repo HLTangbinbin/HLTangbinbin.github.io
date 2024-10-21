@@ -80,7 +80,7 @@ export default {
         },
         requestWithLocalJson() {
             // 读取本地房地产数据
-            fetch('nation.json')
+            fetch('json/nation.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('读取本地数据房地产数据:', data);

@@ -52,6 +52,7 @@ import EducationSector from '../components/NationWide/EducationSector.vue';
 import MedicalTreatment from '../components/NationWide/MedicalTreatment.vue';
 import IndicesData from '../components/NationWide/IndicesData.vue';
 import LivingStandards from '../components/NationWide/LivingStandards.vue';
+import ProvidentFund from '../components/NationWide/ProvidentFund.vue';
 
 
 
@@ -171,6 +172,7 @@ const routes = [
       { path: 'MedicalTreatment', component: MedicalTreatment },
       { path: 'IndicesData', component: IndicesData },
       { path: 'LivingStandards', component: LivingStandards },
+      { path: 'ProvidentFund', component: ProvidentFund },
     ]
   },
   

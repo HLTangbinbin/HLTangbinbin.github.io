@@ -42,7 +42,7 @@
       },
       requestWithLocalJson() {
         // 读取本地人口数据
-        fetch('city.json')
+        fetch('json/city.json')
           .then(response => response.json())
           .then(data => {
             console.log('读取本地数据人口数据:', data);

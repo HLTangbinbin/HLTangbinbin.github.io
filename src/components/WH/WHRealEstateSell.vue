@@ -58,7 +58,7 @@ export default {
         },
         requestWithLocalJson() {
             // 读取本地房地产数据
-            fetch('wh.json')
+            fetch('json/wh.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('读取本地数据房地产数据:', data);
