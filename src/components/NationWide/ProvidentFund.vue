@@ -13,7 +13,7 @@
   </template>
   
   <script>
-  import Hammer from 'hammerjs'; // 引入 Hammer.js
+
   
   export default {
     data() {
@@ -30,23 +30,7 @@
         },
       };
     },
-    mounted() {
-      const imageElement = this.$refs.image; // 获取图片元素
-      const hammer = new Hammer(imageElement); // 创建 Hammer 实例
-      hammer.get('pinch').set({ enable: true }); // 启用捏合手势
-  
-      hammer.on('pinchmove', (e) => {
-        const newScale = Math.max(0.5, Math.min(this.currentScale * e.scale, 3)); // 限制缩放范围 0.5-3 倍
-        if (newScale !== this.currentScale) {
-          this.currentScale = newScale;
-          this.updateImageStyle(); // 更新样式
-        }
-      });
-  
-      hammer.on('pinchend', () => {
-        hammer.get('pinch').manager.stop(); // 重置手势状态
-      });
-    },
+
     methods: {
       onImageLoad(event) {
         const img = event.target;
@@ -80,7 +64,7 @@
         padding-top: 50px;
         padding-bottom: 50px;
         overflow: hidden;
-        touch-action: none;
+        touch-action: auto; /* 完全允许滚动和手势 */
     }
 
     /* 大屏幕设置 */
