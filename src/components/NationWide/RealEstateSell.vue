@@ -1,13 +1,5 @@
 <template>
     <div class="container">
-        <div class="buttons">
-            <button class="button" :class="{ 'is-active': isBarActive_SalesArea_Month }"
-                @click="drawBarChart_SalesArea_Month" style="margin-top: 50px;">柱状图</button>
-            <button class="button" :class="{ 'is-active': isLineActive_SalesArea_Month }"
-                @click="drawLineChart_SalesArea_Month" style="margin-top: 50px;">折线图</button>
-        </div>
-        <div class="chart-container" id="salesarea-month"></div>
-
         <!-- 为下方的按钮添加上边距 style="margin-top -->
         <div class="buttons">
             <button class="button" :class="{ 'is-active': isBarActive_Sales_Month }" @click="drawBarChart_Sales_Month"
@@ -16,6 +8,32 @@
                 style="margin-top: 50px;">折线图</button>
         </div>
         <div class="chart-container" id="sales-month"></div>
+
+        <div class="buttons">
+            <button class="button" :class="{ 'is-active': isBarActive_Sales_Rise_Month }" @click="drawBarChart_Sales_Rise_Month"
+                style="margin-top: 50px;">柱状图</button>
+            <button class="button" :class="{ 'is-active': isLineActive_Sales_Rise_Month }" @click="drawLineChart_Sales_Rise_Month"
+                style="margin-top: 50px;">折线图</button>
+        </div>
+        <div class="chart-container" id="sales-rise-month"></div>
+
+        <div class="buttons">
+            <button class="button" :class="{ 'is-active': isBarActive_SalesArea_Month }"
+                @click="drawBarChart_SalesArea_Month" style="margin-top: 50px;">柱状图</button>
+            <button class="button" :class="{ 'is-active': isLineActive_SalesArea_Month }"
+                @click="drawLineChart_SalesArea_Month" style="margin-top: 50px;">折线图</button>
+        </div>
+        <div class="chart-container" id="salesarea-month"></div>
+
+        <div class="buttons">
+            <button class="button" :class="{ 'is-active': isBarActive_SalesArea_Rise_Month }"
+                @click="drawBarChart_SalesArea_Rise_Month" style="margin-top: 50px;">柱状图</button>
+            <button class="button" :class="{ 'is-active': isLineActive_SalesArea_Rise_Month }"
+                @click="drawLineChart_SalesArea_Rise_Month" style="margin-top: 50px;">折线图</button>
+        </div>
+        <div class="chart-container" id="salesarea-rise-month"></div>
+
+
 
         <!-- 为下方的按钮添加上边距 style="margin-top -->
         <div class="buttons">
@@ -48,20 +66,27 @@ export default {
     data() {
         return {
             EChartType_RealEstate: {
-                SAM: 'salesarea-month',
                 SM: 'sales-month',
+                SRM: 'sales-rise-month',
+                SAM: 'salesarea-month',
+                SARM: 'salesarea-rise-month',
                 SAY: 'salesarea-year',
                 SY: 'sales-year'
             },
 
             isBarActive_SalesArea_Month: false,
             isLineActive_SalesArea_Month: false,
+            isBarActive_SalesArea_Rise_Month: false,
+            isLineActive_SalesArea_Rise_Month: false,
+            isBarActive_Sales_Month: false,
+            isLineActive_Sales_Month: false,
+            isBarActive_Sales_Rise_Month: false,
+            isLineActive_Sales_Rise_Month: false,
             isBarActive_SalesArea_Year: false,
             isLineActive_SalesArea_Year: false,
             isBarActive_Sales_Year: false,
             isLineActive_Sales_Year: false,
-            isBarActive_Sales_Month: false,
-            isLineActive_Sales_Month: false,
+
             returnData: null,
             chartType: null
         };
@@ -104,12 +129,42 @@ export default {
         },
         drawChartWithBtn() {
             if (this.returnData) {
-                this.drawBarChart_SalesArea_Month()
                 this.drawBarChart_Sales_Month()
+                this.drawBarChart_Sales_Rise_Month()
+                this.drawBarChart_SalesArea_Month()
+                this.drawBarChart_SalesArea_Rise_Month()
                 this.drawBarChart_SalesArea_Year()
                 this.drawBarChart_Sales_Year()
 
             }
+        },
+        drawBarChart_Sales_Month() {
+            this.isBarActive_Sales_Month = true;
+            this.isLineActive_Sales_Month = false;
+            this.chartType = "bar"
+            this.drawChartWithParams(this.EChartType_RealEstate.SM)
+
+        },
+        drawLineChart_Sales_Month() {
+            this.isBarActive_Sales_Month = false;
+            this.isLineActive_Sales_Month = true;
+            // 在这里绘制折线图
+            this.chartType = "line"
+            this.drawChartWithParams(this.EChartType_RealEstate.SM)
+        },
+        drawBarChart_Sales_Rise_Month() {
+            this.isBarActive_Sales_Rise_Month = true;
+            this.isLineActive_Sales_Rise_Month = false;
+            this.chartType = "bar"
+            this.drawChartWithParams(this.EChartType_RealEstate.SRM)
+
+        },
+        drawLineChart_Sales_Rise_Month() {
+            this.isBarActive_Sales_Rise_Month = false;
+            this.isLineActive_Sales_Rise_Month = true;
+            // 在这里绘制折线图
+            this.chartType = "line"
+            this.drawChartWithParams(this.EChartType_RealEstate.SRM)
         },
         drawBarChart_SalesArea_Month() {
             this.isBarActive_SalesArea_Month = true;
@@ -125,19 +180,19 @@ export default {
             this.chartType = "line"
             this.drawChartWithParams(this.EChartType_RealEstate.SAM)
         },
-        drawBarChart_Sales_Month() {
-            this.isBarActive_Sales_Month = true;
-            this.isLineActive_Sales_Month = false;
+        drawBarChart_SalesArea_Rise_Month() {
+            this.isBarActive_SalesArea_Rise_Month = true;
+            this.isLineActive_SalesArea_Rise_Month = false;
             this.chartType = "bar"
-            this.drawChartWithParams(this.EChartType_RealEstate.SM)
+            this.drawChartWithParams(this.EChartType_RealEstate.SARM)
 
         },
-        drawLineChart_Sales_Month() {
-            this.isBarActive_Sales_Month = false;
-            this.isLineActive_Sales_Month = true;
+        drawLineChart_SalesArea_Rise_Month() {
+            this.isBarActive_SalesArea_Rise_Month = false;
+            this.isLineActive_SalesArea_Rise_Month = true;
             // 在这里绘制折线图
             this.chartType = "line"
-            this.drawChartWithParams(this.EChartType_RealEstate.SM)
+            this.drawChartWithParams(this.EChartType_RealEstate.SARM)
         },
         drawBarChart_SalesArea_Year() {
             this.isBarActive_SalesArea_Year = true;
@@ -174,15 +229,25 @@ export default {
             let typeArr = [];
             // 年度数据
             switch (echrtId) {
+                case this.EChartType_RealEstate.SM:
+                    // A060B01-商品住宅销售额_累计值 A060B03-商品住宅现房销售额_累计值 A060B05-商品住宅期房销售额_累计值
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品住宅销售额累计值', subtitle: '', exceptName: '销售额_累计值', unit: '(亿元)', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
+                    typeArr = ['A060B01', 'A060B03', 'A060B05'];
+                    break;
+                case this.EChartType_RealEstate.SRM:
+                    // A060B02-商品住宅销售额_累计增长 A060B04-商品住宅现房销售额_累计增长 A060B06-商品住宅期房销售额_累计增长
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品住宅销售额累计增长', subtitle: '', exceptName: '商品住宅销售额_累计增长', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
+                    typeArr = ['A060B02', 'A060B04', 'A060B06'];
+                    break;
                 case this.EChartType_RealEstate.SAM:
                     // A060A01-商品住宅销售面积_累计值 A060A03-商品住宅现房销售面积_累计值 A060A05-商品住宅期房销售面积_累计值
                     basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品住宅销售面积累计值', subtitle: '', exceptName: '销售面积_累计值', unit: '(万平方米)', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
                     typeArr = ['A060A01', 'A060A03', 'A060A05'];
                     break;
-                case this.EChartType_RealEstate.SM:
-                    // A060B01-商品住宅销售额_累计值 A060B03-商品住宅现房销售额_累计值 A060B05-商品住宅期房销售额_累计值
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品住宅销售额累计值', subtitle: '', exceptName: '销售额_累计值', unit: '(亿元)', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
-                    typeArr = ['A060B01', 'A060B03', 'A060B05'];
+                case this.EChartType_RealEstate.SARM:
+                    // A060A02-商品住宅销售面积_累计增长 A060A04-商品住宅现房销售面积_累计增长 A060A06-商品住宅期房销售面积_累计增长
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '商品住宅销售面积累计增长', subtitle: '', exceptName: '商品住宅销售面积_累计增长', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
+                    typeArr = ['A060A02', 'A060A04', 'A060A06'];
                     break;
                 case this.EChartType_RealEstate.SAY:
                     // A051501-商品房销售面积 A051502-住宅商品房销售面积 A051503-别墅、高档公寓销售面积 A051504-办公楼商品房销售面积 A051505-商业营业用房销售面积

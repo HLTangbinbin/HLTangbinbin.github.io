@@ -8,6 +8,14 @@
         </div>
         <div class="chart-container" id="investment-month"></div>
 
+        <div class="buttons">
+            <button class="button" :class="{ 'is-active': isBarActive_Investment_Rise_Month }"
+                @click="drawBarChart_Investment_Rise_Month" style="margin-top: 50px;">柱状图</button>
+            <button class="button" :class="{ 'is-active': isLineActive_Investment_Rise_Month }"
+                @click="drawLineChart_Investment_Rise_Month" style="margin-top: 50px;">折线图</button>
+        </div>
+        <div class="chart-container" id="investment-rise-month"></div>
+
         <!-- 为下方的按钮添加上边距 style="margin-top -->
         <div class="buttons">
             <button class="button" :class="{ 'is-active': isBarActive_Investment_Year }"
@@ -29,11 +37,14 @@ export default {
         return {
             EChartType_RealEstate_Invest: {
                 IM: 'investment-month',
+                IRM: 'investment-rise-month',
                 IY: 'investment-year',
             },
 
             isBarActive_Investment_Month: false,
             isLineActive_Investment_Month: false,
+            isBarActive_Investment_Rise_Month: false,
+            isLineActive_Investment_Rise_Month: false,
             isBarActive_Investment_Year: false,
             isLineActive_Investment_Year: false,
 
@@ -80,6 +91,7 @@ export default {
         drawChartWithBtn() {
             if (this.returnData) {
                 this.drawBarChart_Investment_Month()
+                this.drawBarChart_Investment_Rise_Month()
                 this.drawBarChart_Investment_Year()
 
             }
@@ -98,7 +110,20 @@ export default {
             this.chartType = "line"
             this.drawChartWithParams(this.EChartType_RealEstate_Invest.IM)
         },
+        drawBarChart_Investment_Rise_Month() {
+            this.isBarActive_Investment_Rise_Month = true;
+            this.isLineActive_Investment_Rise_Month = false;
+            this.chartType = "bar"
+            this.drawChartWithParams(this.EChartType_RealEstate_Invest.IRM)
 
+        },
+        drawLineChart_Investment_Rise_Month() {
+            this.isBarActive_Investment_Rise_Month = false;
+            this.isLineActive_Investment_Rise_Month = true;
+            // 在这里绘制折线图
+            this.chartType = "line"
+            this.drawChartWithParams(this.EChartType_RealEstate_Invest.IRM)
+        },
         drawBarChart_Investment_Year() {
             this.isBarActive_Investment_Year = true;
             this.isLineActive_Investment_Year = false;
@@ -123,7 +148,7 @@ export default {
             // 年度/月度数据
             switch (echrtId) {
                 case this.EChartType_RealEstate_Invest.IY:
-                    // A060A01-商品住宅销售面积_累计值 A060A03-商品住宅现房销售面积_累计值 A060A05-商品住宅期房销售面积_累计值
+                    // A051102-商品住宅宅投资额A051104-商品办公楼投资额
                     basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产开发投资额', subtitle: '', exceptName: '房地产开发投资额', unit: '(亿元)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
                     typeArr = ['A051102', 'A051104'];
                     break;
@@ -131,6 +156,11 @@ export default {
                     // A060105-商品住宅投资额_累计值 A06010D-商品住宅现房投资额_累计值 A06010R-土地购置费投资额_累计值
                     basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产投资累计值', subtitle: '', exceptName: '房地产_投资累计值', unit: '(亿元)', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
                     typeArr = ['A060105', 'A06010D', 'A06010R'];
+                    break;
+                case this.EChartType_RealEstate_Invest.IRM:
+                    // A060102-房地产投资_累计增长 A060106-房地产住宅投资_累计增长 A06010E-房地产办公楼投资_累计增长
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产投资_累计增长', subtitle: '', exceptName: '房地产投资_累计增长', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
+                    typeArr = ['A060102', 'A060106', 'A06010E'];
                     break;
                 default:
                     break;
