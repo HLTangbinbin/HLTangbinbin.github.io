@@ -6,9 +6,18 @@
       <button class="button" :class="{ 'is-active': isLineActive_Currency_Month }" @click="drawLineChart_Currency_Month"
         style="margin-top: 50px;">折线图</button>
     </div>
-
     <!-- 为下方的按钮添加上边距 style="margin-top -->
     <div class="chart-container" id="currency-month"></div>
+
+    <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_Currency_Rise_Month }" @click="drawBarChart_Currency_Rise_Month"
+        style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Currency_Rise_Month }" @click="drawLineChart_Currency_Rise_Month"
+        style="margin-top: 50px;">折线图</button>
+    </div>
+    <!-- 为下方的按钮添加上边距 style="margin-top -->
+    <div class="chart-container" id="currency-rise-month"></div>
+
     <div class="buttons">
       <button class="button" :class="{ 'is-active': isBarActive_Currency }" @click="drawBarChart_Currency"
         style="margin-top: 50px;">柱状图</button>
@@ -39,12 +48,15 @@ export default {
     return {
       EChartType_Currency: {
         CM: 'currency-month',
+        CRM: 'currency-rise-month',
         CY: 'currency-year',
         FC: 'foreigncurrency'
       },
 
       isBarActive_Currency_Month: false,
       isLineActive_Currency_Month: false,
+      isBarActive_Currency_Rise_Month: false,
+      isLineActive_Currency_Rise_Month: false,
       isBarActive_Currency: false,
       isLineActive_Currency: false,
       isBarActive_ForeignCurrency: false,
@@ -92,6 +104,7 @@ export default {
     drawChartWithBtn() {
       if (this.returnData) {
         this.drawBarChart_Currency_Month();
+        this.drawBarChart_Currency_Rise_Month();
         this.drawBarChart_Currency();
         this.drawBarChart_ForeignCurrency();
       }
@@ -110,6 +123,21 @@ export default {
       // 在这里绘制折线图
       this.chartType = "line"
       this.drawChartWithParams(this.EChartType_Currency.CM)
+    },
+
+    drawBarChart_Currency_Rise_Month() {
+      this.isBarActive_Currency_Rise_Month = true;
+      this.isLineActive_Currency_Rise_Month = false;
+      // 在这里绘制柱状图
+      this.chartType = "bar"
+      this.drawChartWithParams(this.EChartType_Currency.CRM)
+    },
+    drawLineChart_Currency_Rise_Month() {
+      this.isBarActive_Currency_Rise_Month = false;
+      this.isLineActive_Currency_Rise_Month = true;
+      // 在这里绘制折线图
+      this.chartType = "line"
+      this.drawChartWithParams(this.EChartType_Currency.CRM)
     },
     drawBarChart_Currency() {
       this.isBarActive_Currency = true;
@@ -149,6 +177,11 @@ export default {
           basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货币供应量(万亿)', subtitle: '', exceptName: '供应量_期末值(万亿)', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'yd' }
           // A0D0101-货币(M2)供应量(亿元) A0D0103-货币(M1)供应量(亿元) A0D0105-货币(M0)供应量(亿元)    
           typeArr = ['A0D0105', 'A0D0103', 'A0D0101'];
+          break;
+        case this.EChartType_Currency.CRM:
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货币供应量同比增长(%)', subtitle: '', exceptName: '供应量_同比增长', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'yd' }
+          // A0D0102-货币(M2)供应量同比增长 A0D0104-货币(M1)供应量同比增长 A0D0106-货币(M0)供应量同比增长  
+          typeArr = ['A0D0102', 'A0D0104', 'A0D0106'];
           break;
         case this.EChartType_Currency.CY:
           subtitle = 'M0: 流通中的现金; \n M1: M0+企业活期存款; \n M2: M1+企业单位定期存款+城乡居民储蓄存款;'

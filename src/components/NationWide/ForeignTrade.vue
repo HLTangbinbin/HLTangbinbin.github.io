@@ -8,6 +8,14 @@
         </div>
         <div class="chart-container" id="importandexport-month"></div>
 
+        <div class="buttons">
+            <button class="button" :class="{ 'is-active': isBarActive_ImportAndExport_Rise_Month }"
+                @click="drawBarChart_ImportAndExport_Rise_Month" style="margin-top: 50px;">柱状图</button>
+            <button class="button" :class="{ 'is-active': isLineActive_ImportAndExport_Rise_Month }"
+                @click="drawLineChart_ImportAndExport_Rise_Month" style="margin-top: 50px;">折线图</button>
+        </div>
+        <div class="chart-container" id="importandexport-rise-month"></div>
+
         <!-- 为下方的按钮添加上边距 style="margin-top -->
         <div class="buttons">
             <button class="button" :class="{ 'is-active': isBarActive_ImportAndExport }"
@@ -47,12 +55,15 @@ export default {
         return {
             EChartType_ForeignTrade: {
                 IEM: 'importandexport-month',
+                IERM: 'importandexport-rise-month',
                 IEY: 'importandexport-year',
                 EX: 'export',
                 IM: 'import',
             },
             isBarActive_ImportAndExport_Month: false,
             isLineActive_ImportAndExport_Month: false,
+            isBarActive_ImportAndExport_Rise_Month: false,
+            isLineActive_ImportAndExport_Rise_Month: false,
             isBarActive_ImportAndExport: false,
             isLineActive_ImportAndExport: false,
             isBarActive_Import: false,
@@ -102,6 +113,7 @@ export default {
         drawChartWithBtn() {
             if (this.returnData) {
                 this.drawBarChart_ImportAndExport_Month()
+                this.drawBarChart_ImportAndExport_Rise_Month()
                 this.drawBarChart_ImportAndExport()
                 this.drawBarChart_Export()
                 this.drawBarChart_Import()
@@ -120,6 +132,20 @@ export default {
             // 在这里绘制折线图
             this.chartType = "line"
             this.drawChartWithParams(this.EChartType_ForeignTrade.IEM)
+        },
+        drawBarChart_ImportAndExport_Rise_Month() {
+            this.isBarActive_ImportAndExport_Rise_Month = true;
+            this.isLineActive_ImportAndExport_Rise_Month = false;
+            this.chartType = "bar"
+            this.drawChartWithParams(this.EChartType_ForeignTrade.IERM)
+
+        },
+        drawLineChart_ImportAndExport_Rise_Month() {
+            this.isBarActive_ImportAndExport_Rise_Month = false;
+            this.isLineActive_ImportAndExport_Rise_Month = true;
+            // 在这里绘制折线图
+            this.chartType = "line"
+            this.drawChartWithParams(this.EChartType_ForeignTrade.IERM)
         },
         drawBarChart_ImportAndExport() {
             this.isBarActive_ImportAndExport = true;
@@ -171,6 +197,11 @@ export default {
                     // A080101-进出口总额 A080105-出口总额(美元) A080109-进口总额(美元) A08010D-进出口差额(美元)    
                     basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货物进出口总额(百万美元)', subtitle: '', exceptName: '_当期值', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'yd' }
                     typeArr = ['A080101', 'A080105', 'A080109', 'A08010D'];
+                    break;
+                case this.EChartType_ForeignTrade.IERM:
+                    // A080102-进出口总值_同比增长 A080104-进出口总值_累计增长 A080106-出口总值_同比增长 A080108-出口总值_累计增长 A08010A-进口总值_同比增长  A08010C-进口总值_累计增长     
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货物进出口增长(%)', subtitle: '', exceptName: '总值增长', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'yd' }
+                    typeArr = ['A080102', 'A080104', 'A080106', 'A080108', 'A08010A', 'A08010C'];
                     break;
                 case this.EChartType_ForeignTrade.IEY:
                     // A060105-进出口总额 A060106-出口总额(美元) A060107-进口总额(美元) A060108-进出口差额(美元)    

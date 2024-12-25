@@ -7,6 +7,15 @@
         style="margin-top: 50px;">折线图</button>
     </div>
     <div class="chart-container" id="finance-month"></div>
+
+    <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_Finance_Rise_Month }" @click="drawBarChart_Finance_Rise_Month"
+        style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Finance_Rise_Month }" @click="drawLineChart_Finance_Rise_Month"
+        style="margin-top: 50px;">折线图</button>
+    </div>
+    <div class="chart-container" id="finance-rise-month"></div>
+
     <!-- 为下方的按钮添加上边距 style="margin-top -->
     <div class="buttons">
       <button class="button" :class="{ 'is-active': isBarActive_Finance }" @click="drawBarChart_Finance"
@@ -46,12 +55,15 @@ export default {
     return {
       EChartType_NationalFinance: {
         FM: 'finance-month',
+        FRM: 'finance-rise-month',
         FY: 'finance-year',
         FR: 'fiscalrevenue',
         FE: 'fiscalexpenditure'
       },
 
       isBarActive_Finance_Month: false,
+      isLineActive_Finance_Rise_Month: false,
+      isBarActive_Finance_Rise_Month: false,
       isLineActive_Finance_Month: false,
       isBarActive_Finance: false,
       isLineActive_Finance: false,
@@ -102,6 +114,7 @@ export default {
     drawChartWithBtn() {
       if (this.returnData) {
         this.drawBarChart_Finance_Month()
+        this.drawBarChart_Finance_Rise_Month()
         this.drawBarChart_Finance()
         this.drawBarChart_FiscalRevenue()
         this.drawBarChart_FiscalExpenditure()
@@ -120,6 +133,20 @@ export default {
       // 在这里绘制折线图
       this.chartType = "line"
       this.drawChartWithParams(this.EChartType_NationalFinance.FM)
+    },
+    drawBarChart_Finance_Rise_Month() {
+      this.isBarActive_Finance_Rise_Month = true;
+      this.isLineActive_Finance_Rise_Month = false;
+      this.chartType = "bar"
+      this.drawChartWithParams(this.EChartType_NationalFinance.FRM)
+
+    },
+    drawLineChart_Finance_Rise_Month() {
+      this.isBarActive_Finance_Rise_Month = false;
+      this.isLineActive_Finance_Rise_Month = true;
+      // 在这里绘制折线图
+      this.chartType = "line"
+      this.drawChartWithParams(this.EChartType_NationalFinance.FRM)
     },
     drawBarChart_Finance() {
       this.isBarActive_Finance = true;
@@ -173,6 +200,11 @@ export default {
           // A0C0102-国家财政收入 A0C0202-国家财政支出  
           basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国家财政收支累计值(亿元)', subtitle: '', exceptName: '国家财政(不含债务还本)_累计值', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
           typeArr = ['A0C0102', 'A0C0202'];
+          break;
+        case this.EChartType_NationalFinance.FRM:
+          // A0C0103-国家财政收入累计增长 A0C0203-国家财政支出累计增长  
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国家财政收支累计增长(%)', subtitle: '', exceptName: '国家财政(不含债务还本)_累计增长', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
+          typeArr = ['A0C0103', 'A0C0203'];
           break;
         case this.EChartType_NationalFinance.FY:
           // A080201-全国财政收入 A080202-中央财政收入 A080203-地方财政收入 A080301-全国财政收入  A080302-中央财政收入  A080303-地方财政收入
