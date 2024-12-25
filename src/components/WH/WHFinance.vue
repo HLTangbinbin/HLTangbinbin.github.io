@@ -93,7 +93,7 @@
         switch (echrtId) {
           case this.EChartType_NationalFinance_WH.FY:
             // A0401-地方一般公共预算收入 A0402-地方一般公共预算支出 A0403-住户存款余额 
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政', subtitle: '', exceptName: '地方一般公共预算', unit: '(亿元)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '地方财政(亿元)', subtitle: '', exceptName: '地方一般公共预算', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
             typeArr = ['A0401', 'A0402', 'A0403'];
             break;
           default:

@@ -104,7 +104,7 @@ export default {
             switch (echrtId) {
                 case this.EChartType_RealEstate_WH.IY:
                     // A0302-房地产开发投资额 A0303-房地产开发住宅投资额 A0304-地产开发办公楼投资额
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产开发投资额', subtitle: '', exceptName: '房地产开发投资额', unit: '(亿元)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产开发投资额(亿元)', subtitle: '', exceptName: '房地产开发投资额', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
                     typeArr = ['A0302', 'A0303', 'A0304'];
                     break;
                 default:

@@ -139,19 +139,19 @@ export default {
                 case this.EChartType_Education.ZS:
                     // A0M020119-学前招生数 A0M020111-普通小学招生数 A0M02010U-初中学校招生数
                     // A0M02010I-普通高中招生数 A0M020105-普通本专科学校招生数 A0M020102-研究生招生数
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '招生数', subtitle: '', exceptName: '招生数', unit: '(万人)', dbCode: 'nd' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '招生数(万人)', subtitle: '', exceptName: '招生数', unit: '', dbCode: 'nd' }
                     typeArr = ['A0M020119', 'A0M020111', 'A0M02010U', 'A0M02010I', 'A0M020105', 'A0M020102'];
                     break;
                 case this.EChartType_Education.ZX:
                     // A0M02021A-学前在校学生数 A0M020212-普通小学在校学生数 A0M02020V-初中学校在校学生数
                     // A0M02030J-普通高中在校学生数 A0M020205-普通本专科学校在校学生数 A0M020202-研究生在校学生数
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '在校学生数', subtitle: '', exceptName: '在校学生数', unit: '(万人)',dbCode: 'nd' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '在校学生数(万人)', subtitle: '', exceptName: '在校学生数', unit: '',dbCode: 'nd' }
                     typeArr = ['A0M02021A', 'A0M020212', 'A0M02020V', 'A0M02020J', 'A0M020205', 'A0M020202'];
                     break;
                 case this.EChartType_Education.BY:
                     // A0M02031A-学前毕业生数 A0M020312-普通小学毕业生数 A0M02030V-初中学校毕业生数
                     // A0M02030J-普通高中毕业生数 A0M020305-普通高本专科学校毕业生数 A0M020302-研究生毕业生数
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '毕业生数', subtitle: '', exceptName: '毕业生数', unit: '(万人)', dbCode: 'nd' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '毕业生数(万人)', subtitle: '', exceptName: '毕业生数', unit: '', dbCode: 'nd' }
                     typeArr = ['A0M02031A', 'A0M020312', 'A0M02030V', 'A0M02030J', 'A0M020305', 'A0M020302'];
                     break;
                 default:

@@ -85,6 +85,9 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
       cname = selectDataFromArr(returnData, zbCode, basicParams.exceptName, 'cname', basicParams.dbCode)[0];
       for (let char of basicParams.exceptName) {
         cname = cname.replace(char, '');
+        if (cname == '') {
+          cname = '总的'
+        }
       }
       name = cname + basicParams.unit;
       valueArr = selectDataFromArr(returnData, zbCode, basicParams.exceptName, 'value', basicParams.dbCode);

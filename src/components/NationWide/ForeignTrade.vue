@@ -169,12 +169,12 @@ export default {
             switch (echrtId) {
                 case this.EChartType_ForeignTrade.IEM:
                     // A080101-进出口总额 A080105-出口总额(美元) A080109-进口总额(美元) A08010D-进出口差额(美元)    
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货物进出口总额', subtitle: '', exceptName: '_当期值', unit: '(百万美元)', legendTop: '10%', gridTop: '25%', dbCode: 'yd' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货物进出口总额(百万美元)', subtitle: '', exceptName: '_当期值', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'yd' }
                     typeArr = ['A080101', 'A080105', 'A080109', 'A08010D'];
                     break;
                 case this.EChartType_ForeignTrade.IEY:
                     // A060105-进出口总额 A060106-出口总额(美元) A060107-进口总额(美元) A060108-进出口差额(美元)    
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货物进出口总额', subtitle: '', exceptName: '(美元)', unit: '(百万美元)', legendTop: '10%', gridTop: '25%', dbCode: 'nd' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货物进出口总额(百万美元)', subtitle: '', exceptName: '(百万美元)', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'nd' }
                     typeArr = ['A060105', 'A060106', 'A060107', 'A060108'];
                     break;
                 case this.EChartType_ForeignTrade.EX:

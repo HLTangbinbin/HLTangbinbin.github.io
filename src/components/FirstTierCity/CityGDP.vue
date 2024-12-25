@@ -94,7 +94,7 @@
 
         switch (echrtId) {
           case this.EChartType_GDP_City.GW:
-            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '一线城市GDP(亿元)', subtitle: '', exceptName: '', unit: '(亿元)', legendTop: '10%', gridTop: '25%', dbCode: 'nd' }
+            basicParams = { echrtId: echrtId, chartType: this.chartType, title: '一线城市GDP(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'nd' }
             // A0101- 国内生产总值 A0102-第一产业增加值 A0103-第二产业增加值  A0104-第三产业增加值
             typeArr = ['A0101'];
             break;

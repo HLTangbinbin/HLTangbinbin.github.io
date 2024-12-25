@@ -124,7 +124,7 @@ export default {
             switch (echrtId) {
                 case this.EChartType_RealEstate_City.SAY:
                     // A030A-房地产销售面积
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产销售面积(万平方米)', subtitle: '', exceptName: '', unit: '(万平方米)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产销售面积(万平方米)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
                     typeArr = ['A030A'];
                     break;
                     case this.EChartType_RealEstate_City.SY:

@@ -146,18 +146,18 @@ export default {
       let subtitle = ''
       switch (echrtId) {
         case this.EChartType_Currency.CM:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货币供应量', subtitle: '', exceptName: '供应量_期末值', unit: '(万亿)', legendTop: '10%', gridTop: '25%', dbCode: 'yd' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货币供应量(万亿)', subtitle: '', exceptName: '供应量_期末值(万亿)', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'yd' }
           // A0D0101-货币(M2)供应量(亿元) A0D0103-货币(M1)供应量(亿元) A0D0105-货币(M0)供应量(亿元)    
           typeArr = ['A0D0105', 'A0D0103', 'A0D0101'];
           break;
         case this.EChartType_Currency.CY:
           subtitle = 'M0: 流通中的现金; \n M1: M0+企业活期存款; \n M2: M1+企业单位定期存款+城乡居民储蓄存款;'
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货币供应量', subtitle: subtitle, exceptName: '供应量', unit: '(万亿)', legendTop: '20%', gridTop: '35%', dbCode: 'nd' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '货币供应量(万亿)', subtitle: subtitle, exceptName: '供应量(万亿)', unit: '', legendTop: '20%', gridTop: '35%', dbCode: 'nd' }
           // A0L0301-货币(M2)供应量(亿元) A0L0302-货币(M1)供应量(亿元) A0L0303-货币(M0)供应量(亿元)   
           typeArr = ['A0L0303', 'A0L0302', 'A0L0301'];
           break;
         case this.EChartType_Currency.FC:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '黄金与外汇储备', subtitle: '', exceptName: '', unit: '(亿美元)', legendTop: '10%', gridTop: '25%', dbCode: 'nd' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '黄金与外汇储备(亿美元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'nd' }
           // A0L0401-黄金储备(万盎司) A0L0402-外汇储备(亿美元)
           typeArr = ['A0L0401', 'A0L0402'];
           break;

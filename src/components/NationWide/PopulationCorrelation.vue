@@ -146,7 +146,7 @@ export default {
         case this.EChartType_Population.PL:
           // A030101-总人口 A030102-男性 A030103-女性 A030104-城市 A030105-农村
           // A030302-0-14岁 A030303-15-64岁 A030304-65岁以上
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口数据', subtitle: '', exceptName: '人口', unit: '(万人)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口数据(万人)', subtitle: '', exceptName: '人口', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
           typeArr = ['A030101', 'A030102', 'A030103', 'A030104', 'A030105', 'A030302', 'A030303', 'A030304'];
           break;
         case this.EChartType_Population.PR:

@@ -142,7 +142,7 @@ export default {
       let subtitle = ''
       switch (echrtId) {
         case this.EChartType_LivingStandards.IC:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人均收入数据', subtitle: '', exceptName: '居民可支配收入', unit: '(万元)', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人均收入数据(万元)', subtitle: '', exceptName: '居民可支配收入', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
           // A0A0101-居民人均可支配收入 A0A0103-居民人均可支配收入中位数 A0A0201-城镇居民人均可支配收入   
           // A0A0203-城镇居民人均可支配收入中位数 A0A0301-农村居民人均可支配收入 A0A0303-农村居民人均可支配收入中位数
           typeArr = ['A0A0101', 'A0A0103', 'A0A0201', 'A0A0203', 'A0A0301', 'A0A0303'];
