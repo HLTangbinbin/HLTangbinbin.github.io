@@ -243,6 +243,26 @@ const params_realEstate_sell = [
   { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A060A"},{"wdcode":"sj","valuecode":"LAST13"}]' },//A060A 商品住宅面积
   { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A060B"},{"wdcode":"sj","valuecode":"LAST13"}]' }, //A060B 商品住宅销售额
 ]
+
+//房地产-销售
+const params_socialretailgoods = [
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070101"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零总
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070401"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070402"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070403"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070404"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070405"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070406"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070407"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070408"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070409"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040A"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040B"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040C"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040D"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040E"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040F"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+]
 // GDP
 const params_gdp = [
   // 国家年度数据---// A0201：A020102 国内生产总值  A020103 第一产值增加  A020104 第二产值增加  A020105 第三产值增加
@@ -451,6 +471,7 @@ export {
   params_province,
   params_realEstate_invest,
   params_realEstate_sell,
+  params_socialretailgoods,
   params_gdp,
   params_nationalFinance,
   params_financialIndustry,

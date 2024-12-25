@@ -43,6 +43,7 @@ import NationWide from '../components/NationWide/NationWide.vue';
 import RealEstate from '../components/NationWide/RealEstate.vue';
 import RealEstateInvest from '../components/NationWide/RealEstateInvest.vue';
 import RealEstateSell from '../components/NationWide/RealEstateSell.vue';
+import SocialRetailgoods from '../components/NationWide/SocialRetailgoods.vue';
 import GrossDomesticProduct from '../components/NationWide/GrossDomesticProduct.vue';
 import NationalFinance from '../components/NationWide/NationalFinance.vue';
 import FinancialIndustry from '../components/NationWide/FinancialIndustry.vue';
@@ -163,6 +164,7 @@ const routes = [
           }
         ]
       },
+      { path: 'SocialRetailgoods', component: SocialRetailgoods },
       { path: 'GrossDomesticProduct', component: GrossDomesticProduct },
       { path: 'NationalFinance', component: NationalFinance },
       { path: 'FinancialIndustry', component: FinancialIndustry },
