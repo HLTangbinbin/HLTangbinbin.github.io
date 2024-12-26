@@ -59,7 +59,7 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     this.returnData = data
-                    console.log('本地cityHouseNew数据:', this.returnData);
+                    // console.log('本地cityHouseNew数据:', this.returnData);
                     // 处理数据绘制图表
                     this.drawChartWithBtn()
                 })

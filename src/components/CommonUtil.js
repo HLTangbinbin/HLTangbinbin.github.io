@@ -155,7 +155,7 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
 
 
   };
-  console.log('绘制的图表数据',seriesData)
+  // console.log('绘制的图表数据',seriesData)
   // 使用刚指定的配置项和数据显示图表。
   chart.setOption(option);
 }

@@ -70,7 +70,7 @@ export default {
       fetch('json/province.json')
         .then(response => response.json())
         .then(data => {
-          console.log('读取本地数据教育数据:', data);
+          // console.log('读取本地数据教育数据:', data);
           // 列表数据
           this.returnData = data;
           this.drawChartWithBtn()
