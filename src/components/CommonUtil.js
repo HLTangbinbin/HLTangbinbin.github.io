@@ -29,7 +29,7 @@ export function sortYearMonths(date1, date2) {
   return compareYearMonth(date1, date2);
 }
 // //按照年份与日期做筛选与排序
-export function selectDataFromArr(returnData, zbCode, cname, fieldKey, dbCode = 'nd', cityCode = '') {
+export function selectDataFromArr(returnData, zbCode, fieldKey, dbCode = 'nd', cityCode = '') {
   const filteredData = returnData.dataList.data[dbCode]
     .filter(returnDataObj => {
       // 首先筛选出符合指标代码的数据
@@ -63,7 +63,7 @@ export function selectDataFromArr(returnData, zbCode, cname, fieldKey, dbCode = 
       // 提取指定字段的值
       return item[fieldKey];
     });
-
+  
   return filteredData;
 }
 
@@ -82,7 +82,7 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
     zbArr.map(zbCode => {
       // 调用 selectDataFromArr 并处理返回的数据
       // 截取不包含title的字段作为name
-      cname = selectDataFromArr(returnData, zbCode, basicParams.exceptName, 'cname', basicParams.dbCode)[0];
+      cname = selectDataFromArr(returnData, zbCode, 'cname', basicParams.dbCode)[0];
       for (let char of basicParams.exceptName) {
         cname = cname.replace(char, '');
         if (cname == '') {
@@ -90,7 +90,7 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
         }
       }
       name = cname + basicParams.unit;
-      valueArr = selectDataFromArr(returnData, zbCode, basicParams.exceptName, 'value', basicParams.dbCode);
+      valueArr = selectDataFromArr(returnData, zbCode,  'value', basicParams.dbCode);
       const seriesJson = { name: name, type: type, data: valueArr };
       seriesData.push(seriesJson)
     })
@@ -105,7 +105,7 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
       } else {
         name = result.cname
       }
-      valueArr = selectDataFromArr(returnData, zbArr[0], basicParams.exceptName,'value', basicParams.dbCode, cityCode)
+      valueArr = selectDataFromArr(returnData, zbArr[0],'value', basicParams.dbCode, cityCode)
       const seriesJson = { name: name, type: type, data: valueArr };
       seriesData.push(seriesJson)
     })
@@ -155,7 +155,7 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
 
 
   };
-  console.log(seriesData)
+  console.log('绘制的图表数据',seriesData)
   // 使用刚指定的配置项和数据显示图表。
   chart.setOption(option);
 }
@@ -244,7 +244,7 @@ const params_realEstate_sell = [
   { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A060B"},{"wdcode":"sj","valuecode":"LAST13"}]' }, //A060B 商品住宅销售额
 ]
 
-//房地产-销售
+//社零
 const params_socialretailgoods = [
   {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070101"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零总
   {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070401"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类

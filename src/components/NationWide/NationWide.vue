@@ -10,7 +10,7 @@
         <router-link to="/NationWide/ForeignTrade" class="nav" :class="{ active: $route.path === '/NationWide/ForeignTrade' }">外贸</router-link>
         <router-link to="/NationWide/PopulationCorrelation" class="nav" :class="{ active: $route.path === '/NationWide/PopulationCorrelation' }">人口</router-link>
         <router-link to="/NationWide/RealEstate" class="sub-nav" :class="{ active: $route.path.startsWith('/NationWide/RealEstate') }">房地产</router-link>
-        <router-link to="/NationWide/SocialRetailgoods" class="sub-nav" :class="{ active: $route.path.startsWith('/NationWide/SocialRetailgoods') }">社零</router-link>
+        <router-link to="/NationWide/SocialRetailgoods" class="nav" :class="{ active: $route.path === '/NationWide/SocialRetailgoods' }">社零</router-link>
         <router-link to="/NationWide/EducationSector" class="nav" :class="{ active: $route.path === '/NationWide/EducationSector' }">教育</router-link>
         <router-link to="/NationWide/MedicalTreatment" class="nav" :class="{ active: $route.path === '/NationWide/MedicalTreatment' }">医疗</router-link>
         <router-link to="/NationWide/IndicesData" class="nav" :class="{ active: $route.path === '/NationWide/IndicesData' }">指数</router-link>
