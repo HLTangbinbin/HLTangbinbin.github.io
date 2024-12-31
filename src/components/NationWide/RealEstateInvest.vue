@@ -155,7 +155,7 @@ export default {
                     break;
                 case this.EChartType_RealEstate_Invest.IRM:
                     // A060102-房地产投资_累计增长 A060106-房地产住宅投资_累计增长 A06010E-房地产办公楼投资_累计增长
-                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产投资_累计增长', subtitle: '', exceptName: '房地产投资_累计增长', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
+                    basicParams = { echrtId: echrtId, chartType: this.chartType, title: '房地产投资累计增长', subtitle: '', exceptName: '房地产投资_累计增长', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'yd' }
                     typeArr = ['A060102', 'A060106', 'A06010E'];
                     break;
                 case this.EChartType_RealEstate_Invest.IY:
