@@ -338,6 +338,11 @@ const params_medical = [
   { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0O02"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 卫生人员
   { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0O05"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 医疗机构床位
 ]
+// 婚姻
+const params_marriage = [
+  // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0P0C"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 婚姻
+]
 // 指数数据
 const params_indices = [
   // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，LAST13为最近13个月数据
@@ -479,6 +484,7 @@ export {
   params_population,
   params_education,
   params_medical,
+  params_marriage,
   params_indices,
   params_livingStandards,
 };

@@ -51,9 +51,11 @@ import ForeignTrade from '../components/NationWide/ForeignTrade.vue';
 import PopulationCorrelation from '../components/NationWide/PopulationCorrelation.vue';
 import EducationSector from '../components/NationWide/EducationSector.vue';
 import MedicalTreatment from '../components/NationWide/MedicalTreatment.vue';
+import MarriageStatus from '../components/NationWide/MarriageStatus.vue';
 import IndicesData from '../components/NationWide/IndicesData.vue';
 import LivingStandards from '../components/NationWide/LivingStandards.vue';
 import ProvidentFund from '../components/NationWide/ProvidentFund.vue';
+
 
 
 
@@ -172,9 +174,11 @@ const routes = [
       { path: 'PopulationCorrelation', component: PopulationCorrelation },
       { path: 'EducationSector', component: EducationSector },
       { path: 'MedicalTreatment', component: MedicalTreatment },
+      { path: 'MarriageStatus', component: MarriageStatus },
       { path: 'IndicesData', component: IndicesData },
       { path: 'LivingStandards', component: LivingStandards },
       { path: 'ProvidentFund', component: ProvidentFund },
+      
     ]
   },
   

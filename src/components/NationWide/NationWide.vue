@@ -13,6 +13,7 @@
         <router-link to="/NationWide/SocialRetailgoods" class="nav" :class="{ active: $route.path === '/NationWide/SocialRetailgoods' }">社零</router-link>
         <router-link to="/NationWide/EducationSector" class="nav" :class="{ active: $route.path === '/NationWide/EducationSector' }">教育</router-link>
         <router-link to="/NationWide/MedicalTreatment" class="nav" :class="{ active: $route.path === '/NationWide/MedicalTreatment' }">医疗</router-link>
+        <router-link to="/NationWide/MarriageStatus" class="nav" :class="{ active: $route.path === '/NationWide/MarriageStatus' }">婚姻</router-link>
         <router-link to="/NationWide/IndicesData" class="nav" :class="{ active: $route.path === '/NationWide/IndicesData' }">指数</router-link>
         <router-link to="/NationWide/LivingStandards" class="nav" :class="{ active: $route.path === '/NationWide/LivingStandards' }">生活</router-link>
         <router-link to="/NationWide/ProvidentFund" class="nav" :class="{ active: $route.path === '/NationWide/ProvidentFund' }">公积金</router-link>
