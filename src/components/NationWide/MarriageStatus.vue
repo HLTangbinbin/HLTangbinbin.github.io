@@ -94,7 +94,7 @@
             // A0P0C01-结婚登记 A0P0C02-内地居民登记结婚 A0P0C03-内地居民初婚登记
             // A0P0C04-内地居民再婚登记 A0P0C06-离婚登记
             basicParams = { echrtId: echrtId, chartType: this.chartType, title: '结离婚登记人数(万对)', subtitle: subtitle, exceptName: '居民登记', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
-            typeArr = ['A0P0C01', 'A0P0C02', 'A0P0C03', 'A0P0C04', 'A0P0C06',];
+            typeArr = ['A0P0C01', 'A0P0C06',];
             break;
           default:
             break;
