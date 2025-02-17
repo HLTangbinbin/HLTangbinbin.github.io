@@ -164,6 +164,11 @@
                     name: 2024,
                     type: this.chartsType,
                     data: this.selectMonthArr(this.houseArrayWith(this.AreaName.TOTAL),'2024')
+                },
+                {
+                    name: 2025,
+                    type: this.chartsType,
+                    data: this.selectMonthArr(this.houseArrayWith(this.AreaName.TOTAL),'2025')
                 }
             ]
         };
