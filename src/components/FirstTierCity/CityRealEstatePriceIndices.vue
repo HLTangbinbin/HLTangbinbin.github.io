@@ -23,7 +23,7 @@
 
 <script>
 
-import { params_cityHousePrice, sendRequest, drawCommonChart } from '../CommonUtil';
+import { params_city, sendRequest, drawCommonChart } from '../CommonUtil';
 
 export default {
 
@@ -69,7 +69,7 @@ export default {
         },
         async requestWithAPI() {
             try {
-                this.returnData = await sendRequest(params_cityHousePrice);
+                this.returnData = await sendRequest(params_city);
                 console.log("响应处理后的数据：", this.returnData)
                 this.drawChartWithBtn()
             } catch (error) {

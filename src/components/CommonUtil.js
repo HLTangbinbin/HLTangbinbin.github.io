@@ -63,7 +63,6 @@ export function selectDataFromArr(returnData, zbCode, fieldKey, dbCode = 'nd', c
       // 提取指定字段的值
       return item[fieldKey];
     });
-  
   return filteredData;
 }
 
@@ -155,7 +154,7 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
 
 
   };
-  // console.log('绘制的图表数据',seriesData)
+  console.log('',basicParams.title,seriesData)
   // 使用刚指定的配置项和数据显示图表。
   chart.setOption(option);
 }

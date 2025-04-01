@@ -8,6 +8,14 @@
     </div>
     <div class="chart-container" id="population"></div>
 
+    <div class="buttons">
+      <button class="button" :class="{ 'is-active': isBarActive_Populationbirth }" @click="drawBarChart_Populationbirth"
+        style="margin-top: 50px;">柱状图</button>
+      <button class="button" :class="{ 'is-active': isLineActive_Populationbirth}" @click="drawLineChart_Populationbirth"
+        style="margin-top: 50px;">折线图</button>
+    </div>
+    <div class="chart-container" id="populationbirth"></div>
+
     <!-- 为下方的按钮添加上边距 style="margin-top -->
     <div class="buttons">
       <button class="button" :class="{ 'is-active': isBarActive_Populationrate }" @click="drawBarChart_Populationrate"
@@ -38,11 +46,14 @@ export default {
     return {
       EChartType_Population: {
         PL: 'population',
+        PB: 'populationbirth',
         PR: 'populationrate',
         DC: 'dependencyratio'
       },
       isBarActive_Population: false,
       isLineActive_Population: false,
+      isBarActive_Populationbirth: false,
+      isLineActive_Populationbirth: false,
       isBarActive_Populationrate: false,
       isLineActive_Populationrate: false,
       isBarActive_Dependencyratio: false,
@@ -68,7 +79,7 @@ export default {
       fetch('json/nation.json')
         .then(response => response.json())
         .then(data => {
-          // console.log('读取本地数据人口数据:', data);
+          console.log('读取本地数据人口数据:', data);
           // 列表数据
           this.returnData = data;
           // 处理数据绘制图表
@@ -90,6 +101,7 @@ export default {
     drawChartWithBtn() {
       if (this.returnData) {
         this.drawBarChart_Population()
+        this.drawBarChart_Populationbirth()
         this.drawBarChart_Populationrate()
         this.drawBarChart_Dependencyratio()
       }
@@ -107,6 +119,20 @@ export default {
       // 在这里绘制折线图
       this.chartType = "line"
       this.drawChartWithParams(this.EChartType_Population.PL)
+    },
+    drawBarChart_Populationbirth() {
+      this.isBarActive_Populationbirth = true;
+      this.isLineActive_Populationbirth = false;
+      this.chartType = "bar"
+      this.drawChartWithParams(this.EChartType_Population.PB)
+
+    },
+    drawLineChart_Populationbirth() {
+      this.isBarActive_Populationbirth = false;
+      this.isLineActive_Populationbirth = true;
+      // 在这里绘制折线图
+      this.chartType = "line"
+      this.drawChartWithParams(this.EChartType_Population.PB)
     },
     drawBarChart_Populationrate() {
       this.isBarActive_Populationrate = true;
@@ -148,6 +174,11 @@ export default {
           // A030302-0-14岁 A030303-15-64岁 A030304-65岁以上
           basicParams = { echrtId: echrtId, chartType: this.chartType, title: '人口数据(万人)', subtitle: '', exceptName: '人口', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
           typeArr = ['A030101', 'A030102', 'A030103', 'A030104', 'A030105', 'A030302', 'A030303', 'A030304'];
+          break;
+        case this.EChartType_Population.PB:
+          // A030109-出生人口 A030110-死亡人口
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '出生与死亡人口数据(万人)', subtitle: '', exceptName: '人口', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
+          typeArr = ['A030109', 'A030110'];
           break;
         case this.EChartType_Population.PR:
           // A030201-出生率 A030202-死亡率 A030203-自然增长率  
