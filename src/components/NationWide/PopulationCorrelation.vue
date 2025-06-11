@@ -176,9 +176,9 @@ export default {
           typeArr = ['A030101', 'A030102', 'A030103', 'A030104', 'A030105', 'A030302', 'A030303', 'A030304'];
           break;
         case this.EChartType_Population.PB:
-          // A030109-出生人口 A030110-死亡人口
+          // A030109-出生人口 A030110-死亡人口 A03010A-自然增长人口
           basicParams = { echrtId: echrtId, chartType: this.chartType, title: '出生与死亡人口数据(万人)', subtitle: '', exceptName: '人口', unit: '', legendTop: '10%', gridTop: '30%', dbCode: 'nd' }
-          typeArr = ['A030109', 'A030110'];
+          typeArr = ['A030109', 'A030110','A03010A'];
           break;
         case this.EChartType_Population.PR:
           // A030201-出生率 A030202-死亡率 A030203-自然增长率  
