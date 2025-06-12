@@ -95,7 +95,7 @@ export default {
       let cityCodeArr = [];
       switch (echrtId) {
         case this.EChartType_GDP.GH:
-          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国民经济核算(亿元)', subtitle: '', exceptName: '', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'nd' }
+          basicParams = { echrtId: echrtId, chartType: this.chartType, title: '国民经济核算(亿元)', subtitle: '', exceptName: '增加值', unit: '', legendTop: '10%', gridTop: '25%', dbCode: 'nd' }
           // A020102-CPI 国内生产总值 A020103-第一产业增加值 A020104-第二产业增加值  A020105-第三产业增加值
           typeArr = ['A020102', 'A020103', 'A020104', 'A020105'];
           break;

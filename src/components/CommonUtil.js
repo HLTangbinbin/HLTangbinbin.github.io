@@ -82,12 +82,27 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
       // 调用 selectDataFromArr 并处理返回的数据
       // 截取不包含title的字段作为name
       cname = selectDataFromArr(returnData, zbCode, 'cname', basicParams.dbCode)[0];
-      for (let char of basicParams.exceptName) {
-        cname = cname.replace(char, '');
-        if (cname == '') {
-          cname = '总的'
+
+      if (typeof cname !== 'string' || typeof basicParams.exceptName !== 'string') {
+        cname = cname || '总的';
+      } else {
+        let resultArr = cname.split('');
+        const exceptArr = basicParams.exceptName.split('');
+
+        // 按exceptName顺序，从resultArr里依次删除对应字符
+        for (const ch of exceptArr) {
+          const idx = resultArr.indexOf(ch);
+          if (idx !== -1) {
+            resultArr.splice(idx, 1);
+          }
+        }
+
+        cname = resultArr.join('').trim();
+        if (cname === '') {
+          cname = '总的';
         }
       }
+
       name = cname + basicParams.unit;
       valueArr = selectDataFromArr(returnData, zbCode,  'value', basicParams.dbCode);
       const seriesJson = { name: name, type: type, data: valueArr };
