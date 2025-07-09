@@ -174,6 +174,71 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
   chart.setOption(option);
 }
 
+export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr = []) {
+  const type = basicParams.chartType;
+  const unit = basicParams.unit || '';
+  const seriesData = [];
+
+  if (cityCodeArr.length === 0) {
+    // 不区分城市，展示多个指标
+    zbArr.forEach(zbCode => {
+      let cname = selectDataFromArr(returnData, zbCode, 'cname', basicParams.dbCode)?.[0] || '总的';
+
+      if (typeof cname === 'string' && typeof basicParams.exceptName === 'string') {
+        const resultArr = cname.split('');
+        const exceptArr = basicParams.exceptName.split('');
+        exceptArr.forEach(ch => {
+          const idx = resultArr.indexOf(ch);
+          if (idx !== -1) resultArr.splice(idx, 1);
+        });
+        cname = resultArr.join('').trim() || '总的';
+      }
+
+      const name = cname + unit;
+      const valueArr = selectDataFromArr(returnData, zbCode, 'value', basicParams.dbCode);
+      console.log('当前的数据',valueArr);
+      seriesData.push({ name, type, data: valueArr });
+    });
+  } else {
+    // 区分城市，展示某一指标在多个城市的对比
+    cityCodeArr.forEach(cityCode => {
+      const city = returnData.dataList.reg?.find(r => r.code === cityCode);
+      const name = city?.cname || '';
+      const valueArr = selectDataFromArr(returnData, zbArr[0], 'value', basicParams.dbCode, cityCode);
+      seriesData.push({ name, type, data: valueArr });
+    });
+  }
+
+  return {
+    title: {
+      text: basicParams.title,
+      subtext: basicParams.subtitle,
+      left: 'center',
+      top: 'top',
+      subtextStyle: { fontWeight: 'bold', fontSize: 13, lineHeight: 20 }
+    },
+    tooltip: { trigger: 'axis' },
+    legend: { left: 'center', top: basicParams.legendTop || '10%' },
+    grid: {
+      left: '1%',
+      right: '1%',
+      top: basicParams.gridTop || '25%',
+      bottom: '1%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'category',
+      data: (returnData.dataList.sj?.[basicParams.dbCode] || []).sort()
+    },
+    yAxis: {
+      type: 'value',
+      ...(basicParams.min !== undefined ? { min: basicParams.min } : {}),
+      ...(basicParams.max !== undefined ? { max: basicParams.max } : {})
+    },
+    series: seriesData
+  };
+}
+
 // const baseurl = 'https://data.stats.gov.cn/easyquery.htm';
 // const proxyServerUrl = 'https://githubproxy-592325394348.herokuapp.com/api'
 // 改为这种方式解决跨域报错问题
