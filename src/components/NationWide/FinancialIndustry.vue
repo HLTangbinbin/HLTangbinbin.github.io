@@ -8,7 +8,7 @@
 
 <script>
 import ChartPage from '@/components/common/ChartPage.vue';
-import { FinancialIndustryCharts } from '@/config/chartMeta.js';
+import { FinancialIndustryCharts } from '@/config/chartMetaNation.js';
 
 import { loadChartData } from '@/config/dataLoader.js';
 

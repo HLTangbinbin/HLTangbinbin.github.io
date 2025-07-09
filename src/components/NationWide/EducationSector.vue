@@ -3,12 +3,12 @@
     v-if="returnData"
     :chartMetaList="charts"
     :returnData="returnData"
-    :showToggles="true" ></ChartPage>
+    :showToggles="false" ></ChartPage>
 </template>
 
 <script>
 import ChartPage from '@/components/common/ChartPage.vue';
-import { EducationSectorCharts } from '@/config/chartMeta.js';
+import { EducationSectorCharts } from '@/config/chartMetaNation.js';
 
 import { loadChartData } from '@/config/dataLoader.js';
 

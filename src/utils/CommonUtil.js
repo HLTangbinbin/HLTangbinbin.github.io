@@ -215,7 +215,13 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
       subtext: basicParams.subtitle,
       left: 'center',
       top: 'top',
-      subtextStyle: { fontWeight: 'bold', fontSize: 13, lineHeight: 20 }
+      subtextStyle: {
+        fontWeight: 'bold',
+        fontSize: 13,
+        lineHeight: 20,
+        width: window.innerWidth * 0.8, // ✅ 设置为屏幕 70% 宽度
+        overflow: 'break'
+    }
     },
     tooltip: { trigger: 'axis' },
     legend: { left: 'center', top: basicParams.legendTop || '10%' },
