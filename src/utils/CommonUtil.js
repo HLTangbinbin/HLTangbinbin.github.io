@@ -196,7 +196,7 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
 
       const name = cname + unit;
       const valueArr = selectDataFromArr(returnData, zbCode, 'value', basicParams.dbCode);
-      console.log('当前的数据',valueArr);
+      // console.log('重构后数据',valueArr);
       seriesData.push({ name, type, data: valueArr });
     });
   } else {
@@ -204,6 +204,7 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
     cityCodeArr.forEach(cityCode => {
       const city = returnData.dataList.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
+      // console.log('当前的城市',city);
       const valueArr = selectDataFromArr(returnData, zbArr[0], 'value', basicParams.dbCode, cityCode);
       seriesData.push({ name, type, data: valueArr });
     });

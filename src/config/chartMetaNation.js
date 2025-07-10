@@ -1,5 +1,5 @@
 import { params_education,params_financialIndustry,params_foreignTrade,params_gdp,params_indices,params_livingStandards,params_marriage,params_medical,params_nationalFinance
-  ,params_population,params_realEstateInvest,params_realEstateSale,params_socialretailgoods} from '@/utils/CommonUtil.js';
+  ,params_population,params_realEstate_invest,params_realEstate_sell,params_socialretailgoods} from '@/utils/CommonUtil.js';
 
 export const FinancialIndustryCharts = {
 
@@ -571,7 +571,7 @@ export const PopulationCharts = {
 export const RealEstateInvestCharts = {
   source: {
     localJson: '/json/nation.json',
-    apiParams: params_realEstateInvest
+    apiParams: params_realEstate_invest
   },
   charts: [
     {
@@ -621,7 +621,7 @@ export const RealEstateInvestCharts = {
 export const RealEstateSaleCharts = {
   source: {
     localJson: '/json/nation.json',
-    apiParams: params_realEstateSale
+    apiParams: params_realEstate_sell
   },
   charts: [
     {

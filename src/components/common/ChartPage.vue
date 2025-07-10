@@ -46,7 +46,7 @@
 
 <script>
 import ChartView from "./ChartView.vue";
-import { getCommonChartOption } from "../CommonUtil.js";
+import { getCommonChartOption } from "@/utils/CommonUtil.js";
 
 export default {
   components: { ChartView },
@@ -63,6 +63,11 @@ export default {
       type: Boolean,
       default: true, // 外部控制是否允许切换按钮
     },
+    config: {
+      type: Object,
+      default: () => ({}), // ✅ 新增
+    }
+    
   },
   data() {
     return {
@@ -113,7 +118,8 @@ export default {
         chartType: this.chartType,
         echrtId: chart.id,
       };
-      return getCommonChartOption(params, chart.typeArr, this.returnData);
+    const cityCodeArr = this.config?.cityCodeArr || [];
+    return getCommonChartOption(params, chart.typeArr, this.returnData, cityCodeArr);
     },
   },
 };

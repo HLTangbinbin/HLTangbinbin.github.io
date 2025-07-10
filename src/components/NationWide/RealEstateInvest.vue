@@ -3,6 +3,7 @@
     v-if="returnData"
     :chartMetaList="charts"
     :returnData="returnData"
+    :config="config" 
     :showToggles="true" ></ChartPage>
 </template>
 

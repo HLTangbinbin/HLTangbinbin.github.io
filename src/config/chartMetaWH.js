@@ -81,7 +81,7 @@ export const WHMedicalCharts = {
     charts: [
         {
             id: 'MC',
-            title: '医疗(个)',
+            title: '医院数(个)',
             subtitle: '',
             period: 'yearly',
             typeArr: ['A0802'],
