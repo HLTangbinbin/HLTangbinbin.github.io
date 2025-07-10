@@ -115,7 +115,7 @@ export default {
   color: #fff;
   background-color: #ccc;
   border: none;
-  border-radius: 10px;
+  border-radius: 30px;
   cursor: pointer;
   margin-left: 20px;
   margin-right: 20px;
