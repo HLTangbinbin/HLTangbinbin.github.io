@@ -17,7 +17,7 @@ export const CityEducationCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
+            legendTop: '5%',
             gridTop: '25%',
             unit: ''
         }
@@ -45,7 +45,7 @@ export const CityFinanceCityCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
+            legendTop: '5%',
             gridTop: '30%',
             unit: ''
         },
@@ -58,7 +58,7 @@ export const CityFinanceCityCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
+            legendTop: '5%',
             gridTop: '30%',
             unit: ''
         },
@@ -71,7 +71,7 @@ export const CityFinanceCityCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
+            legendTop: '5%',
             gridTop: '30%',
             unit: ''
         }
@@ -99,7 +99,7 @@ export const CityGDPCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '增加值',
-            legendTop: '10%',
+            legendTop: '5%',
             gridTop: '25%',
             unit: ''
         }
@@ -128,7 +128,7 @@ export const CityMedicalCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
+            legendTop: '5%',
             gridTop: '25%',
             unit: ''
         }
@@ -157,7 +157,7 @@ export const CityPopulationCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '人口',
-            legendTop: '10%',
+            legendTop: '5%',
             gridTop: '25%',
             unit: ''
         }
@@ -186,7 +186,7 @@ export const CityRealEstateInvestCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
+            legendTop: '5%',
             gridTop: '25%',
             unit: ''
         }
@@ -215,7 +215,7 @@ export const CityRealEstateSellCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '商品房销售面积(万平方米)',
-            legendTop: '10%',
+            legendTop: '5%',
             gridTop: '25%',
             unit: ''
         },
@@ -228,7 +228,7 @@ export const CityRealEstateSellCharts = {
         dbCode: 'nd',
         chartType: 'bar',
         exceptName: '商品房平均销售价格(元)',
-        legendTop: '10%',
+        legendTop: '5%',
         gridTop: '25%',
         unit: ''
       },
@@ -257,7 +257,7 @@ export const CityRealEstatePriceIndicesCharts = {
             dbCode: 'yd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
+            legendTop: '5%',
             gridTop: '25%',
             unit: '',
             max: '101',
@@ -272,7 +272,7 @@ export const CityRealEstatePriceIndicesCharts = {
             dbCode: 'yd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
+            legendTop: '5%',
             gridTop: '25%',
             unit: '',
             max: '101',

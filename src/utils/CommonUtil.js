@@ -176,6 +176,7 @@ export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []
 
 export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr = []) {
   const type = basicParams.chartType;
+  console.log('[调试] getCommonChartOption type =', type);
   const unit = basicParams.unit || '';
   const seriesData = [];
 
