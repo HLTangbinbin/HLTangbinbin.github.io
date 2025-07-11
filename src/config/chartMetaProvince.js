@@ -2,7 +2,7 @@ import { params_province } from '@/utils/CommonUtil.js';
 
 export const ProvincialEducationCharts = {
     source: {
-        localJson: '/json/province.json', // ✅ 替换为你实际放置的路径
+        localJson: './json/province.json', // ✅ 替换为你实际放置的路径
         apiParams: params_province,         // ✅ 替换为你的请求参数
         cityCodeArr: [                               // ✅ 实际为省级行政区 code
             '110000', '120000', '130000', '140000',
@@ -58,7 +58,7 @@ export const ProvincialEducationCharts = {
 
 export const ProvincialFinanceCharts = {
     source: {
-        localJson: '/json/province.json',
+        localJson: './json/province.json',
         apiParams: params_province,
         cityCodeArr: [                               // ✅ 实际为省级行政区 code
             '110000', '120000', '130000', '140000',
@@ -102,7 +102,7 @@ export const ProvincialFinanceCharts = {
 export const ProvincialGDPCharts = {
 
     source: {
-        localJson: '/json/province.json',
+        localJson: './json/province.json',
         apiParams: params_province,
         cityCodeArr: [                               // ✅ 实际为省级行政区 code
             '110000', '120000', '130000', '140000',
@@ -134,7 +134,7 @@ export const ProvincialGDPCharts = {
 export const ProvincialMedicalCharts = {
 
     source: {
-        localJson: '/json/province.json',
+        localJson: './json/province.json',
         apiParams: params_province,
         cityCodeArr: [                               // ✅ 实际为省级行政区 code
             '110000', '120000', '130000', '140000',
@@ -180,7 +180,7 @@ export const ProvincialMedicalCharts = {
 
 export const ProvincialPopulationCharts = {
   source: {
-    localJson: '/json/province.json', // ✅ 替换为实际路径
+    localJson: './json/province.json', // ✅ 替换为实际路径
     apiParams: params_province,         // ✅ 替换为你在 CommonUtil.js 中定义的请求参数
     cityCodeArr: [
       '110000', '120000', '130000', '140000', 
@@ -251,7 +251,7 @@ export const ProvincialPopulationCharts = {
 export const ProvincialRealEstateInvestCharts = {
 
     source: {
-        localJson: '/json/province.json',
+        localJson: './json/province.json',
         apiParams: params_province,
         cityCodeArr: [
             '110000', '120000', '130000', '140000',
@@ -283,7 +283,7 @@ export const ProvincialRealEstateInvestCharts = {
 export const ProvincialRealEstateSellCharts = {
 
     source: {
-        localJson: '/json/province.json',
+        localJson: './json/province.json',
         apiParams: params_province,
         cityCodeArr: [
             '110000', '120000', '130000', '140000',
@@ -328,7 +328,7 @@ export const ProvincialRealEstateSellCharts = {
 export const ProvinceRealEstatePriceIndicesCharts = {
 
     source: {
-        localJson: '/json/province.json',
+        localJson: './json/province.json',
         apiParams: params_province,
         ProvinceCodeArr: [
             '110000', '310000', '440100', '440300', '330100',
@@ -373,7 +373,7 @@ export const ProvinceRealEstatePriceIndicesCharts = {
 export const ProvincialLivingCharts = {
 
     source: {
-        localJson: '/json/province.json',
+        localJson: './json/province.json',
         apiParams: params_province,
         cityCodeArr: [                               // ✅ 实际为省级行政区 code
             '110000', '120000', '130000', '140000',

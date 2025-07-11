@@ -3,7 +3,7 @@ import { params_city } from '@/utils/CommonUtil.js';
 export const CityEducationCharts = {
 
     source: {
-        localJson: '/json/city.json',
+        localJson: './json/city.json',
         apiParams: params_city,
         cityCodeArr: ['110000', '310000', '440100', '440300', '330100', '510100', '420100', '320100', '500000', '610100', '410100', '340100', '430100'],
     },
@@ -27,7 +27,7 @@ export const CityEducationCharts = {
 
 export const CityFinanceCityCharts = {
     source: {
-        localJson: '/json/city.json',
+        localJson: './json/city.json',
         apiParams: params_city,
         cityCodeArr: [
             '110000', '310000', '440100', '440300', '330100',
@@ -81,7 +81,7 @@ export const CityFinanceCityCharts = {
 export const CityGDPCharts = {
 
     source: {
-        localJson: '/json/city.json',
+        localJson: './json/city.json',
         apiParams: params_city,
         cityCodeArr: [
             '110000', '310000', '440100', '440300', '330100',
@@ -110,7 +110,7 @@ export const CityGDPCharts = {
 export const CityMedicalCharts = {
 
     source: {
-        localJson: '/json/city.json',
+        localJson: './json/city.json',
         apiParams: params_city,
         cityCodeArr: [
             '110000', '310000', '440100', '440300', '330100',
@@ -139,7 +139,7 @@ export const CityMedicalCharts = {
 export const CityPopulationCharts = {
 
     source: {
-        localJson: '/json/city.json',
+        localJson: './json/city.json',
         apiParams: params_city,
         cityCodeArr: [
             '110000', '310000', '440100', '440300', '330100',
@@ -168,7 +168,7 @@ export const CityPopulationCharts = {
 export const CityRealEstateInvestCharts = {
 
     source: {
-        localJson: '/json/city.json',
+        localJson: './json/city.json',
         apiParams: params_city,
         cityCodeArr: [
             '110000', '310000', '440100', '440300', '330100',
@@ -197,7 +197,7 @@ export const CityRealEstateInvestCharts = {
 export const CityRealEstateSellCharts = {
 
     source: {
-        localJson: '/json/city.json',
+        localJson: './json/city.json',
         apiParams: params_city,
         cityCodeArr: [
             '110000', '310000', '440100', '440300', '330100',
@@ -239,7 +239,7 @@ export const CityRealEstateSellCharts = {
 export const CityRealEstatePriceIndicesCharts = {
 
     source: {
-        localJson: '/json/city.json',
+        localJson: './json/city.json',
         apiParams: params_city,
         cityCodeArr: [
             '110000', '310000', '440100', '440300', '330100',

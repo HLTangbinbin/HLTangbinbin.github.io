@@ -3,7 +3,7 @@ import { params_wh} from '@/utils/CommonUtil.js';
 export const WHEducationCharts = {
 
     source: {
-        localJson: '/json/wh.json',
+        localJson: './json/wh.json',
         apiParams: params_wh
     },
     charts: [
@@ -27,7 +27,7 @@ export const WHEducationCharts = {
 export const WHFinanceCharts = {
 
     source: {
-        localJson: '/json/wh.json',
+        localJson: './json/wh.json',
         apiParams: params_wh
     },
     charts: [
@@ -51,7 +51,7 @@ export const WHFinanceCharts = {
 export const WHGDPCharts = {
 
     source: {
-        localJson: '/json/wh.json',
+        localJson: './json/wh.json',
         apiParams: params_wh
     },
     charts: [
@@ -75,7 +75,7 @@ export const WHGDPCharts = {
 export const WHMedicalCharts = {
 
     source: {
-        localJson: '/json/wh.json',
+        localJson: './json/wh.json',
         apiParams: params_wh
     },
     charts: [
@@ -99,7 +99,7 @@ export const WHMedicalCharts = {
 export const WHPopulationCharts = {
 
     source: {
-        localJson: '/json/wh.json',
+        localJson: './json/wh.json',
         apiParams: params_wh
     },
     charts: [
@@ -123,7 +123,7 @@ export const WHPopulationCharts = {
 export const WHRealEstateInvestCharts = {
 
     source: {
-        localJson: '/json/wh.json',
+        localJson: './json/wh.json',
         apiParams: params_wh
     },
     charts: [
@@ -147,7 +147,7 @@ export const WHRealEstateInvestCharts = {
 export const WHRealEstateSellCharts = {
 
     source: {
-        localJson: '/json/wh.json',
+        localJson: './json/wh.json',
         apiParams: params_wh
     },
     charts: [

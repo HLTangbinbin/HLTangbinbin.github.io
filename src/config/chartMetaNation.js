@@ -4,7 +4,7 @@ import { params_education,params_financialIndustry,params_foreignTrade,params_gd
 export const FinancialIndustryCharts = {
 
     source: {
-        localJson: '/json/nation.json',
+        localJson: './json/nation.json',
         apiParams: params_financialIndustry
     },
     charts: [
@@ -65,7 +65,7 @@ export const FinancialIndustryCharts = {
 
 export const EducationSectorCharts = {
   source: {
-    localJson: '/json/nation.json', // ✅ 根据实际路径调整
+    localJson: './json/nation.json', // ✅ 根据实际路径调整
     apiParams: params_education // ✅ 替换为你的API参数对象
   },
   charts: [
@@ -135,7 +135,7 @@ export const EducationSectorCharts = {
 
 export const ForeignTradeCharts = {
   source: {
-    localJson: '/json/nation.json',
+    localJson: './json/nation.json',
     apiParams: params_foreignTrade
   },
   charts: [
@@ -216,7 +216,7 @@ export const ForeignTradeCharts = {
 
 export const GDPCharts = {
   source: {
-    localJson: '/json/nation.json',
+    localJson: './json/nation.json',
     apiParams: params_gdp
   },
   charts: [
@@ -239,7 +239,7 @@ export const GDPCharts = {
 
 export const IndicesCharts = {
   source: {
-    localJson: '/json/nation.json',
+    localJson: './json/nation.json',
     apiParams: params_indices
   },
   charts: [
@@ -279,7 +279,7 @@ export const IndicesCharts = {
 
 export const LivingStandardsCharts = {
   source: {
-    localJson: '/json/nation.json',
+    localJson: './json/nation.json',
     apiParams: params_livingStandards
   },
   charts: [
@@ -349,7 +349,7 @@ export const LivingStandardsCharts = {
 
 export const MarriageCharts = {
   source: {
-    localJson: '/json/nation.json',
+    localJson: './json/nation.json',
     apiParams: params_marriage
   },
   charts: [
@@ -375,7 +375,7 @@ export const MarriageCharts = {
 
 export const MedicalCharts = {
   source: {
-    localJson: '/json/nation.json',
+    localJson: './json/nation.json',
     apiParams: params_medical
   },
   charts: [
@@ -424,7 +424,7 @@ export const MedicalCharts = {
 
 export const NationalFinanceCharts = {
   source: {
-    localJson: '/json/nation.json',
+    localJson: './json/nation.json',
     apiParams: params_nationalFinance
   },
   charts: [
@@ -505,7 +505,7 @@ export const NationalFinanceCharts = {
 
 export const PopulationCharts = {
   source: {
-    localJson: '/json/nation.json',
+    localJson: './json/nation.json',
     apiParams: params_population
   },
   charts: [
@@ -570,7 +570,7 @@ export const PopulationCharts = {
 
 export const RealEstateInvestCharts = {
   source: {
-    localJson: '/json/nation.json',
+    localJson: './json/nation.json',
     apiParams: params_realEstate_invest
   },
   charts: [
@@ -620,7 +620,7 @@ export const RealEstateInvestCharts = {
 
 export const RealEstateSaleCharts = {
   source: {
-    localJson: '/json/nation.json',
+    localJson: './json/nation.json',
     apiParams: params_realEstate_sell
   },
   charts: [
@@ -709,7 +709,7 @@ export const RealEstateSaleCharts = {
 
 export const SocialRetailgoodsCharts = {
   source: {
-    localJson: '/json/nation.json',
+    localJson: './json/nation.json',
     apiParams: params_socialretailgoods
   },
   charts: [
