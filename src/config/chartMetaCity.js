@@ -219,20 +219,20 @@ export const CityRealEstateSellCharts = {
             gridTop: '25%',
             unit: ''
         },
-      {
-        id: 'ES-SY',
-        title: '住宅商品房平均销售价格(元)',
-        subtitle: '',
-        period: 'yearly',
-        typeArr: ['A030C'],
-        dbCode: 'nd',
-        chartType: 'bar',
-        exceptName: '商品房平均销售价格(元)',
-        legendTop: '5%',
-        gridTop: '25%',
-        unit: ''
-      },
- 
+        {
+            id: 'ES-SY',
+            title: '住宅商品房平均销售价格(元)',
+            subtitle: '',
+            period: 'yearly',
+            typeArr: ['A030C'],
+            dbCode: 'nd',
+            chartType: 'bar',
+            exceptName: '商品房平均销售价格(元)',
+            legendTop: '5%',
+            gridTop: '25%',
+            unit: ''
+        },
+
     ]
 };
 

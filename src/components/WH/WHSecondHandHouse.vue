@@ -1,14 +1,18 @@
 <template>
   <div class="container">
-    <div class="buttons">
-      <button class="button" :class="{ 'is-active': isBarActive }" @click="drawBarChart" style="margin-top: 50px;">柱状图</button>
-      <button class="button" :class="{ 'is-active': isLineActive }" @click="drawLineChart" style="margin-top: 50px;">折线图</button>
+    <!-- 第一张图：合计 -->
+    <div class="chart-block">
+      <h3 class="chart-title">武汉二手房月成交量</h3>
+      <div class="buttons">
+        <button class="button" :class="{ 'is-active': isBarActive }"
+          @click="drawBarChart">柱状图</button>
+        <button class="button" :class="{ 'is-active': isLineActive }"
+          @click="drawLineChart">折线图</button>
+      </div>
+      <div class="chart-container" id="oldHouseVolumeMonth"></div>
     </div>
-   
-    <div class="chart-container" id="oldHouseVolumeMonth"></div>
   </div>
 </template>
-  
   <script>
   import * as echarts from 'echarts';
   
@@ -111,18 +115,18 @@
         var oldHouseVolumeBarMonthChart = echarts.init(document.getElementById('oldHouseVolumeMonth'));
         // 指定图表的配置项和数据
         var oldHouseVolumeBarMonthOption = {
-            title: {
-                text: '武汉二手房月成交量',
-                left: 'center',
-                top: 'top'
-            },
+            // title: {
+            //     text: '武汉二手房月成交量',
+            //     left: 'center',
+            //     top: 'top'
+            // },
             tooltip: {
                //X轴悬浮显示所有数据
                trigger: 'axis'
             },
             legend: {
                 left: 'center',
-                top: '50px'
+                top: '5%'
             },
             grid: {
                 left: '1%',
@@ -180,3 +184,76 @@
   </script>
 
 
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+/* 每个图表块：一张卡片 */
+.chart-block {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 60px;
+  padding: 16px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* 图表标题 */
+.chart-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700; /* 比 500 更粗，接近 canvas 渲染视觉效果 */
+  color: #333;
+  font-family: 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  margin: 0px 0 12px;
+  line-height: 1.4;
+}
+
+/* 图表副标题 */
+.chart-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  white-space: pre-line;
+  margin-bottom: 16px;
+}
+
+/* 图表切换按钮 */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  margin-top: 8px; /* ✅ 确保和 legend 保持间隔 */
+}
+
+.button {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 10px;
+    background-color: #ccc;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.button.is-active {
+  background-color: #0bc2d6;
+}
+
+/* 图表 DOM 容器 */
+.chart-container {
+  width: 100%;
+  height: 600px;
+  margin: 0 auto;
+}
+
+</style>

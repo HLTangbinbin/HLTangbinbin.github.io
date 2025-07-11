@@ -52,23 +52,33 @@ export default {
     flex-direction: column;
     align-items: center;
     /* 让子元素水平居中 */
+    position: relative;
+    z-index: 1;
+    margin-top: 40px;
 }
 
 .chart-title {
-    font-size: 18px;
-    font-weight: 600;
-    text-align: center;
-    margin: 10px 0 8px;
-    width: 100%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700; /* 比 500 更粗，接近 canvas 渲染视觉效果 */
+  color: #333;
+  font-family: 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  margin: 24px 0 6px;
+  line-height: 1.4;
+
+  
 }
 
 .chart-subtitle {
-    font-size: 14px;
-    color: #666;
-    text-align: center;
-    white-space: pre-line;
-    margin-bottom: 12px;
-    width: 100%;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 20px;
+  color: #666; /* 可改为 #aaa 如果需要更淡 */
+  text-align: center;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  margin: 0 auto 12px;
+  max-width: 80vw; /* 等价于 window.innerWidth * 0.8 */
 }
 
 .chart-controls {

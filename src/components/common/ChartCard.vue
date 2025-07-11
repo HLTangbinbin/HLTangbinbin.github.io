@@ -48,9 +48,12 @@ export default {
         gridTop: this.chart.gridTop,
         echrtId: this.chart.id,
         chartType: this.chartType,
+        min: this.chart.min,
+        max: this.chart.max,
       };
 
       const cityCodeArr = this.config?.cityCodeArr || [];
+      console.log(' yAxis min/max =', params.min, params.max);
       const option = getCommonChartOption(params, this.chart.typeArr, this.returnData, cityCodeArr);
 
       if (option.title) delete option.title; // 防止重复标题显示

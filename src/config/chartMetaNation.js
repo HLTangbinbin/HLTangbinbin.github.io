@@ -43,7 +43,7 @@ export const FinancialIndustryCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '供应量(万亿)',
-            legendTop: '20%',
+            legendTop: '5%',
             gridTop: '35%',
             unit: ''
         },
@@ -252,8 +252,8 @@ export const IndicesCharts = {
       typeArr: ['A01010G01', 'A01030G01', 'A01080101', 'A01080701'],
       dbCode: 'yd',
       exceptName: '价格指数',
-      legendTop: '25%',
-      gridTop: '40%',
+      legendTop: '5%',
+      gridTop: '20%',
       unit: '',
       min: '94',
       max: '101'
@@ -267,8 +267,8 @@ export const IndicesCharts = {
       typeArr: ['A0B0101', 'A0B0201', 'A0B0301'],
       dbCode: 'yd',
       exceptName: '采购经理指数商务活动产出',
-      legendTop: '20%',
-      gridTop: '35%',
+      legendTop: '5%',
+      gridTop: '20%',
       unit: '',
       min: '48',
       max: '57'
@@ -316,8 +316,8 @@ export const LivingStandardsCharts = {
       typeArr: ['A0A0H01', 'A0A0H02', 'A0A0H03'],
       dbCode: 'nd',
       exceptName: '恩格尔系数',
-      legendTop: '27%',
-      gridTop: '35%',
+      legendTop: '5%',
+      gridTop: '30%',
       unit: '',
       min: '25',
       max: '35'
@@ -337,8 +337,8 @@ export const LivingStandardsCharts = {
       typeArr: ['A0A0G01'],
       dbCode: 'nd',
       exceptName: '基尼系数',
-      legendTop: '27%',
-      gridTop: '35%',
+      legendTop: '5%',
+      gridTop: '30%',
       unit: '',
       min: '0.4',
       max: '0.5'

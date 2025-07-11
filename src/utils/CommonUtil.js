@@ -1,5 +1,4 @@
 import axios from 'axios'
-import * as echarts from 'echarts';
 
 
 // 定义排序函数
@@ -67,116 +66,8 @@ export function selectDataFromArr(returnData, zbCode, fieldKey, dbCode = 'nd', c
 }
 
 // 图表统一绘制方法
-// basicParams-包含echrtId、title、legendTop、gridTop、xAxisDataArr
-// zbcodeArr所有的请求代码数组 [A0M020202,A0M020302]
-// returnData 本地或者请求返回来的数据
-export function drawCommonChart(basicParams, zbArr, returnData, cityCodeArr = []) {
-  // 通用查询
-  const type = basicParams.chartType;
-  let cname = ''
-  let name = ''
-  let valueArr = []
-  let seriesData = []
-  if (cityCodeArr.length < 1) {
-    zbArr.map(zbCode => {
-      // 调用 selectDataFromArr 并处理返回的数据
-      // 截取不包含title的字段作为name
-      cname = selectDataFromArr(returnData, zbCode, 'cname', basicParams.dbCode)[0];
-
-      if (typeof cname !== 'string' || typeof basicParams.exceptName !== 'string') {
-        cname = cname || '总的';
-      } else {
-        let resultArr = cname.split('');
-        const exceptArr = basicParams.exceptName.split('');
-
-        // 按exceptName顺序，从resultArr里依次删除对应字符
-        for (const ch of exceptArr) {
-          const idx = resultArr.indexOf(ch);
-          if (idx !== -1) {
-            resultArr.splice(idx, 1);
-          }
-        }
-
-        cname = resultArr.join('').trim();
-        if (cname === '') {
-          cname = '总的';
-        }
-      }
-
-      name = cname + basicParams.unit;
-      valueArr = selectDataFromArr(returnData, zbCode,  'value', basicParams.dbCode);
-      const seriesJson = { name: name, type: type, data: valueArr };
-      seriesData.push(seriesJson)
-    })
-  } else {
-    // 循环查询某个城市的数据--此时的zbArr只会有一个值
-    cityCodeArr.map(cityCode => {
-      // 对于城市来说，图标的legent的name取城市名字就行
-      const result = returnData.dataList.reg.filter(item => item.code == cityCode)[0]
-      if (result == undefined) {
-        // 防止result为空
-        name = ''
-      } else {
-        name = result.cname
-      }
-      valueArr = selectDataFromArr(returnData, zbArr[0],'value', basicParams.dbCode, cityCode)
-      const seriesJson = { name: name, type: type, data: valueArr };
-      seriesData.push(seriesJson)
-    })
-  }
-
-
-  // 基于准备好的dom，初始化echarts实例
-  var chart = echarts.init(document.getElementById(basicParams.echrtId));
-  // 指定图表的配置项和数据
-  var option = {
-    title: {
-      text: basicParams.title,
-      left: 'center',
-      top: 'top',
-      subtext: basicParams.subtitle,
-      subtextStyle: {
-        fontWeight: 'bold',
-        fontSize: 13,
-        lineHeight: 20,
-      }
-    },
-    tooltip: {
-      //X轴悬浮显示所有数据
-      trigger: 'axis'
-    },
-    legend: {
-      left: 'center',
-      top: basicParams.legendTop || '10%'
-    },
-    grid: {
-      left: '1%',
-      right: '1%',
-      top: basicParams.gridTop || '25%',
-      bottom: '1%',
-      containLabel: true
-    },
-    xAxis: {
-      type: 'category',
-      data: returnData.dataList.sj[basicParams.dbCode].sort()
-    },
-    yAxis: {
-      ... (basicParams.min !== undefined && basicParams.min !== null ? { min: basicParams.min } : {}),
-      ... (basicParams.max !== undefined && basicParams.max !== null ? { max: basicParams.max } : {})
-    },
-    series: seriesData,
-
-
-
-  };
-  console.log('',basicParams.title,seriesData)
-  // 使用刚指定的配置项和数据显示图表。
-  chart.setOption(option);
-}
-
 export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr = []) {
   const type = basicParams.chartType;
-  console.log('[调试] getCommonChartOption type =', type);
   const unit = basicParams.unit || '';
   const seriesData = [];
 
@@ -196,8 +87,7 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
       }
 
       const name = cname + unit;
-      const valueArr = selectDataFromArr(returnData, zbCode, 'value', basicParams.dbCode);
-      // console.log('重构后数据',valueArr);
+      const valueArr = selectDataFromArr(returnData, zbCode, 'value', basicParams.dbCode) || [];
       seriesData.push({ name, type, data: valueArr });
     });
   } else {
@@ -205,10 +95,28 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
     cityCodeArr.forEach(cityCode => {
       const city = returnData.dataList.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
-      // console.log('当前的城市',city);
-      const valueArr = selectDataFromArr(returnData, zbArr[0], 'value', basicParams.dbCode, cityCode);
+      const valueArr = selectDataFromArr(returnData, zbArr[0], 'value', basicParams.dbCode, cityCode) || [];
       seriesData.push({ name, type, data: valueArr });
     });
+  }
+
+  // 计算所有series中所有数据点，过滤有效数字
+  const allValues = seriesData.flatMap(s => s.data).filter(v => typeof v === 'number' && !isNaN(v));
+
+  const dataMin = allValues.length > 0 ? Math.min(...allValues) : 0;
+  const dataMax = allValues.length > 0 ? Math.max(...allValues) : 100;
+
+  // 5%缓冲区，防止数据紧贴边界，最小缓冲为1
+  const rangeMargin = (dataMax - dataMin) * 0.05 || 1;
+
+  // 优先使用用户传入的 min/max（转数字），否则自动计算
+  let finalMin = basicParams.min !== undefined ? Number(basicParams.min) : dataMin - rangeMargin;
+  let finalMax = basicParams.max !== undefined ? Number(basicParams.max) : dataMax + rangeMargin;
+
+  // 防止 min >= max
+  if (finalMin >= finalMax) {
+    finalMin = dataMin;
+    finalMax = dataMax + rangeMargin;
   }
 
   return {
@@ -221,16 +129,16 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
         fontWeight: 'bold',
         fontSize: 13,
         lineHeight: 20,
-        width: window.innerWidth * 0.8, // ✅ 设置为屏幕 70% 宽度
-        overflow: 'break'
-    }
+        width: window.innerWidth * 0.8,
+        overflowWrap: 'break-word'  // 修正 overflow 属性，保证换行
+      }
     },
     tooltip: { trigger: 'axis' },
-    legend: { left: 'center', top: basicParams.legendTop || '10%' },
+    legend: { left: 'center', top: basicParams.legendTop || '5%' },
     grid: {
       left: '1%',
       right: '1%',
-      top: basicParams.gridTop || '25%',
+      top: basicParams.gridTop || '20%',
       bottom: '1%',
       containLabel: true
     },
@@ -240,8 +148,14 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
     },
     yAxis: {
       type: 'value',
-      ...(basicParams.min !== undefined ? { min: basicParams.min } : {}),
-      ...(basicParams.max !== undefined ? { max: basicParams.max } : {})
+      scale: true,
+      min: finalMin,
+      max: finalMax,
+      axisLabel: {
+        formatter: (value) => {
+          return Math.round(value) + unit;
+        }
+      }
     },
     series: seriesData
   };
@@ -333,22 +247,22 @@ const params_realEstate_sell = [
 
 //社零
 const params_socialretailgoods = [
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070101"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零总
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070401"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070402"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070403"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070404"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070405"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070406"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070407"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070408"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A070409"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040A"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040B"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040C"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040D"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040E"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
-  {'dbcode' : 'hgyd','rowcode' : 'zb','wds' : '[]','dfwds' : '[{"wdcode":"zb","valuecode":"A07040F"},{"wdcode":"sj","valuecode":"LAST14"}]'},   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A070101"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零总
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A070401"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A070402"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A070403"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A070404"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A070405"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A070406"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A070407"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A070408"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A070409"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A07040A"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A07040B"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A07040C"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A07040D"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A07040E"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
+  { 'dbcode': 'hgyd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A07040F"},{"wdcode":"sj","valuecode":"LAST14"}]' },   // 社零分类
 ]
 // GDP
 const params_gdp = [

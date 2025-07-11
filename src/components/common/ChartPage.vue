@@ -123,20 +123,5 @@ export default {
   color: #fff;
 }
 
-.chart-title {
-  font-size: 18px;
-  font-weight: 600;
-  text-align: center;
-  margin: 24px 0 8px;
-}
 
-.chart-subtitle {
-  font-size: 14px;
-  font-weight: 400;
-  color: #666;
-  text-align: center;
-  margin: 4px 0 16px;
-  white-space: pre-line;
-  /* 支持换行 */
-}
 </style>
