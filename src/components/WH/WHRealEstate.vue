@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="nav-wrapper">
-            <nav class="sub-nav-container">
-                <router-link to="/WH/WHRealEstate/WHRealEstateInvest" class="sub-nav"
+            <nav class="nav-container">
+                <router-link to="/WH/WHRealEstate/WHRealEstateInvest" class="nav"
                     :class="{ active: $route.path === '/WH/WHRealEstate/WHRealEstateInvest' }">投资</router-link>
-                <router-link to="/WH/WHRealEstate/WHRealEstateSell" class="sub-nav"
+                <router-link to="/WH/WHRealEstate/WHRealEstateSell" class="nav"
                     :class="{ active: $route.path === '/WH/WHRealEstate/WHRealEstateSell' }">销售</router-link>
             </nav>
         </div>

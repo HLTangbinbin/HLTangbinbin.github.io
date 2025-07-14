@@ -299,13 +299,13 @@ export default {
 /* 每个图表块：一张卡片 */
 .chart-block {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto 60px;
   padding: 16px;
   box-sizing: border-box;
   background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
 }
 
 /* 图表标题 */
@@ -315,7 +315,7 @@ export default {
   font-weight: 700; /* 比 500 更粗，接近 canvas 渲染视觉效果 */
   color: #333;
   font-family: 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
-  margin: 0px 0 12px;
+  margin: 24px 0 6px;
   line-height: 1.4;
 }
 

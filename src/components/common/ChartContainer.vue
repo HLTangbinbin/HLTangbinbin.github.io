@@ -42,19 +42,15 @@ export default {
 
 <style scoped>
 .chart-container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0px 10px;
-    box-sizing: border-box;
-    /* 保证足够高度撑起图表 */
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* 让子元素水平居中 */
-    position: relative;
-    z-index: 1;
-    margin-top: 40px;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto 60px;
+  padding: 16px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
+  margin-top: 50px;
 }
 
 .chart-title {

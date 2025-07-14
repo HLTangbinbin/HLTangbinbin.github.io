@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="nav-wrapper">
-            <nav class="sub-nav-container">
-                <router-link to="/MajorProvincial/ProvincialRealEstate/ProvincialRealEstateInvest" class="sub-nav"
+            <nav class="nav-container">
+                <router-link to="/MajorProvincial/ProvincialRealEstate/ProvincialRealEstateInvest" class="nav"
                     :class="{ active: $route.path === '/MajorProvincial/ProvincialRealEstate/ProvincialRealEstateInvest' }">投资</router-link>
-                <router-link to="/MajorProvincial/ProvincialRealEstate/ProvincialRealEstateSell" class="sub-nav"
+                <router-link to="/MajorProvincial/ProvincialRealEstate/ProvincialRealEstateSell" class="nav"
                     :class="{ active: $route.path === '/MajorProvincial/ProvincialRealEstate/ProvincialRealEstateSell' }">销售</router-link>
             </nav>
         </div>

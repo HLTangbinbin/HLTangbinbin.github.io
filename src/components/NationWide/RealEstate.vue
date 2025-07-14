@@ -1,9 +1,9 @@
 <template>
     <div>
       <div class="nav-wrapper">
-        <nav class="sub-nav-container">
-        <router-link to="/NationWide/RealEstate/RealEstateInvest" class="sub-nav" :class="{ active: $route.path === '/NationWide/RealEstate/RealEstateInvest' }">投资</router-link>
-        <router-link to="/NationWide/RealEstate/RealEstateSell" class="sub-nav" :class="{ active: $route.path === '/NationWide/RealEstate/RealEstateSell' }" >销售</router-link>
+        <nav class="nav-container">
+        <router-link to="/NationWide/RealEstate/RealEstateInvest" class="nav" :class="{ active: $route.path === '/NationWide/RealEstate/RealEstateInvest' }">投资</router-link>
+        <router-link to="/NationWide/RealEstate/RealEstateSell" class="nav" :class="{ active: $route.path === '/NationWide/RealEstate/RealEstateSell' }" >销售</router-link>
       </nav>
       </div>
 

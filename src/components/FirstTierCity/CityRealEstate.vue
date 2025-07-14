@@ -1,12 +1,12 @@
 <template>
     <div>
         <div class="nav-wrapper">
-            <nav class="sub-nav-container">
-                <router-link to="/FirstTierCity/CityRealEstate/CityRealEstateInvest" class="sub-nav"
+            <nav class="nav-container">
+                <router-link to="/FirstTierCity/CityRealEstate/CityRealEstateInvest" class="nav"
                     :class="{ active: $route.path === '/FirstTierCity/CityRealEstate/CityRealEstateInvest' }">投资</router-link>
-                <router-link to="/FirstTierCity/CityRealEstate/CityRealEstateSell" class="sub-nav"
+                <router-link to="/FirstTierCity/CityRealEstate/CityRealEstateSell" class="nav"
                     :class="{ active: $route.path === '/FirstTierCity/CityRealEstate/CityRealEstateSell' }">销售</router-link>
-                <router-link to="/FirstTierCity/CityRealEstate/CityRealEstatePriceIndices" class="sub-nav"
+                <router-link to="/FirstTierCity/CityRealEstate/CityRealEstatePriceIndices" class="nav"
                     :class="{ active: $route.path === '/FirstTierCity/CityRealEstate/CityRealEstatePriceIndices' }">价格指数</router-link>
             </nav>
         </div>
