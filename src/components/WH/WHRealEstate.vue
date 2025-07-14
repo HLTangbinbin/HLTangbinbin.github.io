@@ -1,23 +1,41 @@
 <template>
-    <div>
-        <div class="nav-wrapper">
-            <nav class="nav-container">
-                <router-link to="/WH/WHRealEstate/WHRealEstateInvest" class="nav"
-                    :class="{ active: $route.path === '/WH/WHRealEstate/WHRealEstateInvest' }">投资</router-link>
-                <router-link to="/WH/WHRealEstate/WHRealEstateSell" class="nav"
-                    :class="{ active: $route.path === '/WH/WHRealEstate/WHRealEstateSell' }">销售</router-link>
-            </nav>
-        </div>
-
-        <router-view></router-view> <!-- 用于显示子路由的内容 -->
-    </div>
+  <div>
+    <!-- 自动判断当前 basePath 与 navItems -->
+    <NavBar :navItems="navItems" :basePath="basePath" />
+    <router-view />
+  </div>
 </template>
 
 <script>
-// 不需要在这里直接引入 RealEstateInvest 和 RealEstateSell
-// 因为路由配置已经处理了组件的引入
+import NavBar from '@/utils/NavBar.vue';
+import { navConfig } from '@/config/navConfig';
 
 export default {
-    name: 'WHRealEstate'
+  name: 'WHRealEstate',
+  components: { NavBar },
+  computed: {
+    navItems() {
+      const matched = this.$route.matched;
+      const basePath = matched[0]?.path;
+      const secondPath = matched[1]?.path;
+
+      const group = navConfig.find(i => i.path === basePath);
+      if (!group) return [];
+
+      const second = group.children?.find(i => `${basePath}/${i.path}` === secondPath);
+      if (second?.children) {
+        return second.children;
+      }
+
+      return group.children || [];
+    },
+    basePath() {
+      const matched = this.$route.matched;
+      if (matched.length >= 2) {
+        return matched[1].path;
+      }
+      return matched[0]?.path || '';
+    }
+  }
 };
 </script>
