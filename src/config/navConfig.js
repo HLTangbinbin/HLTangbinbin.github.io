@@ -77,7 +77,7 @@ export const navConfig = [
       },
       { path: 'SocialRetailgoods', label: '社零' },
       { path: 'NationalFinance', label: '财政' },
-      { path: 'FinancialIndustry', label: '金融业' },
+      { path: 'FinancialIndustry', label: '金融' },
       { path: 'ForeignTrade', label: '外贸' },
       { path: 'PopulationCorrelation', label: '人口' },
       { path: 'EducationSector', label: '教育' },
