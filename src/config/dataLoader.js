@@ -1,5 +1,6 @@
 // utils/dataLoader.js
 import { sendRequest } from '@/utils/CommonUtil.js';
+import { logger } from '@/utils/Logger.js';
 
 /**
  * 加载图表数据（支持远程 API 和本地 JSON 文件）
@@ -18,7 +19,7 @@ export async function loadChartData({ localJson, apiParams }) {
       return await response.json();
 
     } catch (error) {
-      console.error('本地数据加载失败:', error);
+      logger.error('本地数据加载失败:', error);
       throw error;
     }
   } else {
@@ -26,7 +27,7 @@ export async function loadChartData({ localJson, apiParams }) {
       const result = await sendRequest(apiParams);
       return result;
     } catch (error) {
-      console.error('接口请求失败:', error);
+      logger.error('接口请求失败:', error);
       throw error;
     }
   }

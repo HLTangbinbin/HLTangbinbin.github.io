@@ -59,7 +59,6 @@ export default {
       };
 
       const cityCodeArr = this.config?.cityCodeArr || [];
-      console.log(' yAxis min/max =', params.min, params.max);
       const option = getCommonChartOption(params, this.chart.typeArr, this.returnData, cityCodeArr, this.yearLimit);
 
       if (option.title) delete option.title; // 防止重复标题显示

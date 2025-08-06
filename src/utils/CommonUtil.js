@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { logger } from '@/utils/Logger.js';
 
 
 // 定义排序函数
@@ -87,7 +88,7 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
   const type = basicParams.chartType;
   const unit = basicParams.unit || '';
   const seriesData = [];
-  console.log("传入的年份：", yearLimit);
+
 
   if (cityCodeArr.length === 0) {
     // 不区分城市，展示多个指标
@@ -134,7 +135,7 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
 
   const fullYears = (returnData.dataList.sj?.[basicParams.dbCode] || []).sort((a, b) => a.localeCompare(b)); // 确保按年份排序
   const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
-  console.log("筛选后的年份：", filteredYears);
+
   // 防止 min >= max
   if (finalMin >= finalMax) {
     finalMin = dataMin;
@@ -400,12 +401,12 @@ export async function sendRequest(specificParams) {
 
   for (let params of specificParams) {
     let mergedParams = { ...common_params, ...params };
-    console.log("请求完整参数：", mergedParams)
+    logger.debug("请求完整参数：", mergedParams)
     try {
 
       let response = await axios.get(totalUrl, { params: mergedParams, timeout: 30000 });
       let data = response.data;
-      console.log("请求返回数据：", data.returndata)
+      logger.debug("请求返回数据：", data.returndata)
       if (data && data.returndata) {
         if (data.returndata.datanodes) {
           datanodesArr = datanodesArr.concat(data.returndata.datanodes);
@@ -434,9 +435,9 @@ export async function sendRequest(specificParams) {
 
     } catch (error) {
       if (error.response && error.response.data) {
-        console.error(`JSON解码错误: 响应内容不是JSON格式,响应内容为: ${error.response.data}`);
+        logger.error(`JSON解码错误: 响应内容不是JSON格式,响应内容为: ${error.response.data}`);
       } else {
-        console.error('请求错误:', error.message);
+        logger.error('请求错误:', error.message);
       }
       return;
     }

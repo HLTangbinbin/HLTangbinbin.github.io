@@ -15,6 +15,7 @@
 </template>
   <script>
   import * as echarts from 'echarts';
+  import { logger } from '@/utils/Logger.js';
   
   export default {
 
@@ -44,14 +45,14 @@
         fetch('json/whhouseTradingInfo.json')
           .then(response => response.json())
           .then(data => {
-            // console.log('读取本地数据二手房数据:', data.houseList);
+            // logger.log('读取本地数据二手房数据:', data.houseList);
             this.houseList = data.houseList;
             this.handleData();
             // 处理数据绘制图表
             this.drawBarChart();
           })
           .catch(error => {
-            console.error('Error fetching data:', error)
+            logger.error('Error fetching data:', error)
           })
       },
         handleData() {
@@ -60,7 +61,7 @@
           this.oldHouseArrayYear2020 = this.oldHouseTotalArr('oldHouseVolume','2020')
           this.oldHouseArrayYear2021 = this.oldHouseTotalArr('oldHouseVolume','2021')
           this.oldHouseArrayYear2022 = this.oldHouseTotalArr('oldHouseVolume','2022')
-          console.log('2022年二手房年成交数组 %o ',this.oldHouseArrayYear2022)
+          logger.debug('2022年二手房年成交数组 %o ',this.oldHouseArrayYear2022)
           // 2019-2022年二手房月成交数据
           this.oldHouseArrayMonth2019 = this.oldSelectMonthArr(this.oldHouseArrayYear2019)
           this.oldHouseArrayMonth2020 = this.oldSelectMonthArr(this.oldHouseArrayYear2020)
@@ -71,7 +72,7 @@
           this.oldHouseArrayMonth2020.unshift(0, 0, this.oldHouseArrayYear2020[0])
           this.oldHouseArrayMonth2021.unshift(0, this.oldHouseArrayYear2021[0])
           this.oldHouseArrayMonth2022.unshift(0, this.oldHouseArrayYear2022[0])
-          console.log('2022年二手房月成交数组 %o ',this.oldHouseArrayMonth2022)
+          logger.debug('2022年二手房月成交数组 %o ',this.oldHouseArrayMonth2022)
           //前面数据补齐-2020年前3月数据为0
           this.oldHouseArrayMonth2020.unshift(0, 0, 0);
         },

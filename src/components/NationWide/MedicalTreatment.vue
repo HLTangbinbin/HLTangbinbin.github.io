@@ -12,6 +12,7 @@ import ChartPage from '@/components/common/ChartPage.vue';
 import { MedicalCharts } from '@/config/chartMetaNation.js';
 
 import { loadChartData } from '@/config/dataLoader.js';
+import { logger } from '@/utils/Logger.js';
 
 export default {
   name: 'MedicalTreatment',
@@ -29,7 +30,7 @@ export default {
         this.config
       );
     } catch (e) {
-      console.error('加载数据失败', e);
+      logger.error('加载数据失败', e);
     }
   }
 };
