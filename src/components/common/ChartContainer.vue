@@ -13,8 +13,14 @@
                 折线图
             </button>
         </div>
+        <div class="year-selector">
+            <label class="year-label">选择时间范围</label>
+            <el-slider v-model="yearLimit" :min="1" :max="20" :step="1" show-tooltip
+                :format-tooltip="val => `近 ${val} 年`" class="year-slider" />
+        </div>
 
-        <ChartCard :chart="chart" :chartType="chartType" :returnData="returnData" :config="config" />
+        <ChartCard :chart="chart" :chartType="chartType" :returnData="returnData" :config="config"
+            :yearLimit="yearLimit" />
     </div>
 </template>
 
@@ -34,55 +40,63 @@ export default {
     },
     data() {
         return {
-            chartType: this.initialChartType
+            chartType: this.initialChartType,
+            yearLimit: 10
         };
     }
 };
+
 </script>
+
+
 
 <style scoped>
 .chart-container {
-  width: 100%;
-  max-width: 1500px;
-  margin: 0 auto 60px;
-  padding: 16px;
-  box-sizing: border-box;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
-  margin-top: 50px;
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto 60px;
+    padding: 16px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
+    margin-top: 50px;
 }
 
 .chart-title {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 700; /* 比 500 更粗，接近 canvas 渲染视觉效果 */
-  color: #333;
-  font-family: 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
-  margin: 24px 0 6px;
-  line-height: 1.4;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    /* 比 500 更粗，接近 canvas 渲染视觉效果 */
+    color: #333;
+    font-family: 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+    margin: 24px 0 6px;
+    line-height: 1.4;
 
-  
+
 }
 
 .chart-subtitle {
-  font-size: 13px;
-  font-weight: bold;
-  line-height: 20px;
-  color: #666; /* 可改为 #aaa 如果需要更淡 */
-  text-align: center;
-  white-space: pre-line;
-  overflow-wrap: break-word;
-  margin: 0 auto 12px;
-  max-width: 80vw; /* 等价于 window.innerWidth * 0.8 */
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #666;
+    /* 可改为 #aaa 如果需要更淡 */
+    text-align: center;
+    white-space: pre-line;
+    overflow-wrap: break-word;
+    margin: 0 auto 12px;
+    max-width: 80vw;
+    /* 等价于 window.innerWidth * 0.8 */
 }
 
 .chart-controls {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 16px;
-  margin-top: 8px; /* ✅ 确保和 legend 保持间隔 */
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    margin-top: 8px;
+    /* ✅ 确保和 legend 保持间隔 */
 }
 
 .chart-button {
@@ -99,5 +113,37 @@ export default {
 
 .chart-button.is-active {
     background-color: #0bc2d6;
+}
+
+.year-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 横向居中 */
+    justify-content: center;
+    /* 纵向居中 */
+    margin: 16px 0;
+}
+
+.year-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+/* 限制滑块宽度 */
+.year-slider {
+    width: 200px;
+}
+
+/* Vue3 推荐写法：v-deep 前缀，作用于 element-plus 内部 */
+::v-deep(.year-slider .el-slider__bar) {
+    background-color: #0bc2d6 !important;
+}
+
+::v-deep(.year-slider .el-slider__button) {
+    background-color: #0bc2d6 !important;
+    border-color: #0bc2d6 !important;
 }
 </style>

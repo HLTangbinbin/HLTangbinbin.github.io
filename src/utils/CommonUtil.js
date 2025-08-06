@@ -28,15 +28,31 @@ export function sortYearMonths(date1, date2) {
   return compareYearMonth(date1, date2);
 }
 // //按照年份与日期做筛选与排序
-export function selectDataFromArr(returnData, zbCode, fieldKey, dbCode = 'nd', cityCode = '') {
+// //按照年份与日期做筛选与排序
+export function selectDataFromArr(returnData, zbCode, fieldKey, dbCode = 'nd', cityCode = '', yearLimit = 10) {
+
+  // 先获取所有数据中最大的年份（即数据最后一年）
+  const allYears = returnData.dataList.data[dbCode]
+    .map(d => parseInt(d.date?.substring(0, 4), 10))
+    .filter(y => !isNaN(y));
+  const maxDataYear = Math.max(...allYears);
+
+  // 使用 maxDataYear 作为数据有效的当前年份
   const filteredData = returnData.dataList.data[dbCode]
     .filter(returnDataObj => {
-      // 首先筛选出符合指标代码的数据
-      if (cityCode == '') {
-        return returnDataObj.code.search(zbCode) !== -1
-      } else {
-        return returnDataObj.code.search(zbCode) !== -1 && returnDataObj.cityCode.search(cityCode) !== -1;
+      // 筛选符合 zbCode 和 cityCode 的数据
+      const isMatchZb = returnDataObj.code.search(zbCode) !== -1;
+      const isMatchCity = cityCode === '' || returnDataObj.cityCode.search(cityCode) !== -1;
+      if (!isMatchZb || !isMatchCity) return false;
+
+      // 筛选近 yearLimit 年
+      if (yearLimit !== null && yearLimit > 0) {
+        const year = parseInt(returnDataObj.date?.substring(0, 4), 10);
+        if (isNaN(year)) return false;
+        return year >= maxDataYear - yearLimit + 1;
       }
+
+      return true;
     })
     .sort((a, b) => {
       // 根据日期排序
@@ -55,27 +71,30 @@ export function selectDataFromArr(returnData, zbCode, fieldKey, dbCode = 'nd', c
         }
       }
 
-      // 在过滤过程中，保留中间的 0，剔除末尾的连续 0
+      // 保留中间的 0，剔除末尾连续的 0
       return index <= lastNonZeroIndex || returnDataObj.value !== 0;
     })
     .map(item => {
       // 提取指定字段的值
       return item[fieldKey];
     });
+
   return filteredData;
 }
 
 // 图表统一绘制方法
-export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr = []) {
+export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr = [], yearLimit = 10) {
   const type = basicParams.chartType;
   const unit = basicParams.unit || '';
   const seriesData = [];
+  console.log("传入的年份：", yearLimit);
 
   if (cityCodeArr.length === 0) {
     // 不区分城市，展示多个指标
     zbArr.forEach(zbCode => {
-      let cname = selectDataFromArr(returnData, zbCode, 'cname', basicParams.dbCode)?.[0] || '总的';
+      let cname = selectDataFromArr(returnData, zbCode, 'cname', basicParams.dbCode, '', yearLimit)?.[0] || '总的';
 
+      // 去除 cname 中的 exceptName 字符
       if (typeof cname === 'string' && typeof basicParams.exceptName === 'string') {
         const resultArr = cname.split('');
         const exceptArr = basicParams.exceptName.split('');
@@ -87,7 +106,7 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
       }
 
       const name = cname + unit;
-      const valueArr = selectDataFromArr(returnData, zbCode, 'value', basicParams.dbCode) || [];
+      const valueArr = selectDataFromArr(returnData, zbCode, 'value', basicParams.dbCode, '', yearLimit) || [];
       seriesData.push({ name, type, data: valueArr });
     });
   } else {
@@ -95,7 +114,7 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
     cityCodeArr.forEach(cityCode => {
       const city = returnData.dataList.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
-      const valueArr = selectDataFromArr(returnData, zbArr[0], 'value', basicParams.dbCode, cityCode) || [];
+      const valueArr = selectDataFromArr(returnData, zbArr[0], 'value', basicParams.dbCode, cityCode, yearLimit) || [];
       seriesData.push({ name, type, data: valueArr });
     });
   }
@@ -113,6 +132,9 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
   let finalMin = basicParams.min !== undefined ? Number(basicParams.min) : dataMin - rangeMargin;
   let finalMax = basicParams.max !== undefined ? Number(basicParams.max) : dataMax + rangeMargin;
 
+  const fullYears = (returnData.dataList.sj?.[basicParams.dbCode] || []).sort((a, b) => a.localeCompare(b)); // 确保按年份排序
+  const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
+  console.log("筛选后的年份：", filteredYears);
   // 防止 min >= max
   if (finalMin >= finalMax) {
     finalMin = dataMin;
@@ -144,7 +166,7 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
     },
     xAxis: {
       type: 'category',
-      data: (returnData.dataList.sj?.[basicParams.dbCode] || []).sort()
+      data: filteredYears
     },
     yAxis: {
       type: 'value',

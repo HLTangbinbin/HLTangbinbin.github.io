@@ -67,6 +67,7 @@ export const navConfig = [
     label: '全国',
     children: [
       { path: 'GrossDomesticProduct', label: 'GDP' },
+      { path: 'PopulationCorrelation', label: '人口' },
       {
         path: 'RealEstate',
         label: '房地产',
@@ -79,7 +80,6 @@ export const navConfig = [
       { path: 'NationalFinance', label: '财政' },
       { path: 'FinancialIndustry', label: '金融' },
       { path: 'ForeignTrade', label: '外贸' },
-      { path: 'PopulationCorrelation', label: '人口' },
       { path: 'EducationSector', label: '教育' },
       { path: 'MedicalTreatment', label: '医疗' },
       { path: 'MarriageStatus', label: '婚姻' },
