@@ -1,17 +1,34 @@
-// utils/logger.js
 const logLevels = ['debug', 'info', 'warn', 'error'];
-const currentLevel = process.env.LOG_LEVEL || 'info'; // 支持动态日志级别
+
+// 默认：生产环境日志等级为 warn，开发环境为 debug
+const defaultLevel = process.env.NODE_ENV === 'production' ? 'warn' : 'debug';
+const currentLevel = process.env.LOG_LEVEL || defaultLevel;
+
+function shouldLog(level) {
+  return logLevels.indexOf(level) >= logLevels.indexOf(currentLevel);
+}
 
 export const logger = {
   debug: (...args) => {
-    if (process.env.NODE_ENV !== 'production' && logLevels.indexOf('debug') >= logLevels.indexOf(currentLevel)) {
-      logger.log('[DEBUG]', ...args);
+    if (shouldLog('debug')) {
+      console.log('[DEBUG]', ...args);
+    }
+  },
+  info: (...args) => {
+    if (shouldLog('info')) {
+      console.info('[INFO]', ...args);
+    }
+  },
+  warn: (...args) => {
+    if (shouldLog('warn')) {
+      console.warn('[WARN]', ...args);
     }
   },
   error: (...args) => {
-    if (logLevels.indexOf('error') >= logLevels.indexOf(currentLevel)) {
-      logger.error('[ERROR]', ...args); // 生产环境也保留错误日志
+    if (shouldLog('error')) {
+      console.error('[ERROR]', ...args);
     }
-  }
+  },
 };
+
 
