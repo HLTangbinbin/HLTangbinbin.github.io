@@ -11,7 +11,7 @@
     </div>
 
     <ChartContainer v-for="chart in chartsToRender" :key="chart.id" :chart="chart" :returnData="returnData"
-      :config="config" />
+      :config="config" :viewMode="viewMode" />
   </div>
 </template>
 

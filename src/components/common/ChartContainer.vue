@@ -16,7 +16,7 @@
         <div class="year-selector">
             <label class="year-label">选择时间范围</label>
             <el-slider v-model="yearLimit" :min="1" :max="20" :step="1" show-tooltip
-                :format-tooltip="val => `近 ${val} 年`" class="year-slider" />
+                :format-tooltip="formatTooltip" class="year-slider" />
         </div>
 
         <ChartCard :chart="chart" :chartType="chartType" :returnData="returnData" :config="config"
@@ -36,13 +36,23 @@ export default {
         initialChartType: {
             type: String,
             default: 'bar'
-        }
+        },
+        viewMode: String,
     },
     data() {
         return {
             chartType: this.initialChartType,
             yearLimit: 10
         };
+    },
+    computed: {
+        // 支持动态 tooltip 格式
+        formatTooltip() {
+            return (val) => {
+                const unit = this.viewMode === 'monthly' ? '个月' : '年';
+                return `近 ${val} ${unit}`;
+            };
+        }
     }
 };
 
@@ -137,7 +147,8 @@ export default {
 
 /* 限制滑块宽度 */
 .year-slider {
-    width: 10%;
+    width: 10%; /* 默认 PC 端 */
+    min-width: 100px; /* 避免过窄 */
 }
 
 /* Vue3 推荐写法：v-deep 前缀，作用于 element-plus 内部 */
