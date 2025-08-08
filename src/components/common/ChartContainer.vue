@@ -126,15 +126,18 @@ export default {
 }
 
 .year-label {
-    font-size: 14px;
+    padding: 6px 8px;
+    font-size: 13px;
+    border-radius: 8px;
     font-weight: bold;
     margin-bottom: 8px;
-    color: #444;
+    color: #fff;
+    background-color: #0bc2d6 !important;
 }
 
 /* 限制滑块宽度 */
 .year-slider {
-    width: 200px;
+    width: 10%;
 }
 
 /* Vue3 推荐写法：v-deep 前缀，作用于 element-plus 内部 */

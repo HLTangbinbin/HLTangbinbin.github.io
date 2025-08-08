@@ -8,7 +8,8 @@ export const navConfig = [
       { path: 'WHNewHouse', label: '新房' },
       { path: 'WHSecondHandHouse', label: '二手房' },
       { path: 'WHGDP', label: 'GDP' },
-      { path: 'WHEducation', label: '教育' },
+      { path: 'WHPopulation', label: '人口' },
+      { path: 'WHFinance', label: '财政' },
       {
         path: 'WHRealEstate',
         label: '房地产',
@@ -17,9 +18,11 @@ export const navConfig = [
           { path: 'WHRealEstateSell', label: '销售' }
         ]
       },
-      { path: 'WHFinance', label: '财政' },
+      { path: 'WHEducation', label: '教育' },
+
+
       { path: 'WHMedical', label: '医疗' },
-      { path: 'WHPopulation', label: '人口' }
+
     ]
   },
   {
@@ -28,6 +31,7 @@ export const navConfig = [
     children: [
       { path: 'CityGDP', label: 'GDP' },
       { path: 'CityPopulation', label: '人口' },
+      { path: 'CityFinance', label: '财政' },
       {
         path: 'CityRealEstate',
         label: '房地产',
@@ -37,7 +41,7 @@ export const navConfig = [
           { path: 'CityRealEstatePriceIndices', label: '价格指数' }
         ]
       },
-      { path: 'CityFinance', label: '财政' },
+
       { path: 'CityEducation', label: '教育' },
       { path: 'CityMedical', label: '医疗' }
     ]
@@ -48,6 +52,7 @@ export const navConfig = [
     children: [
       { path: 'ProvincialGDP', label: 'GDP' },
       { path: 'ProvincialPopulation', label: '人口' },
+      { path: 'ProvincialFinance', label: '财政' },
       {
         path: 'ProvincialRealEstate',
         label: '房地产',
@@ -56,10 +61,9 @@ export const navConfig = [
           { path: 'ProvincialRealEstateSell', label: '销售' }
         ]
       },
-      { path: 'ProvincialFinance', label: '财政' },
-      { path: 'ProvincialLiving', label: '生活水平' },
       { path: 'ProvincialEducation', label: '教育' },
-      { path: 'ProvincialMedical', label: '医疗' }
+      { path: 'ProvincialMedical', label: '医疗' },
+      { path: 'ProvincialLiving', label: '生活水平' }
     ]
   },
   {
@@ -68,6 +72,7 @@ export const navConfig = [
     children: [
       { path: 'GrossDomesticProduct', label: 'GDP' },
       { path: 'PopulationCorrelation', label: '人口' },
+      { path: 'NationalFinance', label: '财政' },
       {
         path: 'RealEstate',
         label: '房地产',
@@ -76,14 +81,13 @@ export const navConfig = [
           { path: 'RealEstateSell', label: '销售' }
         ]
       },
-      { path: 'SocialRetailgoods', label: '社零' },
-      { path: 'NationalFinance', label: '财政' },
-      { path: 'FinancialIndustry', label: '金融' },
-      { path: 'ForeignTrade', label: '外贸' },
       { path: 'EducationSector', label: '教育' },
       { path: 'MedicalTreatment', label: '医疗' },
       { path: 'MarriageStatus', label: '婚姻' },
-      { path: 'IndicesData', label: '指标' },
+      { path: 'SocialRetailgoods', label: '社零' },
+      { path: 'FinancialIndustry', label: '金融' },
+      { path: 'ForeignTrade', label: '外贸' },
+      { path: 'IndicesData', label: '指数' },
       { path: 'LivingStandards', label: '生活' },
       { path: 'ProvidentFund', label: '公积金' }
     ]
