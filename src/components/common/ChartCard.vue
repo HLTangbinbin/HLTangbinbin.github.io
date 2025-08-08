@@ -52,8 +52,6 @@ export default {
         gridTop: this.chart.gridTop,
         echrtId: this.chart.id,
         chartType: this.chartType,
-        min: this.chart.min,
-        max: this.chart.max,
         yearLimit: this.yearLimit,
         
       };

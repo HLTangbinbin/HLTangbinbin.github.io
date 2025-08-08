@@ -172,12 +172,10 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
     yAxis: {
       type: 'value',
       scale: true,
-      min: finalMin,
-      max: finalMax,
+      min: (value) => value.min - (value.max - value.min) * 0.1, // 下边留10%
+      max: (value) => value.max + (value.max - value.min) * 0.1, // 上边留10%
       axisLabel: {
-        formatter: (value) => {
-          return Math.round(value) + unit;
-        }
+        formatter: (value) => value.toFixed(2) + unit
       }
     },
     series: seriesData

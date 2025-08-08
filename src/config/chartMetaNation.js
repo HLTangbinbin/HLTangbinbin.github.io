@@ -255,8 +255,6 @@ export const IndicesCharts = {
       legendTop: '5%',
       gridTop: '20%',
       unit: '',
-      min: '94',
-      max: '101'
     },
     {
       id: 'ID-PM',
@@ -270,8 +268,6 @@ export const IndicesCharts = {
       legendTop: '5%',
       gridTop: '20%',
       unit: '',
-      min: '48',
-      max: '57'
     }
   ]
 };
@@ -319,8 +315,7 @@ export const LivingStandardsCharts = {
       legendTop: '5%',
       gridTop: '30%',
       unit: '',
-      min: '25',
-      max: '35'
+
     },
     {
       id: 'LS-GC',
@@ -340,8 +335,6 @@ export const LivingStandardsCharts = {
       legendTop: '5%',
       gridTop: '30%',
       unit: '',
-      min: '0.4',
-      max: '0.5'
     }
   ]
 };

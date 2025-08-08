@@ -260,8 +260,6 @@ export const CityRealEstatePriceIndicesCharts = {
             legendTop: '5%',
             gridTop: '25%',
             unit: '',
-            max: '101',
-            min: '98'
         },
         {
             id: 'ES-SY',
@@ -275,8 +273,6 @@ export const CityRealEstatePriceIndicesCharts = {
             legendTop: '5%',
             gridTop: '25%',
             unit: '',
-            max: '101',
-            min: '98'
         },
 
     ]

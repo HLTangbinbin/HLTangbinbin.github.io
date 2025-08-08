@@ -171,8 +171,6 @@ export const ProvincialMedicalCharts = {
             legendTop: '5%',
             gridTop: '25%',
             unit: '',
-            max: '100',
-            min: '40'
         }
 
     ]
@@ -230,7 +228,6 @@ export const ProvincialPopulationCharts = {
       legendTop: '5%',
       gridTop: '30%',
       unit: '',
-      min: '4'
     },
     {
       id: 'PRI',
@@ -349,8 +346,6 @@ export const ProvinceRealEstatePriceIndicesCharts = {
             legendTop: '5%',
             gridTop: '25%',
             unit: '',
-            max: '101',
-            min: '98'
         },
         {
             id: 'ES-SY',
@@ -364,8 +359,6 @@ export const ProvinceRealEstatePriceIndicesCharts = {
             legendTop: '5%',
             gridTop: '25%',
             unit: '',
-            max: '101',
-            min: '98'
         },
 
     ]

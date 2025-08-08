@@ -38,7 +38,7 @@ export const navConfig = [
         children: [
           { path: 'CityRealEstateInvest', label: '投资' },
           { path: 'CityRealEstateSell', label: '销售' },
-          { path: 'CityRealEstatePriceIndices', label: '价格指数' }
+          { path: 'CityRealEstatePriceIndices', label: '指数' }
         ]
       },
 
@@ -63,7 +63,7 @@ export const navConfig = [
       },
       { path: 'ProvincialEducation', label: '教育' },
       { path: 'ProvincialMedical', label: '医疗' },
-      { path: 'ProvincialLiving', label: '生活水平' }
+      { path: 'ProvincialLiving', label: '生活' }
     ]
   },
   {
