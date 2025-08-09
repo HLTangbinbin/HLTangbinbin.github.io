@@ -12,39 +12,67 @@ export default {
     option: {
       type: Object,
       required: true
+    },
+    debug: { // 可在父组件临时传 debug=true 打开更多日志
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
     const chartContainer = ref(null);
     let chartInstance = null;
     let resizeObserver = null;
+    let initCount = 0;
+    let disposeCount = 0;
+    let setOptionCount = 0;
+
+    const log = (...args) => {
+      if (props.debug) {
+        console.log('[ChartView]', ...args);
+      }
+    };
 
     const initChart = () => {
       if (!chartContainer.value) return;
 
-      // 如果已有实例，先销毁
-      if (chartInstance) {
-        chartInstance.dispose();
-        chartInstance = null;
+      if (!chartInstance) {
+        initCount++;
+        console.time(`echarts-init-${initCount}`);
+        chartInstance = echarts.init(chartContainer.value);
+        console.timeEnd(`echarts-init-${initCount}`);
+        log(`init #${initCount} (container):`, chartContainer.value);
+
+        // resize 监听
+        window.addEventListener('resize', resizeChart);
+
+        resizeObserver = new ResizeObserver(() => {
+          if (chartInstance) {
+            chartInstance.resize();
+          }
+        });
+        resizeObserver.observe(chartContainer.value);
       }
 
-      // 初始化echarts实例
-      chartInstance = echarts.init(chartContainer.value);
-
+      // 首次初始化后，如果已有 option 立即 setOption 一次
       if (props.option && Object.keys(props.option).length > 0) {
-        chartInstance.setOption(props.option);
+        applyOption(props.option);
       }
+    };
 
-      // 监听窗口resize，自动调整图表大小
-      window.addEventListener('resize', resizeChart);
-
-      // 使用ResizeObserver监听容器尺寸变化
-      resizeObserver = new ResizeObserver(() => {
-        if (chartInstance) {
-          chartInstance.resize();
-        }
-      });
-      resizeObserver.observe(chartContainer.value);
+    const applyOption = (opt) => {
+      if (!chartInstance) return;
+      setOptionCount++;
+      const label = `echarts-setOption-${setOptionCount}`;
+      console.time(label);
+      // 第2个参数 notMerge = false 保留合并逻辑（你之前改成 false）
+      // 第3个参数 lazyUpdate = true 尽量降低同步更新开销（可观察效果）
+      try {
+        chartInstance.setOption(opt, false, true);
+      } catch (e) {
+        console.error('[ChartView] setOption error', e);
+      }
+      console.timeEnd(label);
+      log(`setOption count=${setOptionCount}`);
     };
 
     const resizeChart = () => {
@@ -55,34 +83,45 @@ export default {
 
     onMounted(async () => {
       await nextTick();
+      log('onMounted');
       initChart();
     });
 
     watch(
       () => props.option,
       (newOption) => {
-        if (chartInstance && newOption && Object.keys(newOption).length > 0) {
-          /** 
-           * 当初你需要 true 的可能原因：	getCommonChartOption 之前只更新了 series 或部分坐标轴，其他没覆盖 → ECharts 会合并旧配置，导致残影现在是全量生成，所以 false 就够了
-           * 现在改为flase，避免取消某个lengend后，滑动年份，又会重新选中所有的lengend，而且也没出现切换tab和类型后图表显示异常
-           * */ 
-          chartInstance.setOption(newOption, false); 
+        if (newOption && Object.keys(newOption).length > 0) {
+          // 给出更多日志：测量从 watch 到 setOption 的时间
+          const t0 = performance.now();
+          applyOption(newOption);
+          const t1 = performance.now();
+          log(`watch->applyOption elapsed ${(t1 - t0).toFixed(1)} ms`);
         }
       },
       { deep: true }
     );
 
     onBeforeUnmount(() => {
+      disposeCount++;
+      console.time(`echarts-dispose-${disposeCount}`);
       window.removeEventListener('resize', resizeChart);
+
       if (resizeObserver && chartContainer.value) {
-        resizeObserver.unobserve(chartContainer.value);
-        resizeObserver.disconnect();
+        try {
+          resizeObserver.unobserve(chartContainer.value);
+          resizeObserver.disconnect();
+        } catch (e) { /* ignore */ }
         resizeObserver = null;
       }
+
       if (chartInstance) {
-        chartInstance.dispose();
+        try {
+          chartInstance.dispose();
+        } catch (e) { /* ignore */ }
         chartInstance = null;
       }
+      console.timeEnd(`echarts-dispose-${disposeCount}`);
+      log('onBeforeUnmount, disposeCount=', disposeCount);
     });
 
     return {
@@ -95,6 +134,6 @@ export default {
 <style scoped>
 .chart-view {
   width: 100%;
-  height: 100%; /* 继承外层容器高度 */
+  height: 100%;
 }
 </style>
