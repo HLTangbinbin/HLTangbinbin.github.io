@@ -105,10 +105,10 @@ export const WHPopulationCharts = {
   charts: [
     {
       id: 'PL',
-      title: '年末户籍人口(万人)',
+      title: '武汉市人口(万人)',
       subtitle: '',
       period: 'yearly',
-      zbcodeArr: ['A0201'],
+      zbcodeArr: ['A0201','A0203'],
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '人口',

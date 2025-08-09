@@ -723,7 +723,7 @@
                     "cityCode": "420100"
                 },
                 {
-                    "value": 0.0,
+                    "value": 956.94,
                     "code": "A0201",
                     "date": "2024",
                     "cname": "年末户籍人口",
@@ -732,7 +732,7 @@
                     "cityCode": "420100"
                 },
                 {
-                    "value": 0.0,
+                    "value": 949.52,
                     "code": "A0201",
                     "date": "2023",
                     "cname": "年末户籍人口",
@@ -741,7 +741,7 @@
                     "cityCode": "420100"
                 },
                 {
-                    "value": 0.0,
+                    "value": 944.42,
                     "code": "A0201",
                     "date": "2022",
                     "cname": "年末户籍人口",
@@ -750,7 +750,7 @@
                     "cityCode": "420100"
                 },
                 {
-                    "value": 0.0,
+                    "value": 934.1,
                     "code": "A0201",
                     "date": "2021",
                     "cname": "年末户籍人口",
@@ -759,7 +759,7 @@
                     "cityCode": "420100"
                 },
                 {
-                    "value": 0.0,
+                    "value": 916.19,
                     "code": "A0201",
                     "date": "2020",
                     "cname": "年末户籍人口",
@@ -1079,6 +1079,186 @@
                     "date": "2005",
                     "cname": "城镇非私营单位在岗职工平均工资",
                     "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1380.91,
+                    "code": "A0203",
+                    "date": "2024",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1377.40,
+                    "code": "A0203",
+                    "date": "2023",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1373.90,
+                    "code": "A0203",
+                    "date": "2022",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1364.89,
+                    "code": "A0203",
+                    "date": "2021",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1233,
+                    "code": "A0203",
+                    "date": "2020",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1121.20,
+                    "code": "A0203",
+                    "date": "2019",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1108.1,
+                    "code": "A0203",
+                    "date": "2018",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1089.29,
+                    "code": "A0203",
+                    "date": "2017",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1076.62,
+                    "code": "A0203",
+                    "date": "2016",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1060.77,
+                    "code": "A0203",
+                    "date": "2015",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1033.80,
+                    "code": "A0203",
+                    "date": "2014",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1022,
+                    "code": "A0203",
+                    "date": "2013",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1012,
+                    "code": "A0203",
+                    "date": "2012",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1002.23,
+                    "code": "A0203",
+                    "date": "2011",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 950,
+                    "code": "A0203",
+                    "date": "2010",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 910,
+                    "code": "A0203",
+                    "date": "2009",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 897,
+                    "code": "A0203",
+                    "date": "2008",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 828.2137,
+                    "code": "A0203",
+                    "date": "2007",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 818.8431,
+                    "code": "A0203",
+                    "date": "2006",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 801.3612,
+                    "code": "A0203",
+                    "date": "2005",
+                    "cname": "常住人口",
+                    "unit": "万人",
                     "cityName": "武汉",
                     "cityCode": "420100"
                 },
@@ -4735,6 +4915,10 @@
                 {
                     "cname": "城镇非私营单位在岗职工平均工资",
                     "code": "A0202"
+                },
+                {
+                    "cname": "常住人口",
+                    "code": "A0203"
                 },
                 {
                     "cname": "房地产开发投资额",
