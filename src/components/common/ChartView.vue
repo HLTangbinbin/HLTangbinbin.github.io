@@ -62,7 +62,11 @@ export default {
       () => props.option,
       (newOption) => {
         if (chartInstance && newOption && Object.keys(newOption).length > 0) {
-          chartInstance.setOption(newOption, true);
+          /** 
+           * 当初你需要 true 的可能原因：	getCommonChartOption 之前只更新了 series 或部分坐标轴，其他没覆盖 → ECharts 会合并旧配置，导致残影现在是全量生成，所以 false 就够了
+           * 现在改为flase，避免取消某个lengend后，滑动年份，又会重新选中所有的lengend，而且也没出现切换tab和类型后图表显示异常
+           * */ 
+          chartInstance.setOption(newOption, false); 
         }
       },
       { deep: true }

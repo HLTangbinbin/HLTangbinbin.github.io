@@ -30,16 +30,16 @@ export function sortYearMonths(date1, date2) {
 }
 // //按照年份与日期做筛选与排序
 // //按照年份与日期做筛选与排序
-export function selectDataFromArr(returnData, zbCode, fieldKey, dbCode = 'nd', cityCode = '', yearLimit = 10) {
+export function selectDataFromArr(returndata, zbCode, fieldKey, dbCode = 'nd', cityCode = '', yearLimit = 10) {
 
   // 先获取所有数据中最大的年份（即数据最后一年）
-  const allYears = returnData.dataList.data[dbCode]
+  const allYears = returndata.dataList.data[dbCode]
     .map(d => parseInt(d.date?.substring(0, 4), 10))
     .filter(y => !isNaN(y));
   const maxDataYear = Math.max(...allYears);
 
   // 使用 maxDataYear 作为数据有效的当前年份
-  const filteredData = returnData.dataList.data[dbCode]
+  const filteredData = returndata.dataList.data[dbCode]
     .filter(returnDataObj => {
       // 筛选符合 zbCode 和 cityCode 的数据
       const isMatchZb = returnDataObj.code.search(zbCode) !== -1;
@@ -84,21 +84,32 @@ export function selectDataFromArr(returnData, zbCode, fieldKey, dbCode = 'nd', c
 }
 
 // 图表统一绘制方法
-export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr = [], yearLimit = 10) {
-  const type = basicParams.chartType;
-  const unit = basicParams.unit || '';
+export function getCommonChartOption(params) {
+  const title = params.title;
+  const subtitle = params.subtitle;
+  const data = params.data;
+  const type = params.chartType;
+  const unit = params.unit || '';
+  const zbcodeArr = params.zbcodeArr;
+  const dbCode = params.dbCode;
+  const cityCodeArr = params.cityCodeArr;
+  const yearLimit = params.yearLimit;
+  const exceptName = params.exceptName;
+  const legendTop = params.legendTop;
+  const gridTop = params.gridTop;
+  const isHorizontal = params.isHorizontal;
   const seriesData = [];
 
 
   if (cityCodeArr.length === 0) {
     // 不区分城市，展示多个指标
-    zbArr.forEach(zbCode => {
-      let cname = selectDataFromArr(returnData, zbCode, 'cname', basicParams.dbCode, '', yearLimit)?.[0] || '总的';
+    zbcodeArr.forEach(zbCode => {
+      let cname = selectDataFromArr(data, zbCode, 'cname', dbCode, '', yearLimit)?.[0] || '总的';
 
       // 去除 cname 中的 exceptName 字符
-      if (typeof cname === 'string' && typeof basicParams.exceptName === 'string') {
+      if (typeof cname === 'string' && typeof exceptName === 'string') {
         const resultArr = cname.split('');
-        const exceptArr = basicParams.exceptName.split('');
+        const exceptArr = exceptName.split('');
         exceptArr.forEach(ch => {
           const idx = resultArr.indexOf(ch);
           if (idx !== -1) resultArr.splice(idx, 1);
@@ -107,45 +118,47 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
       }
 
       const name = cname + unit;
-      const valueArr = selectDataFromArr(returnData, zbCode, 'value', basicParams.dbCode, '', yearLimit) || [];
+      const valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
+      
       seriesData.push({ name, type, data: valueArr });
+      logger.debug(`当前的echart数据:  ${JSON.stringify(seriesData)}`);
     });
   } else {
     // 区分城市，展示某一指标在多个城市的对比
     cityCodeArr.forEach(cityCode => {
-      const city = returnData.dataList.reg?.find(r => r.code === cityCode);
+      const city = data.dataList.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
-      const valueArr = selectDataFromArr(returnData, zbArr[0], 'value', basicParams.dbCode, cityCode, yearLimit) || [];
+      const valueArr = selectDataFromArr(data, zbcodeArr[0], 'value', dbCode, cityCode, yearLimit) || [];
       seriesData.push({ name, type, data: valueArr });
     });
   }
 
-  // 计算所有series中所有数据点，过滤有效数字
-  const allValues = seriesData.flatMap(s => s.data).filter(v => typeof v === 'number' && !isNaN(v));
 
-  const dataMin = allValues.length > 0 ? Math.min(...allValues) : 0;
-  const dataMax = allValues.length > 0 ? Math.max(...allValues) : 100;
-
-  // 5%缓冲区，防止数据紧贴边界，最小缓冲为1
-  const rangeMargin = (dataMax - dataMin) * 0.05 || 1;
-
-  // 优先使用用户传入的 min/max（转数字），否则自动计算
-  let finalMin = basicParams.min !== undefined ? Number(basicParams.min) : dataMin - rangeMargin;
-  let finalMax = basicParams.max !== undefined ? Number(basicParams.max) : dataMax + rangeMargin;
-
-  const fullYears = (returnData.dataList.sj?.[basicParams.dbCode] || []).sort((a, b) => a.localeCompare(b)); // 确保按年份排序
+  const fullYears = (data.dataList.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b)); // 确保按年份排序
   const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
 
-  // 防止 min >= max
-  if (finalMin >= finalMax) {
-    finalMin = dataMin;
-    finalMax = dataMax + rangeMargin;
-  }
+
+  // 公用数值轴配置
+  const valueAxisConfig = {
+    type: 'value',
+    scale: true,
+    min: (value) => value.min - (value.max - value.min) * 0.1, // 留10%
+    max: (value) => value.max + (value.max - value.min) * 0.1,
+    axisLabel: {
+      formatter: (value) => value.toFixed(2) + unit,
+    },
+  };
+
+  // 公用类目轴配置
+  const categoryAxisConfig = {
+    type: 'category',
+    data: filteredYears,
+  };
 
   return {
     title: {
-      text: basicParams.title,
-      subtext: basicParams.subtitle,
+      text: title,
+      subtext: subtitle,
       left: 'center',
       top: 'top',
       subtextStyle: {
@@ -153,34 +166,24 @@ export function getCommonChartOption(basicParams, zbArr, returnData, cityCodeArr
         fontSize: 13,
         lineHeight: 20,
         width: window.innerWidth * 0.8,
-        overflowWrap: 'break-word'  // 修正 overflow 属性，保证换行
-      }
+        overflowWrap: 'break-word', // 保证换行
+      },
     },
     tooltip: { trigger: 'axis' },
-    legend: { left: 'center', top: basicParams.legendTop || '5%' },
+    legend: { left: 'center', top: legendTop || '5%' },
     grid: {
       left: '1%',
       right: '1%',
-      top: basicParams.gridTop || '20%',
+      top: gridTop || '20%',
       bottom: '1%',
-      containLabel: true
+      containLabel: true,
     },
-    xAxis: {
-      type: 'category',
-      data: filteredYears
-    },
-    yAxis: {
-      type: 'value',
-      scale: true,
-      min: (value) => value.min - (value.max - value.min) * 0.1, // 下边留10%
-      max: (value) => value.max + (value.max - value.min) * 0.1, // 上边留10%
-      axisLabel: {
-        formatter: (value) => value.toFixed(2) + unit
-      }
-    },
+    xAxis: isHorizontal ? valueAxisConfig : categoryAxisConfig,
+    yAxis: isHorizontal ? categoryAxisConfig : valueAxisConfig,
     series: seriesData
   };
 }
+
 
 // const baseurl = 'https://data.stats.gov.cn/easyquery.htm';
 // const proxyServerUrl = 'https://githubproxy-592325394348.herokuapp.com/api'

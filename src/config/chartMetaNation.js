@@ -13,7 +13,7 @@ export const FinancialIndustryCharts = {
             title: '货币供应量(万亿)',
             subtitle: '',
             period: 'monthly',
-            typeArr: ['A0D0105', 'A0D0103', 'A0D0101'],
+            zbcodeArr: ['A0D0105', 'A0D0103', 'A0D0101'],
             dbCode: 'yd',
             chartType: 'bar',
             exceptName: '供应量_期末值(万亿)',
@@ -26,7 +26,7 @@ export const FinancialIndustryCharts = {
             title: '货币供应量同比增长(%)',
             subtitle: '',
             period: 'monthly',
-            typeArr: ['A0D0102', 'A0D0104', 'A0D0106'],
+            zbcodeArr: ['A0D0102', 'A0D0104', 'A0D0106'],
             dbCode: 'yd',
             chartType: 'bar',
             exceptName: '供应量_同比增长',
@@ -39,7 +39,7 @@ export const FinancialIndustryCharts = {
             title: '货币供应量结构',
             subtitle: 'M0: 流通中的现金；\n M1: M0+企业活期存款；\n M2: M1+企业单位定期+居民存款',
             period: 'yearly',
-            typeArr: ['A0L0303', 'A0L0302', 'A0L0301'],
+            zbcodeArr: ['A0L0303', 'A0L0302', 'A0L0301'],
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '供应量(万亿)',
@@ -52,7 +52,7 @@ export const FinancialIndustryCharts = {
             title: '黄金与外汇储备(亿美元)',
             subtitle: '',
             period: 'yearly',
-            typeArr: ['A0L0401', 'A0L0402'],
+            zbcodeArr: ['A0L0401', 'A0L0402'],
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
@@ -74,7 +74,7 @@ export const EducationSectorCharts = {
       title: '招生数(万人)',
       subtitle: '',
       period: 'yearly',
-      typeArr: [
+      zbcodeArr: [
         'A0M020119', // 学前招生
         'A0M020111', // 小学招生
         'A0M02010U', // 初中招生
@@ -94,7 +94,7 @@ export const EducationSectorCharts = {
       title: '在校学生数(万人)',
       subtitle: '',
       period: 'yearly',
-      typeArr: [
+      zbcodeArr: [
         'A0M02021A', // 学前在校
         'A0M020212', // 小学在校
         'A0M02020V', // 初中在校
@@ -114,7 +114,7 @@ export const EducationSectorCharts = {
       title: '毕业生数(万人)',
       subtitle: '',
       period: 'yearly',
-      typeArr: [
+      zbcodeArr: [
         'A0M02031A', // 学前毕业
         'A0M020312', // 小学毕业
         'A0M02030V', // 初中毕业
@@ -145,7 +145,7 @@ export const ForeignTradeCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A080101', 'A080105', 'A080109', 'A08010D'],
+      zbcodeArr: ['A080101', 'A080105', 'A080109', 'A08010D'],
       dbCode: 'yd',
       exceptName: '_当期值',
       legendTop: '5%',
@@ -158,7 +158,7 @@ export const ForeignTradeCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A080102', 'A080104', 'A080106', 'A080108', 'A08010A', 'A08010C'],
+      zbcodeArr: ['A080102', 'A080104', 'A080106', 'A080108', 'A08010A', 'A08010C'],
       dbCode: 'yd',
       exceptName: '总值增长',
       legendTop: '5%',
@@ -171,7 +171,7 @@ export const ForeignTradeCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A060105', 'A060106', 'A060107', 'A060108'],
+      zbcodeArr: ['A060105', 'A060106', 'A060107', 'A060108'],
       dbCode: 'nd',
       exceptName: '(百万美元)',
       legendTop: '5%',
@@ -184,7 +184,7 @@ export const ForeignTradeCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: [
+      zbcodeArr: [
         'A060502010H', 'A060502010Y', 'A0605020115', 'A0605020313',
         'A060502010C', 'A0605020304', 'A0605020305', 'A060502030A', 'A0605020503'
       ],
@@ -200,7 +200,7 @@ export const ForeignTradeCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: [
+      zbcodeArr: [
         'A060503010H', 'A060503010Y', 'A0605030115', 'A0605030313',
         'A060503010C', 'A0605030304', 'A0605030305', 'A060503030A', 'A0605030503'
       ],
@@ -226,7 +226,7 @@ export const GDPCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A020102', 'A020103', 'A020104', 'A020105'],
+      zbcodeArr: ['A020102', 'A020103', 'A020104', 'A020105'],
       dbCode: 'nd',
       exceptName: '增加值',
       legendTop: '5%',
@@ -249,7 +249,7 @@ export const IndicesCharts = {
       subtitle: 'CPI消费者物价指数反映一定时期内城乡居民所购买的 \n生活消费品和服务项目价格变动趋势和程度的相对数 \nPPI生产者物价指数用来衡量制造商出厂价的平均变化 \n生产者物价指数比预期数值高时，表明有通货膨胀的风险 \n生产者物价指数比预期数值低时，则表明有通货紧缩的风险',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A01010G01', 'A01030G01', 'A01080101', 'A01080701'],
+      zbcodeArr: ['A01010G01', 'A01030G01', 'A01080101', 'A01080701'],
       dbCode: 'yd',
       exceptName: '价格指数',
       legendTop: '5%',
@@ -262,7 +262,7 @@ export const IndicesCharts = {
       subtitle: 'PMI是一套月度发布的、综合性的经济监测指标体系 \nPMI指数50%为荣枯分水线 \nPMI略大于50,说明经济在缓慢前进 \nPMI略小于50说明经济在慢慢走向衰退',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A0B0101', 'A0B0201', 'A0B0301'],
+      zbcodeArr: ['A0B0101', 'A0B0201', 'A0B0301'],
       dbCode: 'yd',
       exceptName: '采购经理指数商务活动产出',
       legendTop: '5%',
@@ -285,7 +285,7 @@ export const LivingStandardsCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: [
+      zbcodeArr: [
         'A0A0101', // 居民人均可支配收入
         'A0A0103', // 中位数
         'A0A0201', // 城镇居民
@@ -309,7 +309,7 @@ export const LivingStandardsCharts = {
         '20%~30%为富足，20%以下为极其富裕',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A0A0H01', 'A0A0H02', 'A0A0H03'],
+      zbcodeArr: ['A0A0H01', 'A0A0H02', 'A0A0H03'],
       dbCode: 'nd',
       exceptName: '恩格尔系数',
       legendTop: '5%',
@@ -329,7 +329,7 @@ export const LivingStandardsCharts = {
         '0.4 是收入分配差距的“警戒线”',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A0A0G01'],
+      zbcodeArr: ['A0A0G01'],
       dbCode: 'nd',
       exceptName: '基尼系数',
       legendTop: '5%',
@@ -352,7 +352,7 @@ export const MarriageCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: [
+      zbcodeArr: [
         'A0P0C01', // 结婚登记
         'A0P0C06'  // 离婚登记
       ],
@@ -378,7 +378,7 @@ export const MedicalCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A0O0101', 'A0O0102', 'A0O0106'],
+      zbcodeArr: ['A0O0101', 'A0O0102', 'A0O0106'],
       dbCode: 'nd',
       exceptName: '卫生机构数',
       legendTop: '5%',
@@ -391,7 +391,7 @@ export const MedicalCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A0O0201', 'A0O0202', 'A0O0204', 'A0O0205'],
+      zbcodeArr: ['A0O0201', 'A0O0202', 'A0O0204', 'A0O0205'],
       dbCode: 'nd',
       exceptName: '数',
       legendTop: '5%',
@@ -404,7 +404,7 @@ export const MedicalCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A0O0501', 'A0O0502', 'A0O0506'],
+      zbcodeArr: ['A0O0501', 'A0O0502', 'A0O0506'],
       dbCode: 'nd',
       exceptName: '卫生机构床位数',
       legendTop: '5%',
@@ -427,7 +427,7 @@ export const NationalFinanceCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A0C0102', 'A0C0202'],
+      zbcodeArr: ['A0C0102', 'A0C0202'],
       dbCode: 'yd',
       exceptName: '国家财政(不含债务还本)_累计值',
       legendTop: '5%',
@@ -440,7 +440,7 @@ export const NationalFinanceCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A0C0103', 'A0C0203'],
+      zbcodeArr: ['A0C0103', 'A0C0203'],
       dbCode: 'yd',
       exceptName: '国家财政(不含债务还本)_累计增长',
       legendTop: '5%',
@@ -453,7 +453,7 @@ export const NationalFinanceCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A080201', 'A080202', 'A080203', 'A080301', 'A080302', 'A080303'],
+      zbcodeArr: ['A080201', 'A080202', 'A080203', 'A080301', 'A080302', 'A080303'],
       dbCode: 'nd',
       exceptName: '财政',
       legendTop: '5%',
@@ -466,7 +466,7 @@ export const NationalFinanceCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: [
+      zbcodeArr: [
         'A08040102', 'A08040103', 'A08040104', 'A08040108',
         'A08040109', 'A0804010G', 'A0804010K', 'A0804010S'
       ],
@@ -482,7 +482,7 @@ export const NationalFinanceCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: [
+      zbcodeArr: [
         'A08050102', 'A08050105', 'A08050106', 'A08050108',
         'A08050109', 'A0805010B', 'A0805010C', 'A0805010G'
       ],
@@ -508,7 +508,7 @@ export const PopulationCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: [
+      zbcodeArr: [
         'A030101', 'A030102', 'A030103', 'A030104', 'A030105',
         'A030302', 'A030303', 'A030304'
       ],
@@ -524,7 +524,7 @@ export const PopulationCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A030109', 'A030110', 'A03010A'],
+      zbcodeArr: ['A030109', 'A030110', 'A03010A'],
       dbCode: 'nd',
       exceptName: '人口',
       legendTop: '5%',
@@ -537,7 +537,7 @@ export const PopulationCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A030201', 'A030202', 'A030203'],
+      zbcodeArr: ['A030201', 'A030202', 'A030203'],
       dbCode: 'nd',
       exceptName: '人口',
       legendTop: '5%',
@@ -551,7 +551,7 @@ export const PopulationCharts = {
         '总体人口中非劳动年龄人口数与劳动年龄人口数之比\n每100名劳动年龄人口负担多少名非劳动年龄人口',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A030305', 'A030306', 'A030307'],
+      zbcodeArr: ['A030305', 'A030306', 'A030307'],
       dbCode: 'nd',
       exceptName: '',
       legendTop: '20%',
@@ -573,7 +573,7 @@ export const RealEstateInvestCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A060101', 'A060105', 'A06010D', 'A06010R'],
+      zbcodeArr: ['A060101', 'A060105', 'A06010D', 'A06010R'],
       dbCode: 'yd',
       exceptName: '房地产投资_累计值',
       legendTop: '5%',
@@ -586,7 +586,7 @@ export const RealEstateInvestCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A060102', 'A060106', 'A06010E'],
+      zbcodeArr: ['A060102', 'A060106', 'A06010E'],
       dbCode: 'yd',
       exceptName: '房地产投资_累计增长',
       legendTop: '5%',
@@ -599,7 +599,7 @@ export const RealEstateInvestCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A051102', 'A051104'],
+      zbcodeArr: ['A051102', 'A051104'],
       dbCode: 'nd',
       exceptName: '房地产开发投资额',
       legendTop: '5%',
@@ -623,7 +623,7 @@ export const RealEstateSaleCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A060B01', 'A060B03', 'A060B05'],
+      zbcodeArr: ['A060B01', 'A060B03', 'A060B05'],
       dbCode: 'yd',
       exceptName: '商品住宅销售额_累计值',
       legendTop: '5%',
@@ -636,7 +636,7 @@ export const RealEstateSaleCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A060B02', 'A060B04', 'A060B06'],
+      zbcodeArr: ['A060B02', 'A060B04', 'A060B06'],
       dbCode: 'yd',
       exceptName: '商品住宅销售额_累计增长',
       legendTop: '5%',
@@ -649,7 +649,7 @@ export const RealEstateSaleCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A060A01', 'A060A03', 'A060A05'],
+      zbcodeArr: ['A060A01', 'A060A03', 'A060A05'],
       dbCode: 'yd',
       exceptName: '商品住宅销售面积_累计值',
       legendTop: '5%',
@@ -662,7 +662,7 @@ export const RealEstateSaleCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: ['A060A02', 'A060A04', 'A060A06'],
+      zbcodeArr: ['A060A02', 'A060A04', 'A060A06'],
       dbCode: 'yd',
       exceptName: '商品住宅销售面积_累计增长',
       legendTop: '5%',
@@ -675,7 +675,7 @@ export const RealEstateSaleCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A051501', 'A051502', 'A051503', 'A051504', 'A051505'],
+      zbcodeArr: ['A051501', 'A051502', 'A051503', 'A051504', 'A051505'],
       dbCode: 'nd',
       exceptName: '商品房销售面积',
       legendTop: '5%',
@@ -688,7 +688,7 @@ export const RealEstateSaleCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      typeArr: ['A051601', 'A051602', 'A051603', 'A051604', 'A051605'],
+      zbcodeArr: ['A051601', 'A051602', 'A051603', 'A051604', 'A051605'],
       dbCode: 'nd',
       exceptName: '商品房销售额',
       legendTop: '5%',
@@ -712,7 +712,7 @@ export const SocialRetailgoodsCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: [
+      zbcodeArr: [
         'A070101', 'A07040105', 'A0704010H', 'A0704010L',
         'A07040205', 'A07040301', 'A07040401', 'A07040501',
         'A07040601', 'A07040701', 'A07040801', 'A07040901',
@@ -731,7 +731,7 @@ export const SocialRetailgoodsCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: [
+      zbcodeArr: [
         'A070103', 'A07040107', 'A0704010J', 'A0704010N',
         'A07040207', 'A07040303', 'A07040403', 'A07040503',
         'A07040603', 'A07040703', 'A07040803', 'A07040903',
@@ -750,7 +750,7 @@ export const SocialRetailgoodsCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: [
+      zbcodeArr: [
         'A070102', 'A07040106', 'A0704010I', 'A0704010M',
         'A07040206', 'A07040302', 'A07040402', 'A07040502',
         'A07040602', 'A07040702', 'A07040802', 'A07040902',
@@ -769,7 +769,7 @@ export const SocialRetailgoodsCharts = {
       subtitle: '',
       period: 'monthly',
       chartType: 'bar',
-      typeArr: [
+      zbcodeArr: [
         'A070104', 'A07040108', 'A0704010K', 'A0704010O',
         'A07040208', 'A07040304', 'A07040404', 'A07040504',
         'A07040604', 'A07040704', 'A07040804', 'A07040904',

@@ -18,7 +18,8 @@ export default {
     yearLimit: {
       type: Number,
       default: 10
-    }
+    },
+    isHorizontal: Boolean,
   },
   computed: {
     adjustedLegendTop() {
@@ -42,10 +43,13 @@ export default {
     chartOption() {
       const params = {
         // 只取必要字段，避免污染
+        data: this.returnData,
+        cityCodeArr: this.config?.cityCodeArr || [],
+        // 图表相关
         title: this.chart.title,
         subtitle: this.chart.subtitle,
         dbCode: this.chart.dbCode,
-        typeArr: this.chart.typeArr,
+        zbcodeArr: this.chart.zbcodeArr,
         unit: this.chart.unit,
         exceptName: this.chart.exceptName,
         legendTop: this.adjustedLegendTop,
@@ -53,11 +57,10 @@ export default {
         echrtId: this.chart.id,
         chartType: this.chartType,
         yearLimit: this.yearLimit,
+        isHorizontal: this.isHorizontal,
         
       };
-
-      const cityCodeArr = this.config?.cityCodeArr || [];
-      const option = getCommonChartOption(params, this.chart.typeArr, this.returnData, cityCodeArr, this.yearLimit);
+      const option = getCommonChartOption(params);
 
       if (option.title) delete option.title; // 防止重复标题显示
 
