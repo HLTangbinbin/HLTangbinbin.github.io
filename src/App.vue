@@ -3,28 +3,76 @@
     <div>
       <h1 class="main-title">大唐统计局</h1>
     </div>
-    <div class="nav-wrapper" >
+    <div class="nav-wrapper">
       <nav class="nav-container">
-        <!-- startsWith 解决主导航栏和子导航栏联动问题 -->
-        <router-link to="/WH" class="nav" :class="{ active: $route.path.startsWith('/WH') }">武汉</router-link>
-        <router-link to="/FirstTierCity" class="nav"
-          :class="{ active: $route.path.startsWith('/FirstTierCity') }">城市</router-link>
-        <router-link to="/MajorProvincial" class="nav"
-          :class="{ active: $route.path.startsWith('/MajorProvincial') }">省市</router-link>
-        <router-link to="/NationWide" class="nav"
-          :class="{ active: $route.path.startsWith('/NationWide') }">全国</router-link>
+        <router-link
+          to="/WH"
+          class="nav"
+          :class="{ active: $route.path.startsWith('/WH') }"
+          >武汉</router-link
+        >
+        <router-link
+          to="/FirstTierCity"
+          class="nav"
+          :class="{ active: $route.path.startsWith('/FirstTierCity') }"
+          >城市</router-link
+        >
+        <router-link
+          to="/MajorProvincial"
+          class="nav"
+          :class="{ active: $route.path.startsWith('/MajorProvincial') }"
+          >省市</router-link
+        >
+        <router-link
+          to="/NationWide"
+          class="nav"
+          :class="{ active: $route.path.startsWith('/NationWide') }"
+          >全国</router-link
+        >
       </nav>
     </div>
-    <router-view></router-view>
+
+    <!-- 全局 loading 遮罩 -->
+    <div v-if="loading" class="loading-overlay">
+      <div class="spinner"></div>
+      <div class="loading-text">数据加载中，请稍候...</div>
+    </div>
+
+    <router-view v-if="!loading"></router-view>
   </div>
 </template>
 
 <script>
+import { loadChartData } from "@/config/dataLoader.js";
+import { WHGDPCharts } from "@/config/chartMetaWH.js";
+import { CityGDPCharts } from "@/config/chartMetaCity.js";
+import { ProvincialGDPCharts } from "@/config/chartMetaProvince.js";
+import { GDPCharts } from "@/config/chartMetaNation.js";
+
 export default {
-  name: 'App'
+  name: "App",
+  data() {
+    return {
+      loading: true,
+    };
+  },
+  async mounted() {
+    try {
+      await loadChartData(WHGDPCharts.source);
+      await loadChartData(CityGDPCharts.source);
+      await loadChartData(ProvincialGDPCharts.source);
+      await loadChartData(GDPCharts.source);
+      // 预加载成功，关闭 loading
+      this.loading = false;
+      console.log("json 预加载成功");
+    } catch (e) {
+      console.error("json 预加载失败", e);
+      // 出错也关闭 loading，避免卡死
+      this.loading = false;
+    }
+  },
 };
 </script>
-
 
 <style>
 .main-title {
@@ -32,8 +80,8 @@ export default {
   justify-content: center;
   width: 100%;
   background-color: #fff;
-  /* 设置背景颜色为灰色 */
 }
+
 .nav-wrapper {
   overflow-x: auto;
   overflow-y: visible;
@@ -42,7 +90,7 @@ export default {
   padding: 12px 0 16px;
   box-sizing: border-box;
   background-color: #fff;
-  text-align: center; /* ✅ 保证内容水平居中 */
+  text-align: center;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -52,7 +100,7 @@ export default {
 }
 
 .nav-container {
-  display: inline-flex; /* ✅ 结合 text-align: center 实现内容居中 */
+  display: inline-flex;
   justify-content: flex-start;
   align-items: center;
   background-color: #ffffff;
@@ -80,6 +128,41 @@ export default {
   background-color: #0bc2d6 !important;
 }
 
+/* loading 遮罩样式 */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 9999;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 6px solid #0bc2d6;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 12px;
+}
+
+.loading-text {
+  font-size: 18px;
+  color: #0bc2d6;
+  font-weight: bold;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>
