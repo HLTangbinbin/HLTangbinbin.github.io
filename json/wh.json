@@ -1,0 +1,5013 @@
+{
+    "dataList": {
+        "data": {
+            "nd": [
+                {
+                    "value": 0.0,
+                    "code": "A0101",
+                    "date": "2024",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 20012.0,
+                    "code": "A0101",
+                    "date": "2023",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 18866.43,
+                    "code": "A0101",
+                    "date": "2022",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 17716.76,
+                    "code": "A0101",
+                    "date": "2021",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 15616.0,
+                    "code": "A0101",
+                    "date": "2020",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 16223.0,
+                    "code": "A0101",
+                    "date": "2019",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 14847.29,
+                    "code": "A0101",
+                    "date": "2018",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 13410.34,
+                    "code": "A0101",
+                    "date": "2017",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11912.61,
+                    "code": "A0101",
+                    "date": "2016",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 10905.6,
+                    "code": "A0101",
+                    "date": "2015",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 10069.48,
+                    "code": "A0101",
+                    "date": "2014",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 9051.27,
+                    "code": "A0101",
+                    "date": "2013",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 8003.8,
+                    "code": "A0101",
+                    "date": "2012",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6762.2,
+                    "code": "A0101",
+                    "date": "2011",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5565.9,
+                    "code": "A0101",
+                    "date": "2010",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4621.0,
+                    "code": "A0101",
+                    "date": "2009",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3960.0819,
+                    "code": "A0101",
+                    "date": "2008",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3141.9048,
+                    "code": "A0101",
+                    "date": "2007",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2590.7569,
+                    "code": "A0101",
+                    "date": "2006",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2238.0,
+                    "code": "A0101",
+                    "date": "2005",
+                    "cname": "地区生产总值（当年价格）",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0102",
+                    "date": "2024",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 474.0,
+                    "code": "A0102",
+                    "date": "2023",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 475.79,
+                    "code": "A0102",
+                    "date": "2022",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 444.21,
+                    "code": "A0102",
+                    "date": "2021",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 402.0,
+                    "code": "A0102",
+                    "date": "2020",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 378.99,
+                    "code": "A0102",
+                    "date": "2019",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 362.0,
+                    "code": "A0102",
+                    "date": "2018",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 408.2,
+                    "code": "A0102",
+                    "date": "2017",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 390.733608,
+                    "code": "A0102",
+                    "date": "2016",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 359.81,
+                    "code": "A0102",
+                    "date": "2015",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 350.06,
+                    "code": "A0102",
+                    "date": "2014",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 335.4,
+                    "code": "A0102",
+                    "date": "2013",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 301.2,
+                    "code": "A0102",
+                    "date": "2012",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 198.7,
+                    "code": "A0102",
+                    "date": "2011",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 170.0,
+                    "code": "A0102",
+                    "date": "2010",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 149.06,
+                    "code": "A0102",
+                    "date": "2009",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 144.7,
+                    "code": "A0102",
+                    "date": "2008",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 129.1547,
+                    "code": "A0102",
+                    "date": "2007",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0102",
+                    "date": "2006",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0102",
+                    "date": "2005",
+                    "cname": "第一产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0103",
+                    "date": "2024",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6801.0,
+                    "code": "A0103",
+                    "date": "2023",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6716.65,
+                    "code": "A0103",
+                    "date": "2022",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6208.34,
+                    "code": "A0103",
+                    "date": "2021",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5558.0,
+                    "code": "A0103",
+                    "date": "2020",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5988.88,
+                    "code": "A0103",
+                    "date": "2019",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6377.75,
+                    "code": "A0103",
+                    "date": "2018",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5861.35,
+                    "code": "A0103",
+                    "date": "2017",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5227.253268,
+                    "code": "A0103",
+                    "date": "2016",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4981.54,
+                    "code": "A0103",
+                    "date": "2015",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4785.66,
+                    "code": "A0103",
+                    "date": "2014",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4396.17,
+                    "code": "A0103",
+                    "date": "2013",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3869.6,
+                    "code": "A0103",
+                    "date": "2012",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3254.02,
+                    "code": "A0103",
+                    "date": "2011",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2532.8,
+                    "code": "A0103",
+                    "date": "2010",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2142.14,
+                    "code": "A0103",
+                    "date": "2009",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1827.65,
+                    "code": "A0103",
+                    "date": "2008",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1440.0,
+                    "code": "A0103",
+                    "date": "2007",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0103",
+                    "date": "2006",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0103",
+                    "date": "2005",
+                    "cname": "第二产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0104",
+                    "date": "2024",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 12736.0,
+                    "code": "A0104",
+                    "date": "2023",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11673.99,
+                    "code": "A0104",
+                    "date": "2022",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11064.21,
+                    "code": "A0104",
+                    "date": "2021",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 9656.0,
+                    "code": "A0104",
+                    "date": "2020",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 9855.34,
+                    "code": "A0104",
+                    "date": "2019",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 8107.54,
+                    "code": "A0104",
+                    "date": "2018",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 7140.79,
+                    "code": "A0104",
+                    "date": "2017",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6294.623124,
+                    "code": "A0104",
+                    "date": "2016",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5564.25,
+                    "code": "A0104",
+                    "date": "2015",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4933.76,
+                    "code": "A0104",
+                    "date": "2014",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4319.7,
+                    "code": "A0104",
+                    "date": "2013",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3833.1,
+                    "code": "A0104",
+                    "date": "2012",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3309.48,
+                    "code": "A0104",
+                    "date": "2011",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2863.1,
+                    "code": "A0104",
+                    "date": "2010",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2329.66,
+                    "code": "A0104",
+                    "date": "2009",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1987.7319,
+                    "code": "A0104",
+                    "date": "2008",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1572.7501,
+                    "code": "A0104",
+                    "date": "2007",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0104",
+                    "date": "2006",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0104",
+                    "date": "2005",
+                    "cname": "第三产业增加值",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 956.94,
+                    "code": "A0201",
+                    "date": "2024",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 949.52,
+                    "code": "A0201",
+                    "date": "2023",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 944.42,
+                    "code": "A0201",
+                    "date": "2022",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 934.1,
+                    "code": "A0201",
+                    "date": "2021",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 916.19,
+                    "code": "A0201",
+                    "date": "2020",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 906.4,
+                    "code": "A0201",
+                    "date": "2019",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 883.73,
+                    "code": "A0201",
+                    "date": "2018",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 853.65,
+                    "code": "A0201",
+                    "date": "2017",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 833.85,
+                    "code": "A0201",
+                    "date": "2016",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 829.27,
+                    "code": "A0201",
+                    "date": "2015",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 827.31,
+                    "code": "A0201",
+                    "date": "2014",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 822.05,
+                    "code": "A0201",
+                    "date": "2013",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 821.71,
+                    "code": "A0201",
+                    "date": "2012",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 827.23,
+                    "code": "A0201",
+                    "date": "2011",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 836.7323,
+                    "code": "A0201",
+                    "date": "2010",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 835.5473,
+                    "code": "A0201",
+                    "date": "2009",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 833.2425,
+                    "code": "A0201",
+                    "date": "2008",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 828.2137,
+                    "code": "A0201",
+                    "date": "2007",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 818.8431,
+                    "code": "A0201",
+                    "date": "2006",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 801.3612,
+                    "code": "A0201",
+                    "date": "2005",
+                    "cname": "年末户籍人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0202",
+                    "date": "2024",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0202",
+                    "date": "2023",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 129004.0,
+                    "code": "A0202",
+                    "date": "2022",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 121608.0,
+                    "code": "A0202",
+                    "date": "2021",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 104009.0,
+                    "code": "A0202",
+                    "date": "2020",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 98043.0,
+                    "code": "A0202",
+                    "date": "2019",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 88327.0,
+                    "code": "A0202",
+                    "date": "2018",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 79684.0,
+                    "code": "A0202",
+                    "date": "2017",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 71963.0,
+                    "code": "A0202",
+                    "date": "2016",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 65720.0,
+                    "code": "A0202",
+                    "date": "2015",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 60624.4814598695,
+                    "code": "A0202",
+                    "date": "2014",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 53684.0,
+                    "code": "A0202",
+                    "date": "2013",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 48941.7199634536,
+                    "code": "A0202",
+                    "date": "2012",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 45643.64,
+                    "code": "A0202",
+                    "date": "2011",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 39302.2,
+                    "code": "A0202",
+                    "date": "2010",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0202",
+                    "date": "2009",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 28431.31,
+                    "code": "A0202",
+                    "date": "2008",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 25135.54,
+                    "code": "A0202",
+                    "date": "2007",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 20632.82,
+                    "code": "A0202",
+                    "date": "2006",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0202",
+                    "date": "2005",
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "unit": "元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1380.91,
+                    "code": "A0203",
+                    "date": "2024",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1377.40,
+                    "code": "A0203",
+                    "date": "2023",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1373.90,
+                    "code": "A0203",
+                    "date": "2022",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1364.89,
+                    "code": "A0203",
+                    "date": "2021",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1233,
+                    "code": "A0203",
+                    "date": "2020",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1121.20,
+                    "code": "A0203",
+                    "date": "2019",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1108.1,
+                    "code": "A0203",
+                    "date": "2018",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1089.29,
+                    "code": "A0203",
+                    "date": "2017",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1076.62,
+                    "code": "A0203",
+                    "date": "2016",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1060.77,
+                    "code": "A0203",
+                    "date": "2015",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1033.80,
+                    "code": "A0203",
+                    "date": "2014",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1022,
+                    "code": "A0203",
+                    "date": "2013",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1012,
+                    "code": "A0203",
+                    "date": "2012",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1002.23,
+                    "code": "A0203",
+                    "date": "2011",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 950,
+                    "code": "A0203",
+                    "date": "2010",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 910,
+                    "code": "A0203",
+                    "date": "2009",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 897,
+                    "code": "A0203",
+                    "date": "2008",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 828.2137,
+                    "code": "A0203",
+                    "date": "2007",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 818.8431,
+                    "code": "A0203",
+                    "date": "2006",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 801.3612,
+                    "code": "A0203",
+                    "date": "2005",
+                    "cname": "常住人口",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0302",
+                    "date": "2024",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3446.8756,
+                    "code": "A0302",
+                    "date": "2023",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3366.7892,
+                    "code": "A0302",
+                    "date": "2022",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3254.6233,
+                    "code": "A0302",
+                    "date": "2021",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2777.1514,
+                    "code": "A0302",
+                    "date": "2020",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2966.206,
+                    "code": "A0302",
+                    "date": "2019",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2780.0098,
+                    "code": "A0302",
+                    "date": "2018",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2686.3358,
+                    "code": "A0302",
+                    "date": "2017",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2517.435,
+                    "code": "A0302",
+                    "date": "2016",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2581.7857,
+                    "code": "A0302",
+                    "date": "2015",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2353.6263,
+                    "code": "A0302",
+                    "date": "2014",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1905.6,
+                    "code": "A0302",
+                    "date": "2013",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1574.8605,
+                    "code": "A0302",
+                    "date": "2012",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1282.2494,
+                    "code": "A0302",
+                    "date": "2011",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1017.4,
+                    "code": "A0302",
+                    "date": "2010",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 778.5946,
+                    "code": "A0302",
+                    "date": "2009",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 560.3605,
+                    "code": "A0302",
+                    "date": "2008",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 459.7498,
+                    "code": "A0302",
+                    "date": "2007",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 366.1516,
+                    "code": "A0302",
+                    "date": "2006",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 297.9919,
+                    "code": "A0302",
+                    "date": "2005",
+                    "cname": "房地产开发投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0303",
+                    "date": "2024",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2581.1639,
+                    "code": "A0303",
+                    "date": "2023",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2426.0057,
+                    "code": "A0303",
+                    "date": "2022",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2417.5505,
+                    "code": "A0303",
+                    "date": "2021",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1959.0072,
+                    "code": "A0303",
+                    "date": "2020",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2183.3116,
+                    "code": "A0303",
+                    "date": "2019",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1957.168,
+                    "code": "A0303",
+                    "date": "2018",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1840.3091,
+                    "code": "A0303",
+                    "date": "2017",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1726.7922,
+                    "code": "A0303",
+                    "date": "2016",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1777.9333,
+                    "code": "A0303",
+                    "date": "2015",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1560.5526,
+                    "code": "A0303",
+                    "date": "2014",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1250.7839,
+                    "code": "A0303",
+                    "date": "2013",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 991.4052,
+                    "code": "A0303",
+                    "date": "2012",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 747.4397,
+                    "code": "A0303",
+                    "date": "2011",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 595.33,
+                    "code": "A0303",
+                    "date": "2010",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 498.0414,
+                    "code": "A0303",
+                    "date": "2009",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 414.9687,
+                    "code": "A0303",
+                    "date": "2008",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 331.1666,
+                    "code": "A0303",
+                    "date": "2007",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 271.8016,
+                    "code": "A0303",
+                    "date": "2006",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 216.8546,
+                    "code": "A0303",
+                    "date": "2005",
+                    "cname": "房地产开发住宅投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0304",
+                    "date": "2024",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 225.8293,
+                    "code": "A0304",
+                    "date": "2023",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 272.3696,
+                    "code": "A0304",
+                    "date": "2022",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 260.782,
+                    "code": "A0304",
+                    "date": "2021",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 252.4147,
+                    "code": "A0304",
+                    "date": "2020",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 211.9627,
+                    "code": "A0304",
+                    "date": "2019",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 220.1957,
+                    "code": "A0304",
+                    "date": "2018",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 254.5234,
+                    "code": "A0304",
+                    "date": "2017",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 190.4573,
+                    "code": "A0304",
+                    "date": "2016",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 188.649,
+                    "code": "A0304",
+                    "date": "2015",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 140.3893,
+                    "code": "A0304",
+                    "date": "2014",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 123.682,
+                    "code": "A0304",
+                    "date": "2013",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 126.4736,
+                    "code": "A0304",
+                    "date": "2012",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 52.8625,
+                    "code": "A0304",
+                    "date": "2011",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 26.46,
+                    "code": "A0304",
+                    "date": "2010",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 19.3372,
+                    "code": "A0304",
+                    "date": "2009",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 12.2092,
+                    "code": "A0304",
+                    "date": "2008",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 8.4515,
+                    "code": "A0304",
+                    "date": "2007",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11.7174,
+                    "code": "A0304",
+                    "date": "2006",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11.5745,
+                    "code": "A0304",
+                    "date": "2005",
+                    "cname": "房地产开发办公楼投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0305",
+                    "date": "2024",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 278.7848,
+                    "code": "A0305",
+                    "date": "2023",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 281.3846,
+                    "code": "A0305",
+                    "date": "2022",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 250.6247,
+                    "code": "A0305",
+                    "date": "2021",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 259.8278,
+                    "code": "A0305",
+                    "date": "2020",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 292.8607,
+                    "code": "A0305",
+                    "date": "2019",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 349.3211,
+                    "code": "A0305",
+                    "date": "2018",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 288.9031,
+                    "code": "A0305",
+                    "date": "2017",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 237.6491,
+                    "code": "A0305",
+                    "date": "2016",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 310.4532,
+                    "code": "A0305",
+                    "date": "2015",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 358.2305,
+                    "code": "A0305",
+                    "date": "2014",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 274.2557,
+                    "code": "A0305",
+                    "date": "2013",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 201.5252,
+                    "code": "A0305",
+                    "date": "2012",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 166.6621,
+                    "code": "A0305",
+                    "date": "2011",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 102.46,
+                    "code": "A0305",
+                    "date": "2010",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 77.0064,
+                    "code": "A0305",
+                    "date": "2009",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 31.0565,
+                    "code": "A0305",
+                    "date": "2008",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 41.3963,
+                    "code": "A0305",
+                    "date": "2007",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 37.7049,
+                    "code": "A0305",
+                    "date": "2006",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 21.1829,
+                    "code": "A0305",
+                    "date": "2005",
+                    "cname": "房地产开发商业营业用房投资额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0306",
+                    "date": "2024",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 14456.2724,
+                    "code": "A0306",
+                    "date": "2023",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 15842.5992,
+                    "code": "A0306",
+                    "date": "2022",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 16251.6233,
+                    "code": "A0306",
+                    "date": "2021",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 15565.8918,
+                    "code": "A0306",
+                    "date": "2020",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 13556.458,
+                    "code": "A0306",
+                    "date": "2019",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11759.7932,
+                    "code": "A0306",
+                    "date": "2018",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11912.9752,
+                    "code": "A0306",
+                    "date": "2017",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11803.1037,
+                    "code": "A0306",
+                    "date": "2016",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11062.5215,
+                    "code": "A0306",
+                    "date": "2015",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 10238.432,
+                    "code": "A0306",
+                    "date": "2014",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 8545.1294,
+                    "code": "A0306",
+                    "date": "2013",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6862.9675,
+                    "code": "A0306",
+                    "date": "2012",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5994.1119,
+                    "code": "A0306",
+                    "date": "2011",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5055.86,
+                    "code": "A0306",
+                    "date": "2010",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4487.38,
+                    "code": "A0306",
+                    "date": "2009",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3798.3,
+                    "code": "A0306",
+                    "date": "2008",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3195.4097,
+                    "code": "A0306",
+                    "date": "2007",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2876.9152,
+                    "code": "A0306",
+                    "date": "2006",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2749.629,
+                    "code": "A0306",
+                    "date": "2005",
+                    "cname": "房地产开发企业施工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0307",
+                    "date": "2024",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1195.3484,
+                    "code": "A0307",
+                    "date": "2023",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 835.7181,
+                    "code": "A0307",
+                    "date": "2022",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 771.1696,
+                    "code": "A0307",
+                    "date": "2021",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 777.857,
+                    "code": "A0307",
+                    "date": "2020",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 697.4964,
+                    "code": "A0307",
+                    "date": "2019",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 458.6349,
+                    "code": "A0307",
+                    "date": "2018",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 776.2977,
+                    "code": "A0307",
+                    "date": "2017",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 813.1722,
+                    "code": "A0307",
+                    "date": "2016",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 804.5819,
+                    "code": "A0307",
+                    "date": "2015",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 765.4176,
+                    "code": "A0307",
+                    "date": "2014",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 679.3066,
+                    "code": "A0307",
+                    "date": "2013",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1054.451,
+                    "code": "A0307",
+                    "date": "2012",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1170.4007,
+                    "code": "A0307",
+                    "date": "2011",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 904.79,
+                    "code": "A0307",
+                    "date": "2010",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 945.05,
+                    "code": "A0307",
+                    "date": "2009",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 869.83,
+                    "code": "A0307",
+                    "date": "2008",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 933.3683,
+                    "code": "A0307",
+                    "date": "2007",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 873.8284,
+                    "code": "A0307",
+                    "date": "2006",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 816.7204,
+                    "code": "A0307",
+                    "date": "2005",
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0308",
+                    "date": "2024",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 869.8263,
+                    "code": "A0308",
+                    "date": "2023",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 541.014,
+                    "code": "A0308",
+                    "date": "2022",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 591.2302,
+                    "code": "A0308",
+                    "date": "2021",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 611.7326,
+                    "code": "A0308",
+                    "date": "2020",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 479.1641,
+                    "code": "A0308",
+                    "date": "2019",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 305.7099,
+                    "code": "A0308",
+                    "date": "2018",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 597.8214,
+                    "code": "A0308",
+                    "date": "2017",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 600.0973,
+                    "code": "A0308",
+                    "date": "2016",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 654.6298,
+                    "code": "A0308",
+                    "date": "2015",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 645.9842,
+                    "code": "A0308",
+                    "date": "2014",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 529.6953,
+                    "code": "A0308",
+                    "date": "2013",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 900.8975,
+                    "code": "A0308",
+                    "date": "2012",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 969.2281,
+                    "code": "A0308",
+                    "date": "2011",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 728.64,
+                    "code": "A0308",
+                    "date": "2010",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 824.58,
+                    "code": "A0308",
+                    "date": "2009",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 768.23,
+                    "code": "A0308",
+                    "date": "2008",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 811.6229,
+                    "code": "A0308",
+                    "date": "2007",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 774.4689,
+                    "code": "A0308",
+                    "date": "2006",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 722.2508,
+                    "code": "A0308",
+                    "date": "2005",
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0309",
+                    "date": "2024",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1972.9609,
+                    "code": "A0309",
+                    "date": "2023",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2122.3352,
+                    "code": "A0309",
+                    "date": "2022",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2759.3911,
+                    "code": "A0309",
+                    "date": "2021",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2646.3699,
+                    "code": "A0309",
+                    "date": "2020",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3332.3398,
+                    "code": "A0309",
+                    "date": "2019",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3646.9391,
+                    "code": "A0309",
+                    "date": "2018",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3532.6055,
+                    "code": "A0309",
+                    "date": "2017",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3255.655,
+                    "code": "A0309",
+                    "date": "2016",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2627.1872,
+                    "code": "A0309",
+                    "date": "2015",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2273.1563,
+                    "code": "A0309",
+                    "date": "2014",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1995.3562,
+                    "code": "A0309",
+                    "date": "2013",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1576.1126,
+                    "code": "A0309",
+                    "date": "2012",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1329.3366,
+                    "code": "A0309",
+                    "date": "2011",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1211.71,
+                    "code": "A0309",
+                    "date": "2010",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1086.99,
+                    "code": "A0309",
+                    "date": "2009",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 732.07,
+                    "code": "A0309",
+                    "date": "2008",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1135.4127,
+                    "code": "A0309",
+                    "date": "2007",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 960.8808,
+                    "code": "A0309",
+                    "date": "2006",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 914.0589,
+                    "code": "A0309",
+                    "date": "2005",
+                    "cname": "商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030A",
+                    "date": "2024",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1583.9635,
+                    "code": "A030A",
+                    "date": "2023",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1742.424,
+                    "code": "A030A",
+                    "date": "2022",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2470.5345,
+                    "code": "A030A",
+                    "date": "2021",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2252.3928,
+                    "code": "A030A",
+                    "date": "2020",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2981.7857,
+                    "code": "A030A",
+                    "date": "2019",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3229.7547,
+                    "code": "A030A",
+                    "date": "2018",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3085.775,
+                    "code": "A030A",
+                    "date": "2017",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2931.0559,
+                    "code": "A030A",
+                    "date": "2016",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2413.769,
+                    "code": "A030A",
+                    "date": "2015",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1978.963,
+                    "code": "A030A",
+                    "date": "2014",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1750.4293,
+                    "code": "A030A",
+                    "date": "2013",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1390.4712,
+                    "code": "A030A",
+                    "date": "2012",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1182.207,
+                    "code": "A030A",
+                    "date": "2011",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1095.22,
+                    "code": "A030A",
+                    "date": "2010",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1041.39,
+                    "code": "A030A",
+                    "date": "2009",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 683.24,
+                    "code": "A030A",
+                    "date": "2008",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1069.8933,
+                    "code": "A030A",
+                    "date": "2007",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 908.923,
+                    "code": "A030A",
+                    "date": "2006",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 834.1755,
+                    "code": "A030A",
+                    "date": "2005",
+                    "cname": "住宅商品房销售面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030B",
+                    "date": "2024",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 14305.0,
+                    "code": "A030B",
+                    "date": "2023",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 14048.0,
+                    "code": "A030B",
+                    "date": "2022",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 15067.0,
+                    "code": "A030B",
+                    "date": "2021",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 14244.0,
+                    "code": "A030B",
+                    "date": "2020",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 14258.0,
+                    "code": "A030B",
+                    "date": "2019",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 13108.2537133675,
+                    "code": "A030B",
+                    "date": "2018",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11744.0,
+                    "code": "A030B",
+                    "date": "2017",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 10048.0,
+                    "code": "A030B",
+                    "date": "2016",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 8556.0,
+                    "code": "A030B",
+                    "date": "2015",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 7951.0,
+                    "code": "A030B",
+                    "date": "2014",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 7717.0,
+                    "code": "A030B",
+                    "date": "2013",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 7344.05270283354,
+                    "code": "A030B",
+                    "date": "2012",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 7192.89982687605,
+                    "code": "A030B",
+                    "date": "2011",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5746.0,
+                    "code": "A030B",
+                    "date": "2010",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5329.0,
+                    "code": "A030B",
+                    "date": "2009",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4781.0,
+                    "code": "A030B",
+                    "date": "2008",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4664.02745010691,
+                    "code": "A030B",
+                    "date": "2007",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3689.64079623612,
+                    "code": "A030B",
+                    "date": "2006",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3061.77096465009,
+                    "code": "A030B",
+                    "date": "2005",
+                    "cname": "商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030C",
+                    "date": "2024",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 14883.0,
+                    "code": "A030C",
+                    "date": "2023",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 14776.0,
+                    "code": "A030C",
+                    "date": "2022",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 15504.0,
+                    "code": "A030C",
+                    "date": "2021",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 14672.0,
+                    "code": "A030C",
+                    "date": "2020",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 13834.0,
+                    "code": "A030C",
+                    "date": "2019",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 12678.4774088261,
+                    "code": "A030C",
+                    "date": "2018",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11453.0,
+                    "code": "A030C",
+                    "date": "2017",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 9819.0,
+                    "code": "A030C",
+                    "date": "2016",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 8404.0,
+                    "code": "A030C",
+                    "date": "2015",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 7399.0,
+                    "code": "A030C",
+                    "date": "2014",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 7238.0,
+                    "code": "A030C",
+                    "date": "2013",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6895.35101482145,
+                    "code": "A030C",
+                    "date": "2012",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6675.9899070129,
+                    "code": "A030C",
+                    "date": "2011",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5550.0,
+                    "code": "A030C",
+                    "date": "2010",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5199.0,
+                    "code": "A030C",
+                    "date": "2009",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4681.0,
+                    "code": "A030C",
+                    "date": "2008",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4515.75965565912,
+                    "code": "A030C",
+                    "date": "2007",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3535.26206290302,
+                    "code": "A030C",
+                    "date": "2006",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2986.20134492082,
+                    "code": "A030C",
+                    "date": "2005",
+                    "cname": "住宅商品房平均销售价格",
+                    "unit": "元/平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030D",
+                    "date": "2024",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030D",
+                    "date": "2023",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 59.5657,
+                    "code": "A030D",
+                    "date": "2022",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 222.6754,
+                    "code": "A030D",
+                    "date": "2021",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 203.4389,
+                    "code": "A030D",
+                    "date": "2020",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 179.3428,
+                    "code": "A030D",
+                    "date": "2019",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 77.0524,
+                    "code": "A030D",
+                    "date": "2018",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 104.8042,
+                    "code": "A030D",
+                    "date": "2017",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 222.1225,
+                    "code": "A030D",
+                    "date": "2016",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 161.6681,
+                    "code": "A030D",
+                    "date": "2015",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 227.0608,
+                    "code": "A030D",
+                    "date": "2014",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 502.8212,
+                    "code": "A030D",
+                    "date": "2013",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 456.9526,
+                    "code": "A030D",
+                    "date": "2012",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 397.7161,
+                    "code": "A030D",
+                    "date": "2011",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 234.97,
+                    "code": "A030D",
+                    "date": "2010",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 228.78,
+                    "code": "A030D",
+                    "date": "2009",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 326.35,
+                    "code": "A030D",
+                    "date": "2008",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 502.8743,
+                    "code": "A030D",
+                    "date": "2007",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 449.7323,
+                    "code": "A030D",
+                    "date": "2006",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 772.7821,
+                    "code": "A030D",
+                    "date": "2005",
+                    "cname": "房地产开发企业购置土地面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2024",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2023",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2022",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2021",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2020",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2019",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2018",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2017",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2016",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2015",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2014",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2013",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2012",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2011",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A030E",
+                    "date": "2010",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 884.98,
+                    "code": "A030E",
+                    "date": "2009",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 457.09,
+                    "code": "A030E",
+                    "date": "2008",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 535.029,
+                    "code": "A030E",
+                    "date": "2007",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 471.8787,
+                    "code": "A030E",
+                    "date": "2006",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 428.8347,
+                    "code": "A030E",
+                    "date": "2005",
+                    "cname": "房地产开发企业土地开发面积",
+                    "unit": "万平方米",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0401",
+                    "date": "2024",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1601.199,
+                    "code": "A0401",
+                    "date": "2023",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1504.7392,
+                    "code": "A0401",
+                    "date": "2022",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1578.6488,
+                    "code": "A0401",
+                    "date": "2021",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1230.2897,
+                    "code": "A0401",
+                    "date": "2020",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1564.1163,
+                    "code": "A0401",
+                    "date": "2019",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1528.6984,
+                    "code": "A0401",
+                    "date": "2018",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1402.9265,
+                    "code": "A0401",
+                    "date": "2017",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1322.0962,
+                    "code": "A0401",
+                    "date": "2016",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1245.6338,
+                    "code": "A0401",
+                    "date": "2015",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1101.0207,
+                    "code": "A0401",
+                    "date": "2014",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 978.52,
+                    "code": "A0401",
+                    "date": "2013",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 828.5846,
+                    "code": "A0401",
+                    "date": "2012",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 673.26,
+                    "code": "A0401",
+                    "date": "2011",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 390.1866,
+                    "code": "A0401",
+                    "date": "2010",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 316.0716,
+                    "code": "A0401",
+                    "date": "2009",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 277.3176,
+                    "code": "A0401",
+                    "date": "2008",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 221.6755,
+                    "code": "A0401",
+                    "date": "2007",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 178.6021,
+                    "code": "A0401",
+                    "date": "2006",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 138.8169,
+                    "code": "A0401",
+                    "date": "2005",
+                    "cname": "地方一般公共预算收入",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0402",
+                    "date": "2024",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2204.0782,
+                    "code": "A0402",
+                    "date": "2023",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2223.1481,
+                    "code": "A0402",
+                    "date": "2022",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2215.9673,
+                    "code": "A0402",
+                    "date": "2021",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2407.8114,
+                    "code": "A0402",
+                    "date": "2020",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2237.1003,
+                    "code": "A0402",
+                    "date": "2019",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1929.3075,
+                    "code": "A0402",
+                    "date": "2018",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1728.2839,
+                    "code": "A0402",
+                    "date": "2017",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1524.6791,
+                    "code": "A0402",
+                    "date": "2016",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1338.0508,
+                    "code": "A0402",
+                    "date": "2015",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1175.1039,
+                    "code": "A0402",
+                    "date": "2014",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1122.8838,
+                    "code": "A0402",
+                    "date": "2013",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 885.5477,
+                    "code": "A0402",
+                    "date": "2012",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 765.0426,
+                    "code": "A0402",
+                    "date": "2011",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 583.5453,
+                    "code": "A0402",
+                    "date": "2010",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 503.643,
+                    "code": "A0402",
+                    "date": "2009",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 377.8847,
+                    "code": "A0402",
+                    "date": "2008",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 307.2345,
+                    "code": "A0402",
+                    "date": "2007",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 257.8102,
+                    "code": "A0402",
+                    "date": "2006",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0402",
+                    "date": "2005",
+                    "cname": "地方一般公共预算支出",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0403",
+                    "date": "2024",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 16208.0792,
+                    "code": "A0403",
+                    "date": "2023",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 13923.74,
+                    "code": "A0403",
+                    "date": "2022",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 11498.18,
+                    "code": "A0403",
+                    "date": "2021",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 10213.24,
+                    "code": "A0403",
+                    "date": "2020",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 8992.96,
+                    "code": "A0403",
+                    "date": "2019",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 7728.5037,
+                    "code": "A0403",
+                    "date": "2018",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6879.7137,
+                    "code": "A0403",
+                    "date": "2017",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6464.8837,
+                    "code": "A0403",
+                    "date": "2016",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 6059.03,
+                    "code": "A0403",
+                    "date": "2015",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5352.1348,
+                    "code": "A0403",
+                    "date": "2014",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5117.43,
+                    "code": "A0403",
+                    "date": "2013",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4622.963,
+                    "code": "A0403",
+                    "date": "2012",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4036.2313,
+                    "code": "A0403",
+                    "date": "2011",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3590.5589,
+                    "code": "A0403",
+                    "date": "2010",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3010.1111,
+                    "code": "A0403",
+                    "date": "2009",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2428.02,
+                    "code": "A0403",
+                    "date": "2008",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1949.0667,
+                    "code": "A0403",
+                    "date": "2007",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1887.7333,
+                    "code": "A0403",
+                    "date": "2006",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 1673.1705,
+                    "code": "A0403",
+                    "date": "2005",
+                    "cname": "住户存款余额",
+                    "unit": "亿元",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0801",
+                    "date": "2024",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 116.1053,
+                    "code": "A0801",
+                    "date": "2023",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 113.5373,
+                    "code": "A0801",
+                    "date": "2022",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 110.5576,
+                    "code": "A0801",
+                    "date": "2021",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 106.7206,
+                    "code": "A0801",
+                    "date": "2020",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 100.6894,
+                    "code": "A0801",
+                    "date": "2019",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 96.9323,
+                    "code": "A0801",
+                    "date": "2018",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 94.7651,
+                    "code": "A0801",
+                    "date": "2017",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 94.8768,
+                    "code": "A0801",
+                    "date": "2016",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 95.6789,
+                    "code": "A0801",
+                    "date": "2015",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 96.2106,
+                    "code": "A0801",
+                    "date": "2014",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 96.6438,
+                    "code": "A0801",
+                    "date": "2013",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 94.6991,
+                    "code": "A0801",
+                    "date": "2012",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 92.0373,
+                    "code": "A0801",
+                    "date": "2011",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 88.1433,
+                    "code": "A0801",
+                    "date": "2010",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 84.6315,
+                    "code": "A0801",
+                    "date": "2009",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 80.9716,
+                    "code": "A0801",
+                    "date": "2008",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 77.8368,
+                    "code": "A0801",
+                    "date": "2007",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 74.7227,
+                    "code": "A0801",
+                    "date": "2006",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0801",
+                    "date": "2005",
+                    "cname": "普通本专科在校学生数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0802",
+                    "date": "2024",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 368.0,
+                    "code": "A0802",
+                    "date": "2023",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 362.0,
+                    "code": "A0802",
+                    "date": "2022",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 364.0,
+                    "code": "A0802",
+                    "date": "2021",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 362.0,
+                    "code": "A0802",
+                    "date": "2020",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 407.0,
+                    "code": "A0802",
+                    "date": "2019",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 398.0,
+                    "code": "A0802",
+                    "date": "2018",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 354.0,
+                    "code": "A0802",
+                    "date": "2017",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 386.0,
+                    "code": "A0802",
+                    "date": "2016",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 372.0,
+                    "code": "A0802",
+                    "date": "2015",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 266.0,
+                    "code": "A0802",
+                    "date": "2014",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 242.0,
+                    "code": "A0802",
+                    "date": "2013",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 238.0,
+                    "code": "A0802",
+                    "date": "2012",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 233.0,
+                    "code": "A0802",
+                    "date": "2011",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 232.0,
+                    "code": "A0802",
+                    "date": "2010",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 227.0,
+                    "code": "A0802",
+                    "date": "2009",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 232.0,
+                    "code": "A0802",
+                    "date": "2008",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 227.0,
+                    "code": "A0802",
+                    "date": "2007",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 221.0,
+                    "code": "A0802",
+                    "date": "2006",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0802",
+                    "date": "2005",
+                    "cname": "医院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0803",
+                    "date": "2024",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 5.0326,
+                    "code": "A0803",
+                    "date": "2023",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4.7652,
+                    "code": "A0803",
+                    "date": "2022",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4.7041,
+                    "code": "A0803",
+                    "date": "2021",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4.1888,
+                    "code": "A0803",
+                    "date": "2020",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4.1327,
+                    "code": "A0803",
+                    "date": "2019",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 4.2271,
+                    "code": "A0803",
+                    "date": "2018",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3.6266,
+                    "code": "A0803",
+                    "date": "2017",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3.473,
+                    "code": "A0803",
+                    "date": "2016",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 3.2888,
+                    "code": "A0803",
+                    "date": "2015",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2.9523,
+                    "code": "A0803",
+                    "date": "2014",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2.7767,
+                    "code": "A0803",
+                    "date": "2013",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2.642,
+                    "code": "A0803",
+                    "date": "2012",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2.5376,
+                    "code": "A0803",
+                    "date": "2011",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2.5069,
+                    "code": "A0803",
+                    "date": "2010",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2.3997,
+                    "code": "A0803",
+                    "date": "2009",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2.2728,
+                    "code": "A0803",
+                    "date": "2008",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2.1541,
+                    "code": "A0803",
+                    "date": "2007",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 2.1145,
+                    "code": "A0803",
+                    "date": "2006",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0803",
+                    "date": "2005",
+                    "cname": "执业(助理)医师数",
+                    "unit": "万人",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0804",
+                    "date": "2024",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0804",
+                    "date": "2023",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0804",
+                    "date": "2022",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0804",
+                    "date": "2021",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0804",
+                    "date": "2020",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0804",
+                    "date": "2019",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0804",
+                    "date": "2018",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0804",
+                    "date": "2017",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0804",
+                    "date": "2016",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0804",
+                    "date": "2015",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 123.0,
+                    "code": "A0804",
+                    "date": "2014",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 115.0,
+                    "code": "A0804",
+                    "date": "2013",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 61.0,
+                    "code": "A0804",
+                    "date": "2012",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 64.0,
+                    "code": "A0804",
+                    "date": "2011",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 64.0,
+                    "code": "A0804",
+                    "date": "2010",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 64.0,
+                    "code": "A0804",
+                    "date": "2009",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 60.0,
+                    "code": "A0804",
+                    "date": "2008",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 60.0,
+                    "code": "A0804",
+                    "date": "2007",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 61.0,
+                    "code": "A0804",
+                    "date": "2006",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                },
+                {
+                    "value": 0.0,
+                    "code": "A0804",
+                    "date": "2005",
+                    "cname": "剧场、影剧院数",
+                    "unit": "个",
+                    "cityName": "武汉",
+                    "cityCode": "420100"
+                }
+            ],
+            "yd": []
+        },
+        "sj": {
+            "nd": [
+                "2024",
+                "2023",
+                "2022",
+                "2021",
+                "2020",
+                "2019",
+                "2018",
+                "2017",
+                "2016",
+                "2015",
+                "2014",
+                "2013",
+                "2012",
+                "2011",
+                "2010",
+                "2009",
+                "2008",
+                "2007",
+                "2006",
+                "2005"
+            ],
+            "yd": []
+        },
+        "zb": {
+            "nd": [
+                {
+                    "cname": "地区生产总值（当年价格）",
+                    "code": "A0101"
+                },
+                {
+                    "cname": "第一产业增加值",
+                    "code": "A0102"
+                },
+                {
+                    "cname": "第二产业增加值",
+                    "code": "A0103"
+                },
+                {
+                    "cname": "第三产业增加值",
+                    "code": "A0104"
+                },
+                {
+                    "cname": "年末户籍人口",
+                    "code": "A0201"
+                },
+                {
+                    "cname": "城镇非私营单位在岗职工平均工资",
+                    "code": "A0202"
+                },
+                {
+                    "cname": "常住人口",
+                    "code": "A0203"
+                },
+                {
+                    "cname": "房地产开发投资额",
+                    "code": "A0302"
+                },
+                {
+                    "cname": "房地产开发住宅投资额",
+                    "code": "A0303"
+                },
+                {
+                    "cname": "房地产开发办公楼投资额",
+                    "code": "A0304"
+                },
+                {
+                    "cname": "房地产开发商业营业用房投资额",
+                    "code": "A0305"
+                },
+                {
+                    "cname": "房地产开发企业施工房屋面积",
+                    "code": "A0306"
+                },
+                {
+                    "cname": "房地产开发企业竣工房屋面积",
+                    "code": "A0307"
+                },
+                {
+                    "cname": "房地产开发企业住宅竣工房屋面积",
+                    "code": "A0308"
+                },
+                {
+                    "cname": "商品房销售面积",
+                    "code": "A0309"
+                },
+                {
+                    "cname": "住宅商品房销售面积",
+                    "code": "A030A"
+                },
+                {
+                    "cname": "商品房平均销售价格",
+                    "code": "A030B"
+                },
+                {
+                    "cname": "住宅商品房平均销售价格",
+                    "code": "A030C"
+                },
+                {
+                    "cname": "房地产开发企业购置土地面积",
+                    "code": "A030D"
+                },
+                {
+                    "cname": "房地产开发企业土地开发面积",
+                    "code": "A030E"
+                },
+                {
+                    "cname": "地方一般公共预算收入",
+                    "code": "A0401"
+                },
+                {
+                    "cname": "地方一般公共预算支出",
+                    "code": "A0402"
+                },
+                {
+                    "cname": "住户存款余额",
+                    "code": "A0403"
+                },
+                {
+                    "cname": "普通本专科在校学生数",
+                    "code": "A0801"
+                },
+                {
+                    "cname": "医院数",
+                    "code": "A0802"
+                },
+                {
+                    "cname": "执业(助理)医师数",
+                    "code": "A0803"
+                },
+                {
+                    "cname": "剧场、影剧院数",
+                    "code": "A0804"
+                }
+            ],
+            "yd": []
+        },
+        "reg": [
+            {
+                "cname": "武汉",
+                "code": "420100"
+            }
+        ]
+    }
+}
