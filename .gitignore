@@ -2,12 +2,14 @@
 node_modules
 
 # 先不忽略该文件，不然打包到github pages 会显示不出来
-#/dist
+/dist
 
 
 # local env files
 .env.local
 .env.*.local
+.env.development
+.env.production
 
 # Log files
 npm-debug.log*
