@@ -48,6 +48,7 @@ import { WHGDPCharts } from "@/config/chartMetaWH.js";
 import { CityGDPCharts } from "@/config/chartMetaCity.js";
 import { ProvincialGDPCharts } from "@/config/chartMetaProvince.js";
 import { GDPCharts } from "@/config/chartMetaNation.js";
+import { logger } from "./utils/Logger";
 
 export default {
   name: "App",
@@ -58,15 +59,17 @@ export default {
   },
   async mounted() {
     try {
-      await loadChartData(WHGDPCharts.source);
-      await loadChartData(CityGDPCharts.source);
-      await loadChartData(ProvincialGDPCharts.source);
-      await loadChartData(GDPCharts.source);
+      await Promise.all([
+        loadChartData(WHGDPCharts.source),
+        loadChartData(CityGDPCharts.source),
+        loadChartData(ProvincialGDPCharts.source),
+        loadChartData(GDPCharts.source),
+      ]);
       // 预加载成功，关闭 loading
       this.loading = false;
-      console.log("json 预加载成功");
+      logger.info("json 预加载成功");
     } catch (e) {
-      console.error("json 预加载失败", e);
+      logger.info("json 预加载失败", e);
       // 出错也关闭 loading，避免卡死
       this.loading = false;
     }
