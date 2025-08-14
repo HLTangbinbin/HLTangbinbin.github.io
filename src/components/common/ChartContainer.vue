@@ -3,48 +3,49 @@
     <h3 class="chart-title">{{ chart.title }}</h3>
     <h4 v-if="chart.subtitle" class="chart-subtitle">{{ chart.subtitle }}</h4>
 
-    <div class="chart-controls">
-      <button
-        :class="[
-          'chart-button',
-          { 'is-active': chartType === 'bar' && isHorizontal === false },
-        ]"
-        @click="chartType = 'bar'; isHorizontal = false"
-        type="button"
-      >
-        柱状图
-      </button>
-      <button
-        :class="[
-          'chart-button',
-          { 'is-active': chartType === 'bar' && isHorizontal === true },
-        ]"
-        @click="chartType = 'bar'; isHorizontal = true"
-        type="button"
-      >
-        条形图
-      </button>
-      <button
-        :class="['chart-button', { 'is-active': chartType === 'line' && isHorizontal === false }]"
-        @click="chartType = 'line'; isHorizontal = false"
-        type="button"
-      >
-        折线图
-      </button>
-    </div>
-    <div class="year-selector">
-      <label class="year-label">选择时间范围</label>
-      <el-slider
-        v-model="yearLimit"
-        :min="1"
-        :max="20"
-        :step="1"
-        show-tooltip
-        :format-tooltip="formatTooltip"
-        class="year-slider"
-      />
+    <!-- 父容器：包含第一行按钮和第二行控件 -->
+    <div class="controls-wrap">
+      <!-- 第一行按钮 -->
+      <div class="chart-controls">
+        <button
+          :class="['chart-button', { 'is-active': chartType === 'bar' && !isHorizontal }]"
+          @click="chartType='bar'; isHorizontal=false"
+        >柱状图</button>
+        <button
+          :class="['chart-button', { 'is-active': chartType === 'bar' && isHorizontal }]"
+          @click="chartType='bar'; isHorizontal=true"
+        >条形图</button>
+        <button
+          :class="['chart-button', { 'is-active': chartType === 'line' && !isHorizontal }]"
+          @click="chartType='line'; isHorizontal=false"
+        >折线图</button>
+      </div>
+
+      <!-- 第二行控件 -->
+      <div class="time-legend-row">
+        <div class="year-selector">
+          <label class="year-label">选择时间范围</label>
+          <el-slider
+            v-model="yearLimit"
+            :min="1"
+            :max="20"
+            :step="1"
+            show-tooltip
+            :format-tooltip="formatTooltip"
+            class="year-slider"
+          />
+        </div>
+  <button
+    class="toggle-legend-btn"
+    :style="{ backgroundColor: legendAllSelected ? '#0bc2d6' : '#ccc' }"
+    @click="toggleLegend"
+  >
+    {{ legendAllSelected ? '一键未选' : '一键全选' }}
+  </button>
+      </div>
     </div>
 
+    <!-- 图表 -->
     <ChartCard
       :chart="chart"
       :chartType="chartType"
@@ -52,12 +53,14 @@
       :config="config"
       :yearLimit="yearLimit"
       :isHorizontal="isHorizontal"
+      :legendAllSelected="legendAllSelected"
     />
   </div>
 </template>
 
 <script>
-import ChartCard from "./ChartCard.vue";
+import { ref } from 'vue';
+import ChartCard from './ChartCard.vue';
 
 export default {
   components: { ChartCard },
@@ -65,55 +68,47 @@ export default {
     chart: Object,
     returnData: Object,
     config: Object,
-    initialChartType: {
-      type: String,
-      default: "bar",
-    },
+    initialChartType: { type: String, default: 'bar' },
     viewMode: String,
   },
-  data() {
-    return {
-      chartType: this.initialChartType,
-      yearLimit: 10,
-      isHorizontal: false
+  setup(props) {
+    const chartType = ref(props.initialChartType);
+    const isHorizontal = ref(false);
+    const yearLimit = ref(10);
+    const legendAllSelected = ref(true);
+
+    const toggleLegend = () => {
+      legendAllSelected.value = !legendAllSelected.value;
     };
-  },
-  computed: {
-    // 支持动态 tooltip 格式
-    formatTooltip() {
-      return (val) => {
-        const unit = this.viewMode === "monthly" ? "个月" : "年";
-        return `近 ${val} ${unit}`;
-      };
-    },
+
+    const formatTooltip = (val) => {
+      const unit = props.viewMode === 'monthly' ? '个月' : '年';
+      return `近 ${val} ${unit}`;
+    };
+
+    return { chartType, isHorizontal, yearLimit, legendAllSelected, toggleLegend, formatTooltip };
   },
 };
 </script>
-
-
 
 <style scoped>
 .chart-container {
   width: 100%;
   max-width: 1500px;
-  margin: 0 auto 60px;
+  margin: 50px auto 60px;
   padding: 16px;
   box-sizing: border-box;
   background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
-  margin-top: 50px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.06);
 }
 
 .chart-title {
   text-align: center;
   font-size: 18px;
   font-weight: 700;
-  /* 比 500 更粗，接近 canvas 渲染视觉效果 */
   color: #333;
-  font-family: "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
   margin: 24px 0 6px;
-  line-height: 1.4;
 }
 
 .chart-subtitle {
@@ -121,48 +116,43 @@ export default {
   font-weight: bold;
   line-height: 20px;
   color: #666;
-  /* 可改为 #aaa 如果需要更淡 */
   text-align: center;
   white-space: pre-line;
   overflow-wrap: break-word;
   margin: 0 auto 12px;
   max-width: 80vw;
-  /* 等价于 window.innerWidth * 0.8 */
 }
 
+/* 父容器：包含第一行按钮和第二行控件 */
+.controls-wrap {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;  /* 宽度自适应内容，即第一行按钮总宽度 */
+  margin: 0 auto;      /* 整体居中页面 */
+  align-items: stretch; /* 第二行控件撑满父容器 */
+}
+
+/* 第一行按钮 */
 .chart-controls {
   display: flex;
-  justify-content: center;
+  justify-content: center; /* 整体居中 */
   gap: 12px;
-  margin-bottom: 16px;
-  margin-top: 8px;
-  /* ✅ 确保和 legend 保持间隔 */
+  margin-top: 16px;        /* 调整与标题间距，原来可能太小 */
 }
 
-.chart-button {
-  padding: 6px 12px;
-  font-size: 13px;
-  border-radius: 10px;
-  background-color: #ccc;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
-  margin-top: 10px;
+/* 第二行控件 */
+.time-legend-row {
+  display: flex;
+  justify-content: space-between; /* 左右对齐 */
+  align-items: flex-start;        /* 顶部对齐 */
+  margin-top: 16px;
 }
 
-.chart-button.is-active {
-  background-color: #0bc2d6;
-}
-
+/* 左边选择时间 */
 .year-selector {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  /* 横向居中 */
-  justify-content: center;
-  /* 纵向居中 */
-  margin: 16px 0;
+    min-width: 80px;       /* 保证内容不挤 */
 }
 
 .year-label {
@@ -172,22 +162,39 @@ export default {
   font-weight: bold;
   margin-bottom: 8px;
   color: #fff;
-  background-color: #0bc2d6 !important;
+  background-color: #0bc2d6;
 }
 
-/* 限制滑块宽度 */
 .year-slider {
-  width: 10%; /* 默认 PC 端 */
-  min-width: 100px; /* 避免过窄 */
+  max-width: 200px; /* 可调整或使用 flex-grow 自适应 */
 }
 
-/* Vue3 推荐写法：v-deep 前缀，作用于 element-plus 内部 */
-::v-deep(.year-slider .el-slider__bar) {
-  background-color: #0bc2d6 !important;
+/* element-plus 滑块样式 */
+::v-deep(.year-slider .el-slider__bar) { background-color: #0bc2d6 !important; }
+::v-deep(.year-slider .el-slider__button) { background-color: #0bc2d6 !important; border-color: #0bc2d6 !important; }
+
+.toggle-legend-btn {
+  display: inline-flex;
+  padding: 6px 12px;
+  height: auto;
+  align-items: center;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-::v-deep(.year-slider .el-slider__button) {
-  background-color: #0bc2d6 !important;
-  border-color: #0bc2d6 !important;
+/* 按钮样式 */
+.chart-button {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 10px;
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
 }
+.chart-button.is-active { background-color: #0bc2d6; }
 </style>

@@ -98,6 +98,8 @@ export function getCommonChartOption(params) {
   const legendTop = params.legendTop;
   const gridTop = params.gridTop;
   const isHorizontal = params.isHorizontal;
+  const legendAllSelected = params.legendAllSelected;
+
   const seriesData = [];
 
 
@@ -119,7 +121,7 @@ export function getCommonChartOption(params) {
 
       const name = cname + unit;
       const valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
-      
+
       seriesData.push({ name, type, data: valueArr });
       logger.debug(`当前的echart数据:  ${JSON.stringify(seriesData)}`);
     });
@@ -155,6 +157,8 @@ export function getCommonChartOption(params) {
     data: filteredYears,
   };
 
+  const legendData = seriesData.map(s => s.name); // 获取所有系列名称
+
   return {
     title: {
       text: title,
@@ -170,7 +174,15 @@ export function getCommonChartOption(params) {
       },
     },
     tooltip: { trigger: 'axis' },
-    legend: { left: 'center', top: legendTop || '5%' },
+    legend: {
+      left: 'center',
+      top: legendTop || '5%',
+      data: legendData,
+      selected: legendData.reduce((acc, name) => {
+        acc[name] = legendAllSelected; // true 全选，false 全不选
+        return acc;
+      }, {}),
+    },
     grid: {
       left: '1%',
       right: '1%',

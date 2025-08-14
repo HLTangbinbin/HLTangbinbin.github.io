@@ -20,6 +20,7 @@ export default {
       default: 10
     },
     isHorizontal: Boolean,
+    legendAllSelected: Boolean,
   },
   computed: {
     adjustedLegendTop() {
@@ -58,6 +59,7 @@ export default {
         chartType: this.chartType,
         yearLimit: this.yearLimit,
         isHorizontal: this.isHorizontal,
+        legendAllSelected: this.legendAllSelected,
         
       };
       const option = getCommonChartOption(params);
