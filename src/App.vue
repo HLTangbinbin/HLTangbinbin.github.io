@@ -59,17 +59,51 @@ export default {
   },
   async mounted() {
     try {
-      await Promise.all([
-        loadChartData(WHGDPCharts.source),
-        loadChartData(CityGDPCharts.source),
-        loadChartData(ProvincialGDPCharts.source),
-        loadChartData(GDPCharts.source),
-      ]);
+      // 只预加载数据，不预加载组件
+      // logger.debug("开始预加载数据...");
+      
+      // 分批预加载，避免阻塞
+      const configs = [
+        { source: WHGDPCharts.source, name: '武汉数据' },
+        { source: CityGDPCharts.source, name: '城市数据' },
+        { source: ProvincialGDPCharts.source, name: '省市数据' },
+        { source: GDPCharts.source, name: '全国数据' }
+      ];
+
+      // 只预加载当前页面的数据，其他数据延迟加载
+      const currentPath = window.location.pathname || '/WH';
+      const currentConfig = configs.find(config => 
+        currentPath.includes('WH') ? config.name === '武汉数据' :
+        currentPath.includes('FirstTierCity') ? config.name === '城市数据' :
+        currentPath.includes('MajorProvincial') ? config.name === '省市数据' :
+        currentPath.includes('NationWide') ? config.name === '全国数据' :
+        config.name === '武汉数据' // 默认
+      );
+
+      if (currentConfig) {
+        // logger.debug(`预加载当前页面数据: ${currentConfig.name}`);
+        await loadChartData(currentConfig.source);
+      }
+
+      // 延迟预加载其他数据
+      setTimeout(async () => {
+        const otherConfigs = configs.filter(config => config !== currentConfig);
+        for (const config of otherConfigs) {
+          try {
+            // logger.debug(`延迟预加载: ${config.name}`);
+            await loadChartData(config.source);
+          } catch (e) {
+            logger.warn(`延迟预加载失败: ${config.name}`, e);
+          }
+        }
+        // logger.debug("所有数据预加载完成");
+      }, 2000); // 2秒后开始预加载其他数据
+
       // 预加载成功，关闭 loading
       this.loading = false;
-      logger.info("json 预加载成功");
+      logger.debug("应用启动完成");
     } catch (e) {
-      logger.info("json 预加载失败", e);
+      logger.error("预加载失败", e);
       // 出错也关闭 loading，避免卡死
       this.loading = false;
     }

@@ -123,7 +123,7 @@ export function getCommonChartOption(params) {
       const valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
 
       seriesData.push({ name, type, data: valueArr });
-      logger.debug(`当前的echart数据:  ${JSON.stringify(seriesData)}`);
+      // logger.debug(`当前的echart数据:  ${JSON.stringify(seriesData)}`);
     });
   } else {
     // 区分城市，展示某一指标在多个城市的对比

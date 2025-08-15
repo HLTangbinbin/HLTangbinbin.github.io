@@ -19,10 +19,7 @@ export const navConfig = [
         ]
       },
       { path: 'WHEducation', label: '教育' },
-
-
       { path: 'WHMedical', label: '医疗' },
-
     ]
   },
   {
@@ -41,7 +38,6 @@ export const navConfig = [
           { path: 'CityRealEstatePriceIndices', label: '指数' }
         ]
       },
-
       { path: 'CityEducation', label: '教育' },
       { path: 'CityMedical', label: '医疗' }
     ]

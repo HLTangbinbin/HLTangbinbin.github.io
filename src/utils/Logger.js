@@ -29,6 +29,16 @@ export const logger = {
       console.error('[ERROR]', ...args);
     }
   },
+  time: (...args) => {
+    if (shouldLog('time')) {
+      console.time('[INFO]', ...args);
+    }
+  },
+  timeEnd: (...args) => {
+    if (shouldLog('timeEnd')) {
+      console.timeEnd('[INFO]', ...args);
+    }
+  },
 };
 
 

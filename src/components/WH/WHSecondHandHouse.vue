@@ -13,105 +13,106 @@
     </div>
   </div>
 </template>
-  <script>
-  import * as echarts from 'echarts';
-  import { logger } from '@/utils/Logger.js';
-  
-  export default {
 
-    data() {
-      return {
-        isBarActive: false,
-        isLineActive: false,
-        houseList: null,
-        chartsType: null,
-        oldHouseArrayYear2019: null,
-        oldHouseArrayYear2020: null,
-        oldHouseArrayYear2021: null,
-        oldHouseArrayYear2022: null,
-        oldHouseArrayMonth2019: null,
-        oldHouseArrayMonth2020: null,
-        oldHouseArrayMonth2021: null,
-        oldHouseArrayMonth2022: null
-      };
+<script>
+import * as echarts from 'echarts';
+import { logger } from '@/utils/Logger.js';
+
+export default {
+
+  data() {
+    return {
+      isBarActive: false,
+      isLineActive: false,
+      houseList: null,
+      chartsType: null,
+      oldHouseArrayYear2019: null,
+      oldHouseArrayYear2020: null,
+      oldHouseArrayYear2021: null,
+      oldHouseArrayYear2022: null,
+      oldHouseArrayMonth2019: null,
+      oldHouseArrayMonth2020: null,
+      oldHouseArrayMonth2021: null,
+      oldHouseArrayMonth2022: null
+    };
+  },
+  mounted() {
+    this.loadData();
+  },
+
+  methods: {
+    loadData() {
+      // 读取本地的 JSON 文件
+      fetch('json/whhouseTradingInfo.json')
+        .then(response => response.json())
+        .then(data => {
+          // logger.log('读取本地数据二手房数据:', data.houseList);
+          this.houseList = data.houseList;
+          this.handleData();
+          // 处理数据绘制图表
+          this.drawBarChart();
+        })
+        .catch(error => {
+          logger.error('Error fetching data:', error)
+        })
     },
-    mounted() {
-      this.loadData();
+    handleData() {
+      // 2019-2022年二手房月成交累计数据
+      this.oldHouseArrayYear2019 = this.oldHouseTotalArr('oldHouseVolume','2019')
+      this.oldHouseArrayYear2020 = this.oldHouseTotalArr('oldHouseVolume','2020')
+      this.oldHouseArrayYear2021 = this.oldHouseTotalArr('oldHouseVolume','2021')
+      this.oldHouseArrayYear2022 = this.oldHouseTotalArr('oldHouseVolume','2022')
+      logger.debug('2022年二手房年成交数组 %o ',this.oldHouseArrayYear2022)
+      // 2019-2022年二手房月成交数据
+      this.oldHouseArrayMonth2019 = this.oldSelectMonthArr(this.oldHouseArrayYear2019)
+      this.oldHouseArrayMonth2020 = this.oldSelectMonthArr(this.oldHouseArrayYear2020)
+      this.oldHouseArrayMonth2021 = this.oldSelectMonthArr(this.oldHouseArrayYear2021)
+      this.oldHouseArrayMonth2022 = this.oldSelectMonthArr(this.oldHouseArrayYear2022)
+
+      //补全数据处理
+      this.oldHouseArrayMonth2020.unshift(0, 0, this.oldHouseArrayYear2020[0])
+      this.oldHouseArrayMonth2021.unshift(0, this.oldHouseArrayYear2021[0])
+      this.oldHouseArrayMonth2022.unshift(0, this.oldHouseArrayYear2022[0])
+      logger.debug('2022年二手房月成交数组 %o ',this.oldHouseArrayMonth2022)
+      //前面数据补齐-2020年前3月数据为0
+      this.oldHouseArrayMonth2020.unshift(0, 0, 0);
     },
-
-    methods: {
-      loadData() {
-        // 读取本地的 JSON 文件
-        fetch('json/whhouseTradingInfo.json')
-          .then(response => response.json())
-          .then(data => {
-            // logger.log('读取本地数据二手房数据:', data.houseList);
-            this.houseList = data.houseList;
-            this.handleData();
-            // 处理数据绘制图表
-            this.drawBarChart();
-          })
-          .catch(error => {
-            logger.error('Error fetching data:', error)
-          })
-      },
-        handleData() {
-          // 2019-2022年二手房月成交累计数据
-          this.oldHouseArrayYear2019 = this.oldHouseTotalArr('oldHouseVolume','2019')
-          this.oldHouseArrayYear2020 = this.oldHouseTotalArr('oldHouseVolume','2020')
-          this.oldHouseArrayYear2021 = this.oldHouseTotalArr('oldHouseVolume','2021')
-          this.oldHouseArrayYear2022 = this.oldHouseTotalArr('oldHouseVolume','2022')
-          logger.debug('2022年二手房年成交数组 %o ',this.oldHouseArrayYear2022)
-          // 2019-2022年二手房月成交数据
-          this.oldHouseArrayMonth2019 = this.oldSelectMonthArr(this.oldHouseArrayYear2019)
-          this.oldHouseArrayMonth2020 = this.oldSelectMonthArr(this.oldHouseArrayYear2020)
-          this.oldHouseArrayMonth2021 = this.oldSelectMonthArr(this.oldHouseArrayYear2021)
-          this.oldHouseArrayMonth2022 = this.oldSelectMonthArr(this.oldHouseArrayYear2022)
-
-          //补全数据处理
-          this.oldHouseArrayMonth2020.unshift(0, 0, this.oldHouseArrayYear2020[0])
-          this.oldHouseArrayMonth2021.unshift(0, this.oldHouseArrayYear2021[0])
-          this.oldHouseArrayMonth2022.unshift(0, this.oldHouseArrayYear2022[0])
-          logger.debug('2022年二手房月成交数组 %o ',this.oldHouseArrayMonth2022)
-          //前面数据补齐-2020年前3月数据为0
-          this.oldHouseArrayMonth2020.unshift(0, 0, 0);
-        },
-        //按照年份与日期做筛选与排序
-        oldHouseTotalArr(houseType, year) {
-          var inventory = Number();
-          return this.houseList.filter( houseObj => {
-              var yearStr = String()
-              yearStr = houseObj.tradingDate
-              return yearStr.search(year) != -1;
-          }).sort(function(a,b) {
-              return a.statisticalTime > b.statisticalTime ? 1: -1;
-          }).map(item => {
-              if (houseType == 'oldHouseVolume') {
-                  var volume = Number(item.oldHouseVolume)
-                  return volume
-              }else if (houseType == 'newHouseVolume') {
-                  inventory = Number(item.newHouseVolume)
-                  return inventory
-              }else if (houseType == 'newHouseInventory'){
-                  inventory = Number(item.newHouseInventory)
-                  return inventory
-              }
-              
-          })
-        },
-        oldSelectMonthArr(arr) {
-                var tempArr = Array()
-                for(let i in arr) {
-                    if (i>0) {
-                        var currenthMonth = (arr[i])-(arr[i-1])
-                        tempArr.push(currenthMonth)
-                    }
-                }
-                return tempArr
-        },
+    //按照年份与日期做筛选与排序
+    oldHouseTotalArr(houseType, year) {
+      var inventory = Number();
+      return this.houseList.filter( houseObj => {
+          var yearStr = String()
+          yearStr = houseObj.tradingDate
+          return yearStr.search(year) != -1;
+      }).sort(function(a,b) {
+          return a.statisticalTime > b.statisticalTime ? 1: -1;
+      }).map(item => {
+          if (houseType == 'oldHouseVolume') {
+              var volume = Number(item.oldHouseVolume)
+              return volume
+          }else if (houseType == 'newHouseVolume') {
+              inventory = Number(item.newHouseVolume)
+              return inventory
+          }else if (houseType == 'newHouseInventory'){
+              inventory = Number(item.newHouseInventory)
+              return inventory
+          }
           
+      })
+    },
+    oldSelectMonthArr(arr) {
+            var tempArr = Array()
+            for(let i in arr) {
+                if (i>0) {
+                    var currenthMonth = (arr[i])-(arr[i-1])
+                    tempArr.push(currenthMonth)
+                }
+            }
+            return tempArr
+    },
+      
 
-      drawCharts() {
+    drawCharts() {
         // 基于准备好的dom，初始化echarts实例（武汉新房月成交量柱状图）
         var oldHouseVolumeBarMonthChart = echarts.init(document.getElementById('oldHouseVolumeMonth'));
         // 指定图表的配置项和数据
