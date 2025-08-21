@@ -99,7 +99,6 @@ export function getCommonChartOption(params) {
   const gridTop = params.gridTop;
   const isHorizontal = params.isHorizontal;
   const legendAllSelected = params.legendAllSelected;
-
   const seriesData = [];
 
 
@@ -123,7 +122,6 @@ export function getCommonChartOption(params) {
       const valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
 
       seriesData.push({ name, type, data: valueArr });
-      // logger.debug(`当前的echart数据:  ${JSON.stringify(seriesData)}`);
     });
   } else {
     // 区分城市，展示某一指标在多个城市的对比
@@ -158,6 +156,14 @@ export function getCommonChartOption(params) {
   };
 
   const legendData = seriesData.map(s => s.name); // 获取所有系列名称
+  // 确保legend.selected有正确的结构
+  const selectedState = legendData.reduce((acc, name) => {
+    // 如果有传入的legendStates优先使用，否则使用legendAllSelected
+    acc[name] = params.legendStates 
+      ? params.legendStates[name] !== false
+      : legendAllSelected !== false;
+    return acc;
+  }, {});
 
   return {
     title: {
@@ -178,10 +184,7 @@ export function getCommonChartOption(params) {
       left: 'center',
       top: legendTop || '5%',
       data: legendData,
-      selected: legendData.reduce((acc, name) => {
-        acc[name] = legendAllSelected; // true 全选，false 全不选
-        return acc;
-      }, {}),
+      selected: selectedState,
     },
     grid: {
       left: '1%',
