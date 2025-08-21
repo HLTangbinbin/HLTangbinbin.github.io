@@ -5,71 +5,177 @@
 <script>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import * as echarts from 'echarts';
+import { debounce } from 'lodash-es';
+import { logger } from '@/utils/Logger.js';
 
 export default {
-  props: ['option'],
-  setup(props) {
+  name: 'ChartView',
+  props: {
+    option: {
+      type: Object,
+      required: true
+    },
+    debug: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ['legendselectchanged'],
+  setup(props, { emit }) {
     const chartContainer = ref(null);
-    let chartInstance = null;
+    const chartInstance = ref(null);
 
-    const initChart = () => {
-      if (!chartContainer.value) {
-        console.error('容器元素未找到');
-        return;
-      }
+    // 基础配置
+    const getBaseOption = () => ({
+      animation: true,
+      tooltip: { trigger: 'axis' },
+      legend: {
+        selectedMode: 'multiple',
+        selector: false,
+        left: 'center',
+        top: '5%'
+      },
+      grid: { containLabel: true }
+    });
 
-      // 销毁旧实例
-      if (chartInstance) {
-        chartInstance.dispose();
-      }
-
-      try {
-        // 创建实例
-        chartInstance = echarts.init(chartContainer.value);
-        
-        // 设置基础配置（确保至少显示坐标轴）
-        const baseOption = {
-          xAxis: { type: 'category', data: ['A', 'B', 'C'] },
-          yAxis: { type: 'value' },
-          series: [{ data: [1, 2, 3], type: 'line' }]
-        };
-        chartInstance.setOption(baseOption);
-        
-        // 设置实际配置
-        if (props.option) {
-          console.log('设置实际配置:', props.option);
-          chartInstance.setOption(props.option);
-        }
-        
-        // 立即resize
-        chartInstance.resize();
-        
-        // 调试：打印当前配置
-        setTimeout(() => {
-          console.log('当前生效配置:', chartInstance.getOption());
-        }, 100);
-      } catch (e) {
-        console.error('图表初始化失败:', e);
+    // 处理图例选择事件 - 关键修复
+    const handleLegendSelect = (params) => {
+      if (params?.name !== undefined && params?.selected !== undefined) {
+        // 只传递变化的图例状态
+        emit('legendselectchanged', {
+          name: params.name,
+          selected: params.selected[params.name]
+        });
       }
     };
 
-    onMounted(() => {
-      console.log('图表挂载，开始初始化...');
-      initChart();
-    });
+    // 应用配置到图表
+    const applyOption = (option) => {
+      if (!chartInstance.value) return;
 
-    watch(() => props.option, (newVal) => {
-      console.log('option变化:', newVal);
-      if (chartInstance && newVal) {
-        chartInstance.setOption(newVal);
+      try {
+        // 创建安全配置副本
+        const safeOption = JSON.parse(JSON.stringify(option));
+        
+        // 确保系列有效
+        safeOption.series = Array.isArray(safeOption.series) 
+          ? safeOption.series.filter(s => s && s.type) 
+          : [];
+
+        // 直接使用传入的图例状态
+        const mergedOption = {
+          ...getBaseOption(),
+          ...safeOption,
+          legend: {
+            ...safeOption.legend,
+            selectedMode: 'multiple',
+            selector: false,
+            selected: safeOption.legend?.selected || {}
+          }
+        };
+
+        if (props.debug) {
+          console.log('[ChartView] 应用配置:', mergedOption);
+          logger.debug('获取当前的option', mergedOption);
+        }
+
+        // 应用配置
+        chartInstance.value.setOption(mergedOption, {
+          notMerge: false,
+          lazyUpdate: true
+        });
+
+        chartInstance.value.resize();
+      } catch (e) {
+        logger.error('[ChartView] 配置应用失败:', e);
+        recoveryFallback();
       }
+    };
+
+    // 应急恢复
+    const recoveryFallback = () => {
+      if (!chartInstance.value) return;
+      try {
+        chartInstance.value.setOption(getBaseOption(), {
+          notMerge: true
+        });
+      } catch (e) {
+        logger.error('应急恢复失败:', e);
+      }
+    };
+
+    // 初始化图表
+    const initChart = () => {
+      if (!chartContainer.value) {
+        logger.error('[ChartView] 容器元素未找到');
+        return;
+      }
+
+      try {
+        // 销毁旧实例
+        if (chartInstance.value) {
+          chartInstance.value.dispose();
+        }
+        
+        // 创建新实例
+        chartInstance.value = echarts.init(chartContainer.value, null, {
+          renderer: 'canvas',
+          useDirtyRect: true
+        });
+
+        // 设置事件监听
+        chartInstance.value.on('legendselectchanged', handleLegendSelect);
+        
+        // 添加错误监听器
+        chartInstance.value.on('error', (error) => {
+          logger.error('ECharts 内部错误:', error);
+        });
+
+        // 应用初始配置
+        applyOption(props.option);
+
+        if (props.debug) {
+          logger.debug('[ChartView] 图表初始化完成');
+        }
+      } catch (e) {
+        logger.error('[ChartView] 初始化失败:', e);
+      }
+    };
+
+    // 调整大小
+    const handleResize = () => {
+      chartInstance.value?.resize();
+    };
+    
+    // 防抖调整大小
+    const debouncedResize = debounce(handleResize, 300);
+
+    // 监听配置变化
+    watch(() => props.option, (newOption) => {
+      if (!newOption) return;
+      applyOption(newOption);
     }, { deep: true });
 
-    onBeforeUnmount(() => {
-      chartInstance?.dispose();
+    // 生命周期钩子
+    onMounted(() => {
+      initChart();
+      window.addEventListener('resize', debouncedResize);
     });
 
-    return { chartContainer };
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', debouncedResize);
+      debouncedResize.cancel();
+      chartInstance.value?.dispose();
+    });
+
+    // 暴露方法
+    const getChartInstance = () => chartInstance.value;
+
+    return {
+      chartContainer,
+      getChartInstance,
+      handleResize
+    };
   }
 };
 </script>
@@ -77,7 +183,8 @@ export default {
 <style scoped>
 .chart-view {
   width: 100%;
-  height: 400px; /* 必须指定高度 */
+  height: 100%;
   min-height: 300px;
+  position: relative;
 }
 </style>

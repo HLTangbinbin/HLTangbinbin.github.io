@@ -99,7 +99,9 @@ export function getCommonChartOption(params) {
   const gridTop = params.gridTop;
   const isHorizontal = params.isHorizontal;
   const legendAllSelected = params.legendAllSelected;
+  const legendStates = {};
   const seriesData = [];
+
 
 
   if (cityCodeArr.length === 0) {
@@ -120,7 +122,6 @@ export function getCommonChartOption(params) {
 
       const name = cname + unit;
       const valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
-
       seriesData.push({ name, type, data: valueArr });
     });
   } else {
@@ -156,14 +157,13 @@ export function getCommonChartOption(params) {
   };
 
   const legendData = seriesData.map(s => s.name); // 获取所有系列名称
-  // 确保legend.selected有正确的结构
-  const selectedState = legendData.reduce((acc, name) => {
-    // 如果有传入的legendStates优先使用，否则使用legendAllSelected
-    acc[name] = params.legendStates 
-      ? params.legendStates[name] !== false
-      : legendAllSelected !== false;
-    return acc;
-  }, {});
+  // 使用传入的 legendStates 作为图例状态
+  const selectedState = Object.keys(legendStates).length > 0
+    ? legendStates
+    : legendData.reduce((acc, name) => {
+      acc[name] = legendAllSelected;
+      return acc;
+    }, {});
 
   return {
     title: {
