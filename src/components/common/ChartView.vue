@@ -46,7 +46,7 @@ export default {
         // 创建名称映射
         const nameMap = {};
         option.series.forEach(series => {
-          nameMap[series.name] = series.originalName;
+          nameMap[series.name] = series.name;
         });
 
         // 转换状态为原始名称
@@ -71,7 +71,6 @@ export default {
       try {
         // 创建安全配置副本
         const safeOption = JSON.parse(JSON.stringify(option));
-        
         // 确保系列有效
         safeOption.series = Array.isArray(safeOption.series) 
           ? safeOption.series.filter(s => s && s.type) 
@@ -139,7 +138,13 @@ export default {
         chartInstance.value.on('error', (error) => {
           logger.error('ECharts 内部错误:', error);
         });
+        chartInstance.value.on('showTip', (params) => {
+          logger.debug('显示悬浮提示事件:', params);
+        });
 
+        chartInstance.value.on('hideTip', () => {
+          logger.debug('隐藏悬浮提示事件');
+});
         // 应用初始配置
         applyOption(props.option);
       } catch (e) {

@@ -100,8 +100,8 @@
             // 初始化为全选状态
             const initialState = {};
             initialOption.series.forEach(series => {
-                // 使用原始名称作为键名
-                initialState[series.originalName] = true;
+                // 使用去除公共字段后的名称作为键名
+                initialState[series.name] = true;
             });
 
             legendStates.value = initialState;
@@ -158,8 +158,8 @@
         
         // 创建新的状态对象
         const newLegendStates = {};
-        Object.keys(legendStates.value).forEach(originalName => {
-          newLegendStates[originalName] = newState;
+        Object.keys(legendStates.value).forEach(name => {
+          newLegendStates[name] = newState;
         });
         // 更新状态
         legendStates.value = newLegendStates;

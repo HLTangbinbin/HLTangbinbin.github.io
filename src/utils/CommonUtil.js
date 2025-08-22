@@ -109,7 +109,7 @@ export function getCommonChartOption(params) {
 
   // 准备系列数据
   const seriesData = [];
-  const originalNames = {}; // 存储原始名称
+
 
   if (cityCodeArr.length === 0) {
     // 不区分城市，展示多个指标
@@ -131,14 +131,10 @@ export function getCommonChartOption(params) {
       const name = cname + unit;
       const valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
 
-      // 存储原始名称
-      originalNames[name] = originalCname;
-
       seriesData.push({
         name,
         type: chartType,
         data: valueArr,
-        originalName: originalCname // 保存原始名称
       });
     });
   } else {
@@ -152,7 +148,6 @@ export function getCommonChartOption(params) {
         name,
         type: chartType,
         data: valueArr,
-        originalName: name // 保存原始名称
       });
     });
   }
@@ -179,11 +174,11 @@ export function getCommonChartOption(params) {
   // 关键修复：使用原始名称匹配状态
   const selectedState = {};
   seriesData.forEach(series => {
-    const originalName = series.originalName;
+    const name = series.name;
 
     // 尝试匹配原始名称
-    if (legendStates[originalName] !== undefined) {
-      selectedState[series.name] = legendStates[originalName];
+    if (legendStates[name] !== undefined) {
+      selectedState[series.name] = legendStates[name];
     }
     // 尝试匹配处理后的名称
     else if (legendStates[series.name] !== undefined) {
@@ -194,6 +189,7 @@ export function getCommonChartOption(params) {
       selectedState[series.name] = legendAllSelected;
     }
   });
+
 
   return {
     title: {
@@ -209,7 +205,11 @@ export function getCommonChartOption(params) {
         overflowWrap: 'break-word', // 保证换行
       },
     },
-    tooltip: { trigger: 'axis' },
+    tooltip: {
+      tooltip: {
+        trigger: 'axis',
+      }
+    },
     legend: {
       left: 'center',
       top: legendTop,
@@ -226,7 +226,9 @@ export function getCommonChartOption(params) {
     xAxis: isHorizontal ? valueAxisConfig : categoryAxisConfig,
     yAxis: isHorizontal ? categoryAxisConfig : valueAxisConfig,
     series: seriesData
+    
   };
+
 }
 
 
