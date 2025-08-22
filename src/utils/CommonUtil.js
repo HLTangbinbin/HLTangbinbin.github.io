@@ -85,29 +85,37 @@ export function selectDataFromArr(returndata, zbCode, fieldKey, dbCode = 'nd', c
 
 // 图表统一绘制方法
 export function getCommonChartOption(params) {
-  const title = params.title;
-  const subtitle = params.subtitle;
-  const data = params.data;
-  const type = params.chartType;
-  const unit = params.unit || '';
-  const zbcodeArr = params.zbcodeArr;
-  const dbCode = params.dbCode;
-  const cityCodeArr = params.cityCodeArr;
-  const yearLimit = params.yearLimit;
-  const exceptName = params.exceptName;
-  const legendTop = params.legendTop;
-  const gridTop = params.gridTop;
-  const isHorizontal = params.isHorizontal;
-  const legendAllSelected = params.legendAllSelected;
-  const legendStates = {};
+  const {
+    data,
+    title,
+    subtitle,
+    zbcodeArr,
+    cityCodeArr = [],
+    dbCode = 'nd',
+    unit = '',
+    exceptName = '',
+    legendTop = '5%',
+    gridTop = '15%',
+    chartType = 'bar',
+    yearLimit = 10,
+    isHorizontal = false,
+    legendAllSelected = true,
+    legendStates = {},
+  } = params;
+
+  // 获取年份数据
+  const fullYears = (data.dataList.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
+  const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
+
+  // 准备系列数据
   const seriesData = [];
-
-
+  const originalNames = {}; // 存储原始名称
 
   if (cityCodeArr.length === 0) {
     // 不区分城市，展示多个指标
     zbcodeArr.forEach(zbCode => {
-      let cname = selectDataFromArr(data, zbCode, 'cname', dbCode, '', yearLimit)?.[0] || '总的';
+      let originalCname = selectDataFromArr(data, zbCode, 'cname', dbCode, '', yearLimit)?.[0] || '总的';
+      let cname = originalCname;
 
       // 去除 cname 中的 exceptName 字符
       if (typeof cname === 'string' && typeof exceptName === 'string') {
@@ -122,7 +130,16 @@ export function getCommonChartOption(params) {
 
       const name = cname + unit;
       const valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
-      seriesData.push({ name, type, data: valueArr });
+
+      // 存储原始名称
+      originalNames[name] = originalCname;
+
+      seriesData.push({
+        name,
+        type: chartType,
+        data: valueArr,
+        originalName: originalCname // 保存原始名称
+      });
     });
   } else {
     // 区分城市，展示某一指标在多个城市的对比
@@ -130,14 +147,15 @@ export function getCommonChartOption(params) {
       const city = data.dataList.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
       const valueArr = selectDataFromArr(data, zbcodeArr[0], 'value', dbCode, cityCode, yearLimit) || [];
-      seriesData.push({ name, type, data: valueArr });
+
+      seriesData.push({
+        name,
+        type: chartType,
+        data: valueArr,
+        originalName: name // 保存原始名称
+      });
     });
   }
-
-
-  const fullYears = (data.dataList.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b)); // 确保按年份排序
-  const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
-
 
   // 公用数值轴配置
   const valueAxisConfig = {
@@ -157,13 +175,25 @@ export function getCommonChartOption(params) {
   };
 
   const legendData = seriesData.map(s => s.name); // 获取所有系列名称
-  // 使用传入的 legendStates 作为图例状态
-  const selectedState = Object.keys(legendStates).length > 0
-    ? legendStates
-    : legendData.reduce((acc, name) => {
-      acc[name] = legendAllSelected;
-      return acc;
-    }, {});
+
+  // 关键修复：使用原始名称匹配状态
+  const selectedState = {};
+  seriesData.forEach(series => {
+    const originalName = series.originalName;
+
+    // 尝试匹配原始名称
+    if (legendStates[originalName] !== undefined) {
+      selectedState[series.name] = legendStates[originalName];
+    }
+    // 尝试匹配处理后的名称
+    else if (legendStates[series.name] !== undefined) {
+      selectedState[series.name] = legendStates[series.name];
+    }
+    // 使用默认状态
+    else {
+      selectedState[series.name] = legendAllSelected;
+    }
+  });
 
   return {
     title: {
@@ -182,14 +212,14 @@ export function getCommonChartOption(params) {
     tooltip: { trigger: 'axis' },
     legend: {
       left: 'center',
-      top: legendTop || '5%',
+      top: legendTop,
       data: legendData,
       selected: selectedState,
     },
     grid: {
       left: '1%',
       right: '1%',
-      top: gridTop || '20%',
+      top: gridTop,
       bottom: '1%',
       containLabel: true,
     },

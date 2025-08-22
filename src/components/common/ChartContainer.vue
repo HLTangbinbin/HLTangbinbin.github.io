@@ -42,6 +42,7 @@
   import { debounce } from 'lodash-es';
   import ChartView from './ChartView.vue';
   import { getCommonChartOption } from '@/utils/CommonUtil.js';
+  import { logger } from '@/utils/Logger.js';
   
   export default {
     name: 'ChartContainer',
@@ -83,7 +84,7 @@
       const updateAllSelectedState = () => {
         const allNames = Object.keys(legendStates.value);
         legendAllSelected.value = allNames.length > 0 &&
-            allNames.every(name => legendStates.value[name]);
+            allNames.every(id => legendStates.value[id]);
       };
       
       // 初始化图例状态
@@ -96,12 +97,15 @@
         });
         
         if (initialOption.legend?.data) {
-          // 初始化为全选状态
-          legendStates.value = initialOption.legend.data.reduce((acc, name) => {
-            acc[name] = true;
-            return acc;
-          }, {});
-          updateAllSelectedState();
+            // 初始化为全选状态
+            const initialState = {};
+            initialOption.series.forEach(series => {
+                // 使用原始名称作为键名
+                initialState[series.originalName] = true;
+            });
+
+            legendStates.value = initialState;
+            updateAllSelectedState();
         }
       };
       
@@ -134,21 +138,19 @@
       // 更新图表配置
       const updateChartOption = () => {
         chartOption.value = getChartOption();
+        logger.debug('更新图表配置');
       };
       
-      // 处理图例选择事件 - 关键修复
-      const handleLegendSelect = (event) => {
-        if (event?.name !== undefined && event?.selected !== undefined) {
-          // 只更新单个图例状态
-          legendStates.value = {
-            ...legendStates.value,
-            [event.name]: event.selected
-          };
-          updateAllSelectedState();
-          updateChartOption();
-        }
-      };
-      
+        // 处理图例选择事件 - 关键修复
+        const handleLegendSelect = (event) => {
+            if (event?.selected) {
+                // 更新整个状态对象
+                legendStates.value = { ...event.selected };
+                updateAllSelectedState();
+                updateChartOption();
+            }
+        };
+
       // 一键全选/取消
       const toggleAllLegends = () => {
         const newState = !legendAllSelected.value;
@@ -156,10 +158,9 @@
         
         // 创建新的状态对象
         const newLegendStates = {};
-        Object.keys(legendStates.value).forEach(name => {
-          newLegendStates[name] = newState;
+        Object.keys(legendStates.value).forEach(originalName => {
+          newLegendStates[originalName] = newState;
         });
-        
         // 更新状态
         legendStates.value = newLegendStates;
         updateChartOption();

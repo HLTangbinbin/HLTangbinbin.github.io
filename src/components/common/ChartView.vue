@@ -40,11 +40,26 @@ export default {
 
     // 处理图例选择事件 - 关键修复
     const handleLegendSelect = (params) => {
-      if (params?.name !== undefined && params?.selected !== undefined) {
-        // 只传递变化的图例状态
+      if (params?.selected) {
+        // 获取图表实例的配置
+        const option = chartInstance.value.getOption();
+        // 创建名称映射
+        const nameMap = {};
+        option.series.forEach(series => {
+          nameMap[series.name] = series.originalName;
+        });
+
+        // 转换状态为原始名称
+        const convertedSelected = {};
+        Object.entries(params.selected).forEach(([name, selected]) => {
+          if (nameMap[name]) {
+            convertedSelected[nameMap[name]] = selected;
+          }
+        });
+
+        // 通知父组件
         emit('legendselectchanged', {
-          name: params.name,
-          selected: params.selected[params.name]
+          selected: convertedSelected
         });
       }
     };
@@ -73,12 +88,6 @@ export default {
             selected: safeOption.legend?.selected || {}
           }
         };
-
-        if (props.debug) {
-          console.log('[ChartView] 应用配置:', mergedOption);
-          logger.debug('获取当前的option', mergedOption);
-        }
-
         // 应用配置
         chartInstance.value.setOption(mergedOption, {
           notMerge: false,
@@ -133,10 +142,6 @@ export default {
 
         // 应用初始配置
         applyOption(props.option);
-
-        if (props.debug) {
-          logger.debug('[ChartView] 图表初始化完成');
-        }
       } catch (e) {
         logger.error('[ChartView] 初始化失败:', e);
       }
