@@ -188,6 +188,7 @@ export function getCommonChartOption(params) {
       trigger: 'axis',
     },
     legend: {
+      type: 'scroll',
       left: 'center',
       top: legendTop,
       data: seriesData.map(s => s.name),
