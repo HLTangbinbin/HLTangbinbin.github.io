@@ -2,7 +2,7 @@ const logLevels = ['debug', 'info', 'warn', 'error'];
 
 // 默认：生产环境日志等级为 warn，开发环境为 debug
 const defaultLevel = process.env.NODE_ENV === 'production' ? 'warn' : 'debug';
-const currentLevel = process.env.LOG_LEVEL || defaultLevel;
+const currentLevel = process.env.debug_LEVEL || defaultLevel;
 
 function shouldLog(level) {
   return logLevels.indexOf(level) >= logLevels.indexOf(currentLevel);

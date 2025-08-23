@@ -85,6 +85,8 @@ export function selectDataFromArr(returndata, zbCode, fieldKey, dbCode = 'nd', c
 
 // 图表统一绘制方法
 export function getCommonChartOption(params) {
+  
+  // 确保参数名称与调用时传入的一致
   const {
     data,
     title,
@@ -94,15 +96,14 @@ export function getCommonChartOption(params) {
     dbCode = 'nd',
     unit = '',
     exceptName = '',
-    legendTop = '5%',
-    gridTop = '15%',
+    legendTop,
+    gridTop,
     chartType = 'bar',
     yearLimit = 10,
     isHorizontal = false,
-    legendAllSelected = true,
-    legendStates = {},
+    legendAllSelected
   } = params;
-
+  logger.debug('当前图表参数',params)
   // 获取年份数据
   const fullYears = (data.dataList.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
   const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
@@ -132,7 +133,7 @@ export function getCommonChartOption(params) {
       const valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
 
       seriesData.push({
-        name,
+        name: name,
         type: chartType,
         data: valueArr,
       });
@@ -145,13 +146,13 @@ export function getCommonChartOption(params) {
       const valueArr = selectDataFromArr(data, zbcodeArr[0], 'value', dbCode, cityCode, yearLimit) || [];
 
       seriesData.push({
-        name,
+        name: name,
         type: chartType,
         data: valueArr,
       });
     });
   }
-
+  // logger.debug('当前图表数据',seriesData)
   // 公用数值轴配置
   const valueAxisConfig = {
     type: 'value',
@@ -169,28 +170,6 @@ export function getCommonChartOption(params) {
     data: filteredYears,
   };
 
-  const legendData = seriesData.map(s => s.name); // 获取所有系列名称
-
-  // 关键修复：使用原始名称匹配状态
-  const selectedState = {};
-  seriesData.forEach(series => {
-    const name = series.name;
-
-    // 尝试匹配原始名称
-    if (legendStates[name] !== undefined) {
-      selectedState[series.name] = legendStates[name];
-    }
-    // 尝试匹配处理后的名称
-    else if (legendStates[series.name] !== undefined) {
-      selectedState[series.name] = legendStates[series.name];
-    }
-    // 使用默认状态
-    else {
-      selectedState[series.name] = legendAllSelected;
-    }
-  });
-
-
   return {
     title: {
       text: title,
@@ -206,15 +185,13 @@ export function getCommonChartOption(params) {
       },
     },
     tooltip: {
-      tooltip: {
-        trigger: 'axis',
-      }
+      trigger: 'axis',
     },
     legend: {
       left: 'center',
       top: legendTop,
-      data: legendData,
-      selected: selectedState,
+      data: seriesData.map(s => s.name),
+      selected: legendAllSelected ? seriesData.reduce((acc, s) => ({ ...acc, [s.name]: true }), {}) : {},
     },
     grid: {
       left: '1%',

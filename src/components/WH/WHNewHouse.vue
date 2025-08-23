@@ -2,7 +2,6 @@
   <div class="container">
     <!-- 第一张图：合计 -->
     <div class="chart-block">
-      <h3 class="chart-title">武汉新房月成交量</h3>
       <div class="buttons">
         <button class="button" :class="{ 'is-active': isBarActive_VolumeMonth }"
           @click="drawBarChart_VolumeMonth">柱状图</button>
@@ -71,7 +70,7 @@ export default {
       fetch('json/whnewhouse.json')
         .then(response => response.json())
         .then(data => {
-          // logger.log('读取本地数据新房数据:', data.houseList);
+          // logger.debug('读取本地数据新房数据:', data.houseList);
           this.houseList = data.houseList;
           // 每年每月合计数据
           this.handleTotalData();
@@ -119,18 +118,18 @@ export default {
       const totalData = this.houseArrayWith(this.AreaName.TOTAL);
       // 指定图表的配置项和数据
       var newHouseVolumeBarMonthOption = {
-        // title: {
-        //     text: '武汉新房月成交量',
-        //     left: 'center',
-        //     top: 'top'
-        // },
+        title: {
+            text: '武汉新房月成交量',
+            left: 'center',
+            top: 'top'
+        },
         tooltip: {
           //X轴悬浮显示所有数据
           trigger: 'axis'
         },
         legend: {
           left: 'center',
-          top: '5%'
+          top: '10%'
         },
         grid: {
           left: '1%',
@@ -334,8 +333,8 @@ export default {
   display: flex;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 16px;
-  margin-top: 8px; /* ✅ 确保和 legend 保持间隔 */
+  margin-bottom: 25px;
+  margin-top: 20px; /* ✅ 确保和 legend 保持间隔 */
 }
 
 .button {

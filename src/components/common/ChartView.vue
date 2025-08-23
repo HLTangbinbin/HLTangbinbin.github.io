@@ -1,190 +1,133 @@
+<!-- ChartView.vue -->
 <template>
   <div ref="chartContainer" class="chart-view"></div>
 </template>
 
 <script>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
-import * as echarts from 'echarts';
-import { debounce } from 'lodash-es';
+import * as echarts from 'echarts/core';
+import { BarChart, LineChart } from 'echarts/charts';
+import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
 import { logger } from '@/utils/Logger.js';
+import debounce from 'lodash-es/debounce';
+
+// 按需注册 ECharts 组件
+echarts.use([
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+  BarChart,
+  LineChart,
+  CanvasRenderer
+]);
 
 export default {
   name: 'ChartView',
   props: {
     option: {
       type: Object,
-      required: true
-    },
-    debug: {
-      type: Boolean,
-      default: false
+      required: true,
+      default: () => ({})
     }
   },
-  emits: ['legendselectchanged'],
-  setup(props, { emit }) {
+  setup(props) {
     const chartContainer = ref(null);
-    const chartInstance = ref(null);
+    let chartInstance = null;
+    let resizeHandler = null;
 
-    // 基础配置
-    const getBaseOption = () => ({
-      animation: true,
-      tooltip: { trigger: 'axis' },
-      legend: {
-        selectedMode: 'multiple',
-        selector: false,
-        left: 'center',
-        top: '5%'
-      },
-      grid: { containLabel: true }
-    });
-
-    // 处理图例选择事件 - 关键修复
-    const handleLegendSelect = (params) => {
-      if (params?.selected) {
-        // 获取图表实例的配置
-        const option = chartInstance.value.getOption();
-        // 创建名称映射
-        const nameMap = {};
-        option.series.forEach(series => {
-          nameMap[series.name] = series.name;
-        });
-
-        // 转换状态为原始名称
-        const convertedSelected = {};
-        Object.entries(params.selected).forEach(([name, selected]) => {
-          if (nameMap[name]) {
-            convertedSelected[nameMap[name]] = selected;
-          }
-        });
-
-        // 通知父组件
-        emit('legendselectchanged', {
-          selected: convertedSelected
-        });
+    // 处理图例选择变化
+    const handleLegendChange = (params) => {
+      if (chartInstance && params && params.selected) {
+        if (Object.values(params.selected).every(Boolean)) {
+          chartInstance.dispatchAction({ type: 'legendInverseSelect' });
+        }
       }
     };
 
-    // 应用配置到图表
-    const applyOption = (option) => {
-      if (!chartInstance.value) return;
-
-      try {
-        // 创建安全配置副本
-        const safeOption = JSON.parse(JSON.stringify(option));
-        // 确保系列有效
-        safeOption.series = Array.isArray(safeOption.series) 
-          ? safeOption.series.filter(s => s && s.type) 
-          : [];
-
-        // 直接使用传入的图例状态
-        const mergedOption = {
-          ...getBaseOption(),
-          ...safeOption,
-          legend: {
-            ...safeOption.legend,
-            selectedMode: 'multiple',
-            selector: false,
-            selected: safeOption.legend?.selected || {}
-          }
-        };
-        // 应用配置
-        chartInstance.value.setOption(mergedOption, {
-          notMerge: false,
-          lazyUpdate: true
-        });
-
-        chartInstance.value.resize();
-      } catch (e) {
-        logger.error('[ChartView] 配置应用失败:', e);
-        recoveryFallback();
-      }
-    };
-
-    // 应急恢复
-    const recoveryFallback = () => {
-      if (!chartInstance.value) return;
-      try {
-        chartInstance.value.setOption(getBaseOption(), {
-          notMerge: true
-        });
-      } catch (e) {
-        logger.error('应急恢复失败:', e);
-      }
-    };
-
-    // 初始化图表
+    // 初始化图表 - 确保在 onMounted 中调用
     const initChart = () => {
       if (!chartContainer.value) {
-        logger.error('[ChartView] 容器元素未找到');
+        return;
+      }
+      
+      // 确保有有效数据
+      if (!props.option || !props.option.series || props.option.series.length === 0) {
+
         return;
       }
 
-      try {
-        // 销毁旧实例
-        if (chartInstance.value) {
-          chartInstance.value.dispose();
-        }
-        
-        // 创建新实例
-        chartInstance.value = echarts.init(chartContainer.value, null, {
-          renderer: 'canvas',
-          useDirtyRect: true
-        });
-
-        // 设置事件监听
-        chartInstance.value.on('legendselectchanged', handleLegendSelect);
-        
-        // 添加错误监听器
-        chartInstance.value.on('error', (error) => {
-          logger.error('ECharts 内部错误:', error);
-        });
-        chartInstance.value.on('showTip', (params) => {
-          logger.debug('显示悬浮提示事件:', params);
-        });
-
-        chartInstance.value.on('hideTip', () => {
-          logger.debug('隐藏悬浮提示事件');
-});
-        // 应用初始配置
-        applyOption(props.option);
-      } catch (e) {
-        logger.error('[ChartView] 初始化失败:', e);
+      // 销毁旧实例
+      if (chartInstance) {
+        chartInstance.dispose();
+        chartInstance = null;
       }
+
+      // 创建新实例
+      chartInstance = echarts.init(chartContainer.value, null, {
+        renderer: 'canvas',
+        width: 'auto',
+        height: 'auto'
+      });
+
+      // 设置图表配置
+      chartInstance.setOption(props.option);
+      
+      // 绑定事件
+      chartInstance.on('legendselectchanged', handleLegendChange);
+      
+      // 初始化防抖resize
+      resizeHandler = debounce(() => {
+        if (chartInstance) {
+          chartInstance.resize();
+        }
+      }, 200);
+      
+      window.addEventListener('resize', resizeHandler);
     };
 
-    // 调整大小
-    const handleResize = () => {
-      chartInstance.value?.resize();
+    // 更新图表
+    const updateChart = (newOption) => {
+      if (!chartInstance) {
+        initChart();
+        return;
+      }
+      
+      if (!newOption || !newOption.series || newOption.series.length === 0) {
+        return;
+      }
+      
+      chartInstance.setOption(newOption, true);
     };
-    
-    // 防抖调整大小
-    const debouncedResize = debounce(handleResize, 300);
 
-    // 监听配置变化
-    watch(() => props.option, (newOption) => {
-      if (!newOption) return;
-      applyOption(newOption);
-    }, { deep: true });
-
-    // 生命周期钩子
+    // 确保在 DOM 完全挂载后初始化
     onMounted(() => {
       initChart();
-      window.addEventListener('resize', debouncedResize);
     });
 
+    // 监听 option 变化
+    watch(() => props.option, (newOption) => {
+      logger.debug('option 发生变化，更新图表');
+      updateChart(newOption);
+    }, { deep: true });
+
+    // 清理工作
     onBeforeUnmount(() => {
-      window.removeEventListener('resize', debouncedResize);
-      debouncedResize.cancel();
-      chartInstance.value?.dispose();
+      logger.debug('组件即将卸载，清理资源');
+      if (resizeHandler) {
+        window.removeEventListener('resize', resizeHandler);
+        resizeHandler.cancel();
+        resizeHandler = null;
+      }
+      if (chartInstance) {
+        chartInstance.dispose();
+        chartInstance = null;
+      }
     });
-
-    // 暴露方法
-    const getChartInstance = () => chartInstance.value;
 
     return {
-      chartContainer,
-      getChartInstance,
-      handleResize
+      updateChart,
+      chartContainer // 暴露给模板
     };
   }
 };
@@ -194,7 +137,8 @@ export default {
 .chart-view {
   width: 100%;
   height: 100%;
-  min-height: 300px;
+  
   position: relative;
+
 }
 </style>
