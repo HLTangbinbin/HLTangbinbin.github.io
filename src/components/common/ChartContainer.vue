@@ -4,53 +4,39 @@
 
     <div class="controls-wrap">
       <div class="chart-controls">
-        <button 
-          :class="['chart-button', { 'is-active': currentChartType === 'bar' && !isHorizontal }]"
-          @click="setChartType('bar', false)"
-        >
+        <button :class="['chart-button', { 'is-active': currentChartType === 'bar' && !isHorizontal }]"
+          @click="setChartType('bar', false)">
           柱状图
         </button>
-        <button 
-          :class="['chart-button', { 'is-active': currentChartType === 'bar' && isHorizontal }]"
-          @click="setChartType('bar', true)"
-        >
+        <button :class="['chart-button', { 'is-active': currentChartType === 'bar' && isHorizontal }]"
+          @click="setChartType('bar', true)">
           条形图
         </button>
-        <button 
-          :class="['chart-button', { 'is-active': currentChartType === 'line' && !isHorizontal }]"
-          @click="setChartType('line', false)"
-        >
+        <button :class="['chart-button', { 'is-active': currentChartType === 'line' && !isHorizontal }]"
+          @click="setChartType('line', false)">
           折线图
         </button>
       </div>
 
       <div class="time-legend-row">
         <label class="year-label">滑动时间</label>
-        <el-slider 
-          v-model="yearLimit" 
-          :min="1" 
-          :max="20" 
-          :step="1" 
-          show-tooltip 
-          :format-tooltip="formatTooltip"
-          class="year-slider" 
-        />
-        <button 
-          class="toggle-legend-btn" 
-          :style="{ backgroundColor: legendAllSelected ? '#0bc2d6' : '#ccc' }"
-          @click="toggleAllLegends"
-        >
+        <el-slider v-model="yearLimit" :min="1" :max="20" :step="1" show-tooltip :format-tooltip="formatTooltip"
+          class="year-slider" />
+        <button class="toggle-legend-btn" :style="{ backgroundColor: legendAllSelected ? '#0bc2d6' : '#ccc' }"
+          @click="toggleAllLegends">
           {{ legendAllSelected ? '一键未选' : '一键全选' }}
         </button>
+
       </div>
     </div>
 
     <div class="chart-card">
-      <!-- 不再使用 ref 调用 updateChart，而是通过 option 属性驱动更新 -->
-      <ChartView 
-        :option="chartOption" 
-        class="chart-wrapper"
-      />
+      <ChartView
+      ref="chartRef"
+      :option="chartOption"
+      :initSelectAll="legendAllSelected"
+      @legendStateChange="legendAllSelected = $event" 
+    />
     </div>
   </div>
 </template>
@@ -65,38 +51,27 @@ export default {
   name: 'ChartContainer',
   components: { ChartView },
   props: {
-    chart: { 
-      type: Object, 
-      required: true,
-      validator: (value) => {
-        return value.title && value.zbcodeArr;
-      }
-    },
-    returnData: { 
-      type: Object, 
-      required: true,
-      default: () => ({})
-    },
-    config: { 
-      type: Object, 
-      default: () => ({})
-    },
-    viewMode: { 
-      type: String, 
-      default: 'monthly',
-      validator: (value) => ['monthly', 'yearly'].includes(value)
-    }
+    chart: { type: Object, required: true },
+    returnData: { type: Object, required: true, default: () => ({}) },
+    config: { type: Object, default: () => ({}) },
+    viewMode: { type: String, default: 'monthly' }
   },
   setup(props) {
     const currentChartType = ref('bar');
     const isHorizontal = ref(false);
     const yearLimit = ref(10);
     const legendAllSelected = ref(true);
+    const chartRef = ref(null);
+    // 格式化滑块提示
+    const formatTooltip = (value) => {
+      if (props.viewMode === 'yearly') {
+        return `近 ${value} 年`;
+      } else {
+        return `近 ${value} 月`;
+      }
+    };
 
-      
-  // 在 ChartContainer.vue 的 setup 函数中
     const chartOption = computed(() => {
-      // 从 props.chart 和组件状态中提取所有必要参数
       const chartConfig = {
         data: props.returnData,
         title: props.chart.title || '默认标题',
@@ -110,29 +85,24 @@ export default {
         gridTop: props.chart.gridTop,
         chartType: currentChartType.value,
         yearLimit: yearLimit.value,
-        isHorizontal: isHorizontal.value,
-        legendAllSelected: legendAllSelected.value
+        isHorizontal: isHorizontal.value
       };
-
       logger.debug('调用 getCommonChartOption 的参数:', chartConfig);
-
       return getCommonChartOption(chartConfig);
     });
 
-    // 设置图表类型
+    // 切换图表类型
     const setChartType = (type, horizontal) => {
       currentChartType.value = type;
       isHorizontal.value = horizontal;
     };
 
-    // 切换图例全选状态
+    // 一键全选/未选
     const toggleAllLegends = () => {
       legendAllSelected.value = !legendAllSelected.value;
-    };
-
-    // 格式化滑块提示
-    const formatTooltip = (value) => {
-      return `${props.chart.title} (${value}年)`;
+      if (chartRef.value) {
+        chartRef.value.toggleAllLegends(legendAllSelected.value);
+      }
     };
 
     return {
@@ -143,7 +113,8 @@ export default {
       chartOption,
       setChartType,
       toggleAllLegends,
-      formatTooltip
+      formatTooltip,
+      chartRef
     };
   }
 };
@@ -167,7 +138,7 @@ export default {
   flex-direction: column;
   width: fit-content;
   margin: 0 auto;
-  
+
 }
 
 .chart-controls {

@@ -1,7 +1,8 @@
-<!-- ChartView.vue -->
+
 <template>
   <div ref="chartContainer" class="chart-view"></div>
 </template>
+
 
 <script>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
@@ -12,133 +13,103 @@ import { CanvasRenderer } from 'echarts/renderers';
 import { logger } from '@/utils/Logger.js';
 import debounce from 'lodash-es/debounce';
 
-// 按需注册 ECharts 组件
-echarts.use([
-  GridComponent,
-  TooltipComponent,
-  LegendComponent,
-  BarChart,
-  LineChart,
-  CanvasRenderer
-]);
+echarts.use([GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, CanvasRenderer]);
 
 export default {
   name: 'ChartView',
   props: {
-    option: {
-      type: Object,
-      required: true,
-      default: () => ({})
-    }
+    option: { type: Object, required: true },
+    initSelectAll: { type: Boolean, default: true }
   },
-  setup(props) {
+  emits: ['legendStateChange'],   // ✅ 新增
+  setup(props, { expose, emit }) {
     const chartContainer = ref(null);
     let chartInstance = null;
     let resizeHandler = null;
 
-    // 处理图例选择变化
-    const handleLegendChange = (params) => {
-      if (chartInstance && params && params.selected) {
-        if (Object.values(params.selected).every(Boolean)) {
-          chartInstance.dispatchAction({ type: 'legendInverseSelect' });
-        }
-      }
-    };
-
-    // 初始化图表 - 确保在 onMounted 中调用
     const initChart = () => {
-      if (!chartContainer.value) {
-        return;
-      }
-      
-      // 确保有有效数据
-      if (!props.option || !props.option.series || props.option.series.length === 0) {
+      if (!chartContainer.value || !props.option?.series?.length) return;
 
-        return;
-      }
-
-      // 销毁旧实例
       if (chartInstance) {
         chartInstance.dispose();
         chartInstance = null;
       }
+      chartInstance = echarts.init(chartContainer.value);
 
-      // 创建新实例
-      chartInstance = echarts.init(chartContainer.value, null, {
-        renderer: 'canvas',
-        width: 'auto',
-        height: 'auto'
+      chartInstance.setOption(props.option, true);
+
+      // 初始化 legend 状态（全选 / 全不选）
+      const legends = chartInstance.getOption().legend?.[0]?.data || [];
+      legends.forEach(name => {
+        chartInstance.dispatchAction({
+          type: props.initSelectAll ? 'legendSelect' : 'legendUnSelect',
+          name
+        });
       });
 
-      // 设置图表配置
-      chartInstance.setOption(props.option);
-      
-      // 绑定事件
-      chartInstance.on('legendselectchanged', handleLegendChange);
-      
-      // 初始化防抖resize
-      resizeHandler = debounce(() => {
-        if (chartInstance) {
-          chartInstance.resize();
+      // ✅ 监听 legend 手动选择事件
+      chartInstance.on('legendselectchanged', (params) => {
+        const allSelected = Object.values(params.selected).every(v => v === true);
+        const noneSelected = Object.values(params.selected).every(v => v === false);
+
+        // 全部选中 → 按钮状态 true
+        // 全部未选 → 按钮状态 false
+        // 其它情况不改变父状态（保持中间态逻辑）
+        if (allSelected) {
+          emit('legendStateChange', true);
+        } else if (noneSelected) {
+          emit('legendStateChange', false);
         }
-      }, 200);
-      
+      });
+
+      resizeHandler = debounce(() => chartInstance?.resize(), 200);
       window.addEventListener('resize', resizeHandler);
     };
 
-    // 更新图表
     const updateChart = (newOption) => {
       if (!chartInstance) {
         initChart();
         return;
       }
-      
-      if (!newOption || !newOption.series || newOption.series.length === 0) {
-        return;
-      }
-      
-      chartInstance.setOption(newOption, true);
+      if (!newOption?.series?.length) return;
+      logger.debug('更新了chart')
+      chartInstance.setOption(newOption, false);
     };
 
-    // 确保在 DOM 完全挂载后初始化
-    onMounted(() => {
-      initChart();
-    });
+    const toggleAllLegends = (selectAll) => {
+      if (!chartInstance) return;
+      const legends = chartInstance.getOption().legend?.[0]?.data || [];
+      legends.forEach(name => {
+        chartInstance.dispatchAction({
+          type: selectAll ? 'legendSelect' : 'legendUnSelect',
+          name
+        });
+      });
+    };
 
-    // 监听 option 变化
-    watch(() => props.option, (newOption) => {
-      logger.debug('option 发生变化，更新图表');
-      updateChart(newOption);
-    }, { deep: true });
-
-    // 清理工作
+    onMounted(initChart);
+    watch(() => props.option, updateChart, { deep: true });
     onBeforeUnmount(() => {
-      logger.debug('组件即将卸载，清理资源');
       if (resizeHandler) {
         window.removeEventListener('resize', resizeHandler);
         resizeHandler.cancel();
-        resizeHandler = null;
       }
-      if (chartInstance) {
-        chartInstance.dispose();
-        chartInstance = null;
-      }
+      chartInstance?.dispose();
+      chartInstance = null;
     });
 
-    return {
-      updateChart,
-      chartContainer // 暴露给模板
-    };
+    expose({ toggleAllLegends });
+
+    return { chartContainer };
   }
 };
 </script>
+
+
 
 <style scoped>
 .chart-view {
   width: 100%;
   height: 100%;
-  
-  position: relative;
-
 }
 </style>
