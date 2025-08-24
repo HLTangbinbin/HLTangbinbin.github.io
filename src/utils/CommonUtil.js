@@ -99,11 +99,11 @@ export function getCommonChartOption(params) {
     legendTop,
     gridTop,
     chartType = 'bar',
-    yearLimit = 10,
+    yearLimit,
     isHorizontal = false,
     legendAllSelected
   } = params;
- 
+
   // 获取年份数据
   const fullYears = (data.dataList.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
   const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
@@ -115,9 +115,10 @@ export function getCommonChartOption(params) {
   if (cityCodeArr.length === 0) {
     // 不区分城市，展示多个指标
     zbcodeArr.forEach(zbCode => {
+
       let originalCname = selectDataFromArr(data, zbCode, 'cname', dbCode, '', yearLimit)?.[0] || '总的';
       let cname = originalCname;
-
+    
       // 去除 cname 中的 exceptName 字符
       if (typeof cname === 'string' && typeof exceptName === 'string') {
         const resultArr = cname.split('');
@@ -131,6 +132,7 @@ export function getCommonChartOption(params) {
 
       const name = cname + unit;
       const valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
+      console.log('yearLimit---valueArr', yearLimit,valueArr);
 
       seriesData.push({
         name: name,
@@ -415,6 +417,17 @@ const params_livingStandards = [
 
 ]
 
+// 住宿与餐饮情况
+const params_accommodationAndCatering = [
+  // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0J01"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 住宿和餐饮
+]
+
+// 旅游业发展情况
+const params_touristIndustry= [
+  // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0K01"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 旅游业发展情况
+]
 
 export async function sendRequest(specificParams) {
 
@@ -537,4 +550,6 @@ export {
   params_marriage,
   params_indices,
   params_livingStandards,
+  params_accommodationAndCatering,
+  params_touristIndustry
 };

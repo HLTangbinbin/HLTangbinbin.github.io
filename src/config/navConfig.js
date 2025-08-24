@@ -84,6 +84,8 @@ export const navConfig = [
       { path: 'FinancialIndustry', label: '金融' },
       { path: 'ForeignTrade', label: '外贸' },
       { path: 'IndicesData', label: '指数' },
+      { path: 'TouristIndustry', label: '旅游' },
+      { path: 'AccommodationAndCateringIndustry', label: '餐宿' },
       { path: 'LivingStandards', label: '生活' },
       { path: 'ProvidentFund', label: '公积金' }
     ]

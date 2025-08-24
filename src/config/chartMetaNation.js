@@ -1,5 +1,6 @@
-import { params_education,params_financialIndustry,params_foreignTrade,params_gdp,params_indices,params_livingStandards,params_marriage,params_medical,params_nationalFinance
-  ,params_population,params_realEstate_invest,params_realEstate_sell,params_socialretailgoods} from '@/utils/CommonUtil.js';
+import { params_accommodationAndCatering, params_education,params_financialIndustry,params_foreignTrade,params_gdp,params_indices,params_livingStandards,params_marriage,params_medical,params_nationalFinance
+  ,params_population,params_realEstate_invest,params_realEstate_sell,params_socialretailgoods,
+  params_touristIndustry} from '@/utils/CommonUtil.js';
 
 export const FinancialIndustryCharts = {
 
@@ -780,6 +781,90 @@ export const SocialRetailgoodsCharts = {
       exceptName: '消费类商品零售类值_累计增长',
       legendTop: '10%',
       gridTop: '30%',
+      unit: ''
+    }
+  ]
+};
+
+
+export const AccommodationAndCateringIndustryCharts = {
+  source: {
+    localJson: './json/nation.json',
+    apiParams: params_accommodationAndCatering
+  },
+  charts: [
+    {
+      id: 'ACI-IC',
+      title: '住宿和餐饮业营业额(亿元)',
+      subtitle: '',
+      period: 'yearly',
+      chartType: 'bar',
+      zbcodeArr: ['A0J0103', 'A0J0108', 'A0J010G'],
+      dbCode: 'nd',
+      exceptName: '营业额',
+      legendTop: '10%',
+      gridTop: '20%',
+      unit: ''
+    },
+    {
+      id: 'ACI-PL',
+      title: '住宿和餐饮业年末从业人数(人)',
+      subtitle: '',
+      period: 'yearly',
+      chartType: 'bar',
+      zbcodeArr: ['A0J0102','A0J0107', 'A0J010F',],
+      dbCode: 'nd',
+      exceptName: '年末从业人数',
+      legendTop: '10%',
+      gridTop: '20%',
+      unit: ''
+    },
+    {
+      id: 'ACI-NE',
+      title: '住宿和餐饮业法人企业数(个)',
+      subtitle: '',
+      period: 'yearly',
+      chartType: 'bar',
+      zbcodeArr: ['A0J0101', 'A0J0106', 'A0J010E'],
+      dbCode: 'nd',
+      exceptName: '法人企业数',
+      legendTop: '10%',
+      gridTop: '20%',
+      unit: ''
+    }
+  ]
+};
+
+export const TouristIndustryCharts = {
+  source: {
+    localJson: './json/nation.json',
+    apiParams: params_touristIndustry
+  },
+  charts: [
+    {
+      id: 'TI-PL',
+      title: '游客数(万人次)',
+      subtitle: '',
+      period: 'yearly',
+      chartType: 'bar',
+      zbcodeArr: ['A0K0103', 'A0K0108', 'A0K010A'],
+      dbCode: 'nd',
+      exceptName: '',
+      legendTop: '10%',
+      gridTop: '20%',
+      unit: ''
+    },
+    {
+      id: 'TI-CT',
+      title: '旅游花费(亿元)',
+      subtitle: '',
+      period: 'yearly',
+      chartType: 'bar',
+      zbcodeArr: ['A0K010C'],
+      dbCode: 'nd',
+      exceptName: '旅游总花费',
+      legendTop: '10%',
+      gridTop: '20%',
       unit: ''
     }
   ]

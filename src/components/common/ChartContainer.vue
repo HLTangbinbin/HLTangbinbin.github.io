@@ -160,7 +160,7 @@ export default {
   font-weight: 500;
   color: #333;
   background-color: #f0f0f0;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .year-slider {
@@ -180,14 +180,14 @@ export default {
 .toggle-legend-btn {
   flex-shrink: 0;
   padding: 6px 12px;
+  font-size: 13px;
   color: #fff;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s;
   display: inline-flex;
   align-items: center;
-  height: auto;
 }
 
 .toggle-legend-btn:active {
@@ -201,7 +201,7 @@ export default {
   color: #fff;
   background-color: #ccc;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s;
 }

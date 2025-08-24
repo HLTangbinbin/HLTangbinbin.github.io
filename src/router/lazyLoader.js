@@ -70,8 +70,11 @@ const componentMap = {
   'NationWide/FinancialIndustry': () => import('../components/NationWide/FinancialIndustry.vue'),
   'NationWide/ForeignTrade': () => import('../components/NationWide/ForeignTrade.vue'),
   'NationWide/IndicesData': () => import('../components/NationWide/IndicesData.vue'),
+  'NationWide/TouristIndustry': () => import('../components/NationWide/TouristIndustry.vue'),
+  'NationWide/AccommodationAndCateringIndustry': () => import('../components/NationWide/AccommodationAndCateringIndustry.vue'),
   'NationWide/LivingStandards': () => import('../components/NationWide/LivingStandards.vue'),
   'NationWide/ProvidentFund': () => import('../components/NationWide/ProvidentFund.vue'),
+
 };
 
 export default function loadPage(...segments) {
@@ -185,7 +188,8 @@ export function preloadRelatedRoutes(currentPath) {
   } else if (dir === 'NationWide') {
     relatedComponents = [
       'GrossDomesticProduct', 'PopulationCorrelation', 'NationalFinance', 'EducationSector', 'MedicalTreatment',
-      'RealEstate', 'MarriageStatus', 'SocialRetailgoods', 'FinancialIndustry', 'ForeignTrade', 'IndicesData', 'LivingStandards', 'ProvidentFund'
+      'RealEstate', 'MarriageStatus', 'SocialRetailgoods', 'FinancialIndustry', 'ForeignTrade', 'IndicesData',  'TouristIndustry', 'AccommodationAndCateringIndustry', 'LivingStandards', 'ProvidentFund'
+      
     ];
   }
 
