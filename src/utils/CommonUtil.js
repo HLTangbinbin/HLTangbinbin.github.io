@@ -177,11 +177,12 @@ export function getCommonChartOption(params) {
       text: title,
       subtext: subtitle,
       left: 'center',
-      top: 'top',
+      top: '15',
+      itemGap: 15, 
       subtextStyle: {
         fontWeight: 'bold',
         fontSize: 13,
-        lineHeight: 20,
+        lineHeight: 15,
         width: window.innerWidth * 0.8,
         overflowWrap: 'break-word', // 保证换行
       },

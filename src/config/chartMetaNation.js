@@ -44,7 +44,7 @@ export const FinancialIndustryCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '供应量(万亿)',
-            legendTop: '10%',
+            legendTop: '20%',
             gridTop: '35%',
             unit: ''
         },
@@ -253,8 +253,8 @@ export const IndicesCharts = {
       zbcodeArr: ['A01010G01', 'A01030G01', 'A01080101', 'A01080701'],
       dbCode: 'yd',
       exceptName: '价格指数',
-      legendTop: '10%',
-      gridTop: '20%',
+      legendTop: '20%',
+      gridTop: '40%',
       unit: '',
     },
     {
@@ -266,8 +266,8 @@ export const IndicesCharts = {
       zbcodeArr: ['A0B0101', 'A0B0201', 'A0B0301'],
       dbCode: 'yd',
       exceptName: '采购经理指数商务活动产出',
-      legendTop: '10%',
-      gridTop: '20%',
+      legendTop: '20%',
+      gridTop: '40%',
       unit: '',
     }
   ]
@@ -305,15 +305,15 @@ export const LivingStandardsCharts = {
       title: '恩格尔系数',
       subtitle:
         '食品支出总额占个人消费支出总额的比重 \n' +
-        '大于60%为贫穷，50%~60%为温饱 \n' +
-        '40%~50%为小康，30%~40%为相对富裕 \n' +
-        '20%~30%为富足，20%以下为极其富裕',
+        '大于60%为贫穷；50%~60%为温饱 \n' +
+        '40%~50%为小康；30%~40%为相对富裕 \n' +
+        '20%~30%为富足；20%以下为极其富裕',
       period: 'yearly',
       chartType: 'bar',
       zbcodeArr: ['A0A0H01', 'A0A0H02', 'A0A0H03'],
       dbCode: 'nd',
       exceptName: '恩格尔系数',
-      legendTop: '10%',
+      legendTop: '20%',
       gridTop: '30%',
       unit: '',
 
@@ -322,18 +322,18 @@ export const LivingStandardsCharts = {
       id: 'LS-GC',
       title: '基尼系数',
       subtitle:
-        '衡量一个国家或地区居民收入差距的常用指标之一：\n' +
-        '0.2~0.29：差距小（较平均）\n' +
-        '0.3~0.39：差距适中（合理）\n' +
-        '0.4~0.59：差距大\n' +
-        '0.6以上：差距悬殊（极高）\n' +
+        '衡量一个国家或地区居民收入差距的常用指标之一\n' +
+        '0.2~0.29-差距小；' +
+        '0.3~0.39-差距适中\n' +
+        '0.4~0.59-差距大；' +
+        '0.6以上-差距悬殊\n' +
         '0.4 是收入分配差距的“警戒线”',
       period: 'yearly',
       chartType: 'bar',
       zbcodeArr: ['A0A0G01'],
       dbCode: 'nd',
       exceptName: '基尼系数',
-      legendTop: '10%',
+      legendTop: '20%',
       gridTop: '30%',
       unit: '',
     }

@@ -212,7 +212,7 @@ export default {
 
 .chart-card {
   width: 95%;
-  height: 600px;
+  height: 700px;
   margin: 0 auto;
   margin-top: 20px;
 }

@@ -121,7 +121,7 @@ export default {
         title: {
             text: '武汉新房月成交量',
             left: 'center',
-            top: 'top'
+            top: '13'
         },
         tooltip: {
           //X轴悬浮显示所有数据
