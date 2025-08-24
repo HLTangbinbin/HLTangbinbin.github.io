@@ -31,12 +31,8 @@
     </div>
 
     <div class="chart-card">
-      <ChartView
-      ref="chartRef"
-      :option="chartOption"
-      :initSelectAll="legendAllSelected"
-      @legendStateChange="legendAllSelected = $event" 
-    />
+      <ChartView ref="chartRef" :option="chartOption" :chartId="chart.id" :initSelectAll="legendAllSelected"
+        @legendStateChange="legendAllSelected = $event" />
     </div>
   </div>
 </template>
@@ -87,7 +83,7 @@ export default {
         yearLimit: yearLimit.value,
         isHorizontal: isHorizontal.value
       };
-      logger.debug('调用 getCommonChartOption 的参数:', chartConfig);
+  
       return getCommonChartOption(chartConfig);
     });
 
@@ -99,6 +95,7 @@ export default {
 
     // 一键全选/未选
     const toggleAllLegends = () => {
+      logger.debug('一键全选:', legendAllSelected.value);
       legendAllSelected.value = !legendAllSelected.value;
       if (chartRef.value) {
         chartRef.value.toggleAllLegends(legendAllSelected.value);

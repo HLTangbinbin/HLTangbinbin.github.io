@@ -103,7 +103,7 @@ export function getCommonChartOption(params) {
     isHorizontal = false,
     legendAllSelected
   } = params;
-  logger.debug('当前图表参数',params)
+ 
   // 获取年份数据
   const fullYears = (data.dataList.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
   const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
