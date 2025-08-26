@@ -216,6 +216,11 @@ export default {
   margin: 0 auto;
   margin-top: 20px;
 }
+@media (max-width: 768px) {
+  .chart-card {
+    height: 580px; /* 手机上高度缩小 */
+  }
+}
 
 .chart-wrapper {
   width: 100%;

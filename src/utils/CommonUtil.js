@@ -178,13 +178,12 @@ export function getCommonChartOption(params) {
       subtext: subtitle,
       left: 'center',
       top: '15',
-      itemGap: 15, 
+      itemGap: 22, 
       subtextStyle: {
         fontWeight: 'bold',
         fontSize: 13,
-        lineHeight: 15,
         width: window.innerWidth * 0.8,
-        overflowWrap: 'break-word', // 保证换行
+        overflow: "breakAll"
       },
     },
     tooltip: {

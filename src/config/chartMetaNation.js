@@ -38,14 +38,14 @@ export const FinancialIndustryCharts = {
         {
             id: 'FI-CY',
             title: '货币供应量结构',
-            subtitle: 'M0: 流通中的现金；\n M1: M0+企业活期存款；\n M2: M1+企业单位定期+居民存款',
+            subtitle: 'M1: M0+企业存款  M2: M1+企业定期+居民存款',
             period: 'yearly',
             zbcodeArr: ['A0L0303', 'A0L0302', 'A0L0301'],
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '供应量(万亿)',
-            legendTop: '20%',
-            gridTop: '20%',
+            legendTop: '15%',
+            gridTop: '25%',
             unit: ''
         },
         {
@@ -247,27 +247,27 @@ export const IndicesCharts = {
     {
       id: 'ID-PI',
       title: '价格指数',
-      subtitle: 'CPI消费者物价指数反映一定时期内城乡居民所购买的 \n生活消费品和服务项目价格变动趋势和程度的相对数 \nPPI生产者物价指数用来衡量制造商出厂价的平均变化 \n生产者物价指数比预期数值高时，表明有通货膨胀的风险 \n生产者物价指数比预期数值低时，则表明有通货紧缩的风险',
+      subtitle: 'CPI:消费者物价指数 PPI:生产者物价指数 ',
       period: 'monthly',
       chartType: 'bar',
       zbcodeArr: ['A01010G01', 'A01030G01', 'A01080101', 'A01080701'],
       dbCode: 'yd',
       exceptName: '价格指数',
-      legendTop: '20%',
-      gridTop: '30%',
+      legendTop: '15%',
+      gridTop: '25%',
       unit: '',
     },
     {
       id: 'ID-PM',
       title: '采购经理指数',
-      subtitle: 'PMI是一套月度发布的、综合性的经济监测指标体系 \nPMI指数50%为荣枯分水线 \nPMI略大于50,说明经济在缓慢前进 \nPMI略小于50说明经济在慢慢走向衰退',
+      subtitle: 'PMI略大于50,经济前进 PMI略小于50,经济衰退',
       period: 'monthly',
       chartType: 'bar',
       zbcodeArr: ['A0B0101', 'A0B0201', 'A0B0301'],
       dbCode: 'yd',
       exceptName: '采购经理指数商务活动产出',
-      legendTop: '20%',
-      gridTop: '30%',
+      legendTop: '15%',
+      gridTop: '25%',
       unit: '',
     }
   ]
@@ -304,17 +304,15 @@ export const LivingStandardsCharts = {
       id: 'LS-EC',
       title: '恩格尔系数',
       subtitle:
-        '食品支出总额占个人消费支出总额的比重 \n' +
-        '大于60%为贫穷；50%~60%为温饱 \n' +
-        '40%~50%为小康；30%~40%为相对富裕 \n' +
-        '20%~30%为富足；20%以下为极其富裕',
+        '大于60%贫穷 50%~60%温饱 40%~50%小康\n' +
+        '30%~40%富裕 20%~30%富足 20%以下极其富裕',
       period: 'yearly',
       chartType: 'bar',
       zbcodeArr: ['A0A0H01', 'A0A0H02', 'A0A0H03'],
       dbCode: 'nd',
       exceptName: '恩格尔系数',
-      legendTop: '20%',
-      gridTop: '20%',
+      legendTop: '15%',
+      gridTop: '25%',
       unit: '',
 
     },
@@ -322,19 +320,17 @@ export const LivingStandardsCharts = {
       id: 'LS-GC',
       title: '基尼系数',
       subtitle:
-        '衡量一个国家或地区居民收入差距的常用指标之一\n' +
-        '0.2~0.29-差距小；' +
-        '0.3~0.39-差距适中\n' +
-        '0.4~0.59-差距大；' +
-        '0.6以上-差距悬殊\n' +
-        '0.4 是收入分配差距的“警戒线”',
+        '0.2~0.29-差距小 ' +
+        '0.3~0.39-差距适中 \n' +
+        '0.4~0.59-差距大 ' +
+        '0.6以上-差距悬殊' ,
       period: 'yearly',
       chartType: 'bar',
       zbcodeArr: ['A0A0G01'],
       dbCode: 'nd',
       exceptName: '基尼系数',
-      legendTop: '20%',
-      gridTop: '20%',
+      legendTop: '15%',
+      gridTop: '25%',
       unit: '',
     }
   ]
