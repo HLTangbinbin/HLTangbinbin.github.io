@@ -128,6 +128,7 @@ export default {
           trigger: 'axis'
         },
         legend: {
+          type: 'scroll',
           left: 'center',
           top: '10%'
         },
@@ -181,8 +182,8 @@ export default {
         series.push({
           type: 'pie',
           id: 'pie',
-          radius: '30%',
-          center: ['50%', '30%'],
+          radius: '25%',
+          center: ['50%', '20%'],
           emphasis: { focus: 'self' },
           label: {
             formatter: '{b}: {@一月} ({d}%)'
@@ -203,16 +204,17 @@ export default {
           tooltip: {
             //X轴悬浮显示所有数据
             trigger: 'axis',
-            position: ['80%', '40%']
+            // position: ['60%', '40%']
           },
           legend: {
+            type: 'scroll',
             left: 'center',
-            top: '5%'
+            top: '0%'
           },
           grid: {
             left: '1%',
             right: '1%',
-            top: '50%',
+            top: '40%',
             bottom: '1%',
             containLabel: true
           },
@@ -293,7 +295,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 /* 每个图表块：一张卡片 */

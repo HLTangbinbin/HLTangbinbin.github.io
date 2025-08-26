@@ -190,7 +190,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 /* 每个图表块：一张卡片 */

@@ -17,7 +17,7 @@ export const WHEducationCharts = {
       chartType: 'bar',
       exceptName: '',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     }
 
@@ -41,7 +41,7 @@ export const WHFinanceCharts = {
       chartType: 'bar',
       exceptName: '地方一般公共预算',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     }
 
@@ -65,7 +65,7 @@ export const WHGDPCharts = {
       chartType: 'bar',
       exceptName: '增加值',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     }
 
@@ -89,7 +89,7 @@ export const WHMedicalCharts = {
       chartType: 'bar',
       exceptName: '',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     }
 
@@ -113,7 +113,7 @@ export const WHPopulationCharts = {
       chartType: 'bar',
       exceptName: '人口',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     }
 
@@ -137,7 +137,7 @@ export const WHRealEstateInvestCharts = {
       chartType: 'bar',
       exceptName: '房地产开发投资额',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     }
 
@@ -161,7 +161,7 @@ export const WHRealEstateSellCharts = {
       chartType: 'bar',
       exceptName: '商品房销售面积(万平方米)',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -174,7 +174,7 @@ export const WHRealEstateSellCharts = {
       chartType: 'bar',
       exceptName: '商品房平均销售价格(元)',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     },
 

@@ -68,7 +68,7 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  margin-bottom: 30px;
+
 }
 
 .segment-wrapper {
@@ -77,7 +77,7 @@ export default {
   width: 200px;
   height: 45px;
   background-color: #fff;
-  border-radius: 999px;
+  border-radius: 15px;
   padding: 2px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   /* ✅ 外部阴影更明显 */
@@ -89,7 +89,7 @@ export default {
   top: 2px;
   bottom: 2px;
   width: 50%;
-  border-radius: 999px;
+  border-radius: 15px;
   background-color: #0bc2d6;
   transition: left 0.25s ease;
   z-index: 0;
@@ -114,7 +114,7 @@ export default {
   color: #333;
   font-size: 14px;
   font-weight: 500;
-  border-radius: 999px;
+  border-radius: 15px;
   cursor: pointer;
   transition: color 0.25s ease;
 }

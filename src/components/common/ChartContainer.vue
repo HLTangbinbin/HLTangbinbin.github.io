@@ -122,7 +122,7 @@ export default {
 .chart-container {
   width: 95%;
   max-width: 1500px;
-  margin: 50px auto 60px;
+  margin: 30px auto 60px;
   padding: 16px;
   background-color: #fff;
   border-radius: 12px;

@@ -19,7 +19,7 @@ export const FinancialIndustryCharts = {
             chartType: 'bar',
             exceptName: '供应量_期末值(万亿)',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         },
         {
@@ -32,7 +32,7 @@ export const FinancialIndustryCharts = {
             chartType: 'bar',
             exceptName: '供应量_同比增长',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         },
         {
@@ -45,7 +45,7 @@ export const FinancialIndustryCharts = {
             chartType: 'bar',
             exceptName: '供应量(万亿)',
             legendTop: '20%',
-            gridTop: '35%',
+            gridTop: '20%',
             unit: ''
         },
         {
@@ -58,7 +58,7 @@ export const FinancialIndustryCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         }
     ]
@@ -87,7 +87,7 @@ export const EducationSectorCharts = {
       chartType: 'bar',
       exceptName: '招生数',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -107,7 +107,7 @@ export const EducationSectorCharts = {
       chartType: 'bar',
       exceptName: '在校学生数',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -127,7 +127,7 @@ export const EducationSectorCharts = {
       chartType: 'bar',
       exceptName: '毕业生数',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     }
   ]
@@ -150,7 +150,7 @@ export const ForeignTradeCharts = {
       dbCode: 'yd',
       exceptName: '_当期值',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -163,7 +163,7 @@ export const ForeignTradeCharts = {
       dbCode: 'yd',
       exceptName: '总值增长',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -176,7 +176,7 @@ export const ForeignTradeCharts = {
       dbCode: 'nd',
       exceptName: '(百万美元)',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -192,7 +192,7 @@ export const ForeignTradeCharts = {
       dbCode: 'nd',
       exceptName: '中国向出口总额',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -208,7 +208,7 @@ export const ForeignTradeCharts = {
       dbCode: 'nd',
       exceptName: '中国从进口总额',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     }
   ]
@@ -231,7 +231,7 @@ export const GDPCharts = {
       dbCode: 'nd',
       exceptName: '增加值',
       legendTop: '10%',
-      gridTop: '25%',
+      gridTop: '20%',
       unit: ''
     }
   ]
@@ -254,7 +254,7 @@ export const IndicesCharts = {
       dbCode: 'yd',
       exceptName: '价格指数',
       legendTop: '20%',
-      gridTop: '40%',
+      gridTop: '30%',
       unit: '',
     },
     {
@@ -267,7 +267,7 @@ export const IndicesCharts = {
       dbCode: 'yd',
       exceptName: '采购经理指数商务活动产出',
       legendTop: '20%',
-      gridTop: '40%',
+      gridTop: '30%',
       unit: '',
     }
   ]
@@ -297,7 +297,7 @@ export const LivingStandardsCharts = {
       dbCode: 'nd',
       exceptName: '居民可支配收入',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -314,7 +314,7 @@ export const LivingStandardsCharts = {
       dbCode: 'nd',
       exceptName: '恩格尔系数',
       legendTop: '20%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: '',
 
     },
@@ -334,7 +334,7 @@ export const LivingStandardsCharts = {
       dbCode: 'nd',
       exceptName: '基尼系数',
       legendTop: '20%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: '',
     }
   ]
@@ -360,7 +360,7 @@ export const MarriageCharts = {
       dbCode: 'nd',
       exceptName: '居民登记',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     }
   ]
@@ -432,7 +432,7 @@ export const NationalFinanceCharts = {
       dbCode: 'yd',
       exceptName: '国家财政(不含债务还本)_累计值',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -445,7 +445,7 @@ export const NationalFinanceCharts = {
       dbCode: 'yd',
       exceptName: '国家财政(不含债务还本)_累计增长',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -458,7 +458,7 @@ export const NationalFinanceCharts = {
       dbCode: 'nd',
       exceptName: '财政',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -474,7 +474,7 @@ export const NationalFinanceCharts = {
       dbCode: 'nd',
       exceptName: '国家财政收入',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -490,7 +490,7 @@ export const NationalFinanceCharts = {
       dbCode: 'nd',
       exceptName: '国家财政支出',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     }
   ]
@@ -516,7 +516,7 @@ export const PopulationCharts = {
       dbCode: 'nd',
       exceptName: '人口',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -529,7 +529,7 @@ export const PopulationCharts = {
       dbCode: 'nd',
       exceptName: '人口',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -556,7 +556,7 @@ export const PopulationCharts = {
       dbCode: 'nd',
       exceptName: '',
       legendTop: '20%',
-      gridTop: '35%',
+      gridTop: '20%',
       unit: '(%)'
     }
   ]
@@ -578,7 +578,7 @@ export const RealEstateInvestCharts = {
       dbCode: 'yd',
       exceptName: '房地产投资_累计值',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -591,7 +591,7 @@ export const RealEstateInvestCharts = {
       dbCode: 'yd',
       exceptName: '房地产投资_累计增长',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -604,7 +604,7 @@ export const RealEstateInvestCharts = {
       dbCode: 'nd',
       exceptName: '房地产开发投资额',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     }
   ]
@@ -628,7 +628,7 @@ export const RealEstateSaleCharts = {
       dbCode: 'yd',
       exceptName: '商品住宅销售额_累计值',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -641,7 +641,7 @@ export const RealEstateSaleCharts = {
       dbCode: 'yd',
       exceptName: '商品住宅销售额_累计增长',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -654,7 +654,7 @@ export const RealEstateSaleCharts = {
       dbCode: 'yd',
       exceptName: '商品住宅销售面积_累计值',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -667,7 +667,7 @@ export const RealEstateSaleCharts = {
       dbCode: 'yd',
       exceptName: '商品住宅销售面积_累计增长',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -680,7 +680,7 @@ export const RealEstateSaleCharts = {
       dbCode: 'nd',
       exceptName: '商品房销售面积',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -693,7 +693,7 @@ export const RealEstateSaleCharts = {
       dbCode: 'nd',
       exceptName: '商品房销售额',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     }
   ]
@@ -723,7 +723,7 @@ export const SocialRetailgoodsCharts = {
       dbCode: 'yd',
       exceptName: '消费类商品零售类值_当期值',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -742,7 +742,7 @@ export const SocialRetailgoodsCharts = {
       dbCode: 'yd',
       exceptName: '消费类商品零售类值_同比增长',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -761,7 +761,7 @@ export const SocialRetailgoodsCharts = {
       dbCode: 'yd',
       exceptName: '消费类商品零售类值_累计值',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -780,7 +780,7 @@ export const SocialRetailgoodsCharts = {
       dbCode: 'yd',
       exceptName: '消费类商品零售类值_累计增长',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     }
   ]

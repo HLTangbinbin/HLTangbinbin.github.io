@@ -24,7 +24,7 @@ export const ProvincialEducationCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '30%',
+            gridTop: '20%',
             unit: ''
         },
         {
@@ -37,7 +37,7 @@ export const ProvincialEducationCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '30%',
+            gridTop: '20%',
             unit: ''
         },
         {
@@ -50,7 +50,7 @@ export const ProvincialEducationCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '30%',
+            gridTop: '20%',
             unit: ''
         }
     ]
@@ -80,7 +80,7 @@ export const ProvincialFinanceCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '30%',
+            gridTop: '20%',
             unit: ''
         },
         {
@@ -93,7 +93,7 @@ export const ProvincialFinanceCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '30%',
+            gridTop: '20%',
             unit: ''
         }
     ]
@@ -124,7 +124,7 @@ export const ProvincialGDPCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         }
 
@@ -156,7 +156,7 @@ export const ProvincialMedicalCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         },
         {
@@ -169,7 +169,7 @@ export const ProvincialMedicalCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: '',
         }
 
@@ -200,7 +200,7 @@ export const ProvincialPopulationCharts = {
       chartType: 'bar',
       exceptName: '人口',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -213,7 +213,7 @@ export const ProvincialPopulationCharts = {
       chartType: 'bar',
       exceptName: '',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     },
     {
@@ -226,7 +226,7 @@ export const ProvincialPopulationCharts = {
       chartType: 'bar',
       exceptName: '',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: '',
     },
     {
@@ -239,7 +239,7 @@ export const ProvincialPopulationCharts = {
       chartType: 'bar',
       exceptName: '',
       legendTop: '10%',
-      gridTop: '30%',
+      gridTop: '20%',
       unit: ''
     }
   ]
@@ -270,7 +270,7 @@ export const ProvincialRealEstateInvestCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         }
 
@@ -302,7 +302,7 @@ export const ProvincialRealEstateSellCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         },
         {
@@ -315,7 +315,7 @@ export const ProvincialRealEstateSellCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         },
 
@@ -344,7 +344,7 @@ export const ProvinceRealEstatePriceIndicesCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: '',
         },
         {
@@ -357,7 +357,7 @@ export const ProvinceRealEstatePriceIndicesCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: '',
         },
 
@@ -388,7 +388,7 @@ export const ProvincialLivingCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         }
 

@@ -18,7 +18,7 @@ export const CityEducationCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         }
 
@@ -46,7 +46,7 @@ export const CityFinanceCityCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '30%',
+            gridTop: '20%',
             unit: ''
         },
         {
@@ -59,7 +59,7 @@ export const CityFinanceCityCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '30%',
+            gridTop: '20%',
             unit: ''
         },
         {
@@ -72,7 +72,7 @@ export const CityFinanceCityCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '30%',
+            gridTop: '20%',
             unit: ''
         }
     ]
@@ -100,7 +100,7 @@ export const CityGDPCharts = {
             chartType: 'bar',
             exceptName: '增加值',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         }
 
@@ -129,7 +129,7 @@ export const CityMedicalCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         }
 
@@ -158,7 +158,7 @@ export const CityPopulationCharts = {
             chartType: 'bar',
             exceptName: '人口',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         }
 
@@ -187,7 +187,7 @@ export const CityRealEstateInvestCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         }
 
@@ -216,7 +216,7 @@ export const CityRealEstateSellCharts = {
             chartType: 'bar',
             exceptName: '商品房销售面积(万平方米)',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         },
         {
@@ -229,7 +229,7 @@ export const CityRealEstateSellCharts = {
             chartType: 'bar',
             exceptName: '商品房平均销售价格(元)',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: ''
         },
 
@@ -258,7 +258,7 @@ export const CityRealEstatePriceIndicesCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: '',
         },
         {
@@ -271,7 +271,7 @@ export const CityRealEstatePriceIndicesCharts = {
             chartType: 'bar',
             exceptName: '',
             legendTop: '10%',
-            gridTop: '25%',
+            gridTop: '20%',
             unit: '',
         },
 
