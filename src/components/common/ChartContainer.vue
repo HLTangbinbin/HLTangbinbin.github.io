@@ -120,7 +120,7 @@ export default {
 <style scoped>
 /* 保持原有样式不变 */
 .chart-container {
-  width: 100%;
+  width: 95%;
   max-width: 1500px;
   margin: 50px auto 60px;
   padding: 16px;
@@ -158,8 +158,8 @@ export default {
   padding: 6px 12px;
   font-size: 13px;
   font-weight: 500;
-  color: #333;
-  background-color: #f0f0f0;
+  color: #fff;
+  background-color: #ccc;
   border-radius: 8px;
 }
 

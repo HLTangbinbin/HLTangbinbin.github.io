@@ -298,7 +298,7 @@ export default {
 
 /* 每个图表块：一张卡片 */
 .chart-block {
-  width: 100%;
+  width: 95%;
   max-width: 1400px;
   margin: 0 auto 60px;
   padding: 16px;
