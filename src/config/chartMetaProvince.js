@@ -23,9 +23,7 @@ export const ProvincialEducationCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: ''
+
         },
         {
             id: 'ZX',
@@ -36,9 +34,7 @@ export const ProvincialEducationCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: ''
+
         },
         {
             id: 'BY',
@@ -49,9 +45,7 @@ export const ProvincialEducationCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: ''
+
         }
     ]
 };
@@ -79,9 +73,7 @@ export const ProvincialFinanceCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: ''
+
         },
         {
             id: 'FOY',
@@ -92,9 +84,7 @@ export const ProvincialFinanceCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: ''
+
         }
     ]
 };
@@ -123,9 +113,7 @@ export const ProvincialGDPCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: ''
+
         }
 
     ]
@@ -155,9 +143,7 @@ export const ProvincialMedicalCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: ''
+
         },
         {
             id: 'BP',
@@ -168,9 +154,6 @@ export const ProvincialMedicalCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: '',
         }
 
     ]
@@ -269,9 +252,7 @@ export const ProvincialRealEstateInvestCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: ''
+
         }
 
     ]
@@ -301,9 +282,7 @@ export const ProvincialRealEstateSellCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: ''
+
         },
         {
             id: 'ES-SY',
@@ -314,9 +293,7 @@ export const ProvincialRealEstateSellCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: ''
+
         },
 
     ]
@@ -343,9 +320,6 @@ export const ProvinceRealEstatePriceIndicesCharts = {
             dbCode: 'yd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: '',
         },
         {
             id: 'ES-SY',
@@ -356,9 +330,6 @@ export const ProvinceRealEstatePriceIndicesCharts = {
             dbCode: 'yd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: '',
         },
 
     ]
@@ -387,9 +358,7 @@ export const ProvincialLivingCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '10%',
-            gridTop: '20%',
-            unit: ''
+
         }
 
     ]

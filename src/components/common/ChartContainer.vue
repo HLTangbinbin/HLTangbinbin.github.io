@@ -218,7 +218,7 @@ export default {
 }
 @media (max-width: 768px) {
   .chart-card {
-    height: 580px; /* 手机上高度缩小 */
+    height: 500px; /* 手机上高度缩小 */
   }
 }
 
