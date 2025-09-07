@@ -485,20 +485,20 @@ export const PopulationCharts = {
       zbcodeArr: ['A030201', 'A030202', 'A030203'],
       dbCode: 'nd',
       exceptName: '人口',
-unit: '(%)'
+      unit: '(%)'
     },
     {
       id: 'PO-DC',
       title: '人口抚养比',
       subtitle:
-        '总体人口中非劳动年龄人口数与劳动年龄人口数之比\n每100名劳动年龄人口负担多少名非劳动年龄人口',
+        '每100名劳动年龄人口负担多少名非劳动年龄人口',
       period: 'yearly',
       chartType: 'bar',
       zbcodeArr: ['A030305', 'A030306', 'A030307'],
       dbCode: 'nd',
-      exceptName: '',
-      legendTop: '20%',
-      
+      exceptName: '', 
+      legendTop: '100px',
+      gridTop: '170px',  
       unit: '(%)'
     }
   ]
