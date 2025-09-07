@@ -137,6 +137,17 @@ export const CityPopulationCharts = {
     },
     charts: [
         {
+            id: 'PLA',
+            title: '常住人口(万人)',
+            subtitle: '',
+            period: 'yearly',
+            zbcodeArr: ['A0203'],
+            dbCode: 'nd',
+            chartType: 'bar',
+            exceptName: '人口',
+
+        },
+        {
             id: 'PL',
             title: '年末户籍人口(万人)',
             subtitle: '',
