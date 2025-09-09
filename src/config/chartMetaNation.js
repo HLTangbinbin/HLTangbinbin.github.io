@@ -316,15 +316,20 @@ export const MarriageCharts = {
     {
       id: 'MR-MA',
       title: '结离婚登记人数(万对)',
-      subtitle: '',
+      subtitle: '出生人口向前平移1年，实际为下一年数据',
       period: 'yearly',
       chartType: 'bar',
       zbcodeArr: [
-        'A0P0C01', // 结婚登记
-        'A0P0C06'  // 离婚登记
+        'A0P0C01',  // 结婚登记
+        'A0P0C06',  // 离婚登记
+        'A030109'   // 出生人口
       ],
       dbCode: 'nd',
       exceptName: '居民登记',
+      legendTop: '100px',
+      gridTop: '170px',  
+      enableBirthOffset: true,
+      enableBirthPrediction: true
 
     }
   ]

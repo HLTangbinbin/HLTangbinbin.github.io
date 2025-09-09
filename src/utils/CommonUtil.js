@@ -84,9 +84,135 @@ export function selectDataFromArr(returndata, zbCode, fieldKey, dbCode = 'nd', c
 }
 
 // 图表统一绘制方法
+// ============================
+// 工具方法
+// ============================
+function offsetArray(arr, offset = -1) {
+  // 向前/向后偏移数组，空位补 null
+  if (!Array.isArray(arr)) return arr;
+  if (offset < 0) {
+    return arr.slice(-offset).concat(Array(-offset).fill(null));
+  } else if (offset > 0) {
+    return Array(offset).fill(null).concat(arr.slice(0, arr.length - offset));
+  }
+  return arr;
+}
+
+
+/**
+ * 最近 N 年滑动窗口预测（滞后1年，年份动态）
+ * @param {number[]} marriageArr - 历史结婚人数数组
+ * @param {number[]} birthArr - 历史出生人口数组
+ * @param {number} recentYears - 滑动窗口长度（<= marriageArr.length-1）
+ * @param {number} z - 置信区间系数，默认 1.96
+ */
+function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears, z = 1.96) {
+  const n = marriageArr.length;
+  if (!Array.isArray(marriageArr) || !Array.isArray(birthArr) || n !== birthArr.length || n <= 1) {
+    return {
+      slidingPreds: [],
+      nextYearPred: { yearIndex: null, pred: null, lower: null, upper: null }
+    };
+  }
+
+  const windowSize = Math.min(recentYears, n - 1);
+  const slidingPreds = [];
+
+  // 历史滑动预测
+  for (let t = 1; t < n; t++) {
+    const start = Math.max(0, t - windowSize);
+    const X = marriageArr.slice(start, t);
+    const Y = birthArr.slice(start + 1, t + 1);
+
+    if (X.length === 0 || Y.length === 0) {
+      slidingPreds.push({
+        yearIndex: t,
+        marriage: marriageArr[t],
+        pred: null,
+        lower: null,
+        upper: null,
+        actual: birthArr[t],
+        error: null
+      });
+      continue;
+    }
+
+    const meanX = X.reduce((a, b) => a + b, 0) / X.length;
+    const meanY = Y.reduce((a, b) => a + b, 0) / Y.length;
+
+    let num = 0, den = 0;
+    for (let i = 0; i < X.length; i++) {
+      num += (X[i] - meanX) * (Y[i] - meanY);
+      den += (X[i] - meanX) ** 2;
+    }
+    const w = den === 0 ? 0 : num / den;
+    const intercept = meanY - w * meanX;
+
+    const predValue = intercept + w * marriageArr[t];
+    const residuals = Y.map((y, i) => y - (intercept + w * X[i]));
+    const std = residuals.length > 1 ? Math.sqrt(residuals.reduce((s, r) => s + r ** 2, 0) / (residuals.length - 1)) : 0;
+
+    slidingPreds.push({
+      yearIndex: t,
+      marriage: marriageArr[t],
+      pred: Math.round(predValue),
+      lower: Math.round(predValue - z * std),
+      upper: Math.round(predValue + z * std),
+      actual: birthArr[t],
+      error: Math.round(predValue - birthArr[t])
+    });
+  }
+
+  // 下一年预测
+  let nextYearPred = { yearIndex: n, pred: null, lower: null, upper: null };
+
+  const startLast = Math.max(0, n - windowSize - 1);
+  const Xlast = marriageArr.slice(startLast, n - 1);
+  const Ylast = birthArr.slice(startLast + 1, n);
+
+  if (Xlast.length > 0 && Ylast.length > 0) {
+    const meanXlast = Xlast.reduce((a, b) => a + b, 0) / Xlast.length;
+    const meanYlast = Ylast.reduce((a, b) => a + b, 0) / Ylast.length;
+
+    let num = 0, den = 0;
+    for (let i = 0; i < Xlast.length; i++) {
+      num += (Xlast[i] - meanXlast) * (Ylast[i] - meanYlast);
+      den += (Xlast[i] - meanXlast) ** 2;
+    }
+
+    const wLast = den === 0 ? 0 : num / den;
+    const interceptLast = meanYlast - wLast * meanXlast;
+    const residualsLast = Ylast.map((y, i) => y - (interceptLast + wLast * Xlast[i]));
+    const stdLast = residualsLast.length > 1 ? Math.sqrt(residualsLast.reduce((s, r) => s + r ** 2, 0) / (residualsLast.length - 1)) : 0;
+
+    if (Xlast.length < 2 || Ylast.length < 2) {
+      // 数据太少，退化使用上一年婚姻 × 平均生育率
+      const k = Xlast.length === 1 ? Ylast[0] / Xlast[0] : 1; 
+      nextYearPred = {
+        yearIndex: n,
+        pred: Math.round(marriageArr[n - 1] * k),
+        lower: null,
+        upper: null
+      };
+    }else {
+      nextYearPred = {
+        yearIndex: n,
+        pred: Math.round(interceptLast + wLast * marriageArr[n - 1]),
+        lower: Math.round(interceptLast + wLast * marriageArr[n - 1] - z * stdLast),
+        upper: Math.round(interceptLast + wLast * marriageArr[n - 1] + z * stdLast)
+      };
+    }
+
+  }
+
+  return { slidingPreds, nextYearPred };
+}
+
+
+// ============================
+// 主方法
+// ============================
 export function getCommonChartOption(params) {
-  
-  // 确保参数名称与调用时传入的一致
   const {
     data,
     title,
@@ -101,25 +227,26 @@ export function getCommonChartOption(params) {
     chartType = 'bar',
     yearLimit,
     isHorizontal = false,
-    legendAllSelected
+    legendAllSelected,
+    enableBirthOffset = false,
+    enableBirthPrediction = false,
   } = params;
 
-  // 获取年份数据
+  let marriageArr = [];
+  let birthArr = [];
+  let nextBirth = 0;
   const fullYears = (data.dataList.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
   const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
 
-  // 准备系列数据
-  const seriesData = [];
+  let seriesData = [];
 
-
+  // ----------------------------
+  // 生成基础 series
   if (cityCodeArr.length === 0) {
-    // 不区分城市，展示多个指标
     zbcodeArr.forEach(zbCode => {
-
       let originalCname = selectDataFromArr(data, zbCode, 'cname', dbCode, '', yearLimit)?.[0] || '总的';
       let cname = originalCname;
-    
-      // 去除 cname 中的 exceptName 字符
+
       if (typeof cname === 'string' && typeof exceptName === 'string') {
         const resultArr = cname.split('');
         const exceptArr = exceptName.split('');
@@ -131,8 +258,15 @@ export function getCommonChartOption(params) {
       }
 
       const name = cname + unit;
-      const valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
-      console.log('yearLimit---valueArr', yearLimit,valueArr);
+      let valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
+
+      if (enableBirthOffset && zbCode === 'A0P0C01') {
+        marriageArr = valueArr;
+      }
+      if (enableBirthOffset && zbCode === 'A030109') {
+        birthArr = valueArr;
+        valueArr = offsetArray(valueArr, -1);
+      }
 
       seriesData.push({
         name: name,
@@ -141,12 +275,10 @@ export function getCommonChartOption(params) {
       });
     });
   } else {
-    // 区分城市，展示某一指标在多个城市的对比
     cityCodeArr.forEach(cityCode => {
       const city = data.dataList.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
       const valueArr = selectDataFromArr(data, zbcodeArr[0], 'value', dbCode, cityCode, yearLimit) || [];
-
       seriesData.push({
         name: name,
         type: chartType,
@@ -154,8 +286,58 @@ export function getCommonChartOption(params) {
       });
     });
   }
-  // logger.debug('当前图表数据',seriesData)
-  // 公用数值轴配置
+
+  // ----------------------------
+  // 预测下一年出生人口
+  if (enableBirthPrediction && marriageArr.length && birthArr.length) {
+    const mode = fitMarriageBirthDynamic(marriageArr, birthArr, 20);
+    nextBirth = mode.nextYearPred.pred;
+
+  }
+
+  // ----------------------------
+  // 处理折线图出生人口系列
+  seriesData = seriesData.map(s => {
+    // 只处理出生人口系列
+    if (enableBirthPrediction && s.name.includes('出生')) {
+      if (chartType === 'line') {
+        const lastIndex = s.data.length - 1;
+        const color = s.lineStyle?.color || '#5470C6';
+        const updatedData = s.data.slice();
+        updatedData[lastIndex] = nextBirth;
+
+        // 历史 + 预测拆分
+        const historySeries = {
+          ...s,
+          type: 'line',
+          name: '出生人口',
+          data: updatedData.slice(0, lastIndex),
+          lineStyle: { type: 'solid' },
+        };
+        const predictionData = updatedData.map((d, i) => (i >= lastIndex - 1 ? d : null));
+        const predictionSeries = {
+          ...s,
+          type: 'line',
+          name: '出生人口预测',
+          data: predictionData,
+          lineStyle: { color, type: 'dashed' },
+          symbol: 'circle',
+          symbolSize: 10,
+          connectNulls: true
+        };
+        return [historySeries, predictionSeries];
+      } else {
+        // 非折线图，保留 series，但 data 置空即可，ECharts 会更新
+        return [
+          { ...s, type: 'bar'}, // 历史实线 series
+          { ...s, type: 'bar', data: [] } // 虚线 series
+        ];
+      }
+    }
+    return s;
+  }).flat();
+
+  // ----------------------------
   const valueAxisConfig = {
     type: 'value',
     scale: true,
@@ -166,7 +348,6 @@ export function getCommonChartOption(params) {
     },
   };
 
-  // 公用类目轴配置
   const categoryAxisConfig = {
     type: 'category',
     data: filteredYears,
@@ -206,9 +387,7 @@ export function getCommonChartOption(params) {
     xAxis: isHorizontal ? valueAxisConfig : categoryAxisConfig,
     yAxis: isHorizontal ? categoryAxisConfig : valueAxisConfig,
     series: seriesData
-    
   };
-
 }
 
 
@@ -424,7 +603,7 @@ const params_accommodationAndCatering = [
 ]
 
 // 旅游业发展情况
-const params_touristIndustry= [
+const params_touristIndustry = [
   // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
   { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0K01"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 旅游业发展情况
 ]

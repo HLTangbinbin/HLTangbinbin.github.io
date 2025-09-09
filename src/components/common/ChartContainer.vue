@@ -81,7 +81,9 @@ export default {
         gridTop: props.chart.gridTop,
         chartType: currentChartType.value,
         yearLimit: yearLimit.value,
-        isHorizontal: isHorizontal.value
+        isHorizontal: isHorizontal.value,
+        enableBirthOffset: props.chart.enableBirthOffset || false,
+        enableBirthPrediction: props.chart.enableBirthPrediction || false
       };
   
       return getCommonChartOption(chartConfig);
