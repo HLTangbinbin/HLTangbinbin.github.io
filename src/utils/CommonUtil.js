@@ -337,6 +337,15 @@ export function getCommonChartOption(params) {
     return s;
   }).flat();
 
+  // ---------- 条形图横向正序处理 ----------
+if (isHorizontal) {
+  // 反转每个 series 的 data
+  seriesData = seriesData.map(s => ({
+    ...s,
+    data: s.data ? [...s.data].reverse() : s.data
+  }));
+}
+
   // ----------------------------
   const valueAxisConfig = {
     type: 'value',
@@ -350,7 +359,7 @@ export function getCommonChartOption(params) {
 
   const categoryAxisConfig = {
     type: 'category',
-    data: filteredYears,
+    data: isHorizontal ? [...filteredYears].reverse() : filteredYears,
   };
 
   return {
