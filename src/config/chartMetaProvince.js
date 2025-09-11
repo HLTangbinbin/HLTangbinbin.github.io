@@ -85,6 +85,17 @@ export const ProvincialFinanceCharts = {
             chartType: 'bar',
             exceptName: '',
 
+        },
+        {
+            id: 'FDT',
+            title: '地方财政赤字(亿元)',
+            subtitle: '',
+            period: 'yearly',
+            zbcodeArr: ['A080301'],
+            dbCode: 'nd',
+            chartType: 'bar',
+            exceptName: '',
+
         }
     ]
 };

@@ -57,6 +57,17 @@ export const CityFinanceCityCharts = {
 
         },
         {
+            id: 'FDT',
+            title: '地方财政赤字(亿元)',
+            subtitle: '',
+            period: 'yearly',
+            zbcodeArr: ['A0404'],
+            dbCode: 'nd',
+            chartType: 'bar',
+            exceptName: '',
+
+        },
+        {
             id: 'FDY',
             title: '住户存款余额(亿元)',
             subtitle: '',
@@ -235,7 +246,7 @@ export const CityRealEstatePriceIndicesCharts = {
         cityCodeArr: [
             '110000', '310000', '440100', '440300', '330100',
             '510100', '420100', '320100', '500000', '610100',
-            '410100', '340100', '430100'
+            '410100', '340100', '430100', '420500'
         ]
     },
     charts: [
