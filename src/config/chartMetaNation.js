@@ -413,7 +413,7 @@ export const NationalFinanceCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      zbcodeArr: ['A080201', 'A080202', 'A080203', 'A080301', 'A080302', 'A080303'],
+      zbcodeArr: ['A080201', 'A080202', 'A080203', 'A080301', 'A080302', 'A080303', 'A080206', 'A080207', 'A080208'],
       dbCode: 'nd',
       exceptName: '财政',
 
