@@ -616,6 +616,13 @@ const params_touristIndustry = [
   // 请求的数据指标与时间，必须通过这2个确定数据，如果不传"wdcode":"sj"参数，默认为10年数据
   { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0K01"},{"wdcode":"sj","valuecode":"LAST10"}]' }, // 旅游业发展情况
 ]
+// 运输与邮电
+const params_transportationAndTelecommunications = [
+  // 运输
+  {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0G02"},{"wdcode":"sj","valuecode":"LAST20"}]'}, // 运输长度
+  {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0G04"},{"wdcode":"sj","valuecode":"LAST20"}]'}, // 客运量
+]
+
 
 export async function sendRequest(specificParams) {
 
@@ -739,5 +746,6 @@ export {
   params_indices,
   params_livingStandards,
   params_accommodationAndCatering,
-  params_touristIndustry
+  params_touristIndustry,
+  params_transportationAndTelecommunications
 };

@@ -1,6 +1,7 @@
 import { params_accommodationAndCatering, params_education,params_financialIndustry,params_foreignTrade,params_gdp,params_indices,params_livingStandards,params_marriage,params_medical,params_nationalFinance
   ,params_population,params_realEstate_invest,params_realEstate_sell,params_socialretailgoods,
-  params_touristIndustry} from '@/utils/CommonUtil.js';
+  params_touristIndustry,
+  params_transportationAndTelecommunications} from '@/utils/CommonUtil.js';
 
 export const FinancialIndustryCharts = {
 
@@ -778,5 +779,34 @@ export const TouristIndustryCharts = {
       exceptName: '旅游总花费',
 
     }
+  ]
+};
+
+export const TransportationAndTelecommunicationsCharts = {
+  source: {
+    localJson: './json/nation.json',
+    apiParams: params_transportationAndTelecommunications
+  },
+  charts: [
+    {
+      id: 'TT-LG',
+      title: '运输线路长度(万公里)',
+      subtitle: '',
+      period: 'yearly',
+      chartType: 'bar',
+      zbcodeArr: ['A0G0201', 'A0G0203', 'A0G0205', 'A0G0209', 'A0G020A', 'A0G020B'],
+      dbCode: 'nd',
+      exceptName: '里程',
+    },
+    {
+      id: 'TT-CT',
+      title: '旅客运输量(万人)',
+      subtitle: '',
+      period: 'yearly',
+      chartType: 'bar',
+      zbcodeArr: ['A0G0401', 'A0G0402', 'A0G0406', 'A0G0407', 'A0G0408'],
+      dbCode: 'nd',
+      exceptName: '客运量',
+    },
   ]
 };

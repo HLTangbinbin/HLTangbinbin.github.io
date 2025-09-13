@@ -73,6 +73,7 @@ const componentMap = {
   'NationWide/TouristIndustry': () => import('../components/NationWide/TouristIndustry.vue'),
   'NationWide/AccommodationAndCateringIndustry': () => import('../components/NationWide/AccommodationAndCateringIndustry.vue'),
   'NationWide/LivingStandards': () => import('../components/NationWide/LivingStandards.vue'),
+  'NationWide/TransportationAndTelecommunications': () => import('../components/NationWide/TransportationAndTelecommunications.vue'),
   'NationWide/ProvidentFund': () => import('../components/NationWide/ProvidentFund.vue'),
 
 };
