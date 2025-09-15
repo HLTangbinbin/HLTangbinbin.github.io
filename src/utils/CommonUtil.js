@@ -267,21 +267,16 @@ export function getCommonChartOption(params) {
   let nextBirth = 0;
   
   // 优化年份处理
-  const fullYears = data.dataList.sj?.[dbCode] || [];
-  const filteredYears = yearLimit && fullYears.length > yearLimit 
-    ? fullYears.slice(-yearLimit) 
-    : fullYears;
+  const fullYears = (data.dataList.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
+  const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
 
 
   let seriesData = [];
 
   // ----------------------------
   // 生成基础 series
-  
   if (cityCodeArr.length === 0) {
-    
-    zbcodeArr.forEach((zbCode) => {
-      
+    zbcodeArr.forEach(zbCode => {
       let originalCname = selectDataFromArr(data, zbCode, 'cname', dbCode, '', yearLimit)?.[0] || '总的';
       let cname = originalCname;
 
@@ -311,13 +306,9 @@ export function getCommonChartOption(params) {
         type: chartType,
         data: valueArr,
       });
-      
     });
   } else {
-
-    
-    cityCodeArr.forEach((cityCode) => {
-      
+    cityCodeArr.forEach(cityCode => {
       const city = data.dataList.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
       const valueArr = selectDataFromArr(data, zbcodeArr[0], 'value', dbCode, cityCode, yearLimit) || [];
@@ -326,10 +317,8 @@ export function getCommonChartOption(params) {
         type: chartType,
         data: valueArr,
       });
-      
     });
   }
-  
 
   // ----------------------------
   // 预测下一年出生人口
