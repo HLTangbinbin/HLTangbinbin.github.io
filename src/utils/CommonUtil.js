@@ -28,59 +28,86 @@ export function sortYearMonths(date1, date2) {
   // 返回排序后的结果
   return compareYearMonth(date1, date2);
 }
-// //按照年份与日期做筛选与排序
-// //按照年份与日期做筛选与排序
+// 优化的数据筛选函数
 export function selectDataFromArr(returndata, zbCode, fieldKey, dbCode = 'nd', cityCode = '', yearLimit = 10) {
+  
+  const dataList = returndata.dataList.data[dbCode];
+  if (!dataList || !Array.isArray(dataList)) {
 
-  // 先获取所有数据中最大的年份（即数据最后一年）
-  const allYears = returndata.dataList.data[dbCode]
-    .map(d => parseInt(d.date?.substring(0, 4), 10))
-    .filter(y => !isNaN(y));
-  const maxDataYear = Math.max(...allYears);
+    return [];
+  }
 
-  // 使用 maxDataYear 作为数据有效的当前年份
-  const filteredData = returndata.dataList.data[dbCode]
-    .filter(returnDataObj => {
-      // 筛选符合 zbCode 和 cityCode 的数据
-      const isMatchZb = returnDataObj.code.search(zbCode) !== -1;
-      const isMatchCity = cityCode === '' || returnDataObj.cityCode.search(cityCode) !== -1;
-      if (!isMatchZb || !isMatchCity) return false;
 
-      // 筛选近 yearLimit 年
-      if (yearLimit !== null && yearLimit > 0) {
-        const year = parseInt(returnDataObj.date?.substring(0, 4), 10);
-        if (isNaN(year)) return false;
-        return year >= maxDataYear - yearLimit + 1;
-      }
 
-      return true;
-    })
-    .sort((a, b) => {
-      // 根据日期排序
-      return sortYearMonths(a.date, b.date);
-    })
-    .filter((returnDataObj, index, array) => {
-      // 先过滤掉空字符串
-      let filteredData = array.filter(item => item.value !== '');
+  // 预计算最大年份，避免重复计算
+  let maxDataYear = 0;
+  const validYears = [];
+  
+  for (let i = 0; i < dataList.length; i++) {
+    const year = parseInt(dataList[i].date?.substring(0, 4), 10);
+    if (!isNaN(year)) {
+      validYears.push(year);
+      if (year > maxDataYear) maxDataYear = year;
+    }
+  }
 
-      // 找到从末尾开始第一个非 0 的数据的位置
-      let lastNonZeroIndex = filteredData.length - 1;
-      for (let i = filteredData.length - 1; i >= 0; i--) {
-        if (filteredData[i].value !== 0) {
-          lastNonZeroIndex = i;
-          break;
-        }
-      }
+  if (validYears.length === 0) return [];
 
-      // 保留中间的 0，剔除末尾连续的 0
-      return index <= lastNonZeroIndex || returnDataObj.value !== 0;
-    })
-    .map(item => {
-      // 提取指定字段的值
-      return item[fieldKey];
-    });
+  // 计算年份阈值
+  const yearThreshold = yearLimit ? maxDataYear - yearLimit + 1 : 0;
+  
+  // 一次性筛选和排序
+  const result = [];
+  const tempData = [];
+  
+  for (let i = 0; i < dataList.length; i++) {
+    const item = dataList[i];
+    
+    // 快速筛选条件
+    if (item.code.indexOf(zbCode) === -1) continue;
+    if (cityCode && item.cityCode.indexOf(cityCode) === -1) continue;
+    
+    // 年份筛选
+    if (yearLimit && yearThreshold > 0) {
+      const year = parseInt(item.date?.substring(0, 4), 10);
+      if (isNaN(year) || year < yearThreshold) continue;
+    }
+    
+    tempData.push(item);
+  }
+  
+  
+  // 排序
+  tempData.sort((a, b) => {
+    const dateA = a.date?.replace('-', '');
+    const dateB = b.date?.replace('-', '');
+    if (!dateA || !dateB) return 0;
+    
+    const yearA = parseInt(dateA.substring(0, 4), 10);
+    const yearB = parseInt(dateB.substring(0, 4), 10);
+    if (yearA !== yearB) return yearA - yearB;
+    
+    const monthA = parseInt(dateA.substring(4), 10);
+    const monthB = parseInt(dateB.substring(4), 10);
+    return monthA - monthB;
+  });
+  
+  
+  // 过滤末尾的0值
+  let lastNonZeroIndex = -1;
+  for (let i = tempData.length - 1; i >= 0; i--) {
+    if (tempData[i].value !== '' && tempData[i].value !== 0) {
+      lastNonZeroIndex = i;
+      break;
+    }
+  }
+  
+  // 提取字段值
+  for (let i = 0; i <= lastNonZeroIndex; i++) {
+    result.push(tempData[i][fieldKey]);
+  }
 
-  return filteredData;
+  return result;
 }
 
 // 图表统一绘制方法
@@ -213,6 +240,7 @@ function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears, z = 1.96) {
 // 主方法
 // ============================
 export function getCommonChartOption(params) {
+  
   const {
     data,
     title,
@@ -232,18 +260,28 @@ export function getCommonChartOption(params) {
     enableBirthPrediction = false,
   } = params;
 
+  const startTime = performance.now();
+
   let marriageArr = [];
   let birthArr = [];
   let nextBirth = 0;
-  const fullYears = (data.dataList.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
-  const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
+  
+  // 优化年份处理
+  const fullYears = data.dataList.sj?.[dbCode] || [];
+  const filteredYears = yearLimit && fullYears.length > yearLimit 
+    ? fullYears.slice(-yearLimit) 
+    : fullYears;
+
 
   let seriesData = [];
 
   // ----------------------------
   // 生成基础 series
+  
   if (cityCodeArr.length === 0) {
-    zbcodeArr.forEach(zbCode => {
+    
+    zbcodeArr.forEach((zbCode) => {
+      
       let originalCname = selectDataFromArr(data, zbCode, 'cname', dbCode, '', yearLimit)?.[0] || '总的';
       let cname = originalCname;
 
@@ -273,9 +311,13 @@ export function getCommonChartOption(params) {
         type: chartType,
         data: valueArr,
       });
+      
     });
   } else {
-    cityCodeArr.forEach(cityCode => {
+
+    
+    cityCodeArr.forEach((cityCode) => {
+      
       const city = data.dataList.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
       const valueArr = selectDataFromArr(data, zbcodeArr[0], 'value', dbCode, cityCode, yearLimit) || [];
@@ -284,8 +326,10 @@ export function getCommonChartOption(params) {
         type: chartType,
         data: valueArr,
       });
+      
     });
   }
+  
 
   // ----------------------------
   // 预测下一年出生人口
@@ -362,7 +406,7 @@ if (isHorizontal) {
     data: isHorizontal ? [...filteredYears].reverse() : filteredYears,
   };
 
-  return {
+  const result = {
     title: {
       text: title,
       subtext: subtitle,
@@ -397,6 +441,11 @@ if (isHorizontal) {
     yAxis: isHorizontal ? categoryAxisConfig : valueAxisConfig,
     series: seriesData
   };
+
+  const endTime = performance.now();
+  logger.debug(`[getCommonChartOption] 总耗时: ${Math.round(endTime - startTime)}ms, 标题: ${title}, series数量: ${seriesData.length}`);
+
+  return result;
 }
 
 

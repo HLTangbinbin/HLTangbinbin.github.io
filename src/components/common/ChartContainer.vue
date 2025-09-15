@@ -68,6 +68,7 @@ export default {
     };
 
     const chartOption = computed(() => {
+      
       const chartConfig = {
         data: props.returnData,
         title: props.chart.title || '默认标题',
@@ -86,7 +87,10 @@ export default {
         enableBirthPrediction: props.chart.enableBirthPrediction || false
       };
   
-      return getCommonChartOption(chartConfig);
+      const result = getCommonChartOption(chartConfig);
+      
+      
+      return result;
     });
 
     // 切换图表类型

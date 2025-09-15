@@ -31,27 +31,28 @@ export default {
 
       const startTime = performance.now();
 
-      if (chartInstance) {
-        chartInstance.dispose();
-        chartInstance = null;
+      // 如果实例已存在且未销毁，直接更新
+      if (chartInstance && !chartInstance.isDisposed()) {
+        updateChart(props.option);
+        return;
       }
-      chartInstance = echarts.init(chartContainer.value);
 
+      // 创建新实例
+      chartInstance = echarts.init(chartContainer.value);
       chartInstance.setOption(props.option, true);
 
-      // 原 legend 初始化逻辑（保留原功能）
+      // 初始化图例状态
       const legends = chartInstance.getOption().legend?.[0]?.data || [];
-      const startLegend = performance.now();
-      legends.forEach(name => {
-        chartInstance.dispatchAction({
-          type: props.initSelectAll ? 'legendSelect' : 'legendUnSelect',
-          name
+      if (legends.length > 0) {
+        legends.forEach(name => {
+          chartInstance.dispatchAction({
+            type: props.initSelectAll ? 'legendSelect' : 'legendUnSelect',
+            name
+          });
         });
-      });
-      const endLegend = performance.now();
-      logger.debug(`[Chart ${props.chartId}] dispatchAction循环耗时: ${Math.round(endLegend - startLegend)}ms`);
+      }
 
-      // legend 手动选择事件
+      // 绑定事件（只绑定一次）
       chartInstance.on('legendselectchanged', (params) => {
         const allSelected = Object.values(params.selected).every(v => v === true);
         const noneSelected = Object.values(params.selected).every(v => v === false);
@@ -60,24 +61,29 @@ export default {
         else if (noneSelected) emit('legendStateChange', false);
       });
 
-      resizeHandler = debounce(() => chartInstance?.resize(), 200);
-      window.addEventListener('resize', resizeHandler);
+      // 绑定窗口大小调整事件
+      if (!resizeHandler) {
+        resizeHandler = debounce(() => {
+          if (chartInstance && !chartInstance.isDisposed()) {
+            chartInstance.resize();
+          }
+        }, 200);
+        window.addEventListener('resize', resizeHandler);
+      }
 
       const endTime = performance.now();
       logger.debug(`[Chart ${props.chartId}] 图表初始化耗时: ${Math.round(endTime - startTime)}ms`);
     };
 
     const updateChart = (newOption) => {
-      if (!chartInstance) {
+      if (!chartInstance || chartInstance.isDisposed()) {
         initChart();
         return;
       }
       if (!newOption?.series?.length) return;
 
-      const startTime = performance.now();
-      chartInstance.setOption(newOption, false);
-      const endTime = performance.now();
-      logger.debug(`[Chart ${props.chartId}] 图表更新耗时: ${Math.round(endTime - startTime)}ms`);
+      // 使用增量更新，提高性能
+      chartInstance.setOption(newOption, false, true);
     };
 
     const toggleAllLegends = (selectAll) => {
@@ -98,7 +104,8 @@ export default {
       nextTick(() => initChart());
     });
 
-    watch(() => props.option, updateChart, { deep: true });
+    // 使用浅监听，避免深度监听的性能开销
+    watch(() => props.option, updateChart, { deep: false });
 
     onBeforeUnmount(() => {
       if (resizeHandler) {
