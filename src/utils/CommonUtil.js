@@ -411,6 +411,13 @@ if (isHorizontal) {
     },
     tooltip: {
       trigger: 'axis',
+      valueFormatter: (value) => {
+        if (typeof value === 'number') {
+          // 如果是整数，直接显示；否则保留2位小数
+          return value % 1 === 0 ? value.toString() : value.toFixed(2);
+        }
+        return value; // 非数值保持不变
+      },
     },
     legend: {
       type: 'scroll',
