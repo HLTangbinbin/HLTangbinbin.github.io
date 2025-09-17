@@ -28,6 +28,20 @@
         </button>
 
       </div>
+
+      <!-- 偏移控件：只在折线图模式下显示 -->
+      <div v-if="currentChartType === 'line' && !isHorizontal" class="offset-controls">
+        <el-select v-model="selectedLegend" placeholder="选择图例" class="legend-selector">
+          <el-option v-for="legend in legendList" :key="legend" :label="legend" :value="legend" />
+        </el-select>
+
+        <div class="control-group">
+          <label>偏移：</label>
+          <input type="range" min="-10" max="10" step="1" v-model="offsetValue" @input="applyOffset" />
+          <span class="offset-value">{{ offsetValue }}</span>
+        </div>
+      </div>
+
     </div>
 
     <div class="chart-card">
@@ -38,7 +52,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import ChartView from './ChartView.vue';
 import { getCommonChartOption } from '@/utils/CommonUtil.js';
 import { logger } from '@/utils/Logger.js';
@@ -58,6 +72,11 @@ export default {
     const yearLimit = ref(10);
     const legendAllSelected = ref(true);
     const chartRef = ref(null);
+    // 新增状态
+    const selectedLegend = ref(null)
+    const offsetValue = ref(0)
+    const legendNames = ref([])
+
     // 格式化滑块提示
     const formatTooltip = (value) => {
       if (props.viewMode === 'yearly') {
@@ -66,9 +85,11 @@ export default {
         return `近 ${value} 月`;
       }
     };
+   // 必须这么写，不然在上面使用legendNames取不到数据，使用legendNames.value写法又报错
+    const legendList = computed(() => legendNames.value)
 
     const chartOption = computed(() => {
-      
+
       const chartConfig = {
         data: props.returnData,
         title: props.chart.title || '默认标题',
@@ -84,14 +105,30 @@ export default {
         yearLimit: yearLimit.value,
         isHorizontal: isHorizontal.value,
         enableBirthOffset: props.chart.enableBirthOffset || false,
-        enableBirthPrediction: props.chart.enableBirthPrediction || false
+        enableBirthPrediction: props.chart.enableBirthPrediction || false,
+        selectedLegend: selectedLegend.value,
+        offsetValue: offsetValue.value
       };
-  
-      const result = getCommonChartOption(chartConfig);
-      
-      
-      return result;
+
+      const option = getCommonChartOption(chartConfig);
+
+      return option;
     });
+
+
+    // 监听 legendNames，初始化选中第一个
+    // ✅ 在 watch 里同步 legend，不会报 eslint 错
+    // watch returnData 或 chartOption 更新 legendNames
+    watch(chartOption, async (newOption) => {
+
+      legendNames.value = newOption?.legend?.data || []
+      // 默认选中第一个 legend
+      if (!selectedLegend.value && legendNames.value.length > 0) {
+        selectedLegend.value = legendNames.value[0]
+      }
+
+      logger.debug('当前的legendNames和selectedLegend', legendNames.value, selectedLegend.value)
+    }, { immediate: true })
 
     // 切换图表类型
     const setChartType = (type, horizontal) => {
@@ -117,7 +154,10 @@ export default {
       setChartType,
       toggleAllLegends,
       formatTooltip,
-      chartRef
+      chartRef,
+      selectedLegend,
+      offsetValue,
+      legendList
     };
   }
 };
@@ -149,6 +189,69 @@ export default {
   justify-content: center;
   gap: 12px;
   margin-top: 16px;
+}
+
+/* 新增偏移控制样式 */
+.offset-controls {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  gap: 16px;
+  background-color: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.legend-selector {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.offset-slider-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+}
+
+.offset-label {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #606266;
+}
+
+.offset-value {
+  flex-shrink: 0;
+  min-width: 100px;
+  font-size: 14px;
+  color: #606266;
+}
+
+/* 调整滑块样式 */
+::v-deep(.el-slider) {
+  flex-grow: 1;
+  max-width: 300px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .offset-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .offset-slider-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .offset-label,
+  .offset-value {
+    text-align: center;
+  }
 }
 
 .time-legend-row {
@@ -222,9 +325,11 @@ export default {
   margin: 0 auto;
   margin-top: 20px;
 }
+
 @media (max-width: 768px) {
   .chart-card {
-    height: 500px; /* 手机上高度缩小 */
+    height: 500px;
+    /* 手机上高度缩小 */
   }
 }
 

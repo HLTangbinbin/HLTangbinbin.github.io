@@ -258,6 +258,8 @@ export function getCommonChartOption(params) {
     legendAllSelected,
     enableBirthOffset = false,
     enableBirthPrediction = false,
+    selectedLegend,
+    offsetValue = 0
   } = params;
 
   const startTime = performance.now();
@@ -300,6 +302,12 @@ export function getCommonChartOption(params) {
         birthArr = valueArr;
         valueArr = offsetArray(valueArr, -1);
       }
+      logger.debug('chartType----name----selectedLegend',chartType,name,selectedLegend)
+      if (chartType === 'line' && name === selectedLegend) 
+        {
+          valueArr = offsetArray(valueArr, offsetValue);
+
+        }
 
       seriesData.push({
         name: name,
