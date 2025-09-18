@@ -76,7 +76,8 @@ export const EducationSectorCharts = {
         'A0M02010U', // 初中招生
         'A0M02010I', // 高中招生
         'A0M020105', // 本专科招生
-        'A0M020102'  // 研究生招生
+        'A0M020102',  // 研究生招生
+        'A030109'   // 出生人口
       ],
       dbCode: 'nd',
       chartType: 'bar',
@@ -94,7 +95,8 @@ export const EducationSectorCharts = {
         'A0M02020V', // 初中在校
         'A0M02020J', // 高中在校
         'A0M020205', // 本专科在校
-        'A0M020202'  // 研究生在校
+        'A0M020202', // 研究生在校
+        'A030109'    // 出生人口
       ],
       dbCode: 'nd',
       chartType: 'bar',
@@ -112,7 +114,8 @@ export const EducationSectorCharts = {
         'A0M02030V', // 初中毕业
         'A0M02030J', // 高中毕业
         'A0M020305', // 本专科毕业
-        'A0M020302'  // 研究生毕业
+        'A0M020302', // 研究生毕业
+        'A030109'   // 出生人口
       ],
       dbCode: 'nd',
       chartType: 'bar',

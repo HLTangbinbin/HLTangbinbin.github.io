@@ -370,15 +370,15 @@ export default {
   
   .legend-control {
     flex: 1;
-    min-width: 100px;
-    max-width: 40%; /* 限制最大宽度 */
+    min-width: 50px;
+    max-width: 34%; /* 限制最大宽度 */
     justify-content: center;
   }
   
   .offset-controls {
     flex: 1;
     min-width: 150px;
-    max-width: 60%; /* 限制最大宽度 */
+    max-width: 80%; /* 限制最大宽度 */
     justify-content: center;
   }
   
@@ -399,8 +399,8 @@ export default {
   }
   
   .offset-controls .year-slider {
-    min-width: 80px; /* 减小滑块最小宽度 */
-    max-width: 120px; /* 减小滑块最大宽度 */
+    min-width: 120px; /* 减小滑块最小宽度 */
+    max-width: 200px; /* 减小滑块最大宽度 */
     flex-grow: 1;
   }
   
