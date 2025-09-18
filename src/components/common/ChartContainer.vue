@@ -1,48 +1,54 @@
-<!-- ChartContainer.vue -->
 <template>
   <div class="chart-container">
-
     <div class="controls-wrap">
-      <div class="chart-controls">
-        <button :class="['chart-button', { 'is-active': currentChartType === 'bar' && !isHorizontal }]"
-          @click="setChartType('bar', false)">
-          柱状图
-        </button>
-        <button :class="['chart-button', { 'is-active': currentChartType === 'bar' && isHorizontal }]"
-          @click="setChartType('bar', true)">
-          条形图
-        </button>
-        <button :class="['chart-button', { 'is-active': currentChartType === 'line' && !isHorizontal }]"
-          @click="setChartType('line', false)">
-          折线图
-        </button>
-      </div>
-
-      <div class="time-legend-row">
-        <label class="year-label">滑动时间</label>
-        <el-slider v-model="yearLimit" :min=1 :max=20 :step=1 show-tooltip :format-tooltip="formatTooltip"
-          class="year-slider" />
+      <!-- PC端布局 - 所有控件在一行 -->
+      <div class="controls-row">
+        <!-- 图表类型控件 -->
+        <div class="chart-controls">
+          <button :class="['chart-button', { 'is-active': currentChartType === 'bar' && !isHorizontal }]"
+            @click="setChartType('bar', false)">
+            柱状图
+          </button>
+          <button :class="['chart-button', { 'is-active': currentChartType === 'bar' && isHorizontal }]"
+            @click="setChartType('bar', true)">
+            条形图
+          </button>
+          <button :class="['chart-button', { 'is-active': currentChartType === 'line' && !isHorizontal }]"
+            @click="setChartType('line', false)">
+            折线图
+          </button>
+        </div>
+        
+        <!-- 一键全选控件 - 与图表类型按钮在同一行 -->
         <button class="toggle-legend-btn" :style="{ backgroundColor: legendAllSelected ? '#0bc2d6' : '#ccc' }"
           @click="toggleAllLegends">
           {{ legendAllSelected ? '一键未选' : '一键全选' }}
         </button>
-
-      </div>
-
-      <!-- 偏移控件：只在折线图模式下显示 -->
-      <div v-if="currentChartType === 'line' && !isHorizontal" class="offset-controls">
-        <el-select v-model="selectedLegend" placeholder="选择图例" class="legend-selector">
-          <el-option v-for="legend in legendList" :key="legend" :label="legend" :value="legend" />
-        </el-select>
-
-        <div class="control-group">
-          <label class="year-label">偏移</label>
-          <el-slider v-model="offsetValue" :min=-20 :max=20 :step=1 show-tooltip :format-tooltip="formatTooltip"
-            class="year-slider" />
-          <span class="offset-value">{{ offsetValue }}</span>
+        
+        <!-- 时间选择控件 -->
+        <div class="time-control">
+          <label class="year-label">选择时间:</label>
+          <el-slider v-model="yearLimit" :min=1 :max=20 :step=1 class="year-slider" />
+          <span class="offset-value">{{ yearLimit }}</span>
         </div>
       </div>
-
+      
+      <!-- 折线图模式下第二行控件 -->
+      <div v-if="currentChartType === 'line' && !isHorizontal" class="line-mode-controls">
+        <div class="legend-control">
+          <el-select v-model="selectedLegend" placeholder="选择图例" class="legend-selector">
+            <el-option v-for="legend in legendList" :key="legend" :label="legend" :value="legend" />
+          </el-select>
+        </div>
+        
+        <div class="offset-controls">
+          <label class="year-label">折线偏移:</label>
+          <div class="offset-slider-container">
+            <el-slider v-model="offsetValue" :min=-20 :max=20 :step=1 class="year-slider" />
+            <span class="offset-value">{{ offsetValue }}</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="chart-card">
@@ -51,6 +57,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import { ref, computed, watch } from 'vue';
@@ -78,14 +85,7 @@ export default {
     const offsetValue = ref(0)
     const legendNames = ref([])
 
-    // 格式化滑块提示
-    const formatTooltip = (value) => {
-      if (props.viewMode === 'yearly') {
-        return `近 ${value} 年`;
-      } else {
-        return `近 ${value} 月`;
-      }
-    };
+
    // 必须这么写，不然在上面使用legendNames取不到数据，使用legendNames.value写法又报错
     const legendList = computed(() => legendNames.value)
 
@@ -153,7 +153,6 @@ export default {
       chartOption,
       setChartType,
       toggleAllLegends,
-      formatTooltip,
       chartRef,
       selectedLegend,
       offsetValue,
@@ -163,8 +162,8 @@ export default {
 };
 </script>
 
+
 <style scoped>
-/* 保持原有样式不变 */
 .chart-container {
   width: 95%;
   max-width: 1500px;
@@ -181,116 +180,69 @@ export default {
   flex-direction: column;
   width: fit-content;
   margin: 0 auto;
+}
 
+.controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
 }
 
 .chart-controls {
   display: flex;
-  justify-content: center;
   gap: 12px;
-  margin-top: 16px;
 }
 
-/* 新增偏移控制样式 */
+.time-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.legend-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .offset-controls {
   display: flex;
-  flex-direction: column;
-  margin-top: 16px;
-  gap: 16px;
-  background-color: #f8f9fa;
-  padding: 12px;
-  border-radius: 8px;
+  align-items: center;
+  gap: 12px;
 }
 
-.legend-selector {
+.line-mode-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
   width: 100%;
-  max-width: 300px;
-  margin: 0 auto;
-}
-
-.offset-slider-container {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  justify-content: center;
-}
-
-.offset-label {
-  flex-shrink: 0;
-  font-size: 14px;
-  font-weight: 500;
-  color: #606266;
-}
-
-.offset-value {
-  flex-shrink: 0;
-  min-width: 100px;
-  font-size: 14px;
-  color: #606266;
-}
-
-/* 调整滑块样式 */
-::v-deep(.el-slider) {
-  flex-grow: 1;
-  max-width: 300px;
-}
-
-/* 响应式调整 */
-@media (max-width: 768px) {
-  .offset-controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .offset-slider-container {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .offset-label,
-  .offset-value {
-    text-align: center;
-  }
-}
-
-.time-legend-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 16px;
-  gap: 16px;
 }
 
 .year-label {
+  font-weight: 400;
   flex-shrink: 0;
-  padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #fff;
-  background-color: #ccc;
+  padding: 8px 14px; /* PC端增大尺寸 */
+  font-size: 18px; /* PC端增大字体 */
+  /* color: rgb(113, 109, 109); */
   border-radius: 8px;
 }
 
 .year-slider {
-  min-width: 120px;
-  max-width: 200px;
-}
-
-::v-deep(.year-slider .el-slider__bar) {
-  background-color: #0bc2d6 !important;
-}
-
-::v-deep(.year-slider .el-slider__button) {
-  background-color: #0bc2d6 !important;
-  border-color: #0bc2d6 !important;
+  min-width: 150px; /* PC端增大宽度 */
+  max-width: 250px; /* PC端增大宽度 */
 }
 
 .toggle-legend-btn {
   flex-shrink: 0;
-  padding: 6px 12px;
-  font-size: 13px;
+  padding: 8px 14px; /* PC端增大尺寸 */
+  font-size: 14px; /* PC端增大字体 */
   color: #fff;
+  background-color: #0bc2d6;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -304,9 +256,8 @@ export default {
 }
 
 .chart-button {
-  padding: 6px 12px;
-  margin: 10px;
-  font-size: 13px;
+  padding: 8px 14px; /* PC端增大尺寸 */
+  font-size: 14px; /* PC端增大字体 */
   color: #fff;
   background-color: #ccc;
   border: none;
@@ -326,16 +277,173 @@ export default {
   margin-top: 20px;
 }
 
+.legend-selector {
+  width: 100%;
+  min-width: 250px;
+  max-width: 350px;
+}
+
+.offset-slider-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.offset-value {
+  flex-shrink: 0;
+  min-width: 30px;
+  font-size: 14px;
+  color: #606266;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
+  .controls-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  
+  .chart-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 0;
+  }
+  
+  .toggle-legend-btn {
+    margin: 0;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  /* 时间控件优化 */
+  .time-control {
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+    flex-wrap: nowrap;
+    /* background-color: #f8f9fa; */
+    padding: 4px 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .time-control .year-label {
+    padding: 4px 4px;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  
+  .time-control .year-slider {
+    min-width: 100px;
+    max-width: 150px;
+    flex-grow: 1;
+  }
+  
+  .legend-selector {
+    max-width: 120px; /* 进一步减小图例选择框宽度 */
+    min-width: auto;
+  }
+  
   .chart-card {
     height: 500px;
-    /* 手机上高度缩小 */
+  }
+  
+  /* 图例选择框和偏移控件布局优化 */
+  .line-mode-controls {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin-top: 8px;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #f8f9fa; */
+    padding: 6px;
+    border-radius: 8px;
+    width: 100%;
+  }
+  
+  .legend-control {
+    flex: 1;
+    min-width: 100px;
+    max-width: 40%; /* 限制最大宽度 */
+    justify-content: center;
+  }
+  
+  .offset-controls {
+    flex: 1;
+    min-width: 150px;
+    max-width: 60%; /* 限制最大宽度 */
+    justify-content: center;
+  }
+  
+  /* 偏移控件内部优化 */
+  .offset-controls {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .offset-slider-container {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 4px;
+    flex-grow: 1;
+  }
+  
+  .offset-controls .year-slider {
+    min-width: 80px; /* 减小滑块最小宽度 */
+    max-width: 120px; /* 减小滑块最大宽度 */
+    flex-grow: 1;
+  }
+  
+  .year-label {
+    padding: 4px 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  
+  .chart-button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .offset-value {
+    font-size: 12px;
+    min-width: 25px;
+    flex-shrink: 0;
+  }
+  
+  /* 添加间距 */
+  .legend-control {
+    margin-right: 8px; /* 图例选择框右侧添加间距 */
   }
 }
 
-.chart-wrapper {
-  width: 100%;
-  height: 100%;
+/* 滑块样式覆盖 */
+::v-deep(.el-slider__bar) {
+  background-color: #0bc2d6 !important;
+}
 
+::v-deep(.el-slider__button) {
+  background-color: #0bc2d6 !important;
+  border-color: #0bc2d6 !important;
+}
+
+/* 选legend择框圆角 */
+::v-deep(.legend-selector .el-select__wrapper) {
+  border-radius: 6px !important;
+}
+
+::v-deep(.legend-selector .el-select__tags) {
+  border-radius: 6px !important;
 }
 </style>
