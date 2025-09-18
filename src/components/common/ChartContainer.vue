@@ -127,7 +127,6 @@ export default {
         selectedLegend.value = legendNames.value[0]
       }
 
-      logger.debug('当前的legendNames和selectedLegend', legendNames.value, selectedLegend.value)
     }, { immediate: true })
 
     // 切换图表类型

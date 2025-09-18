@@ -81,7 +81,7 @@ export default {
         return;
       }
       if (!newOption?.series?.length) return;
-
+      logger.debug('updateChart方法调用')
       // 使用增量更新，提高性能
       chartInstance.setOption(newOption, false, true);
     };

@@ -302,7 +302,6 @@ export function getCommonChartOption(params) {
         birthArr = valueArr;
         valueArr = offsetArray(valueArr, -1);
       }
-      logger.debug('chartType----name----selectedLegend',chartType,name,selectedLegend)
       if (chartType === 'line' && name === selectedLegend) 
         {
           valueArr = offsetArray(valueArr, offsetValue);
