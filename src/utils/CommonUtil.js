@@ -112,18 +112,32 @@ export function selectDataFromArr(returndata, zbCode, fieldKey, dbCode = 'nd', c
 
 // 图表统一绘制方法
 // ============================
-// 工具方法
-// ============================
-function offsetArray(arr, offset = -1) {
-  // 向前/向后偏移数组，空位补 null
+
+// 新增：根据偏移量调整数据
+// 偏移函数
+const offsetArray = (arr, yearLimit, offset) => {
   if (!Array.isArray(arr)) return arr;
+
   if (offset < 0) {
-    return arr.slice(-offset).concat(Array(-offset).fill(null));
+    // 左移：arr的长度为yearLimit（因为左移时totalYears等于yearLimit）
+    const absOffset = Math.min(-offset, arr.length);
+    return [...arr.slice(absOffset), ...Array(absOffset).fill(null)];
   } else if (offset > 0) {
-    return Array(offset).fill(null).concat(arr.slice(0, arr.length - offset));
+
+    // 右移：扩展数据长度，前面用NULL补齐
+    const totalLength = yearLimit + offset;
+    // 如果实际数据不足，前面用NULL补齐
+    const paddedArr = [
+      ...Array(Math.max(0, totalLength - arr.length)).fill(null),
+      ...arr
+    ];
+    // 右移：arr的长度为yearLimit+offset，我们截取前yearLimit个
+    // logger.debug("移动前----移动后", arr, paddedArr.slice(0, yearLimit))
+    // 只取前yearLimit个数据
+    return paddedArr.slice(0, yearLimit);
   }
   return arr;
-}
+};
 
 
 /**
@@ -294,19 +308,18 @@ export function getCommonChartOption(params) {
 
       const name = cname + unit;
       let valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
+    
 
       if (enableBirthOffset && zbCode === 'A0P0C01') {
         marriageArr = valueArr;
-      }
-      if (enableBirthOffset && zbCode === 'A030109') {
+      } else if (enableBirthOffset && zbCode === 'A030109') {
         birthArr = valueArr;
-        valueArr = offsetArray(valueArr, -1);
-      }
-      if (chartType === 'line' && name === selectedLegend) 
-        {
-          valueArr = offsetArray(valueArr, offsetValue);
+        valueArr = offsetArray(valueArr, yearLimit, -1);
+      } else if (chartType === 'line' && name === selectedLegend) {
+        valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit + (offsetValue > 0 ? offsetValue : 0)) || [];
+        valueArr = offsetArray(valueArr, yearLimit, offsetValue);
 
-        }
+      }
 
       seriesData.push({
         name: name,

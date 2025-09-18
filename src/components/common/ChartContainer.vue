@@ -20,7 +20,7 @@
 
       <div class="time-legend-row">
         <label class="year-label">滑动时间</label>
-        <el-slider v-model="yearLimit" :min="1" :max="20" :step="1" show-tooltip :format-tooltip="formatTooltip"
+        <el-slider v-model="yearLimit" :min=1 :max=20 :step=1 show-tooltip :format-tooltip="formatTooltip"
           class="year-slider" />
         <button class="toggle-legend-btn" :style="{ backgroundColor: legendAllSelected ? '#0bc2d6' : '#ccc' }"
           @click="toggleAllLegends">
@@ -36,8 +36,9 @@
         </el-select>
 
         <div class="control-group">
-          <label>偏移：</label>
-          <input type="range" min="-10" max="10" step="1" v-model="offsetValue" @input="applyOffset" />
+          <label class="year-label">偏移</label>
+          <el-slider v-model="offsetValue" :min=-20 :max=20 :step=1 show-tooltip :format-tooltip="formatTooltip"
+            class="year-slider" />
           <span class="offset-value">{{ offsetValue }}</span>
         </div>
       </div>
