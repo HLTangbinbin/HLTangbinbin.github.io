@@ -29,85 +29,44 @@ export function sortYearMonths(date1, date2) {
   return compareYearMonth(date1, date2);
 }
 // 优化的数据筛选函数
-export function selectDataFromArr(returndata, zbCode, fieldKey, dbCode = 'nd', cityCode = '', yearLimit = 10) {
-  
-  const dataList = returndata.dataList.data[dbCode];
-  if (!dataList || !Array.isArray(dataList)) {
+// 最新数据结构适配版
+// selectDataFromArr.js
+export function selectDataFromArr(returndata, zbCode, dbCode = 'nd', cityCode = '', yearLimit = 10) {
+  const codeItem = returndata.data[dbCode]?.[zbCode];
+  if (!codeItem || !Array.isArray(codeItem.data)) return [];
 
-    return [];
+  // copy 一份数据
+  let dataArr = [...codeItem.data];
+
+  // 城市过滤
+  if (cityCode) {
+    dataArr = dataArr.filter(d => d.cityCode === cityCode);
   }
 
-
-
-  // 预计算最大年份，避免重复计算
-  let maxDataYear = 0;
-  const validYears = [];
-  
-  for (let i = 0; i < dataList.length; i++) {
-    const year = parseInt(dataList[i].date?.substring(0, 4), 10);
-    if (!isNaN(year)) {
-      validYears.push(year);
-      if (year > maxDataYear) maxDataYear = year;
-    }
-  }
-
-  if (validYears.length === 0) return [];
-
-  // 计算年份阈值
-  const yearThreshold = yearLimit ? maxDataYear - yearLimit + 1 : 0;
-  
-  // 一次性筛选和排序
-  const result = [];
-  const tempData = [];
-  
-  for (let i = 0; i < dataList.length; i++) {
-    const item = dataList[i];
-    
-    // 快速筛选条件
-    if (item.code.indexOf(zbCode) === -1) continue;
-    if (cityCode && item.cityCode.indexOf(cityCode) === -1) continue;
-    
-    // 年份筛选
-    if (yearLimit && yearThreshold > 0) {
-      const year = parseInt(item.date?.substring(0, 4), 10);
-      if (isNaN(year) || year < yearThreshold) continue;
-    }
-    
-    tempData.push(item);
-  }
-  
-  
-  // 排序
-  tempData.sort((a, b) => {
+  // 排序：年份升序（从小到大）
+  dataArr.sort((a, b) => {
     const dateA = a.date?.replace('-', '');
     const dateB = b.date?.replace('-', '');
-    if (!dateA || !dateB) return 0;
-    
-    const yearA = parseInt(dateA.substring(0, 4), 10);
-    const yearB = parseInt(dateB.substring(0, 4), 10);
-    if (yearA !== yearB) return yearA - yearB;
-    
-    const monthA = parseInt(dateA.substring(4), 10);
-    const monthB = parseInt(dateB.substring(4), 10);
-    return monthA - monthB;
+    return Number(dateA) - Number(dateB);
   });
-  
-  
-  // 过滤末尾的0值
-  let lastNonZeroIndex = -1;
-  for (let i = tempData.length - 1; i >= 0; i--) {
-    if (tempData[i].value !== '' && tempData[i].value !== 0) {
+
+  // 年份限制：取最新 N 年，但保持升序
+  if (yearLimit && dataArr.length > yearLimit) {
+    dataArr = dataArr.slice(-yearLimit);
+  }
+
+  // 过滤尾部的 0 值
+  let lastNonZeroIndex = dataArr.length - 1;
+  for (let i = dataArr.length - 1; i >= 0; i--) {
+    if (dataArr[i].value !== '' && dataArr[i].value !== 0) {
       lastNonZeroIndex = i;
       break;
     }
   }
-  
-  // 提取字段值
-  for (let i = 0; i <= lastNonZeroIndex; i++) {
-    result.push(tempData[i][fieldKey]);
-  }
+  dataArr = dataArr.slice(0, lastNonZeroIndex + 1);
 
-  return result;
+  // 返回 value 数组（升序）
+  return dataArr.map(d => d.value);
 }
 
 // 图表统一绘制方法
@@ -250,11 +209,8 @@ function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears, z = 1.96) {
 }
 
 
-// ============================
-// 主方法
-// ============================
+// 最新兼容 getCommonChartOption
 export function getCommonChartOption(params) {
-  
   const {
     data,
     title,
@@ -281,11 +237,6 @@ export function getCommonChartOption(params) {
   let marriageArr = [];
   let birthArr = [];
   let nextBirth = 0;
-  
-  // 优化年份处理
-  const fullYears = (data.dataList.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
-  const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
-
 
   let seriesData = [];
 
@@ -293,9 +244,11 @@ export function getCommonChartOption(params) {
   // 生成基础 series
   if (cityCodeArr.length === 0) {
     zbcodeArr.forEach(zbCode => {
-      let originalCname = selectDataFromArr(data, zbCode, 'cname', dbCode, '', yearLimit)?.[0] || '总的';
-      let cname = originalCname;
+      const codeItem = data.data[dbCode]?.[zbCode];
+      if (!codeItem) return;
 
+      let cname = codeItem.cname || '总的';
+      
       if (typeof cname === 'string' && typeof exceptName === 'string') {
         const resultArr = cname.split('');
         const exceptArr = exceptName.split('');
@@ -307,8 +260,8 @@ export function getCommonChartOption(params) {
       }
 
       const name = cname + unit;
-      let valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit) || [];
-    
+
+      let valueArr = selectDataFromArr(data, zbCode, dbCode, '', yearLimit);
 
       if (enableBirthOffset && zbCode === 'A0P0C01') {
         marriageArr = valueArr;
@@ -316,9 +269,7 @@ export function getCommonChartOption(params) {
         birthArr = valueArr;
         valueArr = offsetArray(valueArr, yearLimit, -1);
       } else if (chartType === 'line' && name === selectedLegend) {
-        valueArr = selectDataFromArr(data, zbCode, 'value', dbCode, '', yearLimit + (offsetValue > 0 ? offsetValue : 0)) || [];
-        valueArr = offsetArray(valueArr, yearLimit, offsetValue);
-
+        valueArr = offsetArray(selectDataFromArr(data, zbCode, dbCode, '', yearLimit + (offsetValue > 0 ? offsetValue : 0)), yearLimit, offsetValue);
       }
 
       seriesData.push({
@@ -329,9 +280,9 @@ export function getCommonChartOption(params) {
     });
   } else {
     cityCodeArr.forEach(cityCode => {
-      const city = data.dataList.reg?.find(r => r.code === cityCode);
+      const city = data.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
-      const valueArr = selectDataFromArr(data, zbcodeArr[0], 'value', dbCode, cityCode, yearLimit) || [];
+      const valueArr = selectDataFromArr(data, zbcodeArr[0], dbCode, cityCode, yearLimit) || [];
       seriesData.push({
         name: name,
         type: chartType,
@@ -345,7 +296,6 @@ export function getCommonChartOption(params) {
   if (enableBirthPrediction && marriageArr.length && birthArr.length) {
     const mode = fitMarriageBirthDynamic(marriageArr, birthArr, 20);
     nextBirth = mode.nextYearPred.pred;
-
   }
 
   // ----------------------------
@@ -359,7 +309,6 @@ export function getCommonChartOption(params) {
         const updatedData = s.data.slice();
         updatedData[lastIndex] = nextBirth;
 
-        // 历史 + 预测拆分
         const historySeries = {
           ...s,
           type: 'line',
@@ -380,7 +329,6 @@ export function getCommonChartOption(params) {
         };
         return [historySeries, predictionSeries];
       } else {
-        // 非折线图，保留 series，但 data 置空即可，ECharts 会更新
         return [
           { ...s, type: 'bar'}, // 历史实线 series
           { ...s, type: 'bar', data: [] } // 虚线 series
@@ -403,30 +351,32 @@ if (isHorizontal) {
   const valueAxisConfig = {
     type: 'value',
     scale: true,
-    min: (value) => value.min - (value.max - value.min) * 0.1, // 留10%
+    min: (value) => value.min - (value.max - value.min) * 0.1,
     max: (value) => value.max + (value.max - value.min) * 0.1,
     axisLabel: {
       formatter: (value) => value.toFixed(2) + unit,
     },
   };
-
+  // 优化年份处理
+  const fullYears = (data.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
+  const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
   const categoryAxisConfig = {
     type: 'category',
     data: isHorizontal ? [...filteredYears].reverse() : filteredYears,
   };
 
-  const result = {
+  const optionData = {
     title: {
       text: title,
       subtext: subtitle,
       left: 'center',
       top: '15',
-      itemGap: 22, 
+      itemGap: 22,
       subtextStyle: {
         fontWeight: 'bold',
         fontSize: 13,
         width: window.innerWidth * 0.8,
-        overflow: "breakAll"
+        overflow: 'breakAll'
       },
     },
     tooltip: {
@@ -461,7 +411,7 @@ if (isHorizontal) {
   const endTime = performance.now();
   logger.debug(`[getCommonChartOption] 总耗时: ${Math.round(endTime - startTime)}ms, 标题: ${title}, series数量: ${seriesData.length}`);
 
-  return result;
+  return optionData;
 }
 
 
@@ -783,7 +733,7 @@ export async function sendRequest(specificParams) {
   }
 
   const newData = {
-    dataList: newDataArr,
+    data: newDataArr,
     zb: newDataArr_zb,
     reg: newDataArr_reg,
     sj: newDataArr_sj

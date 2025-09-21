@@ -51,7 +51,7 @@ export default {
     },
     chartsToRender() {
       return this.filteredCharts.filter((chart) => {
-        const sj = this.returnData?.dataList?.sj?.[chart.dbCode];
+        const sj = this.returnData?.sj?.[chart.dbCode];
         return Array.isArray(sj) && sj.length > 0;
       });
     },
