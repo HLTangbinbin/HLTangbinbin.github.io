@@ -339,13 +339,7 @@ export function getCommonChartOption(params) {
   }).flat();
 
   // ---------- 条形图横向正序处理 ----------
-if (isHorizontal) {
-  // 反转每个 series 的 data
-  seriesData = seriesData.map(s => ({
-    ...s,
-    data: s.data ? [...s.data].reverse() : s.data
-  }));
-}
+
 
   // ----------------------------
   const valueAxisConfig = {
@@ -360,10 +354,13 @@ if (isHorizontal) {
   // 优化年份处理
   const fullYears = (data.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
   const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
+  // 横向条形图时，年份倒序
   const categoryAxisConfig = {
     type: 'category',
-    data: isHorizontal ? [...filteredYears].reverse() : filteredYears,
+    data: filteredYears,
   };
+
+
 
   const optionData = {
     title: {
