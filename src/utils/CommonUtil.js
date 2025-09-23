@@ -380,11 +380,31 @@ export function getCommonChartOption(params) {
       trigger: 'axis',
       valueFormatter: (value) => {
         if (typeof value === 'number') {
-          // 如果是整数，直接显示；否则保留2位小数
           return value % 1 === 0 ? value.toString() : value.toFixed(2);
         }
-        return value; // 非数值保持不变
+        return value;
       },
+      formatter: function (params) {
+        // 按数值从大到小排序
+        const sorted = params.slice().sort((a, b) => {
+          const valA = typeof a.value === 'number' ? a.value : (Array.isArray(a.value) ? a.value[1] : NaN);
+          const valB = typeof b.value === 'number' ? b.value : (Array.isArray(b.value) ? b.value[1] : NaN);
+          return valB - valA;
+        });
+    
+        let result = params[0].axisValue + '<br/>';
+        sorted.forEach(item => {
+          let val = item.value;
+          if (typeof val === 'number') {
+            val = val % 1 === 0 ? val.toString() : val.toFixed(2);
+          } else if (Array.isArray(val) && typeof val[1] === 'number') {
+            // 如果 value 是 [x, y] 这样的数组，取 y
+            val = val[1] % 1 === 0 ? val[1].toString() : val[1].toFixed(2);
+          }
+          result += `${item.marker}${item.seriesName}: ${val}<br/>`;
+        });
+        return result;
+      }
     },
     legend: {
       type: 'scroll',
