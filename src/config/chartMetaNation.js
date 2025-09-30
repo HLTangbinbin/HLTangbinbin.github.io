@@ -1,62 +1,64 @@
-import { params_accommodationAndCatering, params_education,params_financialIndustry,params_foreignTrade,params_gdp,params_indices,params_livingStandards,params_marriage,params_medical,params_nationalFinance
-  ,params_population,params_realEstate_invest,params_realEstate_sell,params_socialretailgoods,
+import {
+  params_accommodationAndCatering, params_education, params_financialIndustry, params_foreignTrade, params_gdp, params_indices, params_livingStandards, params_marriage, params_medical, params_nationalFinance
+  , params_population, params_realEstate_invest, params_realEstate_sell, params_socialretailgoods,
   params_touristIndustry,
-  params_transportationAndTelecommunications} from '@/utils/CommonUtil.js';
+  params_transportationAndTelecommunications
+} from '@/utils/CommonUtil.js';
 
 export const FinancialIndustryCharts = {
 
-    source: {
-        localJson: './json/nation.json',
-        apiParams: params_financialIndustry
+  source: {
+    localJson: './json/nation.json',
+    apiParams: params_financialIndustry
+  },
+  charts: [
+    {
+      id: 'FI-CM',
+      title: '货币供应量(万亿)',
+      subtitle: '',
+      period: 'monthly',
+      zbcodeArr: ['A0D0105', 'A0D0103', 'A0D0101'],
+      dbCode: 'yd',
+      chartType: 'bar',
+      exceptName: '供应量_期末值(万亿)',
+
     },
-    charts: [
-        {
-            id: 'FI-CM',
-            title: '货币供应量(万亿)',
-            subtitle: '',
-            period: 'monthly',
-            zbcodeArr: ['A0D0105', 'A0D0103', 'A0D0101'],
-            dbCode: 'yd',
-            chartType: 'bar',
-            exceptName: '供应量_期末值(万亿)',
+    {
+      id: 'FI-CRM',
+      title: '货币供应量同比增长(%)',
+      subtitle: '',
+      period: 'monthly',
+      zbcodeArr: ['A0D0102', 'A0D0104', 'A0D0106'],
+      dbCode: 'yd',
+      chartType: 'bar',
+      exceptName: '供应量_同比增长',
 
-        },
-        {
-            id: 'FI-CRM',
-            title: '货币供应量同比增长(%)',
-            subtitle: '',
-            period: 'monthly',
-            zbcodeArr: ['A0D0102', 'A0D0104', 'A0D0106'],
-            dbCode: 'yd',
-            chartType: 'bar',
-            exceptName: '供应量_同比增长',
+    },
+    {
+      id: 'FI-CY',
+      title: '货币供应量结构',
+      subtitle: 'M1: M0+企业存款  M2: M1+企业定期+居民存款',
+      period: 'yearly',
+      zbcodeArr: ['A0L0303', 'A0L0302', 'A0L0301'],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '供应量(万亿)',
+      legendTop: '100px',
+      gridTop: '170px',
 
-        },
-        {
-            id: 'FI-CY',
-            title: '货币供应量结构',
-            subtitle: 'M1: M0+企业存款  M2: M1+企业定期+居民存款',
-            period: 'yearly',
-            zbcodeArr: ['A0L0303', 'A0L0302', 'A0L0301'],
-            dbCode: 'nd',
-            chartType: 'bar',
-            exceptName: '供应量(万亿)',
-            legendTop: '100px',
-            gridTop: '170px',
-            
-        },
-        {
-            id: 'FI-FC',
-            title: '黄金与外汇储备(亿美元)',
-            subtitle: '',
-            period: 'yearly',
-            zbcodeArr: ['A0L0401', 'A0L0402'],
-            dbCode: 'nd',
-            chartType: 'bar',
-            exceptName: '',
+    },
+    {
+      id: 'FI-FC',
+      title: '黄金与外汇储备(亿美元)',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: ['A0L0401', 'A0L0402'],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '',
 
-        }
-    ]
+    }
+  ]
 };
 
 export const EducationSectorCharts = {
@@ -212,7 +214,18 @@ export const GDPCharts = {
       zbcodeArr: ['A020102', 'A020103', 'A020104', 'A020105'],
       dbCode: 'nd',
       exceptName: '增加值',
-
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A020103', 'A020104', 'A020105'],  // 第一产业、第二产业、第三产业
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
     }
   ]
 };
@@ -298,7 +311,7 @@ export const LivingStandardsCharts = {
         '0.2~0.29-差距小 ' +
         '0.3~0.39-差距适中 \n' +
         '0.4~0.59-差距大 ' +
-        '0.6以上-差距悬殊' ,
+        '0.6以上-差距悬殊',
       period: 'yearly',
       chartType: 'bar',
       zbcodeArr: ['A0A0G01'],
@@ -330,10 +343,20 @@ export const MarriageCharts = {
       ],
       dbCode: 'nd',
       exceptName: '居民登记',
-      legendTop: '100px',
-      gridTop: '170px',  
       enableBirthOffset: true,
-      enableBirthPrediction: true
+      enableBirthPrediction: true,
+      legendTop: '100px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A0P0C01', 'A0P0C06'],  // 现房/期房
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     }
   ]
@@ -398,6 +421,18 @@ export const NationalFinanceCharts = {
       zbcodeArr: ['A0C0102', 'A0C0202'],
       dbCode: 'yd',
       exceptName: '国家财政(不含债务还本)_累计值',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A0C0102', 'A0C0202'],  // 收入/支出
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     },
     {
@@ -434,6 +469,21 @@ export const NationalFinanceCharts = {
       ],
       dbCode: 'nd',
       exceptName: '国家财政收入',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: [
+              'A08040102', 'A08040103', 'A08040104', 'A08040108',
+              'A08040109', 'A0804010G', 'A0804010K', 'A0804010S'
+            ],
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     },
     {
@@ -448,6 +498,21 @@ export const NationalFinanceCharts = {
       ],
       dbCode: 'nd',
       exceptName: '国家财政支出',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: [
+              'A08050102', 'A08050105', 'A08050106', 'A08050108',
+              'A08050109', 'A0805010B', 'A0805010C', 'A0805010G'
+            ],
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     }
   ]
@@ -472,6 +537,28 @@ export const PopulationCharts = {
       ],
       dbCode: 'nd',
       exceptName: '人口',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A030102', 'A030103'],  // 男性、女性
+            radius: '20%',
+            center: ['15%', '30%'],
+          },
+          {
+            triggerZbCodes: ['A030104', 'A030105'],  // 城乡
+            radius: '20%',
+            center: ['50%', '30%'],
+          },
+          {
+            triggerZbCodes: ['A030302', 'A030303', 'A030304'],  // 城乡
+            radius: '20%',
+            center: ['85%', '30%'],
+          }
+        ]
+      }
 
     },
     {
@@ -505,9 +592,9 @@ export const PopulationCharts = {
       chartType: 'bar',
       zbcodeArr: ['A030305', 'A030306', 'A030307'],
       dbCode: 'nd',
-      exceptName: '', 
+      exceptName: '',
       legendTop: '100px',
-      gridTop: '170px',  
+      gridTop: '170px',
       unit: '(%)'
     }
   ]
@@ -528,6 +615,18 @@ export const RealEstateInvestCharts = {
       zbcodeArr: ['A060101', 'A060105', 'A06010D', 'A06010R'],
       dbCode: 'yd',
       exceptName: '房地产投资_累计值',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A060105', 'A06010D'],  // 住宅/办公楼
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     },
     {
@@ -550,6 +649,18 @@ export const RealEstateInvestCharts = {
       zbcodeArr: ['A051102', 'A051104'],
       dbCode: 'nd',
       exceptName: '房地产开发投资额',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A051102', 'A051104'],  // 住宅/办公楼
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     }
   ]
@@ -572,6 +683,18 @@ export const RealEstateSaleCharts = {
       zbcodeArr: ['A060B01', 'A060B03', 'A060B05'],
       dbCode: 'yd',
       exceptName: '商品住宅销售额_累计值',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A060B03', 'A060B05'],  // 现房/期房
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     },
     {
@@ -594,6 +717,18 @@ export const RealEstateSaleCharts = {
       zbcodeArr: ['A060A01', 'A060A03', 'A060A05'],
       dbCode: 'yd',
       exceptName: '商品住宅销售面积_累计值',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A060A03', 'A060A05'],  // 现房/期房
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     },
     {
@@ -616,6 +751,18 @@ export const RealEstateSaleCharts = {
       zbcodeArr: ['A051501', 'A051502', 'A051503', 'A051504', 'A051505'],
       dbCode: 'nd',
       exceptName: '商品房销售面积',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A051502', 'A051503', 'A051504', 'A051505'],  // 现房/期房
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     },
     {
@@ -627,6 +774,18 @@ export const RealEstateSaleCharts = {
       zbcodeArr: ['A051601', 'A051602', 'A051603', 'A051604', 'A051605'],
       dbCode: 'nd',
       exceptName: '商品房销售额',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A051602', 'A051603', 'A051604', 'A051605'],  // 现房/期房
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     }
   ]
@@ -655,6 +814,24 @@ export const SocialRetailgoodsCharts = {
       ],
       dbCode: 'yd',
       exceptName: '消费类商品零售类值_当期值',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: [
+              'A07040105', 'A0704010H', 'A0704010L',
+              'A07040205', 'A07040301', 'A07040401', 'A07040501',
+              'A07040601', 'A07040701', 'A07040801', 'A07040901',
+              'A07040A01', 'A07040B01', 'A07040C01', 'A07040D01',
+              'A07040E01', 'A07040F01'
+            ],
+            radius: '25%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     },
     {
@@ -689,6 +866,24 @@ export const SocialRetailgoodsCharts = {
       ],
       dbCode: 'yd',
       exceptName: '消费类商品零售类值_累计值',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: [
+              'A07040106', 'A0704010I', 'A0704010M',
+              'A07040206', 'A07040302', 'A07040402', 'A07040502',
+              'A07040602', 'A07040702', 'A07040802', 'A07040902',
+              'A07040A02', 'A07040B02', 'A07040C02', 'A07040D02',
+              'A07040E02', 'A07040F02'
+            ],
+            radius: '25%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     },
     {
@@ -735,7 +930,7 @@ export const AccommodationAndCateringIndustryCharts = {
       subtitle: '',
       period: 'yearly',
       chartType: 'bar',
-      zbcodeArr: ['A0J0102','A0J0107', 'A0J010F',],
+      zbcodeArr: ['A0J0102', 'A0J0107', 'A0J010F',],
       dbCode: 'nd',
       exceptName: '年末从业人数',
 

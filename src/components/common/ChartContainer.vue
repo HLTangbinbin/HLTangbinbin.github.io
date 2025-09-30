@@ -51,8 +51,8 @@
       </div>
     </div>
 
-    <div class="chart-card">
-      <ChartView ref="chartRef" :option="chartOption" :chartId="chart.id" :initSelectAll="legendAllSelected"
+    <div class="chart-card " :style="{ height: chartHeight + 'px' }">
+      <ChartView ref="chartRef" :option="chartOption" :chartId="chart.id" :initSelectAll="legendAllSelected" :pieConfig="chart.pieConfig"
         @legendStateChange="legendAllSelected = $event" />
     </div>
   </div>
@@ -85,7 +85,6 @@ export default {
     const offsetValue = ref(0)
     const legendNames = ref([])
 
-
    // 必须这么写，不然在上面使用legendNames取不到数据，使用legendNames.value写法又报错
     const legendList = computed(() => legendNames.value)
 
@@ -108,7 +107,8 @@ export default {
         enableBirthOffset: props.chart.enableBirthOffset || false,
         enableBirthPrediction: props.chart.enableBirthPrediction || false,
         selectedLegend: selectedLegend.value,
-        offsetValue: offsetValue.value
+        offsetValue: offsetValue.value,
+        pieConfig:props.chart.pieConfig,
       };
 
       const option = getCommonChartOption(chartConfig);
@@ -116,6 +116,11 @@ export default {
       return option;
     });
 
+    const windowWidth = ref(window.innerWidth);
+    const baseHeight = computed(() => (windowWidth.value > 768 ? 600 : 400));
+    const pieExtraHeight = computed(() => (props.chart.pieConfig?.enabled ? (windowWidth.value > 768 ? 150 : 100) : 0));
+    const chartHeight = computed(() => baseHeight.value + pieExtraHeight.value);
+    logger.debug('当前的高度',chartHeight,pieExtraHeight)
 
     // 监听 legendNames，初始化选中第一个
     // ✅ 在 watch 里同步 legend，不会报 eslint 错
@@ -156,7 +161,8 @@ export default {
       chartRef,
       selectedLegend,
       offsetValue,
-      legendList
+      legendList,
+      chartHeight
     };
   }
 };
@@ -272,7 +278,6 @@ export default {
 
 .chart-card {
   width: 95%;
-  height: 700px;
   margin: 0 auto;
   margin-top: 20px;
 }
@@ -350,9 +355,6 @@ export default {
     min-width: auto;
   }
   
-  .chart-card {
-    height: 500px;
-  }
   
   /* 图例选择框和偏移控件布局优化 */
   .line-mode-controls {

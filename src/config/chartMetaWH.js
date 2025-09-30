@@ -38,6 +38,18 @@ export const WHFinanceCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '地方一般公共预算',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A0401','A0402'],  // 收入/支出
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     }
 
@@ -60,6 +72,18 @@ export const WHGDPCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '增加值',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A0102','A0103', 'A0104'],  // 第一产业、第二产业、第三产业
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
 
     }
 

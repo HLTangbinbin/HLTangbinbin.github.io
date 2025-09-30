@@ -66,7 +66,12 @@ export function selectDataFromArr(returndata, zbCode, dbCode = 'nd', cityCode = 
   dataArr = dataArr.slice(0, lastNonZeroIndex + 1);
 
   // 返回 value 数组（升序）
-  return dataArr.map(d => d.value);
+    // 返回 value 数组（升序），小数保留2位
+    return dataArr.map(d => {
+      const val = Number(d.value);
+      if (Number.isInteger(val)) return val;
+      return Number(val.toFixed(2));
+    });
 }
 
 // 图表统一绘制方法
@@ -229,26 +234,22 @@ export function getCommonChartOption(params) {
     enableBirthOffset = false,
     enableBirthPrediction = false,
     selectedLegend,
-    offsetValue = 0
+    offsetValue = 0,
+    pieConfig, // 新增配置字段
   } = params;
 
   const startTime = performance.now();
-
-  let marriageArr = [];
-  let birthArr = [];
-  let nextBirth = 0;
-
+  let marriageArr = [], birthArr = [], nextBirth = 0;
   let seriesData = [];
 
   // ----------------------------
-  // 生成基础 series
+  // 原有 series 数据生成逻辑（不改动）
   if (cityCodeArr.length === 0) {
     zbcodeArr.forEach(zbCode => {
       const codeItem = data.data[dbCode]?.[zbCode];
       if (!codeItem) return;
 
       let cname = codeItem.cname || '总的';
-      
       if (typeof cname === 'string' && typeof exceptName === 'string') {
         const resultArr = cname.split('');
         const exceptArr = exceptName.split('');
@@ -260,20 +261,23 @@ export function getCommonChartOption(params) {
       }
 
       const name = cname + unit;
-
       let valueArr = selectDataFromArr(data, zbCode, dbCode, '', yearLimit);
 
-      if (enableBirthOffset && zbCode === 'A0P0C01') {
-        marriageArr = valueArr;
-      } else if (enableBirthOffset && zbCode === 'A030109') {
+      if (enableBirthOffset && zbCode === 'A0P0C01') marriageArr = valueArr;
+      else if (enableBirthOffset && zbCode === 'A030109') {
         birthArr = valueArr;
         valueArr = offsetArray(valueArr, yearLimit, -1);
       } else if (chartType === 'line' && name === selectedLegend) {
-        valueArr = offsetArray(selectDataFromArr(data, zbCode, dbCode, '', yearLimit + (offsetValue > 0 ? offsetValue : 0)), yearLimit, offsetValue);
+        valueArr = offsetArray(
+          selectDataFromArr(data, zbCode, dbCode, '', yearLimit + (offsetValue > 0 ? offsetValue : 0)),
+          yearLimit,
+          offsetValue
+        );
       }
 
       seriesData.push({
-        name: name,
+        name,
+        zbCode, // 新增 zbCode 供饼图触发
         type: chartType,
         data: valueArr,
       });
@@ -283,63 +287,35 @@ export function getCommonChartOption(params) {
       const city = data.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
       const valueArr = selectDataFromArr(data, zbcodeArr[0], dbCode, cityCode, yearLimit) || [];
-      seriesData.push({
-        name: name,
-        type: chartType,
-        data: valueArr,
-      });
+      seriesData.push({ name, type: chartType, data: valueArr });
     });
   }
 
   // ----------------------------
-  // 预测下一年出生人口
+  // 原有出生人口预测逻辑（不改动）
   if (enableBirthPrediction && marriageArr.length && birthArr.length) {
     const mode = fitMarriageBirthDynamic(marriageArr, birthArr, 20);
     nextBirth = mode.nextYearPred.pred;
   }
 
   // ----------------------------
-  // 处理折线图出生人口系列
+  // 处理折线图出生人口系列（不改动）
   seriesData = seriesData.map(s => {
-    // 只处理出生人口系列
     if (enableBirthPrediction && s.name.includes('出生')) {
       if (chartType === 'line') {
         const lastIndex = s.data.length - 1;
-        const color = s.lineStyle?.color || '#5470C6';
         const updatedData = s.data.slice();
         updatedData[lastIndex] = nextBirth;
-
-        const historySeries = {
-          ...s,
-          type: 'line',
-          name: '出生人口',
-          data: updatedData.slice(0, lastIndex),
-          lineStyle: { type: 'solid' },
-        };
+        const historySeries = { ...s, type: 'line', name: '出生人口', data: updatedData.slice(0, lastIndex), lineStyle: { type: 'solid' } };
         const predictionData = updatedData.map((d, i) => (i >= lastIndex - 1 ? d : null));
-        const predictionSeries = {
-          ...s,
-          type: 'line',
-          name: '出生人口预测',
-          data: predictionData,
-          lineStyle: { color, type: 'dashed' },
-          symbol: 'circle',
-          symbolSize: 10,
-          connectNulls: true
-        };
+        const predictionSeries = { ...s, type: 'line', name: '出生人口预测', data: predictionData, lineStyle: { color: s.lineStyle?.color || '#5470C6', type: 'dashed' }, symbol: 'circle', symbolSize: 10, connectNulls: true };
         return [historySeries, predictionSeries];
       } else {
-        return [
-          { ...s, type: 'bar'}, // 历史实线 series
-          { ...s, type: 'bar', data: [] } // 虚线 series
-        ];
+        return [{ ...s, type: 'bar' }, { ...s, type: 'bar', data: [] }];
       }
     }
     return s;
   }).flat();
-
-  // ---------- 条形图横向正序处理 ----------
-
 
   // ----------------------------
   const valueAxisConfig = {
@@ -354,80 +330,62 @@ export function getCommonChartOption(params) {
   // 优化年份处理
   const fullYears = (data.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
   const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
-  // 横向条形图时，年份倒序
-  const categoryAxisConfig = {
-    type: 'category',
-    data: filteredYears,
-  };
+  const categoryAxisConfig = { type: 'category', data: filteredYears };
 
-
-
+  // ----------------------------
   const optionData = {
-    title: {
-      text: title,
-      subtext: subtitle,
-      left: 'center',
-      top: '15',
-      itemGap: 22,
-      subtextStyle: {
-        fontWeight: 'bold',
-        fontSize: 13,
-        width: window.innerWidth * 0.8,
-        overflow: 'breakAll'
-      },
-    },
-    tooltip: {
-      trigger: 'axis',
-      valueFormatter: (value) => {
-        if (typeof value === 'number') {
-          return value % 1 === 0 ? value.toString() : value.toFixed(2);
-        }
-        return value;
-      },
-      formatter: function (params) {
-        // 按数值从大到小排序
-        const sorted = params.slice().sort((a, b) => {
-          const valA = typeof a.value === 'number' ? a.value : (Array.isArray(a.value) ? a.value[1] : NaN);
-          const valB = typeof b.value === 'number' ? b.value : (Array.isArray(b.value) ? b.value[1] : NaN);
-          return valB - valA;
-        });
-    
-        let result = params[0].axisValue + '<br/>';
-        sorted.forEach(item => {
-          let val = item.value;
-          if (typeof val === 'number') {
-            val = val % 1 === 0 ? val.toString() : val.toFixed(2);
-          } else if (Array.isArray(val) && typeof val[1] === 'number') {
-            // 如果 value 是 [x, y] 这样的数组，取 y
-            val = val[1] % 1 === 0 ? val[1].toString() : val[1].toFixed(2);
-          }
-          result += `${item.marker}${item.seriesName}: ${val}<br/>`;
-        });
-        return result;
-      }
-    },
-    legend: {
-      type: 'scroll',
-      left: 'center',
-      top: legendTop,
-      data: seriesData.map(s => s.name),
-      selected: legendAllSelected ? seriesData.reduce((acc, s) => ({ ...acc, [s.name]: true }), {}) : {},
-    },
-    grid: {
-      left: '1%',
-      right: '1%',
-      top: gridTop,
-      bottom: '1%',
-      containLabel: true,
-    },
+    title: { text: title, subtext: subtitle, left: 'center', top: 15, itemGap: 22, subtextStyle: { fontWeight: 'bold', fontSize: 13, width: window.innerWidth * 0.8, overflow: 'breakAll' } },
+    tooltip: { trigger: 'axis' },
+    legend: { type: 'scroll', left: 'center', top: legendTop, data: seriesData.map(s => s.name), selected: legendAllSelected ? seriesData.reduce((acc, s) => ({ ...acc, [s.name]: true }), {}) : {} },
+    grid: { left: '1%', right: '1%', top: gridTop, bottom: '1%', containLabel: true },
     xAxis: isHorizontal ? valueAxisConfig : categoryAxisConfig,
     yAxis: isHorizontal ? categoryAxisConfig : valueAxisConfig,
     series: seriesData
   };
 
+  // ----------------------------
+  // dataset + 饼图
+  if (pieConfig?.enabled) {
+    pieConfig.pies.forEach((pie, idx) => {
+      const lastYearIndex = filteredYears.length - 1;
+    
+      // 针对当前饼图单独筛选 series
+      const pieSeriesData = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
+    
+      const datasetSource = [
+        ['name', 'value'],
+        ...pieSeriesData.map(s => {
+          const value = Array.isArray(s.data) ? s.data[lastYearIndex] : 0;
+          return [s.name, value];  // 保证每行都是 [string, number]
+        })
+      ];
+    
+      // 注入 dataset
+      optionData.dataset = optionData.dataset || [];
+      optionData.dataset.push({
+        id: `pieDataset_${idx}`,
+        source: datasetSource
+      });
+    
+      optionData.series.push({
+        id: `pie_${idx}`,
+        type: 'pie',
+        radius: pie.radius || '25%',
+        center: pie.center || ['50%', 170],
+        datasetId: `pieDataset_${idx}`,
+        encode: { itemName: 'name', value: 'value', tooltip: 'value'},
+        label: {
+          formatter: params => `${params.data[0]}\n ${params.data[1]}\n(${params.percent}%)`
+        },
+        emphasis: { focus: 'self' },
+
+      });
+    });
+    logger.debug('最终图表数据', optionData.series)
+  }
+
   const endTime = performance.now();
   logger.debug(`[getCommonChartOption] 总耗时: ${Math.round(endTime - startTime)}ms, 标题: ${title}, series数量: ${seriesData.length}`);
-
   return optionData;
 }
 

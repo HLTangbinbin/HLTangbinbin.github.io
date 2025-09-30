@@ -5,19 +5,20 @@
 <script>
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue';
 import * as echarts from 'echarts/core';
-import { BarChart, LineChart } from 'echarts/charts';
+import { BarChart, LineChart, PieChart } from 'echarts/charts';
 import { TitleComponent,GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 import { logger } from '@/utils/Logger.js';
 import debounce from 'lodash-es/debounce';
 
-echarts.use([TitleComponent,GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, CanvasRenderer]);
+echarts.use([TitleComponent,GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, PieChart,CanvasRenderer]);
 
 export default {
   name: 'ChartView',
   props: {
     option: { type: Object, required: true },
     chartId: { type: String, required: true }, // 从 ChartContainer 传入
+    pieConfig: { type: Object, default: () => ({}) },
     initSelectAll: { type: Boolean, default: true }
   },
   emits: ['legendStateChange'],
@@ -60,6 +61,43 @@ export default {
         if (allSelected) emit('legendStateChange', true);
         else if (noneSelected) emit('legendStateChange', false);
       });
+      // 饼状图联动事件
+      chartInstance.on('updateAxisPointer', function (event) {
+        // 在 setup() 或 initChart() 里
+        const seriesData = props.option?.series?.filter(s => s.type !== 'pie') || [];
+
+        const xAxisInfo = event.axesInfo?.[0];
+        if (!xAxisInfo) return;
+
+        const yearIndex = xAxisInfo.value; // 对应 filteredYears 的索引
+        const pieConfig = props.pieConfig;
+        if (!pieConfig?.enabled || !Array.isArray(pieConfig.pies)) return; // ✅ 没有饼图直接返回
+
+        pieConfig?.pies.forEach((pie, idx) => {
+          const pieSeriesData = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
+
+          // 构建 dataset，更新为当前年份的数据
+          const datasetSource = [
+            ['name', 'value'],
+            ...pieSeriesData.map(s => [s.name, Array.isArray(s.data) ? s.data[yearIndex] : 0])
+          ];
+
+          chartInstance.setOption({
+            dataset: [{
+              id: `pieDataset_${idx}`,
+              source: datasetSource
+            }],
+            series: [{
+              id: `pie_${idx}`,
+              datasetId: `pieDataset_${idx}`,
+              encode: { itemName: 'name', value: 'value', tooltip: 'value' },
+              label: {
+                formatter: params => `${params.data[0]}\n ${params.data[1]} \n(${params.percent}%)`
+              },
+            }]
+          });
+        });
+      });
 
       // 绑定窗口大小调整事件
       if (!resizeHandler) {
@@ -85,6 +123,7 @@ export default {
       // 使用增量更新，提高性能
       chartInstance.setOption(newOption, false, true);
     };
+
 
     const toggleAllLegends = (selectAll) => {
       if (!chartInstance) return;
