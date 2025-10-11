@@ -545,7 +545,7 @@ export const PopulationCharts = {
           {
             triggerZbCodes: ['A030102', 'A030103'],  // 男性、女性
             radius: '20%',
-            center: ['15%', '30%'],
+            center: ['20%', '30%'],
           },
           {
             triggerZbCodes: ['A030104', 'A030105'],  // 城乡
@@ -555,7 +555,7 @@ export const PopulationCharts = {
           {
             triggerZbCodes: ['A030302', 'A030303', 'A030304'],  // 城乡
             radius: '20%',
-            center: ['85%', '30%'],
+            center: ['80%', '30%'],
           }
         ]
       }

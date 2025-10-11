@@ -335,7 +335,23 @@ export function getCommonChartOption(params) {
   // ----------------------------
   const optionData = {
     title: { text: title, subtext: subtitle, left: 'center', top: 15, itemGap: 22, subtextStyle: { fontWeight: 'bold', fontSize: 13, width: window.innerWidth * 0.8, overflow: 'breakAll' } },
-    tooltip: { trigger: 'axis' },
+    tooltip: {
+      trigger: 'axis',
+      formatter: function (params) {
+        // 倒序排列
+        const sorted = params.slice().sort((a, b) => b.value - a.value);
+    
+        let result = sorted[0].axisValue + '<br/>';
+        sorted.forEach(item => {
+          let val = item.value;
+          if (typeof val === 'number') {
+            val = val.toLocaleString(); // 数字格式化（可选）
+          }
+          result += `${item.marker}${item.seriesName}: ${val}<br/>`;
+        });
+        return result;
+      }
+    },
     legend: { type: 'scroll', left: 'center', top: legendTop, data: seriesData.map(s => s.name), selected: legendAllSelected ? seriesData.reduce((acc, s) => ({ ...acc, [s.name]: true }), {}) : {} },
     grid: { left: '1%', right: '1%', top: gridTop, bottom: '1%', containLabel: true },
     xAxis: isHorizontal ? valueAxisConfig : categoryAxisConfig,
