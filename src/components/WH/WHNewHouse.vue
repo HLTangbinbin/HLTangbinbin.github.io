@@ -1,6 +1,16 @@
 <template>
   <div class="container">
-    <!-- 第一张图：合计 -->
+    
+    <div class="chart-block">
+      <div class="buttons">
+        <button class="button" :class="{ 'is-active': isBarActive_VolumeYear }"
+          @click="drawBarChart_VolumeYear">柱状图</button>
+        <button class="button" :class="{ 'is-active': isLineActive_VolumeYear }"
+          @click="drawLineChart_VolumeYear">折线图</button>
+      </div>
+      <div class="chart-container" id="newHouseVolumeYear"></div>
+    </div>
+
     <div class="chart-block">
       <div class="buttons">
         <button class="button" :class="{ 'is-active': isBarActive_VolumeMonth }"
@@ -13,7 +23,6 @@
 
     <!-- 第二张图：分区域 -->
     <div class="chart-block">
-      <h3 class="chart-title">武汉各区域新房月成交量</h3>
       <div class="buttons">
         <button class="button" :class="{ 'is-active': isBarActive_VolumeMonthForArea }"
           @click="drawBarChart_VolumeMonthForArea">柱状图</button>
@@ -51,6 +60,8 @@ export default {
         HN: '汉南区',
         TOTAL: '合计',
       },
+      isBarActive_VolumeYear: false,
+      isLineActive_VolumeYear: false,
       isBarActive_VolumeMonth: false,
       isLineActive_VolumeMonth: false,
       isBarActive_VolumeMonthForArea: false,
@@ -75,6 +86,7 @@ export default {
           // 每年每月合计数据
           this.handleTotalData();
           // 处理数据绘制图表
+          this.drawBarChart_VolumeYear();
           this.drawBarChart_VolumeMonth();
           this.drawBarChart_VolumeMonthForArea();
         })
@@ -110,11 +122,66 @@ export default {
         return hosuseNum
       })
     },
+    // 计算每年的总数（houseNum总和）
+    calcYearTotal(houseArr, year = new Date().getFullYear()) {
+      // 先筛选出该年的所有数据
+      const yearData = houseArr.filter(houseObj => {
+        return houseObj.month.search(year) != -1;
+      });
+      // 累加 houseNum
+      const total = yearData.reduce((sum, item) => {
+        const num = Number(item.houseNum) || 0;
+        return sum + num;
+      }, 0);
+      return total;
+    },
+
+    drawVolumeYearChart() {
+      // 基于准备好的dom，初始化echarts实例（武汉新房月成交量柱状图）
+      var newHouseVolumeBarYearChart = echarts.init(document.getElementById('newHouseVolumeYear'));
+      const years = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
+      const monthTotal = this.houseArrayWith(this.AreaName.TOTAL);
+      // 指定图表的配置项和数据
+      var newHouseVolumeBarYearOption = {
+        title: {
+            text: '武汉新房年成交量',
+            left: 'center',
+            top: '13'
+        },
+        tooltip: {
+          //X轴悬浮显示所有数据
+          trigger: 'axis'
+        },
+        legend: {
+          type: 'scroll',
+          left: 'center',
+          top: '10%'
+        },
+        grid: {
+          left: '1%',
+          right: '1%',
+          top: '20%',
+          bottom: '1%',
+          containLabel: true
+        },
+        xAxis: {
+          data: years,
+        },
+        yAxis: {},
+        series: [{
+          name: '总成交量',
+          type: this.chartsType,
+          data: years.map(year => this.calcYearTotal(monthTotal, year)) // 每年一个数字
+        }]
+      };
+      // 使用刚指定的配置项和数据显示图表。
+      newHouseVolumeBarYearChart.setOption(newHouseVolumeBarYearOption);
+    },
 
     drawVolumeMonthChart() {
       // 基于准备好的dom，初始化echarts实例（武汉新房月成交量柱状图）
       var newHouseVolumeBarMonthChart = echarts.init(document.getElementById('newHouseVolumeMonth'));
-      const years = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
+      const years = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
       const totalData = this.houseArrayWith(this.AreaName.TOTAL);
       // 指定图表的配置项和数据
       var newHouseVolumeBarMonthOption = {
@@ -183,7 +250,7 @@ export default {
           type: 'pie',
           id: 'pie',
           radius: '25%',
-          center: ['50%', '20%'],
+          center: ['50%', '25%'],
           emphasis: { focus: 'self' },
           label: {
             formatter: '{b}: {@一月} ({d}%)'
@@ -196,11 +263,11 @@ export default {
         });
 
         newHouseVolumeBarMonthOptionForArea = {
-          // title: {
-          //   text: `武汉各区域${year}年新房月成交量`,
-          //   left: 'center',
-          //   top: 'top'
-          // },
+          title: {
+            text: `武汉各区域新房月成交量`,
+            left: 'center',
+            top: 'top'
+          },
           tooltip: {
             //X轴悬浮显示所有数据
             trigger: 'axis',
@@ -209,12 +276,12 @@ export default {
           legend: {
             type: 'scroll',
             left: 'center',
-            top: '0%'
+            top: '50px'
           },
           grid: {
             left: '1%',
             right: '1%',
-            top: '40%',
+            top: '450px',
             bottom: '1%',
             containLabel: true
           },
@@ -253,6 +320,21 @@ export default {
         newHouseVolumeBarMonthChartForArea.setOption(newHouseVolumeBarMonthOptionForArea);
       }, 1000),
         newHouseVolumeBarMonthOptionForArea && newHouseVolumeBarMonthChartForArea.setOption(newHouseVolumeBarMonthOptionForArea);
+    },
+    drawBarChart_VolumeYear() {
+      this.isBarActive_VolumeYear = true;
+      this.isLineActive_VolumeYear = false;
+      // 在这里绘制柱状图
+      this.chartsType = "bar"
+      this.drawVolumeYearChart();
+
+    },
+    drawLineChart_VolumeYear() {
+      this.isBarActive_VolumeYear = false;
+      this.isLineActive_VolumeYear = true;
+      // 在这里绘制折线图
+      this.chartsType = "line"
+      this.drawVolumeYearChart();
     },
     drawBarChart_VolumeMonth() {
       this.isBarActive_VolumeMonth = true;
