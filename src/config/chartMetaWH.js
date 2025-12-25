@@ -189,3 +189,58 @@ export const WHRealEstateSellCharts = {
   ]
 };
 
+export const WHSecondHouseCharts = {
+
+  source: {
+    localJson: './json/wh.json',
+    apiParams: params_wh
+  },
+  charts: [
+    {
+      id: 'HNV',
+      title: '武汉二手房年成交量',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: ['A0501'],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '二手房数',
+
+    },
+    {
+      id: 'HYV',
+      title: '武汉二手房月成交量',
+      subtitle: '',
+      period: 'monthly',
+      zbcodeArr: ['A0901'],
+      dbCode: 'yd',
+      chartType: 'bar',
+      exceptName: '二手房数',
+
+    },
+    {
+      id: 'HYP',
+      title: '武汉二手房月成交价',
+      subtitle: '',
+      period: 'monthly',
+      zbcodeArr: ['A0902'],
+      dbCode: 'yd',
+      chartType: 'bar',
+      exceptName: '二手房',
+
+    },
+    {
+      id: 'HYA',
+      title: '武汉二手房房源数量',
+      subtitle: '',
+      period: 'monthly',
+      zbcodeArr: ['A0903','A0904','A0905'],
+      dbCode: 'yd',
+      chartType: 'bar',
+      exceptName: '武汉二手房数量',
+
+    }
+
+  ]
+};
+

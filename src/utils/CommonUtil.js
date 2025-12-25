@@ -53,6 +53,7 @@ export function selectDataFromArr(returndata, zbCode, dbCode = 'nd', cityCode = 
   // 年份限制：取最新 N 年，但保持升序
   if (yearLimit && dataArr.length > yearLimit) {
     dataArr = dataArr.slice(-yearLimit);
+    
   }
 
   // 过滤尾部的 0 值
@@ -331,7 +332,6 @@ export function getCommonChartOption(params) {
   const fullYears = (data.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
   const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
   const categoryAxisConfig = { type: 'category', data: filteredYears };
-
   // ----------------------------
   const optionData = {
     title: { text: title, subtext: subtitle, left: 'center', top: 15, itemGap: 22, subtextStyle: { fontWeight: 'bold', fontSize: 13, width: window.innerWidth * 0.8, overflow: 'breakAll' } },
