@@ -233,7 +233,8 @@ export default {
 
         const areaData = areaKeys.map(key => {
           const name = _this.AreaName[key];
-          const values = _this.selectMonthArr(_this.houseArrayWith(name));
+          // 指定年份，不然跨年后获获取不到之前上一年数据了
+          const values = _this.selectMonthArr(_this.houseArrayWith(name),2025); 
           values.unshift(name); // 插入区域名作为每行首项
           return values;
         });
