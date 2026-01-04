@@ -189,6 +189,62 @@ export const WHRealEstateSellCharts = {
   ]
 };
 
+export const WHNewHouseCharts = {
+
+  source: {
+    localJson: './json/wh.json',
+    apiParams: params_wh
+  },
+  charts: [
+    {
+      id: 'HNYV',
+      title: '武汉新房年成交量',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: ['A0501'],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '',
+
+    },
+    {
+      id: 'HNMV',
+      title: '武汉新房月成交量',
+      subtitle: '',
+      period: 'monthly',
+      zbcodeArr: ['A0101'],
+      dbCode: 'yd',
+      chartType: 'bar',
+      exceptName: '',
+
+    },
+    {
+      id: 'HNYVA',
+      title: '武汉各区域二手房月成交量',
+      subtitle: '',
+      period: 'monthly',
+      zbcodeArr: ['A0102','A0103','A0104','A0105','A0106','A0107','A0108','A0109','A010A','A010B','A010C','A010D','A010E','A010F','A010G','A010H'],
+      dbCode: 'yd',
+      chartType: 'bar',
+      exceptName: '',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A0102','A0103','A0104','A0105','A0106','A0107','A0108','A0109','A010A','A010B','A010C','A010D','A010E','A010F','A010G','A010H'],
+            radius: '30%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
+
+    }
+
+  ]
+};
+
 export const WHSecondHouseCharts = {
 
   source: {
@@ -197,44 +253,44 @@ export const WHSecondHouseCharts = {
   },
   charts: [
     {
-      id: 'HNV',
+      id: 'HSYV',
       title: '武汉二手房年成交量',
       subtitle: '',
       period: 'yearly',
-      zbcodeArr: ['A0501'],
+      zbcodeArr: ['A0502'],
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '二手房数',
 
     },
     {
-      id: 'HYV',
+      id: 'HSMV',
       title: '武汉二手房月成交量',
       subtitle: '',
       period: 'monthly',
-      zbcodeArr: ['A0901'],
+      zbcodeArr: ['A0201'],
       dbCode: 'yd',
       chartType: 'bar',
       exceptName: '二手房数',
 
     },
     {
-      id: 'HYP',
+      id: 'HSMP',
       title: '武汉二手房月成交价',
       subtitle: '',
       period: 'monthly',
-      zbcodeArr: ['A0902'],
+      zbcodeArr: ['A0202'],
       dbCode: 'yd',
       chartType: 'bar',
       exceptName: '二手房',
 
     },
     {
-      id: 'HYA',
+      id: 'HSMA',
       title: '武汉二手房房源数量',
       subtitle: '',
       period: 'monthly',
-      zbcodeArr: ['A0903','A0904','A0905'],
+      zbcodeArr: ['A0203','A0204','A0205'],
       dbCode: 'yd',
       chartType: 'bar',
       exceptName: '武汉二手房数量',
