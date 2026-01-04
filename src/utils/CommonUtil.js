@@ -362,27 +362,36 @@ export function getCommonChartOption(params) {
   // ----------------------------
   // dataset + 饼图
   if (pieConfig?.enabled) {
+    // 确保有全局颜色
+    if (!optionData.color) {
+      optionData.color = [
+        '#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de',
+        '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'
+      ];
+    }
+    
     pieConfig.pies.forEach((pie, idx) => {
       const lastYearIndex = filteredYears.length - 1;
-    
-      // 针对当前饼图单独筛选 series
+      
       const pieSeriesData = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
-    
+      
       const datasetSource = [
         ['name', 'value'],
         ...pieSeriesData.map(s => {
           const value = Array.isArray(s.data) ? s.data[lastYearIndex] : 0;
-          return [s.name, value];  // 保证每行都是 [string, number]
+          return [s.name, value];
         })
       ];
-    
-      // 注入 dataset
+      
       optionData.dataset = optionData.dataset || [];
       optionData.dataset.push({
         id: `pieDataset_${idx}`,
         source: datasetSource
       });
-    
+      
+      // 获取饼图数据在 legend 中的索引
+      const legendData = optionData.legend?.data || [];
+      
       optionData.series.push({
         id: `pie_${idx}`,
         type: 'pie',
@@ -394,10 +403,22 @@ export function getCommonChartOption(params) {
           formatter: params => `${params.data[0]}\n ${params.data[1]}\n(${params.percent}%)`
         },
         emphasis: { focus: 'self' },
-
+        itemStyle: {
+          color: function(params) {
+            const dataName = params.data[0];
+            const legendIndex = legendData.indexOf(dataName);
+            
+            // 如果找到了在 legend 中的位置，使用对应的颜色-不设置会导致饼图都是灰色
+            if (legendIndex !== -1 && optionData.color[legendIndex]) {
+              return optionData.color[legendIndex];
+            }
+            
+            // 否则使用 dataIndex 的颜色
+            return optionData.color[params.dataIndex % optionData.color.length];
+          }
+        }
       });
     });
-    logger.debug('最终图表数据', optionData.series)
   }
 
   const endTime = performance.now();
