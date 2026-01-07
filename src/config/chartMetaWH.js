@@ -295,6 +295,17 @@ export const WHSecondHouseCharts = {
       chartType: 'bar',
       exceptName: '武汉二手房数量',
 
+    },
+    {
+      id: 'HSMW',
+      title: '武汉二手房看房人数',
+      subtitle: '',
+      period: 'monthly',
+      zbcodeArr: ['A0206'],
+      dbCode: 'yd',
+      chartType: 'bar',
+      exceptName: '武汉二手房数量',
+
     }
 
   ]

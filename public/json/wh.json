@@ -4434,6 +4434,36 @@
                         "value": 373.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202504",
+                        "value": 0.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202503",
+                        "value": 0.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202502",
+                        "value": 0.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202501",
+                        "value": 0.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202412",
+                        "value": 0.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -5324,6 +5354,90 @@
                         "cityCode": "420100"
                     }
                 ]
+            },
+            "A0206": {
+                "cname": "二手房看房人数",
+                "unit": "个",
+                "data": [
+                    {
+                        "date": "202512",
+                        "value": 88072.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202511",
+                        "value": 93532.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202510",
+                        "value": 89739.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202509",
+                        "value": 85989.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202508",
+                        "value": 79837.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202507",
+                        "value": 78091.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202506",
+                        "value": 85848.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202505",
+                        "value": 92340.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202504",
+                        "value": 92778.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202503",
+                        "value": 114204.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202502",
+                        "value": 84369.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202501",
+                        "value": 48917.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202412",
+                        "value": 65134.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    }
+                ]
             }
         }
     },
@@ -5574,6 +5688,10 @@
             {
                 "code": "A0205",
                 "cname": "二手房新增挂牌数量"
+            },
+            {
+                "code": "A0206",
+                "cname": "二手房看房人数"
             }
         ]
     },
