@@ -74,25 +74,25 @@ export default {
         if (!pieConfig?.enabled || !Array.isArray(pieConfig.pies)) return; // ✅ 没有饼图直接返回
 
         pieConfig?.pies.forEach((pie, idx) => {
-          const pieSeriesData = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
+          const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
 
-          // 构建 dataset，更新为当前年份的数据
-          const datasetSource = [
-            ['name', 'value'],
-            ...pieSeriesData.map(s => [s.name, Array.isArray(s.data) ? s.data[yearIndex] : 0])
-          ];
+
+          // 创建饼图数据：使用最后一年的数据
+          const pieData = targetSeries.map(series => {
+            // 获取最后一个年份的数据
+            const lastValue = Array.isArray(series.data) ? series.data[yearIndex] : 0;
+            return {
+              name: series.name,
+              value: lastValue  // 使用具体数值，不是整个data数组
+            };
+          });
 
           chartInstance.setOption({
-            dataset: [{
-              id: `pieDataset_${idx}`,
-              source: datasetSource
-            }],
             series: [{
               id: `pie_${idx}`,
-              datasetId: `pieDataset_${idx}`,
-              encode: { itemName: 'name', value: 'value', tooltip: 'value' },
+              data: pieData,
               label: {
-                formatter: params => `${params.data[0]}\n ${params.data[1]} \n(${params.percent}%)`
+                formatter: params => `${params.name}\n ${params.value} \n(${params.percent}%)`
               },
             }]
           });

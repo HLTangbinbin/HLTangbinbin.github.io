@@ -369,24 +369,20 @@ export function getCommonChartOption(params) {
         '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'
       ];
     }
-    
     pieConfig.pies.forEach((pie, idx) => {
+      const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
+      
+      // 获取最后一个横坐标的索引
       const lastYearIndex = filteredYears.length - 1;
       
-      const pieSeriesData = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
-      
-      const datasetSource = [
-        ['name', 'value'],
-        ...pieSeriesData.map(s => {
-          const value = Array.isArray(s.data) ? s.data[lastYearIndex] : 0;
-          return [s.name, value];
-        })
-      ];
-      
-      optionData.dataset = optionData.dataset || [];
-      optionData.dataset.push({
-        id: `pieDataset_${idx}`,
-        source: datasetSource
+      // 创建饼图数据：使用最后一年的数据
+      const pieData = targetSeries.map(series => {
+        // 获取最后一个年份的数据
+        const lastValue = Array.isArray(series.data) ? series.data[lastYearIndex] : 0;
+        return {
+          name: series.name,
+          value: lastValue  // 使用具体数值，不是整个data数组
+        };
       });
       
       // 获取饼图数据在 legend 中的索引
@@ -397,30 +393,29 @@ export function getCommonChartOption(params) {
         type: 'pie',
         radius: pie.radius || '25%',
         center: pie.center || ['50%', 170],
-        datasetId: `pieDataset_${idx}`,
-        encode: { itemName: 'name', value: 'value', tooltip: 'value'},
+        data: pieData,
         label: {
-          formatter: params => `${params.data[0]}\n ${params.data[1]}\n(${params.percent}%)`
+          formatter: params => `${params.name}\n${params.value}\n(${params.percent}%)`
         },
         emphasis: { focus: 'self' },
         itemStyle: {
           color: function(params) {
-            const dataName = params.data[0];
+            const dataName = params.name;
             const legendIndex = legendData.indexOf(dataName);
             
-            // 如果找到了在 legend 中的位置，使用对应的颜色-不设置会导致饼图都是灰色
-            if (legendIndex !== -1 && optionData.color[legendIndex]) {
+            if (legendIndex !== -1 && optionData.color && optionData.color[legendIndex]) {
               return optionData.color[legendIndex];
             }
             
-            // 否则使用 dataIndex 的颜色
             return optionData.color[params.dataIndex % optionData.color.length];
           }
         }
       });
     });
+    
+  
   }
-
+  logger.debug('optionData',optionData)
   const endTime = performance.now();
   logger.debug(`[getCommonChartOption] 总耗时: ${Math.round(endTime - startTime)}ms, 标题: ${title}, series数量: ${seriesData.length}`);
   return optionData;

@@ -228,14 +228,14 @@ export const WHNewHouseCharts = {
       chartType: 'bar',
       exceptName: '',
       legendTop: '70px',
-      gridTop: '45%',
+      gridTop: '55%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A0102','A0103','A0104','A0105','A0106','A0107','A0108','A0109','A010A','A010B','A010C','A010D','A010E','A010F','A010G','A010H'],
             radius: '30%',
-            center: ['50%', '30%'],
+            center: ['50%', '35%'],
           }
         ]
       }

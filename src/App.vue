@@ -15,7 +15,7 @@
 <script>
 import NavBar from "@/components/common/NavBar.vue";
 import { loadChartData } from "@/config/dataLoader.js";
-import { WHGDPCharts } from "@/config/chartMetaWH.js";
+import { WHNewHouseCharts } from "@/config/chartMetaWH.js";
 import { CityGDPCharts } from "@/config/chartMetaCity.js";
 import { ProvincialGDPCharts } from "@/config/chartMetaProvince.js";
 import { GDPCharts } from "@/config/chartMetaNation.js";
@@ -38,7 +38,7 @@ export default {
   async mounted() {
     try {
       const configs = [
-        { source: WHGDPCharts.source, name: "武汉数据" },
+        { source: WHNewHouseCharts.source, name: "武汉数据" },
         { source: CityGDPCharts.source, name: "城市数据" },
         { source: ProvincialGDPCharts.source, name: "省市数据" },
         { source: GDPCharts.source, name: "全国数据" }
