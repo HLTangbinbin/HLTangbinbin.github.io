@@ -242,6 +242,7 @@ export function getCommonChartOption(params) {
   const startTime = performance.now();
   let marriageArr = [], birthArr = [], nextBirth = 0;
   let seriesData = [];
+  let firstDate = '';
 
   // ----------------------------
   // 原有 series 数据生成逻辑（不改动）
@@ -329,9 +330,23 @@ export function getCommonChartOption(params) {
     },
   };
   // 优化年份处理
+  let filteredYears = [];
+  const zbCode = zbcodeArr[0]
+  const zbDataArr = data.data[dbCode]?.[zbCode];
+  firstDate = zbDataArr.data[0]?.date;
+ 
   const fullYears = (data.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
-  const filteredYears = yearLimit ? fullYears.slice(-yearLimit) : fullYears;
+  
+  if (firstDate === fullYears.slice(-1)[0]) {
+    filteredYears = fullYears.slice(-yearLimit);
+  }else {
+    
+    filteredYears = fullYears.slice(-yearLimit - 1, -1);
+  }
+  
+
   const categoryAxisConfig = { type: 'category', data: filteredYears };
+  logger.debug('seriesData-valueAxisConfig-categoryAxisConfig',seriesData,valueAxisConfig,categoryAxisConfig)
   // ----------------------------
   const optionData = {
     title: { text: title, subtext: subtitle, left: 'center', top: 15, itemGap: 22, subtextStyle: { fontWeight: 'bold', fontSize: 13, width: window.innerWidth * 0.8, overflow: 'breakAll' } },
