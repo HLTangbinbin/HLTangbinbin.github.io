@@ -3283,7 +3283,7 @@
                 "data": [
                     {
                         "date": "2025",
-                        "value": 109585.0,
+                        "value": 87433.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
                     },
@@ -3535,6 +3535,12 @@
                 "cname": "新房成交量",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202512",
+                        "value": 22152.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202511",
                         "value": 10753.0,
@@ -4923,90 +4929,6 @@
                     }
                 ]
             },
-            "A010I": {
-                "cname": "合计",
-                "unit": "套",
-                "data": [
-                    {
-                        "date": "202512",
-                        "value": 22152.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202511",
-                        "value": 10753.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202510",
-                        "value": 10447.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202509",
-                        "value": 6985.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202508",
-                        "value": 6638.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202507",
-                        "value": 8212.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202506",
-                        "value": 12618.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202505",
-                        "value": 7653.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202504",
-                        "value": 5294.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202503",
-                        "value": 8613.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202502",
-                        "value": 5084.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202501",
-                        "value": 5136.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "date": "202412",
-                        "value": 28331.0,
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    }
-                ]
-            },
             "A0201": {
                 "cname": "二手房成交量",
                 "unit": "套",
@@ -5736,10 +5658,6 @@
             {
                 "code": "A010H",
                 "cname": "汉南区"
-            },
-            {
-                "code": "A010I",
-                "cname": "合计"
             },
             {
                 "code": "A0201",
