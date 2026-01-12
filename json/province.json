@@ -7458,7 +7458,7 @@
                 "unit": "‰",
                 "data": [
                     {
-                        "value": 0.0,
+                        "value": 6.09,
                         "date": "2024",
                         "cityName": "北京市",
                         "cityCode": "110000"
@@ -7578,7 +7578,7 @@
                         "cityCode": "110000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 4.99,
                         "date": "2024",
                         "cityName": "天津市",
                         "cityCode": "120000"
@@ -7698,7 +7698,7 @@
                         "cityCode": "120000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5.9,
                         "date": "2024",
                         "cityName": "河北省",
                         "cityCode": "130000"
@@ -7818,7 +7818,7 @@
                         "cityCode": "130000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.94,
                         "date": "2024",
                         "cityName": "山西省",
                         "cityCode": "140000"
@@ -7938,7 +7938,7 @@
                         "cityCode": "140000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5.52,
                         "date": "2024",
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
@@ -8058,7 +8058,7 @@
                         "cityCode": "150000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 4.32,
                         "date": "2024",
                         "cityName": "辽宁省",
                         "cityCode": "210000"
@@ -8178,7 +8178,7 @@
                         "cityCode": "210000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 4.17,
                         "date": "2024",
                         "cityName": "吉林省",
                         "cityCode": "220000"
@@ -8298,7 +8298,7 @@
                         "cityCode": "220000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 3.35,
                         "date": "2024",
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
@@ -8418,7 +8418,7 @@
                         "cityCode": "230000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 4.75,
                         "date": "2024",
                         "cityName": "上海市",
                         "cityCode": "310000"
@@ -8538,7 +8538,7 @@
                         "cityCode": "310000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 4.98,
                         "date": "2024",
                         "cityName": "江苏省",
                         "cityCode": "320000"
@@ -8658,7 +8658,7 @@
                         "cityCode": "320000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.17,
                         "date": "2024",
                         "cityName": "浙江省",
                         "cityCode": "330000"
@@ -8778,7 +8778,7 @@
                         "cityCode": "330000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.17,
                         "date": "2024",
                         "cityName": "安徽省",
                         "cityCode": "340000"
@@ -8898,7 +8898,7 @@
                         "cityCode": "340000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.95,
                         "date": "2024",
                         "cityName": "福建省",
                         "cityCode": "350000"
@@ -9018,7 +9018,7 @@
                         "cityCode": "350000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.65,
                         "date": "2024",
                         "cityName": "江西省",
                         "cityCode": "360000"
@@ -9138,7 +9138,7 @@
                         "cityCode": "360000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.42,
                         "date": "2024",
                         "cityName": "山东省",
                         "cityCode": "370000"
@@ -9258,7 +9258,7 @@
                         "cityCode": "370000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7.78,
                         "date": "2024",
                         "cityName": "河南省",
                         "cityCode": "410000"
@@ -9378,7 +9378,7 @@
                         "cityCode": "410000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5.38,
                         "date": "2024",
                         "cityName": "湖北省",
                         "cityCode": "420000"
@@ -9498,7 +9498,7 @@
                         "cityCode": "420000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5.89,
                         "date": "2024",
                         "cityName": "湖南省",
                         "cityCode": "430000"
@@ -9618,7 +9618,7 @@
                         "cityCode": "430000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.89,
                         "date": "2024",
                         "cityName": "广东省",
                         "cityCode": "440000"
@@ -9738,7 +9738,7 @@
                         "cityCode": "440000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.37,
                         "date": "2024",
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
@@ -9858,7 +9858,7 @@
                         "cityCode": "450000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 9.37,
                         "date": "2024",
                         "cityName": "海南省",
                         "cityCode": "460000"
@@ -9978,7 +9978,7 @@
                         "cityCode": "460000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5.99,
                         "date": "2024",
                         "cityName": "重庆市",
                         "cityCode": "500000"
@@ -10098,7 +10098,7 @@
                         "cityCode": "500000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.41,
                         "date": "2024",
                         "cityName": "四川省",
                         "cityCode": "510000"
@@ -10218,7 +10218,7 @@
                         "cityCode": "510000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 10.74,
                         "date": "2024",
                         "cityName": "贵州省",
                         "cityCode": "520000"
@@ -10338,7 +10338,7 @@
                         "cityCode": "520000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.62,
                         "date": "2024",
                         "cityName": "云南省",
                         "cityCode": "530000"
@@ -10458,7 +10458,7 @@
                         "cityCode": "530000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 13.87,
                         "date": "2024",
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
@@ -10578,7 +10578,7 @@
                         "cityCode": "540000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7.36,
                         "date": "2024",
                         "cityName": "陕西省",
                         "cityCode": "610000"
@@ -10698,7 +10698,7 @@
                         "cityCode": "610000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.0,
                         "date": "2024",
                         "cityName": "甘肃省",
                         "cityCode": "620000"
@@ -10818,7 +10818,7 @@
                         "cityCode": "620000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 10.11,
                         "date": "2024",
                         "cityName": "青海省",
                         "cityCode": "630000"
@@ -10938,7 +10938,7 @@
                         "cityCode": "630000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 10.9739368998628,
                         "date": "2024",
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
@@ -11058,7 +11058,7 @@
                         "cityCode": "640000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 9.42,
                         "date": "2024",
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
@@ -11184,7 +11184,7 @@
                 "unit": "‰",
                 "data": [
                     {
-                        "value": 0.0,
+                        "value": 6.08,
                         "date": "2024",
                         "cityName": "北京市",
                         "cityCode": "110000"
@@ -11304,7 +11304,7 @@
                         "cityCode": "110000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.96,
                         "date": "2024",
                         "cityName": "天津市",
                         "cityCode": "120000"
@@ -11424,7 +11424,7 @@
                         "cityCode": "120000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.22,
                         "date": "2024",
                         "cityName": "河北省",
                         "cityCode": "130000"
@@ -11544,7 +11544,7 @@
                         "cityCode": "130000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.33,
                         "date": "2024",
                         "cityName": "山西省",
                         "cityCode": "140000"
@@ -11664,7 +11664,7 @@
                         "cityCode": "140000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.36,
                         "date": "2024",
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
@@ -11784,7 +11784,7 @@
                         "cityCode": "150000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 9.62,
                         "date": "2024",
                         "cityName": "辽宁省",
                         "cityCode": "210000"
@@ -11904,7 +11904,7 @@
                         "cityCode": "210000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 9.02,
                         "date": "2024",
                         "cityName": "吉林省",
                         "cityCode": "220000"
@@ -12024,7 +12024,7 @@
                         "cityCode": "220000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 9.69,
                         "date": "2024",
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
@@ -12144,7 +12144,7 @@
                         "cityCode": "230000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.28,
                         "date": "2024",
                         "cityName": "上海市",
                         "cityCode": "310000"
@@ -12264,7 +12264,7 @@
                         "cityCode": "310000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7.48,
                         "date": "2024",
                         "cityName": "江苏省",
                         "cityCode": "320000"
@@ -12384,7 +12384,7 @@
                         "cityCode": "320000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.53,
                         "date": "2024",
                         "cityName": "浙江省",
                         "cityCode": "330000"
@@ -12504,7 +12504,7 @@
                         "cityCode": "330000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.41,
                         "date": "2024",
                         "cityName": "安徽省",
                         "cityCode": "340000"
@@ -12624,7 +12624,7 @@
                         "cityCode": "340000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.71,
                         "date": "2024",
                         "cityName": "福建省",
                         "cityCode": "350000"
@@ -12744,7 +12744,7 @@
                         "cityCode": "350000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7.23,
                         "date": "2024",
                         "cityName": "江西省",
                         "cityCode": "360000"
@@ -12864,7 +12864,7 @@
                         "cityCode": "360000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.09,
                         "date": "2024",
                         "cityName": "山东省",
                         "cityCode": "370000"
@@ -12984,7 +12984,7 @@
                         "cityCode": "370000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7.89,
                         "date": "2024",
                         "cityName": "河南省",
                         "cityCode": "410000"
@@ -13104,7 +13104,7 @@
                         "cityCode": "410000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.52,
                         "date": "2024",
                         "cityName": "湖北省",
                         "cityCode": "420000"
@@ -13224,7 +13224,7 @@
                         "cityCode": "420000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.93,
                         "date": "2024",
                         "cityName": "湖南省",
                         "cityCode": "430000"
@@ -13344,7 +13344,7 @@
                         "cityCode": "430000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5.2,
                         "date": "2024",
                         "cityName": "广东省",
                         "cityCode": "440000"
@@ -13464,7 +13464,7 @@
                         "cityCode": "440000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7.49,
                         "date": "2024",
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
@@ -13584,7 +13584,7 @@
                         "cityCode": "450000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.31,
                         "date": "2024",
                         "cityName": "海南省",
                         "cityCode": "460000"
@@ -13704,7 +13704,7 @@
                         "cityCode": "460000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.87,
                         "date": "2024",
                         "cityName": "重庆市",
                         "cityCode": "500000"
@@ -13824,7 +13824,7 @@
                         "cityCode": "500000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 9.43,
                         "date": "2024",
                         "cityName": "四川省",
                         "cityCode": "510000"
@@ -13944,7 +13944,7 @@
                         "cityCode": "510000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7.74,
                         "date": "2024",
                         "cityName": "贵州省",
                         "cityCode": "520000"
@@ -14064,7 +14064,7 @@
                         "cityCode": "520000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.45,
                         "date": "2024",
                         "cityName": "云南省",
                         "cityCode": "530000"
@@ -14184,7 +14184,7 @@
                         "cityCode": "530000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5.44,
                         "date": "2024",
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
@@ -14304,7 +14304,7 @@
                         "cityCode": "540000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.05,
                         "date": "2024",
                         "cityName": "陕西省",
                         "cityCode": "610000"
@@ -14424,7 +14424,7 @@
                         "cityCode": "610000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.9,
                         "date": "2024",
                         "cityName": "甘肃省",
                         "cityCode": "620000"
@@ -14544,7 +14544,7 @@
                         "cityCode": "620000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7.41,
                         "date": "2024",
                         "cityName": "青海省",
                         "cityCode": "630000"
@@ -14664,7 +14664,7 @@
                         "cityCode": "630000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.45,
                         "date": "2024",
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
@@ -14784,7 +14784,7 @@
                         "cityCode": "640000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.05,
                         "date": "2024",
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
@@ -14910,7 +14910,7 @@
                 "unit": "‰",
                 "data": [
                     {
-                        "value": 0.0,
+                        "value": 0.01,
                         "date": "2024",
                         "cityName": "北京市",
                         "cityCode": "110000"
@@ -15030,7 +15030,7 @@
                         "cityCode": "110000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -1.97,
                         "date": "2024",
                         "cityName": "天津市",
                         "cityCode": "120000"
@@ -15150,7 +15150,7 @@
                         "cityCode": "120000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -2.32,
                         "date": "2024",
                         "cityName": "河北省",
                         "cityCode": "130000"
@@ -15270,7 +15270,7 @@
                         "cityCode": "130000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -1.39,
                         "date": "2024",
                         "cityName": "山西省",
                         "cityCode": "140000"
@@ -15390,7 +15390,7 @@
                         "cityCode": "140000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -2.84,
                         "date": "2024",
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
@@ -15510,7 +15510,7 @@
                         "cityCode": "150000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -5.3,
                         "date": "2024",
                         "cityName": "辽宁省",
                         "cityCode": "210000"
@@ -15630,7 +15630,7 @@
                         "cityCode": "210000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -4.85,
                         "date": "2024",
                         "cityName": "吉林省",
                         "cityCode": "220000"
@@ -15750,7 +15750,7 @@
                         "cityCode": "220000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -6.34,
                         "date": "2024",
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
@@ -15870,7 +15870,7 @@
                         "cityCode": "230000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -1.53,
                         "date": "2024",
                         "cityName": "上海市",
                         "cityCode": "310000"
@@ -15990,7 +15990,7 @@
                         "cityCode": "310000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -2.5,
                         "date": "2024",
                         "cityName": "江苏省",
                         "cityCode": "320000"
@@ -16110,7 +16110,7 @@
                         "cityCode": "320000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -0.36,
                         "date": "2024",
                         "cityName": "浙江省",
                         "cityCode": "330000"
@@ -16230,7 +16230,7 @@
                         "cityCode": "330000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -2.24,
                         "date": "2024",
                         "cityName": "安徽省",
                         "cityCode": "340000"
@@ -16350,7 +16350,7 @@
                         "cityCode": "340000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 0.24,
                         "date": "2024",
                         "cityName": "福建省",
                         "cityCode": "350000"
@@ -16470,7 +16470,7 @@
                         "cityCode": "350000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -0.58,
                         "date": "2024",
                         "cityName": "江西省",
                         "cityCode": "360000"
@@ -16590,7 +16590,7 @@
                         "cityCode": "360000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -1.67,
                         "date": "2024",
                         "cityName": "山东省",
                         "cityCode": "370000"
@@ -16710,7 +16710,7 @@
                         "cityCode": "370000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -0.11,
                         "date": "2024",
                         "cityName": "河南省",
                         "cityCode": "410000"
@@ -16830,7 +16830,7 @@
                         "cityCode": "410000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -3.14,
                         "date": "2024",
                         "cityName": "湖北省",
                         "cityCode": "420000"
@@ -16950,7 +16950,7 @@
                         "cityCode": "420000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -3.04,
                         "date": "2024",
                         "cityName": "湖南省",
                         "cityCode": "430000"
@@ -17070,7 +17070,7 @@
                         "cityCode": "430000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 3.69,
                         "date": "2024",
                         "cityName": "广东省",
                         "cityCode": "440000"
@@ -17190,7 +17190,7 @@
                         "cityCode": "440000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 0.88,
                         "date": "2024",
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
@@ -17310,7 +17310,7 @@
                         "cityCode": "450000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 3.06,
                         "date": "2024",
                         "cityName": "海南省",
                         "cityCode": "460000"
@@ -17430,7 +17430,7 @@
                         "cityCode": "460000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -2.88,
                         "date": "2024",
                         "cityName": "重庆市",
                         "cityCode": "500000"
@@ -17550,7 +17550,7 @@
                         "cityCode": "500000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -3.02,
                         "date": "2024",
                         "cityName": "四川省",
                         "cityCode": "510000"
@@ -17670,7 +17670,7 @@
                         "cityCode": "510000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 3.0,
                         "date": "2024",
                         "cityName": "贵州省",
                         "cityCode": "520000"
@@ -17790,7 +17790,7 @@
                         "cityCode": "520000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 0.17,
                         "date": "2024",
                         "cityName": "云南省",
                         "cityCode": "530000"
@@ -17910,7 +17910,7 @@
                         "cityCode": "530000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.43,
                         "date": "2024",
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
@@ -18030,7 +18030,7 @@
                         "cityCode": "540000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -0.69,
                         "date": "2024",
                         "cityName": "陕西省",
                         "cityCode": "610000"
@@ -18150,7 +18150,7 @@
                         "cityCode": "610000"
                     },
                     {
-                        "value": 0.0,
+                        "value": -0.9,
                         "date": "2024",
                         "cityName": "甘肃省",
                         "cityCode": "620000"
@@ -18270,7 +18270,7 @@
                         "cityCode": "620000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 2.7,
                         "date": "2024",
                         "cityName": "青海省",
                         "cityCode": "630000"
@@ -18390,7 +18390,7 @@
                         "cityCode": "630000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 4.52,
                         "date": "2024",
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
@@ -18510,7 +18510,7 @@
                         "cityCode": "640000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 3.37,
                         "date": "2024",
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
@@ -26088,7 +26088,7 @@
                 "unit": "元/平方米",
                 "data": [
                     {
-                        "value": 0.0,
+                        "value": 38673.0,
                         "date": "2024",
                         "cityName": "北京市",
                         "cityCode": "110000"
@@ -26208,7 +26208,7 @@
                         "cityCode": "110000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 14967.0,
                         "date": "2024",
                         "cityName": "天津市",
                         "cityCode": "120000"
@@ -26328,7 +26328,7 @@
                         "cityCode": "120000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8201.0,
                         "date": "2024",
                         "cityName": "河北省",
                         "cityCode": "130000"
@@ -26448,7 +26448,7 @@
                         "cityCode": "130000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6871.0,
                         "date": "2024",
                         "cityName": "山西省",
                         "cityCode": "140000"
@@ -26568,7 +26568,7 @@
                         "cityCode": "140000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6547.0,
                         "date": "2024",
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
@@ -26688,7 +26688,7 @@
                         "cityCode": "150000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7509.0,
                         "date": "2024",
                         "cityName": "辽宁省",
                         "cityCode": "210000"
@@ -26808,7 +26808,7 @@
                         "cityCode": "210000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6598.0,
                         "date": "2024",
                         "cityName": "吉林省",
                         "cityCode": "220000"
@@ -26928,7 +26928,7 @@
                         "cityCode": "220000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6157.0,
                         "date": "2024",
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
@@ -27048,7 +27048,7 @@
                         "cityCode": "230000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 47223.0,
                         "date": "2024",
                         "cityName": "上海市",
                         "cityCode": "310000"
@@ -27168,7 +27168,7 @@
                         "cityCode": "310000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 11163.0,
                         "date": "2024",
                         "cityName": "江苏省",
                         "cityCode": "320000"
@@ -27288,7 +27288,7 @@
                         "cityCode": "320000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 17753.0,
                         "date": "2024",
                         "cityName": "浙江省",
                         "cityCode": "330000"
@@ -27408,7 +27408,7 @@
                         "cityCode": "330000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7772.0,
                         "date": "2024",
                         "cityName": "安徽省",
                         "cityCode": "340000"
@@ -27528,7 +27528,7 @@
                         "cityCode": "340000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 11538.0,
                         "date": "2024",
                         "cityName": "福建省",
                         "cityCode": "350000"
@@ -27648,7 +27648,7 @@
                         "cityCode": "350000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6999.0,
                         "date": "2024",
                         "cityName": "江西省",
                         "cityCode": "360000"
@@ -27768,7 +27768,7 @@
                         "cityCode": "360000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8269.0,
                         "date": "2024",
                         "cityName": "山东省",
                         "cityCode": "370000"
@@ -27888,7 +27888,7 @@
                         "cityCode": "370000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6280.0,
                         "date": "2024",
                         "cityName": "河南省",
                         "cityCode": "410000"
@@ -28008,7 +28008,7 @@
                         "cityCode": "410000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8247.0,
                         "date": "2024",
                         "cityName": "湖北省",
                         "cityCode": "420000"
@@ -28128,7 +28128,7 @@
                         "cityCode": "420000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6038.0,
                         "date": "2024",
                         "cityName": "湖南省",
                         "cityCode": "430000"
@@ -28248,7 +28248,7 @@
                         "cityCode": "430000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 17550.0,
                         "date": "2024",
                         "cityName": "广东省",
                         "cityCode": "440000"
@@ -28368,7 +28368,7 @@
                         "cityCode": "440000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5926.0,
                         "date": "2024",
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
@@ -28488,7 +28488,7 @@
                         "cityCode": "450000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 14766.0,
                         "date": "2024",
                         "cityName": "海南省",
                         "cityCode": "460000"
@@ -28608,7 +28608,7 @@
                         "cityCode": "460000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8243.0,
                         "date": "2024",
                         "cityName": "重庆市",
                         "cityCode": "500000"
@@ -28728,7 +28728,7 @@
                         "cityCode": "500000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 9770.0,
                         "date": "2024",
                         "cityName": "四川省",
                         "cityCode": "510000"
@@ -28848,7 +28848,7 @@
                         "cityCode": "510000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5538.0,
                         "date": "2024",
                         "cityName": "贵州省",
                         "cityCode": "520000"
@@ -28968,7 +28968,7 @@
                         "cityCode": "520000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7008.0,
                         "date": "2024",
                         "cityName": "云南省",
                         "cityCode": "530000"
@@ -29088,7 +29088,7 @@
                         "cityCode": "530000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 9085.0,
                         "date": "2024",
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
@@ -29208,7 +29208,7 @@
                         "cityCode": "540000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 10973.0,
                         "date": "2024",
                         "cityName": "陕西省",
                         "cityCode": "610000"
@@ -29328,7 +29328,7 @@
                         "cityCode": "610000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5789.0,
                         "date": "2024",
                         "cityName": "甘肃省",
                         "cityCode": "620000"
@@ -29448,7 +29448,7 @@
                         "cityCode": "620000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6647.0,
                         "date": "2024",
                         "cityName": "青海省",
                         "cityCode": "630000"
@@ -29568,7 +29568,7 @@
                         "cityCode": "630000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6579.0,
                         "date": "2024",
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
@@ -29688,7 +29688,7 @@
                         "cityCode": "640000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5591.0,
                         "date": "2024",
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
@@ -29814,7 +29814,7 @@
                 "unit": "亿元",
                 "data": [
                     {
-                        "value": 6372.68,
+                        "value": 6372.6778,
                         "date": "2024",
                         "cityName": "北京市",
                         "cityCode": "110000"
@@ -29934,7 +29934,7 @@
                         "cityCode": "110000"
                     },
                     {
-                        "value": 2133.68,
+                        "value": 2134.1963,
                         "date": "2024",
                         "cityName": "天津市",
                         "cityCode": "120000"
@@ -30054,7 +30054,7 @@
                         "cityCode": "120000"
                     },
                     {
-                        "value": 4310.05,
+                        "value": 4310.8544,
                         "date": "2024",
                         "cityName": "河北省",
                         "cityCode": "130000"
@@ -30174,7 +30174,7 @@
                         "cityCode": "130000"
                     },
                     {
-                        "value": 3541.74,
+                        "value": 3542.2398,
                         "date": "2024",
                         "cityName": "山西省",
                         "cityCode": "140000"
@@ -30294,7 +30294,7 @@
                         "cityCode": "140000"
                     },
                     {
-                        "value": 3150.25,
+                        "value": 3150.5713,
                         "date": "2024",
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
@@ -30414,7 +30414,7 @@
                         "cityCode": "150000"
                     },
                     {
-                        "value": 2905.83,
+                        "value": 2906.9401,
                         "date": "2024",
                         "cityName": "辽宁省",
                         "cityCode": "210000"
@@ -30534,7 +30534,7 @@
                         "cityCode": "210000"
                     },
                     {
-                        "value": 1191.39,
+                        "value": 1191.3865,
                         "date": "2024",
                         "cityName": "吉林省",
                         "cityCode": "220000"
@@ -30654,7 +30654,7 @@
                         "cityCode": "220000"
                     },
                     {
-                        "value": 1452.05,
+                        "value": 1452.3421,
                         "date": "2024",
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
@@ -30774,7 +30774,7 @@
                         "cityCode": "230000"
                     },
                     {
-                        "value": 8374.17,
+                        "value": 8374.1665,
                         "date": "2024",
                         "cityName": "上海市",
                         "cityCode": "310000"
@@ -30894,7 +30894,7 @@
                         "cityCode": "310000"
                     },
                     {
-                        "value": 10038.16,
+                        "value": 10038.1618,
                         "date": "2024",
                         "cityName": "江苏省",
                         "cityCode": "320000"
@@ -31014,7 +31014,7 @@
                         "cityCode": "320000"
                     },
                     {
-                        "value": 8705.61,
+                        "value": 8707.5673,
                         "date": "2024",
                         "cityName": "浙江省",
                         "cityCode": "330000"
@@ -31134,7 +31134,7 @@
                         "cityCode": "330000"
                     },
                     {
-                        "value": 4041.21,
+                        "value": 4041.6394,
                         "date": "2024",
                         "cityName": "安徽省",
                         "cityCode": "340000"
@@ -31254,7 +31254,7 @@
                         "cityCode": "340000"
                     },
                     {
-                        "value": 3614.64,
+                        "value": 3615.293,
                         "date": "2024",
                         "cityName": "福建省",
                         "cityCode": "350000"
@@ -31374,7 +31374,7 @@
                         "cityCode": "350000"
                     },
                     {
-                        "value": 3066.56,
+                        "value": 3066.9175,
                         "date": "2024",
                         "cityName": "江西省",
                         "cityCode": "360000"
@@ -31494,7 +31494,7 @@
                         "cityCode": "360000"
                     },
                     {
-                        "value": 7711.5,
+                        "value": 7711.7432,
                         "date": "2024",
                         "cityName": "山东省",
                         "cityCode": "370000"
@@ -31614,7 +31614,7 @@
                         "cityCode": "370000"
                     },
                     {
-                        "value": 4398.91,
+                        "value": 4392.6669,
                         "date": "2024",
                         "cityName": "河南省",
                         "cityCode": "410000"
@@ -31734,7 +31734,7 @@
                         "cityCode": "410000"
                     },
                     {
-                        "value": 3937.05,
+                        "value": 3937.8822,
                         "date": "2024",
                         "cityName": "湖北省",
                         "cityCode": "420000"
@@ -31854,7 +31854,7 @@
                         "cityCode": "420000"
                     },
                     {
-                        "value": 3448.91,
+                        "value": 3449.2686,
                         "date": "2024",
                         "cityName": "湖南省",
                         "cityCode": "430000"
@@ -31974,7 +31974,7 @@
                         "cityCode": "430000"
                     },
                     {
-                        "value": 13533.27,
+                        "value": 13533.9828,
                         "date": "2024",
                         "cityName": "广东省",
                         "cityCode": "440000"
@@ -32094,7 +32094,7 @@
                         "cityCode": "440000"
                     },
                     {
-                        "value": 1837.32,
+                        "value": 1837.3177,
                         "date": "2024",
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
@@ -32214,7 +32214,7 @@
                         "cityCode": "450000"
                     },
                     {
-                        "value": 890.46,
+                        "value": 890.5105,
                         "date": "2024",
                         "cityName": "海南省",
                         "cityCode": "460000"
@@ -32334,7 +32334,7 @@
                         "cityCode": "460000"
                     },
                     {
-                        "value": 2595.36,
+                        "value": 2595.5465,
                         "date": "2024",
                         "cityName": "重庆市",
                         "cityCode": "500000"
@@ -32454,7 +32454,7 @@
                         "cityCode": "500000"
                     },
                     {
-                        "value": 5635.08,
+                        "value": 5635.5999,
                         "date": "2024",
                         "cityName": "四川省",
                         "cityCode": "510000"
@@ -32574,7 +32574,7 @@
                         "cityCode": "510000"
                     },
                     {
-                        "value": 2169.62,
+                        "value": 2169.9992,
                         "date": "2024",
                         "cityName": "贵州省",
                         "cityCode": "520000"
@@ -32694,7 +32694,7 @@
                         "cityCode": "520000"
                     },
                     {
-                        "value": 2193.23,
+                        "value": 2193.6809,
                         "date": "2024",
                         "cityName": "云南省",
                         "cityCode": "530000"
@@ -32814,7 +32814,7 @@
                         "cityCode": "530000"
                     },
                     {
-                        "value": 277.2,
+                        "value": 277.1948,
                         "date": "2024",
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
@@ -32934,7 +32934,7 @@
                         "cityCode": "540000"
                     },
                     {
-                        "value": 3393.08,
+                        "value": 3393.2832,
                         "date": "2024",
                         "cityName": "陕西省",
                         "cityCode": "610000"
@@ -33054,7 +33054,7 @@
                         "cityCode": "610000"
                     },
                     {
-                        "value": 1051.42,
+                        "value": 1051.8875,
                         "date": "2024",
                         "cityName": "甘肃省",
                         "cityCode": "620000"
@@ -33174,7 +33174,7 @@
                         "cityCode": "620000"
                     },
                     {
-                        "value": 370.54,
+                        "value": 370.4488,
                         "date": "2024",
                         "cityName": "青海省",
                         "cityCode": "630000"
@@ -33294,7 +33294,7 @@
                         "cityCode": "630000"
                     },
                     {
-                        "value": 516.53,
+                        "value": 516.5863,
                         "date": "2024",
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
@@ -33414,7 +33414,7 @@
                         "cityCode": "640000"
                     },
                     {
-                        "value": 2408.92,
+                        "value": 2409.689,
                         "date": "2024",
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
@@ -33540,7 +33540,7 @@
                 "unit": "亿元",
                 "data": [
                     {
-                        "value": 8396.48,
+                        "value": 8396.486,
                         "date": "2024",
                         "cityName": "北京市",
                         "cityCode": "110000"
@@ -33660,7 +33660,7 @@
                         "cityCode": "110000"
                     },
                     {
-                        "value": 3620.68,
+                        "value": 3627.181,
                         "date": "2024",
                         "cityName": "天津市",
                         "cityCode": "120000"
@@ -33780,7 +33780,7 @@
                         "cityCode": "120000"
                     },
                     {
-                        "value": 10325.97,
+                        "value": 10326.7213,
                         "date": "2024",
                         "cityName": "河北省",
                         "cityCode": "130000"
@@ -33900,7 +33900,7 @@
                         "cityCode": "130000"
                     },
                     {
-                        "value": 6318.08,
+                        "value": 6312.6744,
                         "date": "2024",
                         "cityName": "山西省",
                         "cityCode": "140000"
@@ -34020,7 +34020,7 @@
                         "cityCode": "140000"
                     },
                     {
-                        "value": 6928.04,
+                        "value": 6916.7077,
                         "date": "2024",
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
@@ -34140,7 +34140,7 @@
                         "cityCode": "150000"
                     },
                     {
-                        "value": 6853.17,
+                        "value": 6860.032,
                         "date": "2024",
                         "cityName": "辽宁省",
                         "cityCode": "210000"
@@ -34260,7 +34260,7 @@
                         "cityCode": "210000"
                     },
                     {
-                        "value": 4672.93,
+                        "value": 4672.9378,
                         "date": "2024",
                         "cityName": "吉林省",
                         "cityCode": "220000"
@@ -34380,7 +34380,7 @@
                         "cityCode": "220000"
                     },
                     {
-                        "value": 6454.53,
+                        "value": 6454.5393,
                         "date": "2024",
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
@@ -34500,7 +34500,7 @@
                         "cityCode": "230000"
                     },
                     {
-                        "value": 9874.84,
+                        "value": 9874.8381,
                         "date": "2024",
                         "cityName": "上海市",
                         "cityCode": "310000"
@@ -34620,7 +34620,7 @@
                         "cityCode": "310000"
                     },
                     {
-                        "value": 15293.91,
+                        "value": 15293.5674,
                         "date": "2024",
                         "cityName": "江苏省",
                         "cityCode": "320000"
@@ -34740,7 +34740,7 @@
                         "cityCode": "320000"
                     },
                     {
-                        "value": 12564.61,
+                        "value": 12564.653,
                         "date": "2024",
                         "cityName": "浙江省",
                         "cityCode": "330000"
@@ -34860,7 +34860,7 @@
                         "cityCode": "330000"
                     },
                     {
-                        "value": 8995.15,
+                        "value": 8999.544,
                         "date": "2024",
                         "cityName": "安徽省",
                         "cityCode": "340000"
@@ -34980,7 +34980,7 @@
                         "cityCode": "340000"
                     },
                     {
-                        "value": 6081.11,
+                        "value": 6080.9344,
                         "date": "2024",
                         "cityName": "福建省",
                         "cityCode": "350000"
@@ -35100,7 +35100,7 @@
                         "cityCode": "350000"
                     },
                     {
-                        "value": 7696.52,
+                        "value": 7695.2547,
                         "date": "2024",
                         "cityName": "江西省",
                         "cityCode": "360000"
@@ -35220,7 +35220,7 @@
                         "cityCode": "360000"
                     },
                     {
-                        "value": 13077.21,
+                        "value": 13077.193,
                         "date": "2024",
                         "cityName": "山东省",
                         "cityCode": "370000"
@@ -35340,7 +35340,7 @@
                         "cityCode": "370000"
                     },
                     {
-                        "value": 11460.99,
+                        "value": 11464.1594,
                         "date": "2024",
                         "cityName": "河南省",
                         "cityCode": "410000"
@@ -35460,7 +35460,7 @@
                         "cityCode": "410000"
                     },
                     {
-                        "value": 9974.11,
+                        "value": 9976.306,
                         "date": "2024",
                         "cityName": "湖北省",
                         "cityCode": "420000"
@@ -35580,7 +35580,7 @@
                         "cityCode": "420000"
                     },
                     {
-                        "value": 9533.76,
+                        "value": 9536.2643,
                         "date": "2024",
                         "cityName": "湖南省",
                         "cityCode": "430000"
@@ -35700,7 +35700,7 @@
                         "cityCode": "430000"
                     },
                     {
-                        "value": 17956.4,
+                        "value": 17956.0571,
                         "date": "2024",
                         "cityName": "广东省",
                         "cityCode": "440000"
@@ -35820,7 +35820,7 @@
                         "cityCode": "440000"
                     },
                     {
-                        "value": 6485.35,
+                        "value": 6469.5823,
                         "date": "2024",
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
@@ -35940,7 +35940,7 @@
                         "cityCode": "450000"
                     },
                     {
-                        "value": 2293.57,
+                        "value": 2293.2126,
                         "date": "2024",
                         "cityName": "海南省",
                         "cityCode": "460000"
@@ -36060,7 +36060,7 @@
                         "cityCode": "460000"
                     },
                     {
-                        "value": 5621.27,
+                        "value": 5621.2108,
                         "date": "2024",
                         "cityName": "重庆市",
                         "cityCode": "500000"
@@ -36180,7 +36180,7 @@
                         "cityCode": "500000"
                     },
                     {
-                        "value": 13445.33,
+                        "value": 13447.1601,
                         "date": "2024",
                         "cityName": "四川省",
                         "cityCode": "510000"
@@ -36300,7 +36300,7 @@
                         "cityCode": "510000"
                     },
                     {
-                        "value": 6522.42,
+                        "value": 6524.7385,
                         "date": "2024",
                         "cityName": "贵州省",
                         "cityCode": "520000"
@@ -36420,7 +36420,7 @@
                         "cityCode": "520000"
                     },
                     {
-                        "value": 6863.09,
+                        "value": 6862.9199,
                         "date": "2024",
                         "cityName": "云南省",
                         "cityCode": "530000"
@@ -36540,7 +36540,7 @@
                         "cityCode": "530000"
                     },
                     {
-                        "value": 2919.55,
+                        "value": 2919.6152,
                         "date": "2024",
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
@@ -36660,7 +36660,7 @@
                         "cityCode": "540000"
                     },
                     {
-                        "value": 7297.72,
+                        "value": 7297.7293,
                         "date": "2024",
                         "cityName": "陕西省",
                         "cityCode": "610000"
@@ -36780,7 +36780,7 @@
                         "cityCode": "610000"
                     },
                     {
-                        "value": 4781.75,
+                        "value": 4784.6717,
                         "date": "2024",
                         "cityName": "甘肃省",
                         "cityCode": "620000"
@@ -36900,7 +36900,7 @@
                         "cityCode": "620000"
                     },
                     {
-                        "value": 2164.94,
+                        "value": 2164.0481,
                         "date": "2024",
                         "cityName": "青海省",
                         "cityCode": "630000"
@@ -37020,7 +37020,7 @@
                         "cityCode": "630000"
                     },
                     {
-                        "value": 1769.5,
+                        "value": 1768.4951,
                         "date": "2024",
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
@@ -37140,7 +37140,7 @@
                         "cityCode": "640000"
                     },
                     {
-                        "value": 7649.11,
+                        "value": 7645.9581,
                         "date": "2024",
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
@@ -40992,7 +40992,7 @@
                 "unit": "万人",
                 "data": [
                     {
-                        "value": 0.0,
+                        "value": 14.9282,
                         "date": "2024",
                         "cityName": "北京市",
                         "cityCode": "110000"
@@ -41112,7 +41112,7 @@
                         "cityCode": "110000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 9.4802,
                         "date": "2024",
                         "cityName": "天津市",
                         "cityCode": "120000"
@@ -41232,7 +41232,7 @@
                         "cityCode": "120000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 24.0921,
                         "date": "2024",
                         "cityName": "河北省",
                         "cityCode": "130000"
@@ -41352,7 +41352,7 @@
                         "cityCode": "130000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 12.6933,
                         "date": "2024",
                         "cityName": "山西省",
                         "cityCode": "140000"
@@ -41472,7 +41472,7 @@
                         "cityCode": "140000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.7779,
                         "date": "2024",
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
@@ -41592,7 +41592,7 @@
                         "cityCode": "150000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 18.73,
                         "date": "2024",
                         "cityName": "辽宁省",
                         "cityCode": "210000"
@@ -41712,7 +41712,7 @@
                         "cityCode": "210000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 13.3474,
                         "date": "2024",
                         "cityName": "吉林省",
                         "cityCode": "220000"
@@ -41832,7 +41832,7 @@
                         "cityCode": "220000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 14.6083,
                         "date": "2024",
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
@@ -41952,7 +41952,7 @@
                         "cityCode": "230000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 10.4824,
                         "date": "2024",
                         "cityName": "上海市",
                         "cityCode": "310000"
@@ -42072,7 +42072,7 @@
                         "cityCode": "310000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 31.3683,
                         "date": "2024",
                         "cityName": "江苏省",
                         "cityCode": "320000"
@@ -42192,7 +42192,7 @@
                         "cityCode": "320000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 17.5272,
                         "date": "2024",
                         "cityName": "浙江省",
                         "cityCode": "330000"
@@ -42312,7 +42312,7 @@
                         "cityCode": "330000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 18.6593,
                         "date": "2024",
                         "cityName": "安徽省",
                         "cityCode": "340000"
@@ -42432,7 +42432,7 @@
                         "cityCode": "340000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 14.5951,
                         "date": "2024",
                         "cityName": "福建省",
                         "cityCode": "350000"
@@ -42552,7 +42552,7 @@
                         "cityCode": "350000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 18.641,
                         "date": "2024",
                         "cityName": "江西省",
                         "cityCode": "360000"
@@ -42672,7 +42672,7 @@
                         "cityCode": "360000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 29.1743,
                         "date": "2024",
                         "cityName": "山东省",
                         "cityCode": "370000"
@@ -42792,7 +42792,7 @@
                         "cityCode": "370000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 33.2846,
                         "date": "2024",
                         "cityName": "河南省",
                         "cityCode": "410000"
@@ -42912,7 +42912,7 @@
                         "cityCode": "410000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 24.7357,
                         "date": "2024",
                         "cityName": "湖北省",
                         "cityCode": "420000"
@@ -43032,7 +43032,7 @@
                         "cityCode": "420000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 24.2835,
                         "date": "2024",
                         "cityName": "湖南省",
                         "cityCode": "430000"
@@ -43152,7 +43152,7 @@
                         "cityCode": "430000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 32.0203,
                         "date": "2024",
                         "cityName": "广东省",
                         "cityCode": "440000"
@@ -43272,7 +43272,7 @@
                         "cityCode": "440000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 15.3192,
                         "date": "2024",
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
@@ -43392,7 +43392,7 @@
                         "cityCode": "450000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 3.3041,
                         "date": "2024",
                         "cityName": "海南省",
                         "cityCode": "460000"
@@ -43512,7 +43512,7 @@
                         "cityCode": "460000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 12.5549,
                         "date": "2024",
                         "cityName": "重庆市",
                         "cityCode": "500000"
@@ -43632,7 +43632,7 @@
                         "cityCode": "500000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 27.7402,
                         "date": "2024",
                         "cityName": "四川省",
                         "cityCode": "510000"
@@ -43752,7 +43752,7 @@
                         "cityCode": "510000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 9.4762,
                         "date": "2024",
                         "cityName": "贵州省",
                         "cityCode": "520000"
@@ -43872,7 +43872,7 @@
                         "cityCode": "520000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 12.8572,
                         "date": "2024",
                         "cityName": "云南省",
                         "cityCode": "530000"
@@ -43992,7 +43992,7 @@
                         "cityCode": "530000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 0.748,
                         "date": "2024",
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
@@ -44112,7 +44112,7 @@
                         "cityCode": "540000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 18.6932,
                         "date": "2024",
                         "cityName": "陕西省",
                         "cityCode": "610000"
@@ -44232,7 +44232,7 @@
                         "cityCode": "610000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7.8958,
                         "date": "2024",
                         "cityName": "甘肃省",
                         "cityCode": "620000"
@@ -44352,7 +44352,7 @@
                         "cityCode": "620000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1.3109,
                         "date": "2024",
                         "cityName": "青海省",
                         "cityCode": "630000"
@@ -44472,7 +44472,7 @@
                         "cityCode": "630000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 2.7757,
                         "date": "2024",
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
@@ -44592,7 +44592,7 @@
                         "cityCode": "640000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7.8607,
                         "date": "2024",
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
@@ -44718,7 +44718,7 @@
                 "unit": "万人",
                 "data": [
                     {
-                        "value": 0.0,
+                        "value": 58.2387,
                         "date": "2024",
                         "cityName": "北京市",
                         "cityCode": "110000"
@@ -44838,7 +44838,7 @@
                         "cityCode": "110000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 38.3836,
                         "date": "2024",
                         "cityName": "天津市",
                         "cityCode": "120000"
@@ -44958,7 +44958,7 @@
                         "cityCode": "120000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 100.7071,
                         "date": "2024",
                         "cityName": "河北省",
                         "cityCode": "130000"
@@ -45078,7 +45078,7 @@
                         "cityCode": "130000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 55.3472,
                         "date": "2024",
                         "cityName": "山西省",
                         "cityCode": "140000"
@@ -45198,7 +45198,7 @@
                         "cityCode": "140000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 29.849,
                         "date": "2024",
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
@@ -45318,7 +45318,7 @@
                         "cityCode": "150000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 78.7129,
                         "date": "2024",
                         "cityName": "辽宁省",
                         "cityCode": "210000"
@@ -45438,7 +45438,7 @@
                         "cityCode": "210000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 55.1533,
                         "date": "2024",
                         "cityName": "吉林省",
                         "cityCode": "220000"
@@ -45558,7 +45558,7 @@
                         "cityCode": "220000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 61.0972,
                         "date": "2024",
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
@@ -45678,7 +45678,7 @@
                         "cityCode": "230000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 43.0622,
                         "date": "2024",
                         "cityName": "上海市",
                         "cityCode": "310000"
@@ -45798,7 +45798,7 @@
                         "cityCode": "310000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 131.5065,
                         "date": "2024",
                         "cityName": "江苏省",
                         "cityCode": "320000"
@@ -45918,7 +45918,7 @@
                         "cityCode": "320000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 75.0983,
                         "date": "2024",
                         "cityName": "浙江省",
                         "cityCode": "330000"
@@ -46038,7 +46038,7 @@
                         "cityCode": "330000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 80.814,
                         "date": "2024",
                         "cityName": "安徽省",
                         "cityCode": "340000"
@@ -46158,7 +46158,7 @@
                         "cityCode": "340000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 61.2357,
                         "date": "2024",
                         "cityName": "福建省",
                         "cityCode": "350000"
@@ -46278,7 +46278,7 @@
                         "cityCode": "350000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 77.159,
                         "date": "2024",
                         "cityName": "江西省",
                         "cityCode": "360000"
@@ -46398,7 +46398,7 @@
                         "cityCode": "360000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 128.9383,
                         "date": "2024",
                         "cityName": "山东省",
                         "cityCode": "370000"
@@ -46518,7 +46518,7 @@
                         "cityCode": "370000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 147.4776,
                         "date": "2024",
                         "cityName": "河南省",
                         "cityCode": "410000"
@@ -46638,7 +46638,7 @@
                         "cityCode": "410000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 105.7066,
                         "date": "2024",
                         "cityName": "湖北省",
                         "cityCode": "420000"
@@ -46758,7 +46758,7 @@
                         "cityCode": "420000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 96.1391,
                         "date": "2024",
                         "cityName": "湖南省",
                         "cityCode": "430000"
@@ -46878,7 +46878,7 @@
                         "cityCode": "430000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 139.8,
                         "date": "2024",
                         "cityName": "广东省",
                         "cityCode": "440000"
@@ -46998,7 +46998,7 @@
                         "cityCode": "440000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 67.9267,
                         "date": "2024",
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
@@ -47118,7 +47118,7 @@
                         "cityCode": "450000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 13.6272,
                         "date": "2024",
                         "cityName": "海南省",
                         "cityCode": "460000"
@@ -47238,7 +47238,7 @@
                         "cityCode": "460000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 55.9297,
                         "date": "2024",
                         "cityName": "重庆市",
                         "cityCode": "500000"
@@ -47358,7 +47358,7 @@
                         "cityCode": "500000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 117.9764,
                         "date": "2024",
                         "cityName": "四川省",
                         "cityCode": "510000"
@@ -47478,7 +47478,7 @@
                         "cityCode": "510000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 41.7319,
                         "date": "2024",
                         "cityName": "贵州省",
                         "cityCode": "520000"
@@ -47598,7 +47598,7 @@
                         "cityCode": "520000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 57.9448,
                         "date": "2024",
                         "cityName": "云南省",
                         "cityCode": "530000"
@@ -47718,7 +47718,7 @@
                         "cityCode": "530000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 3.0994,
                         "date": "2024",
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
@@ -47838,7 +47838,7 @@
                         "cityCode": "540000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 80.5593,
                         "date": "2024",
                         "cityName": "陕西省",
                         "cityCode": "610000"
@@ -47958,7 +47958,7 @@
                         "cityCode": "610000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 34.5948,
                         "date": "2024",
                         "cityName": "甘肃省",
                         "cityCode": "620000"
@@ -48078,7 +48078,7 @@
                         "cityCode": "620000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 5.213,
                         "date": "2024",
                         "cityName": "青海省",
                         "cityCode": "630000"
@@ -48198,7 +48198,7 @@
                         "cityCode": "630000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 11.3135,
                         "date": "2024",
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
@@ -48318,7 +48318,7 @@
                         "cityCode": "640000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 31.5708,
                         "date": "2024",
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
@@ -48444,7 +48444,7 @@
                 "unit": "万人",
                 "data": [
                     {
-                        "value": 0.0,
+                        "value": 13.5261,
                         "date": "2024",
                         "cityName": "北京市",
                         "cityCode": "110000"
@@ -48564,7 +48564,7 @@
                         "cityCode": "110000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 9.2536,
                         "date": "2024",
                         "cityName": "天津市",
                         "cityCode": "120000"
@@ -48684,7 +48684,7 @@
                         "cityCode": "120000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 25.0983,
                         "date": "2024",
                         "cityName": "河北省",
                         "cityCode": "130000"
@@ -48804,7 +48804,7 @@
                         "cityCode": "130000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 14.5478,
                         "date": "2024",
                         "cityName": "山西省",
                         "cityCode": "140000"
@@ -48924,7 +48924,7 @@
                         "cityCode": "140000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 7.7066,
                         "date": "2024",
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
@@ -49044,7 +49044,7 @@
                         "cityCode": "150000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 19.035,
                         "date": "2024",
                         "cityName": "辽宁省",
                         "cityCode": "210000"
@@ -49164,7 +49164,7 @@
                         "cityCode": "210000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 13.5913,
                         "date": "2024",
                         "cityName": "吉林省",
                         "cityCode": "220000"
@@ -49284,7 +49284,7 @@
                         "cityCode": "220000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 14.9816,
                         "date": "2024",
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
@@ -49404,7 +49404,7 @@
                         "cityCode": "230000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 10.2636,
                         "date": "2024",
                         "cityName": "上海市",
                         "cityCode": "310000"
@@ -49524,7 +49524,7 @@
                         "cityCode": "310000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 31.1178,
                         "date": "2024",
                         "cityName": "江苏省",
                         "cityCode": "320000"
@@ -49644,7 +49644,7 @@
                         "cityCode": "320000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 18.332,
                         "date": "2024",
                         "cityName": "浙江省",
                         "cityCode": "330000"
@@ -49764,7 +49764,7 @@
                         "cityCode": "330000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 19.917,
                         "date": "2024",
                         "cityName": "安徽省",
                         "cityCode": "340000"
@@ -49884,7 +49884,7 @@
                         "cityCode": "340000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 15.0364,
                         "date": "2024",
                         "cityName": "福建省",
                         "cityCode": "350000"
@@ -50004,7 +50004,7 @@
                         "cityCode": "350000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 18.2388,
                         "date": "2024",
                         "cityName": "江西省",
                         "cityCode": "360000"
@@ -50124,7 +50124,7 @@
                         "cityCode": "360000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 32.7899,
                         "date": "2024",
                         "cityName": "山东省",
                         "cityCode": "370000"
@@ -50244,7 +50244,7 @@
                         "cityCode": "370000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 37.4711,
                         "date": "2024",
                         "cityName": "河南省",
                         "cityCode": "410000"
@@ -50364,7 +50364,7 @@
                         "cityCode": "410000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 26.245,
                         "date": "2024",
                         "cityName": "湖北省",
                         "cityCode": "420000"
@@ -50484,7 +50484,7 @@
                         "cityCode": "420000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 21.4303,
                         "date": "2024",
                         "cityName": "湖南省",
                         "cityCode": "430000"
@@ -50604,7 +50604,7 @@
                         "cityCode": "430000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 34.9512,
                         "date": "2024",
                         "cityName": "广东省",
                         "cityCode": "440000"
@@ -50724,7 +50724,7 @@
                         "cityCode": "440000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 16.8769,
                         "date": "2024",
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
@@ -50844,7 +50844,7 @@
                         "cityCode": "450000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 3.3592,
                         "date": "2024",
                         "cityName": "海南省",
                         "cityCode": "460000"
@@ -50964,7 +50964,7 @@
                         "cityCode": "460000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 14.3019,
                         "date": "2024",
                         "cityName": "重庆市",
                         "cityCode": "500000"
@@ -51084,7 +51084,7 @@
                         "cityCode": "500000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 28.0757,
                         "date": "2024",
                         "cityName": "四川省",
                         "cityCode": "510000"
@@ -51204,7 +51204,7 @@
                         "cityCode": "510000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 10.8287,
                         "date": "2024",
                         "cityName": "贵州省",
                         "cityCode": "520000"
@@ -51324,7 +51324,7 @@
                         "cityCode": "520000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 14.9895,
                         "date": "2024",
                         "cityName": "云南省",
                         "cityCode": "530000"
@@ -51444,7 +51444,7 @@
                         "cityCode": "530000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 0.7316,
                         "date": "2024",
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
@@ -51564,7 +51564,7 @@
                         "cityCode": "540000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 20.1416,
                         "date": "2024",
                         "cityName": "陕西省",
                         "cityCode": "610000"
@@ -51684,7 +51684,7 @@
                         "cityCode": "610000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 8.6664,
                         "date": "2024",
                         "cityName": "甘肃省",
                         "cityCode": "620000"
@@ -51804,7 +51804,7 @@
                         "cityCode": "620000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1.0365,
                         "date": "2024",
                         "cityName": "青海省",
                         "cityCode": "630000"
@@ -51924,7 +51924,7 @@
                         "cityCode": "630000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 2.5716,
                         "date": "2024",
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
@@ -52044,7 +52044,7 @@
                         "cityCode": "640000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 6.8447,
                         "date": "2024",
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
@@ -52170,7 +52170,7 @@
                 "unit": "个",
                 "data": [
                     {
-                        "value": 0.0,
+                        "value": 682.0,
                         "date": "2024",
                         "cityName": "北京市",
                         "cityCode": "110000"
@@ -52290,7 +52290,7 @@
                         "cityCode": "110000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 453.0,
                         "date": "2024",
                         "cityName": "天津市",
                         "cityCode": "120000"
@@ -52410,7 +52410,7 @@
                         "cityCode": "120000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 2528.0,
                         "date": "2024",
                         "cityName": "河北省",
                         "cityCode": "130000"
@@ -52530,7 +52530,7 @@
                         "cityCode": "130000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1373.0,
                         "date": "2024",
                         "cityName": "山西省",
                         "cityCode": "140000"
@@ -52650,7 +52650,7 @@
                         "cityCode": "140000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 861.0,
                         "date": "2024",
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
@@ -52770,7 +52770,7 @@
                         "cityCode": "150000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1646.0,
                         "date": "2024",
                         "cityName": "辽宁省",
                         "cityCode": "210000"
@@ -52890,7 +52890,7 @@
                         "cityCode": "210000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 873.0,
                         "date": "2024",
                         "cityName": "吉林省",
                         "cityCode": "220000"
@@ -53010,7 +53010,7 @@
                         "cityCode": "220000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1278.0,
                         "date": "2024",
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
@@ -53130,7 +53130,7 @@
                         "cityCode": "230000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 492.0,
                         "date": "2024",
                         "cityName": "上海市",
                         "cityCode": "310000"
@@ -53250,7 +53250,7 @@
                         "cityCode": "310000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 2246.0,
                         "date": "2024",
                         "cityName": "江苏省",
                         "cityCode": "320000"
@@ -53370,7 +53370,7 @@
                         "cityCode": "320000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1620.0,
                         "date": "2024",
                         "cityName": "浙江省",
                         "cityCode": "330000"
@@ -53490,7 +53490,7 @@
                         "cityCode": "330000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1354.0,
                         "date": "2024",
                         "cityName": "安徽省",
                         "cityCode": "340000"
@@ -53610,7 +53610,7 @@
                         "cityCode": "340000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 736.0,
                         "date": "2024",
                         "cityName": "福建省",
                         "cityCode": "350000"
@@ -53730,7 +53730,7 @@
                         "cityCode": "350000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1098.0,
                         "date": "2024",
                         "cityName": "江西省",
                         "cityCode": "360000"
@@ -53850,7 +53850,7 @@
                         "cityCode": "360000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 2930.0,
                         "date": "2024",
                         "cityName": "山东省",
                         "cityCode": "370000"
@@ -53970,7 +53970,7 @@
                         "cityCode": "370000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 2472.0,
                         "date": "2024",
                         "cityName": "河南省",
                         "cityCode": "410000"
@@ -54090,7 +54090,7 @@
                         "cityCode": "410000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1268.0,
                         "date": "2024",
                         "cityName": "湖北省",
                         "cityCode": "420000"
@@ -54210,7 +54210,7 @@
                         "cityCode": "420000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1763.0,
                         "date": "2024",
                         "cityName": "湖南省",
                         "cityCode": "430000"
@@ -54330,7 +54330,7 @@
                         "cityCode": "430000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1895.0,
                         "date": "2024",
                         "cityName": "广东省",
                         "cityCode": "440000"
@@ -54450,7 +54450,7 @@
                         "cityCode": "440000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 929.0,
                         "date": "2024",
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
@@ -54570,7 +54570,7 @@
                         "cityCode": "450000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 247.0,
                         "date": "2024",
                         "cityName": "海南省",
                         "cityCode": "460000"
@@ -54690,7 +54690,7 @@
                         "cityCode": "460000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 851.0,
                         "date": "2024",
                         "cityName": "重庆市",
                         "cityCode": "500000"
@@ -54810,7 +54810,7 @@
                         "cityCode": "500000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 2421.0,
                         "date": "2024",
                         "cityName": "四川省",
                         "cityCode": "510000"
@@ -54930,7 +54930,7 @@
                         "cityCode": "510000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1572.0,
                         "date": "2024",
                         "cityName": "贵州省",
                         "cityCode": "520000"
@@ -55050,7 +55050,7 @@
                         "cityCode": "520000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1390.0,
                         "date": "2024",
                         "cityName": "云南省",
                         "cityCode": "530000"
@@ -55170,7 +55170,7 @@
                         "cityCode": "530000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 199.0,
                         "date": "2024",
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
@@ -55290,7 +55290,7 @@
                         "cityCode": "540000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1288.0,
                         "date": "2024",
                         "cityName": "陕西省",
                         "cityCode": "610000"
@@ -55410,7 +55410,7 @@
                         "cityCode": "610000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 765.0,
                         "date": "2024",
                         "cityName": "甘肃省",
                         "cityCode": "620000"
@@ -55530,7 +55530,7 @@
                         "cityCode": "620000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 252.0,
                         "date": "2024",
                         "cityName": "青海省",
                         "cityCode": "630000"
@@ -55650,7 +55650,7 @@
                         "cityCode": "630000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 219.0,
                         "date": "2024",
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
@@ -55770,7 +55770,7 @@
                         "cityCode": "640000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 1009.0,
                         "date": "2024",
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
@@ -55896,7 +55896,7 @@
                 "unit": "张",
                 "data": [
                     {
-                        "value": 0.0,
+                        "value": 64.6,
                         "date": "2024",
                         "cityName": "北京市",
                         "cityCode": "110000"
@@ -56016,7 +56016,7 @@
                         "cityCode": "110000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 53.7,
                         "date": "2024",
                         "cityName": "天津市",
                         "cityCode": "120000"
@@ -56136,7 +56136,7 @@
                         "cityCode": "120000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 74.1,
                         "date": "2024",
                         "cityName": "河北省",
                         "cityCode": "130000"
@@ -56256,7 +56256,7 @@
                         "cityCode": "130000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 66.7,
                         "date": "2024",
                         "cityName": "山西省",
                         "cityCode": "140000"
@@ -56376,7 +56376,7 @@
                         "cityCode": "140000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 72.7,
                         "date": "2024",
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
@@ -56496,7 +56496,7 @@
                         "cityCode": "150000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 81.3,
                         "date": "2024",
                         "cityName": "辽宁省",
                         "cityCode": "210000"
@@ -56616,7 +56616,7 @@
                         "cityCode": "210000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 76.7,
                         "date": "2024",
                         "cityName": "吉林省",
                         "cityCode": "220000"
@@ -56736,7 +56736,7 @@
                         "cityCode": "220000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 90.1,
                         "date": "2024",
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
@@ -56856,7 +56856,7 @@
                         "cityCode": "230000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 75.0,
                         "date": "2024",
                         "cityName": "上海市",
                         "cityCode": "310000"
@@ -56976,7 +56976,7 @@
                         "cityCode": "310000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 70.9,
                         "date": "2024",
                         "cityName": "江苏省",
                         "cityCode": "320000"
@@ -57096,7 +57096,7 @@
                         "cityCode": "320000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 61.9,
                         "date": "2024",
                         "cityName": "浙江省",
                         "cityCode": "330000"
@@ -57216,7 +57216,7 @@
                         "cityCode": "330000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 73.3,
                         "date": "2024",
                         "cityName": "安徽省",
                         "cityCode": "340000"
@@ -57336,7 +57336,7 @@
                         "cityCode": "340000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 59.4,
                         "date": "2024",
                         "cityName": "福建省",
                         "cityCode": "350000"
@@ -57456,7 +57456,7 @@
                         "cityCode": "350000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 75.6,
                         "date": "2024",
                         "cityName": "江西省",
                         "cityCode": "360000"
@@ -57576,7 +57576,7 @@
                         "cityCode": "360000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 75.5,
                         "date": "2024",
                         "cityName": "山东省",
                         "cityCode": "370000"
@@ -57696,7 +57696,7 @@
                         "cityCode": "370000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 78.2,
                         "date": "2024",
                         "cityName": "河南省",
                         "cityCode": "410000"
@@ -57816,7 +57816,7 @@
                         "cityCode": "410000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 81.6,
                         "date": "2024",
                         "cityName": "湖北省",
                         "cityCode": "420000"
@@ -57936,7 +57936,7 @@
                         "cityCode": "420000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 80.0,
                         "date": "2024",
                         "cityName": "湖南省",
                         "cityCode": "430000"
@@ -58056,7 +58056,7 @@
                         "cityCode": "430000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 50.4,
                         "date": "2024",
                         "cityName": "广东省",
                         "cityCode": "440000"
@@ -58176,7 +58176,7 @@
                         "cityCode": "440000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 75.3,
                         "date": "2024",
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
@@ -58296,7 +58296,7 @@
                         "cityCode": "450000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 58.7,
                         "date": "2024",
                         "cityName": "海南省",
                         "cityCode": "460000"
@@ -58416,7 +58416,7 @@
                         "cityCode": "460000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 77.7,
                         "date": "2024",
                         "cityName": "重庆市",
                         "cityCode": "500000"
@@ -58536,7 +58536,7 @@
                         "cityCode": "500000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 85.5,
                         "date": "2024",
                         "cityName": "四川省",
                         "cityCode": "510000"
@@ -58656,7 +58656,7 @@
                         "cityCode": "510000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 84.1,
                         "date": "2024",
                         "cityName": "贵州省",
                         "cityCode": "520000"
@@ -58776,7 +58776,7 @@
                         "cityCode": "520000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 80.4,
                         "date": "2024",
                         "cityName": "云南省",
                         "cityCode": "530000"
@@ -58896,7 +58896,7 @@
                         "cityCode": "530000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 58.1,
                         "date": "2024",
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
@@ -59016,7 +59016,7 @@
                         "cityCode": "540000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 78.3,
                         "date": "2024",
                         "cityName": "陕西省",
                         "cityCode": "610000"
@@ -59136,7 +59136,7 @@
                         "cityCode": "610000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 84.5,
                         "date": "2024",
                         "cityName": "甘肃省",
                         "cityCode": "620000"
@@ -59256,7 +59256,7 @@
                         "cityCode": "620000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 80.6,
                         "date": "2024",
                         "cityName": "青海省",
                         "cityCode": "630000"
@@ -59376,7 +59376,7 @@
                         "cityCode": "630000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 60.7,
                         "date": "2024",
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
@@ -59496,7 +59496,7 @@
                         "cityCode": "640000"
                     },
                     {
-                        "value": 0.0,
+                        "value": 77.1,
                         "date": "2024",
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
@@ -59623,7 +59623,7 @@
                 "data": [
                     {
                         "date": "2024",
-                        "value": -2023.8,
+                        "value": -2023.81,
                         "cityName": "北京市",
                         "cityCode": "110000"
                     },
@@ -59743,7 +59743,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -1487.0,
+                        "value": -1492.98,
                         "cityName": "天津市",
                         "cityCode": "120000"
                     },
@@ -59863,7 +59863,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -6015.92,
+                        "value": -6015.87,
                         "cityName": "河北省",
                         "cityCode": "130000"
                     },
@@ -59983,7 +59983,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -2776.34,
+                        "value": -2770.43,
                         "cityName": "山西省",
                         "cityCode": "140000"
                     },
@@ -60103,7 +60103,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -3777.79,
+                        "value": -3766.14,
                         "cityName": "内蒙古自治区",
                         "cityCode": "150000"
                     },
@@ -60223,7 +60223,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -3947.34,
+                        "value": -3953.09,
                         "cityName": "辽宁省",
                         "cityCode": "210000"
                     },
@@ -60343,7 +60343,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -3481.54,
+                        "value": -3481.55,
                         "cityName": "吉林省",
                         "cityCode": "220000"
                     },
@@ -60463,7 +60463,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -5002.48,
+                        "value": -5002.2,
                         "cityName": "黑龙江省",
                         "cityCode": "230000"
                     },
@@ -60703,7 +60703,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -5255.75,
+                        "value": -5255.41,
                         "cityName": "江苏省",
                         "cityCode": "320000"
                     },
@@ -60823,7 +60823,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -3859.0,
+                        "value": -3857.09,
                         "cityName": "浙江省",
                         "cityCode": "330000"
                     },
@@ -60943,7 +60943,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -4953.94,
+                        "value": -4957.9,
                         "cityName": "安徽省",
                         "cityCode": "340000"
                     },
@@ -61063,7 +61063,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -2466.47,
+                        "value": -2465.64,
                         "cityName": "福建省",
                         "cityCode": "350000"
                     },
@@ -61183,7 +61183,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -4629.96,
+                        "value": -4628.34,
                         "cityName": "江西省",
                         "cityCode": "360000"
                     },
@@ -61303,7 +61303,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -5365.71,
+                        "value": -5365.45,
                         "cityName": "山东省",
                         "cityCode": "370000"
                     },
@@ -61423,7 +61423,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -7062.08,
+                        "value": -7071.49,
                         "cityName": "河南省",
                         "cityCode": "410000"
                     },
@@ -61543,7 +61543,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -6037.06,
+                        "value": -6038.42,
                         "cityName": "湖北省",
                         "cityCode": "420000"
                     },
@@ -61663,7 +61663,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -6084.85,
+                        "value": -6087.0,
                         "cityName": "湖南省",
                         "cityCode": "430000"
                     },
@@ -61783,7 +61783,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -4423.13,
+                        "value": -4422.07,
                         "cityName": "广东省",
                         "cityCode": "440000"
                     },
@@ -61903,7 +61903,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -4648.03,
+                        "value": -4632.26,
                         "cityName": "广西壮族自治区",
                         "cityCode": "450000"
                     },
@@ -62023,7 +62023,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -1403.11,
+                        "value": -1402.7,
                         "cityName": "海南省",
                         "cityCode": "460000"
                     },
@@ -62143,7 +62143,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -3025.91,
+                        "value": -3025.66,
                         "cityName": "重庆市",
                         "cityCode": "500000"
                     },
@@ -62263,7 +62263,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -7810.25,
+                        "value": -7811.56,
                         "cityName": "四川省",
                         "cityCode": "510000"
                     },
@@ -62383,7 +62383,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -4352.8,
+                        "value": -4354.74,
                         "cityName": "贵州省",
                         "cityCode": "520000"
                     },
@@ -62503,7 +62503,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -4669.86,
+                        "value": -4669.24,
                         "cityName": "云南省",
                         "cityCode": "530000"
                     },
@@ -62623,7 +62623,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -2642.35,
+                        "value": -2642.42,
                         "cityName": "西藏自治区",
                         "cityCode": "540000"
                     },
@@ -62743,7 +62743,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -3904.64,
+                        "value": -3904.45,
                         "cityName": "陕西省",
                         "cityCode": "610000"
                     },
@@ -62863,7 +62863,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -3730.33,
+                        "value": -3732.78,
                         "cityName": "甘肃省",
                         "cityCode": "620000"
                     },
@@ -62983,7 +62983,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -1794.4,
+                        "value": -1793.6,
                         "cityName": "青海省",
                         "cityCode": "630000"
                     },
@@ -63103,7 +63103,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -1252.97,
+                        "value": -1251.91,
                         "cityName": "宁夏回族自治区",
                         "cityCode": "640000"
                     },
@@ -63223,7 +63223,7 @@
                     },
                     {
                         "date": "2024",
-                        "value": -5240.19,
+                        "value": -5236.27,
                         "cityName": "新疆维吾尔自治区",
                         "cityCode": "650000"
                     },
@@ -63368,8 +63368,7 @@
             "2007",
             "2006",
             "2005"
-        ],
-        "yd": []
+        ]
     },
     "zb": {
         "nd": [
@@ -63441,8 +63440,7 @@
                 "code": "A080301",
                 "cname": "地方财政一般预算赤字"
             }
-        ],
-        "yd": []
+        ]
     },
     "reg": [
         {
