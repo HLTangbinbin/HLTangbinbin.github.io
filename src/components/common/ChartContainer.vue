@@ -28,7 +28,7 @@
         <!-- 时间选择控件 -->
         <div class="time-control">
           <label class="year-label">选择时间:</label>
-          <el-slider v-model="yearLimit" :min=1 :max=20 :step=1 class="year-slider" />
+          <el-slider v-model="yearLimit" :min=1 :max=30 :step=1 class="year-slider" />
           <span class="offset-value">{{ yearLimit }}</span>
         </div>
       </div>
@@ -44,7 +44,7 @@
         <div class="offset-controls">
           <label class="year-label">折线偏移:</label>
           <div class="offset-slider-container">
-            <el-slider v-model="offsetValue" :min=-20 :max=20 :step=1 class="year-slider" />
+            <el-slider v-model="offsetValue" :min=-30 :max=30 :step=1 class="year-slider" />
             <span class="offset-value">{{ offsetValue }}</span>
           </div>
         </div>

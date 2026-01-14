@@ -310,41 +310,7 @@ export const ProvincialRealEstateSellCharts = {
     ]
 };
 
-export const ProvinceRealEstatePriceIndicesCharts = {
 
-    source: {
-        localJson: './json/province.json',
-        apiParams: params_province,
-        ProvinceCodeArr: [
-            '110000', '310000', '440100', '440300', '330100',
-            '510100', '420100', '320100', '500000', '610100',
-            '410100', '340100', '430100'
-        ]
-    },
-    charts: [
-        {
-            id: 'ES-SAY',
-            title: '新建商品住宅销售价格指数(上月=100)',
-            subtitle: '',
-            period: 'monthly',
-            zbcodeArr: ['A010804'],
-            dbCode: 'yd',
-            chartType: 'bar',
-            exceptName: '',
-        },
-        {
-            id: 'ES-SY',
-            title: '二手房住宅销售价格指数(上月=100)',
-            subtitle: '',
-            period: 'monthly',
-            zbcodeArr: ['A010807'],
-            dbCode: 'yd',
-            chartType: 'bar',
-            exceptName: '',
-        },
-
-    ]
-};
 export const ProvincialLivingCharts = {
 
     source: {
