@@ -71,7 +71,8 @@ export function selectDataFromArr(returndata, zbCode, dbCode = 'nd', cityCode = 
     return dataArr.map(d => {
       const val = Number(d.value);
       if (Number.isInteger(val)) return val;
-      return Number(val.toFixed(2));
+      const decimalPlaces = Math.abs(val) >= 1 ? 2 : 3;
+      return Number(val.toFixed(decimalPlaces));
     });
 }
 
@@ -326,7 +327,11 @@ export function getCommonChartOption(params) {
     min: (value) => value.min - (value.max - value.min) * 0.1,
     max: (value) => value.max + (value.max - value.min) * 0.1,
     axisLabel: {
-      formatter: (value) => value.toFixed(2) + unit,
+      formatter: (value) => {
+        // 根据数值大小决定小数位数
+        const decimalPlaces = Math.abs(value) >= 1 ? 2 : 3;
+        return value.toFixed(decimalPlaces) + unit;
+      },
     },
   };
   // 优化年份处理
