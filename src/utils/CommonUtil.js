@@ -290,7 +290,12 @@ export function getCommonChartOption(params) {
       const city = data.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
       const valueArr = selectDataFromArr(data, zbcodeArr[0], dbCode, cityCode, yearLimit) || [];
-      seriesData.push({ name, type: chartType, data: valueArr });
+      seriesData.push({
+        name,
+        zbCode:zbcodeArr[0], // 新增 zbCode 供饼图触发
+        type: chartType,
+        data: valueArr,
+      });
     });
   }
 
@@ -387,6 +392,8 @@ export function getCommonChartOption(params) {
     }
     pieConfig.pies.forEach((pie, idx) => {
       const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
+      logger.debug('seriesData-targetSeries',seriesData,targetSeries)
+     
       
       // 获取最后一个横坐标的索引
       const lastYearIndex = filteredYears.length - 1;
@@ -411,7 +418,7 @@ export function getCommonChartOption(params) {
         center: pie.center || ['50%', 170],
         data: pieData,
         label: {
-          formatter: params => `${params.name}\n${params.value}\n(${params.percent}%)`
+          formatter: params => `${params.name}(${params.percent}%)`
         },
         emphasis: { focus: 'self' },
         itemStyle: {

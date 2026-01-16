@@ -1,17 +1,18 @@
 import { params_province } from '@/utils/CommonUtil.js';
 
+const PROVINCE_CODES = [
+    '110000', '120000', '130000', '140000',
+    '150000', '210000', '220000', '230000',
+    '310000', '320000', '330000', '340000', '350000', '360000', '370000',
+    '410000', '420000', '430000', '440000', '450000', '460000',
+    '500000', '510000', '520000', '530000', '540000',
+    '610000', '620000', '630000', '640000', '650000'];
+
 export const ProvincialEducationCharts = {
     source: {
         localJson: './json/province.json', // ✅ 替换为你实际放置的路径
         apiParams: params_province,         // ✅ 替换为你的请求参数
-        cityCodeArr: [                               // ✅ 实际为省级行政区 code
-            '110000', '120000', '130000', '140000',
-            '150000', '210000', '220000', '230000',
-            '310000', '320000', '330000', '340000', '350000', '360000', '370000',
-            '410000', '420000', '430000', '440000', '450000', '460000',
-            '500000', '510000', '520000', '530000', '540000',
-            '610000', '620000', '630000', '640000', '650000'
-        ]
+        cityCodeArr: PROVINCE_CODES
     },
     charts: [
         {
@@ -23,6 +24,18 @@ export const ProvincialEducationCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
+            legendTop: '70px',
+            gridTop: '55%',
+            pieConfig: {
+              enabled: true,
+              pies: [
+                {
+                  triggerZbCodes: ['A0M0103'],
+                  radius: '20%',
+                  center: ['50%', '30%'],
+                }
+              ]
+            }
 
         },
         {
@@ -34,6 +47,18 @@ export const ProvincialEducationCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
+            legendTop: '70px',
+            gridTop: '55%',
+            pieConfig: {
+              enabled: true,
+              pies: [
+                {
+                  triggerZbCodes: ['A0M0106'],
+                  radius: '20%',
+                  center: ['50%', '30%'],
+                }
+              ]
+            }
 
         },
         {
@@ -45,6 +70,18 @@ export const ProvincialEducationCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
+            legendTop: '70px',
+            gridTop: '55%',
+            pieConfig: {
+              enabled: true,
+              pies: [
+                {
+                  triggerZbCodes: ['A0M010C'],
+                  radius: '20%',
+                  center: ['50%', '30%'],
+                }
+              ]
+            }
 
         }
     ]
@@ -54,14 +91,7 @@ export const ProvincialFinanceCharts = {
     source: {
         localJson: './json/province.json',
         apiParams: params_province,
-        cityCodeArr: [                               // ✅ 实际为省级行政区 code
-            '110000', '120000', '130000', '140000',
-            '150000', '210000', '220000', '230000',
-            '310000', '320000', '330000', '340000', '350000', '360000', '370000',
-            '410000', '420000', '430000', '440000', '450000', '460000',
-            '500000', '510000', '520000', '530000', '540000',
-            '610000', '620000', '630000', '640000', '650000'
-        ]
+        cityCodeArr: PROVINCE_CODES
     },
     charts: [
         {
@@ -73,6 +103,18 @@ export const ProvincialFinanceCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
+            legendTop: '70px',
+            gridTop: '55%',
+            pieConfig: {
+              enabled: true,
+              pies: [
+                {
+                  triggerZbCodes: ['A080101'],
+                  radius: '20%',
+                  center: ['50%', '30%'],
+                }
+              ]
+            }
 
         },
         {
@@ -84,6 +126,18 @@ export const ProvincialFinanceCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
+            legendTop: '70px',
+            gridTop: '55%',
+            pieConfig: {
+              enabled: true,
+              pies: [
+                {
+                  triggerZbCodes: ['A080201'],
+                  radius: '20%',
+                  center: ['50%', '30%'],
+                }
+              ]
+            }
 
         },
         {
@@ -105,14 +159,7 @@ export const ProvincialGDPCharts = {
     source: {
         localJson: './json/province.json',
         apiParams: params_province,
-        cityCodeArr: [                               // ✅ 实际为省级行政区 code
-            '110000', '120000', '130000', '140000',
-            '150000', '210000', '220000', '230000',
-            '310000', '320000', '330000', '340000', '350000', '360000', '370000',
-            '410000', '420000', '430000', '440000', '450000', '460000',
-            '500000', '510000', '520000', '530000', '540000',
-            '610000', '620000', '630000', '640000', '650000'
-        ]
+        cityCodeArr: PROVINCE_CODES
     },
     charts: [
         {
@@ -124,7 +171,18 @@ export const ProvincialGDPCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-
+            legendTop: '70px',
+            gridTop: '55%',
+            pieConfig: {
+              enabled: true,
+              pies: [
+                {
+                  triggerZbCodes: ['A020101'],
+                  radius: '20%',
+                  center: ['50%', '30%'],
+                }
+              ]
+            }
         }
 
     ]
@@ -135,14 +193,7 @@ export const ProvincialMedicalCharts = {
     source: {
         localJson: './json/province.json',
         apiParams: params_province,
-        cityCodeArr: [                               // ✅ 实际为省级行政区 code
-            '110000', '120000', '130000', '140000',
-            '150000', '210000', '220000', '230000',
-            '310000', '320000', '330000', '340000', '350000', '360000', '370000',
-            '410000', '420000', '430000', '440000', '450000', '460000',
-            '500000', '510000', '520000', '530000', '540000',
-            '610000', '620000', '630000', '640000', '650000'
-        ]
+        cityCodeArr: PROVINCE_CODES
     },
     charts: [
         {
@@ -193,9 +244,18 @@ export const ProvincialPopulationCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '人口',
-      legendTop: '10%',
-      gridTop: '20%',
-      unit: ''
+      legendTop: '70px',
+      gridTop: '55%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: ['A030101'],
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
     },
     {
       id: 'PRB',
@@ -263,6 +323,18 @@ export const ProvincialRealEstateInvestCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
+            legendTop: '70px',
+            gridTop: '55%',
+            pieConfig: {
+              enabled: true,
+              pies: [
+                {
+                  triggerZbCodes: ['A050D02'],
+                  radius: '20%',
+                  center: ['50%', '30%'],
+                }
+              ]
+            }
 
         }
 
@@ -293,6 +365,18 @@ export const ProvincialRealEstateSellCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
+            legendTop: '70px',
+            gridTop: '55%',
+            pieConfig: {
+              enabled: true,
+              pies: [
+                {
+                  triggerZbCodes: ['A050H02'],
+                  radius: '20%',
+                  center: ['50%', '30%'],
+                }
+              ]
+            }
 
         },
         {
@@ -316,14 +400,7 @@ export const ProvincialLivingCharts = {
     source: {
         localJson: './json/province.json',
         apiParams: params_province,
-        cityCodeArr: [                               // ✅ 实际为省级行政区 code
-            '110000', '120000', '130000', '140000',
-            '150000', '210000', '220000', '230000',
-            '310000', '320000', '330000', '340000', '350000', '360000', '370000',
-            '410000', '420000', '430000', '440000', '450000', '460000',
-            '500000', '510000', '520000', '530000', '540000',
-            '610000', '620000', '630000', '640000', '650000'
-        ]
+        cityCodeArr: PROVINCE_CODES
     },
     charts: [
         {

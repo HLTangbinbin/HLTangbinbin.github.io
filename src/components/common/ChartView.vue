@@ -92,7 +92,7 @@ export default {
               id: `pie_${idx}`,
               data: pieData,
               label: {
-                formatter: params => `${params.name}\n ${params.value} \n(${params.percent}%)`
+                formatter: params => `${params.name}(${params.percent}%)`
               },
             }]
           });
