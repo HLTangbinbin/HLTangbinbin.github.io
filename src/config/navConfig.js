@@ -67,7 +67,14 @@ export const navConfig = [
     label: '全国',
     children: [
       { path: 'GrossDomesticProduct', label: 'GDP' },
-      { path: 'PopulationCorrelation', label: '人口' },
+      {
+        path: 'PopulationCorrelation',
+        label: '人口',
+        children: [
+          { path: 'PopulationBasic', label: '普查' },
+          { path: 'PopulationSpot', label: '抽样' }
+        ]
+      },
       { path: 'NationalFinance', label: '财政' },
       {
         path: 'RealEstate',
@@ -77,11 +84,28 @@ export const navConfig = [
           { path: 'RealEstateSell', label: '销售' }
         ]
       },
-      { path: 'EducationSector', label: '教育' },
+      {
+        path: 'EducationSector',
+        label: '教育',
+        children: [
+          { path: 'EducationSchool', label: '学校' },
+          { path: 'EducationTeacher', label: '教师' },
+          { path: 'EducationStudent', label: '学生' }
+        ]
+      },
       { path: 'MedicalTreatment', label: '医疗' },
       { path: 'MarriageStatus', label: '婚姻' },
       { path: 'SocialRetailgoods', label: '社零' },
-      { path: 'FinancialIndustry', label: '金融' },
+      {
+        path: 'FinancialIndustry',
+        label: '金融',
+        children: [
+          { path: 'FinancialCurrency', label: '货币' },
+          { path: 'FinancialSocialFinancing', label: '社融' },
+          { path: 'FinancialSecurity', label: '证券' },
+          { path: 'FinancialInsurance', label: '保险' }
+        ]
+      },
       { path: 'ForeignTrade', label: '外贸' },
       { path: 'IndicesData', label: '指数' },
       { path: 'TouristIndustry', label: '旅游' },

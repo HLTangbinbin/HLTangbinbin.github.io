@@ -1,38 +1,41 @@
 <template>
-  <ChartPage
-    v-if="returnData"
-    :chartMetaList="charts"
-    :returnData="returnData"
-    :config="config" 
-    :showToggles="false" ></ChartPage>
+  <div>
+    <!-- 自动判断当前 basePath 与 navItems -->
+    <NavBar :navItems="navItems" :basePath="basePath" />
+    <router-view />
+  </div>
 </template>
 
 <script>
-import ChartPage from '@/components/common/ChartPage.vue';
-import { PopulationCharts } from '@/config/chartMetaNation.js';
-
-import { loadChartData } from '@/config/dataLoader.js';
-import { logger } from '@/utils/Logger.js';
+import NavBar from '@/components/common/NavBar.vue';
+import { navConfig } from '@/config/navConfig';
 
 export default {
   name: 'PopulationCorrelation',
-  components: { ChartPage },
-  data() {
-    return {
-      charts: PopulationCharts.charts,
-      returnData: null,
-      config: PopulationCharts.source
-    };
-  },
-  async mounted() {
-    try {
-      this.returnData = await loadChartData(
-        this.config
-      );
-    } catch (e) {
-      logger.error('加载数据失败', e);
+  components: { NavBar },
+  computed: {
+    navItems() {
+      const matched = this.$route.matched;
+      const basePath = matched[0]?.path;
+      const secondPath = matched[1]?.path;
+
+      const group = navConfig.find(i => i.path === basePath);
+      if (!group) return [];
+
+      const second = group.children?.find(i => `${basePath}/${i.path}` === secondPath);
+      if (second?.children) {
+        return second.children;
+      }
+
+      return group.children || [];
+    },
+    basePath() {
+      const matched = this.$route.matched;
+      if (matched.length >= 2) {
+        return matched[1].path;
+      }
+      return matched[0]?.path || '';
     }
   }
 };
-
 </script>

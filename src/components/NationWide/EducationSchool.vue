@@ -1,0 +1,39 @@
+<template>
+    <ChartPage
+      v-if="returnData"
+      :chartMetaList="charts"
+      :returnData="returnData"
+      :config="config" 
+      :showToggles="false" ></ChartPage>
+  </template>
+  
+  <script>
+  import ChartPage from '@/components/common/ChartPage.vue';
+  import { EducationSchoolCharts } from '@/config/chartMetaNation.js';
+  
+  import { loadChartData } from '@/config/dataLoader.js';
+  import { logger } from '@/utils/Logger.js';
+  
+  export default {
+    name: 'EducationSchool',
+    components: { ChartPage },
+    data() {
+      return {
+        charts: EducationSchoolCharts.charts,
+        returnData: null,
+        config: EducationSchoolCharts.source
+      };
+    },
+    async mounted() {
+      try {
+        this.returnData = await loadChartData(
+          this.config
+        );
+      } catch (e) {
+        logger.error('加载数据失败', e);
+      }
+    }
+  };
+  
+  </script>
+  

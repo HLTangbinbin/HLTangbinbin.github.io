@@ -5,7 +5,29 @@ import {
   params_transportationAndTelecommunications
 } from '@/utils/CommonUtil.js';
 
-export const FinancialIndustryCharts = {
+const AGE_CODES = [
+  'A03060102', 'A03060103', 'A03060104', 'A03060105',
+  'A03060106', 'A03060107', 'A03060108', 'A03060109',
+  'A0306010A', 'A0306010B', 'A0306010C', 'A0306010D',
+  'A0306010E', 'A0306010F', 'A0306010G', 'A0306010H',
+  'A0306010I', 'A0306010J', 'A0306010K', 'A0306010L',];
+
+const AGE_SEX_CODES = [
+  'A03060402', 'A03060403', 'A03060404', 'A03060405',
+  'A03060406', 'A03060407', 'A03060408', 'A03060409',
+  'A0306040A', 'A0306040B', 'A0306040C', 'A0306040D',
+  'A0306040E', 'A0306040F', 'A0306040G', 'A0306040H',
+  'A0306040I', 'A0306040J', 'A0306040K', 'A0306040L',];
+
+
+const Eductor_CODES = [
+  'A03060904', 'A03060907', 'A0306090A', 'A0306090D',
+  'A0306090G',];
+  
+
+  
+
+export const FinancialCurrencyCharts = {
 
   source: {
     localJson: './json/nation.json',
@@ -60,8 +82,157 @@ export const FinancialIndustryCharts = {
     }
   ]
 };
+export const FinancialSocialFinancingCharts = {
 
-export const EducationSectorCharts = {
+  source: {
+    localJson: './json/nation.json',
+    apiParams: params_financialIndustry
+  },
+  charts: [
+    {
+      id: 'FI-SF',
+      title: '社会融资规模(亿元)',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: ['A0L0801'],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '',
+
+    }
+  ]
+};
+export const FinancialSecurityCharts = {
+
+  source: {
+    localJson: './json/nation.json',
+    apiParams: params_financialIndustry
+  },
+  charts: [
+    {
+      id: 'FI-SCS',
+      title: '股票数据(亿) ',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: ['A0L0904', 'A0L0905', 'A0L0906', 'A0L0907', 'A0L0908', 'A0L0909'],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '股票',
+
+    },
+    {
+      id: 'FI-SCO',
+      title: '债券基金数据(亿) ',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: ['A0L090J', 'A0L090O', 'A0L090Q'],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '成交金额',
+
+    }
+  ]
+};
+
+export const FinancialInsuranceCharts = {
+
+  source: {
+    localJson: './json/nation.json',
+    apiParams: params_financialIndustry
+  },
+  charts: [
+    {
+      id: 'FI-ISA',
+      title: '保险业资产(亿元) ',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: ['A0L0F01', 'A0L0F02', 'A0L0F03', 'A0L0F04', 'A0L0F05', 'A0L0F06'],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '公司资产',
+
+    },
+    {
+      id: 'FI-ISF',
+      title: '保费收入与支出(亿) ',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: ['A0L0H01', 'A0L0H02', 'A0L0H03', 'A0L0H04', 'A0L0H05', 'A0L0H06'],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '保险保费',
+
+    }
+  ]
+};
+export const EducationSchoolCharts = {
+  source: {
+    localJson: './json/nation.json', // ✅ 根据实际路径调整
+    apiParams: params_education // ✅ 替换为你的API参数对象
+  },
+  charts: [
+    {
+      id: 'ES-SC', // 学校数
+      title: '各类学校数(个)',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: [
+        'A0M0508', // 学前
+        'A0M0506', // 小学
+        'A0M0504', // 初中
+        'A0M0503', // 高中
+        'A0M0501', // 高等
+      ],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '学校数',
+
+    },
+    {
+      id: 'ES-TAS', // 各类学校生师比
+      title: '各类学校生师比',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: [
+
+        'A0M0W01', // 小学
+        'A0M0W02', // 初中
+        'A0M0W03', // 高中
+        'A0M0W06', // 高等
+      ],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '生师比',
+
+    },
+  ]
+};
+export const EducationTeacherCharts = {
+  source: {
+    localJson: './json/nation.json', // ✅ 根据实际路径调整
+    apiParams: params_education // ✅ 替换为你的API参数对象
+  },
+  charts: [
+    {
+      id: 'ES-TC', // 学校数
+      title: '各类教师数(万人)',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: [
+        'A0M0608', // 学前教师数
+        'A0M0606', // 小学教师数
+        'A0M0604', // 初中教师数
+        'A0M0603', // 高中中教师数
+        'A0M0601', // 高等中学教师数
+      ],
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '普通教育专任教师数',
+
+    },
+  ]
+};
+export const EducationStudentCharts = {
   source: {
     localJson: './json/nation.json', // ✅ 根据实际路径调整
     apiParams: params_education // ✅ 替换为你的API参数对象
@@ -647,7 +818,7 @@ export const NationalFinanceCharts = {
 };
 
 
-export const PopulationCharts = {
+export const PopulationBasicCharts = {
   source: {
     localJson: './json/nation.json',
     apiParams: params_population
@@ -725,6 +896,83 @@ export const PopulationCharts = {
       gridTop: '170px',
       unit: '(%)'
     }
+  ]
+};
+export const PopulationSpotCharts = {
+  source: {
+    localJson: './json/nation.json',
+    apiParams: params_population
+  },
+  charts: [
+    {
+      id: 'PO-SC-AA',
+      title: '按年龄分人口数(抽样调查)',
+      subtitle: '',
+      period: 'yearly',
+      chartType: 'bar',
+      zbcodeArr: AGE_CODES,
+      dbCode: 'nd',
+      exceptName: '人口数(人口抽样调查)',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: AGE_CODES,  // 男性、女性
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
+
+    },
+    {
+      id: 'PO-SC-AS',
+      title: '按年龄分性别比(抽样调查)',
+      subtitle: '',
+      period: 'yearly',
+      chartType: 'bar',
+      zbcodeArr: AGE_SEX_CODES,
+      dbCode: 'nd',
+      exceptName: '性别比(女=100)(人口抽样调查)',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: AGE_SEX_CODES,  // 男性、女性
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
+
+    },
+    {
+      id: 'PO-SC-EP',
+      title: '按受教育程度分人口数(抽样调查)',
+      subtitle: '',
+      period: 'yearly',
+      chartType: 'bar',
+      zbcodeArr: Eductor_CODES,
+      dbCode: 'nd',
+      exceptName: '6岁及6岁以上及以上人口数(人口抽样调查)',
+      legendTop: '70px',
+      gridTop: '45%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: Eductor_CODES,  // 男性、女性
+            radius: '20%',
+            center: ['50%', '30%'],
+          }
+        ]
+      }
+
+    },
   ]
 };
 
