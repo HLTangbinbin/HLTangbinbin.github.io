@@ -6,6 +6,12 @@
                 "unit": "亿元",
                 "data": [
                     {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
                         "value": 21106.23,
                         "date": "2024",
                         "cityName": "武汉",
@@ -178,12 +184,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -191,6 +191,12 @@
                 "cname": "第一产业增加值",
                 "unit": "亿元",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 506.82,
                         "date": "2024",
@@ -364,12 +370,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -377,6 +377,12 @@
                 "cname": "第二产业增加值",
                 "unit": "亿元",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 6584.45,
                         "date": "2024",
@@ -550,12 +556,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -563,6 +563,12 @@
                 "cname": "第三产业增加值",
                 "unit": "亿元",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 14014.96,
                         "date": "2024",
@@ -736,12 +742,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -749,6 +749,12 @@
                 "cname": "年末户籍人口",
                 "unit": "万人",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 956.94,
                         "date": "2024",
@@ -922,12 +928,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -935,6 +935,12 @@
                 "cname": "城镇非私营单位在岗职工平均工资",
                 "unit": "元",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 0.0,
                         "date": "2024",
@@ -1108,12 +1114,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -1121,6 +1121,12 @@
                 "cname": "房地产开发投资额",
                 "unit": "亿元",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 3332.08,
                         "date": "2024",
@@ -1294,12 +1300,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -1307,6 +1307,12 @@
                 "cname": "房地产开发住宅投资额",
                 "unit": "亿元",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 2422.4641,
                         "date": "2024",
@@ -1480,12 +1486,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -1493,6 +1493,12 @@
                 "cname": "房地产开发办公楼投资额",
                 "unit": "亿元",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 238.7085,
                         "date": "2024",
@@ -1666,12 +1672,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -1679,6 +1679,12 @@
                 "cname": "房地产开发商业营业用房投资额",
                 "unit": "亿元",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 282.3118,
                         "date": "2024",
@@ -1852,12 +1858,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -1865,6 +1865,12 @@
                 "cname": "房地产开发企业施工房屋面积",
                 "unit": "万平方米",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 14437.7134,
                         "date": "2024",
@@ -2038,12 +2044,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -2051,6 +2051,12 @@
                 "cname": "房地产开发企业竣工房屋面积",
                 "unit": "万平方米",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 936.8879,
                         "date": "2024",
@@ -2224,12 +2230,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -2237,6 +2237,12 @@
                 "cname": "房地产开发企业住宅竣工房屋面积",
                 "unit": "万平方米",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 669.9469,
                         "date": "2024",
@@ -2410,12 +2416,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -2423,6 +2423,12 @@
                 "cname": "商品房销售面积",
                 "unit": "万平方米",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 1998.2954,
                         "date": "2024",
@@ -2596,12 +2602,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -2609,6 +2609,12 @@
                 "cname": "住宅商品房销售面积",
                 "unit": "万平方米",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 1583.5057,
                         "date": "2024",
@@ -2782,12 +2788,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -2795,6 +2795,12 @@
                 "cname": "商品房平均销售价格",
                 "unit": "元/平方米",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 12771.0,
                         "date": "2024",
@@ -2968,12 +2974,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -2981,6 +2981,12 @@
                 "cname": "住宅商品房平均销售价格",
                 "unit": "元/平方米",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 13571.0,
                         "date": "2024",
@@ -3154,12 +3160,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -3167,6 +3167,12 @@
                 "cname": "房地产开发企业购置土地面积",
                 "unit": "万平方米",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 0.0,
                         "date": "2024",
@@ -3340,12 +3346,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -3353,6 +3353,12 @@
                 "cname": "房地产开发企业土地开发面积",
                 "unit": "万平方米",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 0.0,
                         "date": "2024",
@@ -3526,12 +3532,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -3539,6 +3539,12 @@
                 "cname": "地方一般公共预算收入",
                 "unit": "亿元",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 1667.3101,
                         "date": "2024",
@@ -3712,12 +3718,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 31.5353,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -3725,6 +3725,12 @@
                 "cname": "地方一般公共预算支出",
                 "unit": "亿元",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 2480.996,
                         "date": "2024",
@@ -3898,12 +3904,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -3911,6 +3911,12 @@
                 "cname": "住户存款余额",
                 "unit": "亿元",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 18248.5802,
                         "date": "2024",
@@ -4084,12 +4090,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 227.7695,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -4097,6 +4097,12 @@
                 "cname": "普通本专科在校学生数",
                 "unit": "万人",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 119.3975,
                         "date": "2024",
@@ -4270,12 +4276,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -4283,6 +4283,12 @@
                 "cname": "医院数",
                 "unit": "个",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 373.0,
                         "date": "2024",
@@ -4456,12 +4462,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -4469,6 +4469,12 @@
                 "cname": "执业(助理)医师数",
                 "unit": "万人",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 5.2766,
                         "date": "2024",
@@ -4642,12 +4648,6 @@
                         "date": "1996",
                         "cityName": "武汉",
                         "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
                     }
                 ]
             },
@@ -4655,6 +4655,12 @@
                 "cname": "剧场、影剧院数",
                 "unit": "个",
                 "data": [
+                    {
+                        "value": 0.0,
+                        "date": "2025",
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "value": 0.0,
                         "date": "2024",
@@ -4826,12 +4832,6 @@
                     {
                         "value": 0.0,
                         "date": "1996",
-                        "cityName": "武汉",
-                        "cityCode": "420100"
-                    },
-                    {
-                        "value": 0.0,
-                        "date": "1995",
                         "cityName": "武汉",
                         "cityCode": "420100"
                     }
@@ -6494,6 +6494,12 @@
                 "unit": "套",
                 "data": [
                     {
+                        "date": "202601",
+                        "value": 4817.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
                         "date": "202512",
                         "value": 4697.0,
                         "cityName": "武汉",
@@ -6577,6 +6583,12 @@
                 "cname": "二手房成交价格",
                 "unit": "万元",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 0.99,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 0.97,
@@ -6662,6 +6674,12 @@
                 "unit": "套",
                 "data": [
                     {
+                        "date": "202601",
+                        "value": 0.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
                         "date": "202512",
                         "value": 47061.0,
                         "cityName": "武汉",
@@ -6745,6 +6763,12 @@
                 "cname": "二手房涨价房源数量",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 0.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 2528.0,
@@ -6830,6 +6854,12 @@
                 "unit": "套",
                 "data": [
                     {
+                        "date": "202601",
+                        "value": 14527.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
                         "date": "202512",
                         "value": 17602.0,
                         "cityName": "武汉",
@@ -6913,6 +6943,12 @@
                 "cname": "二手房看房人数",
                 "unit": "个",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 81783.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 88072.0,
@@ -7026,10 +7062,10 @@
             "1999",
             "1998",
             "1997",
-            "1996",
-            "1995"
+            "1996"
         ],
         "yd": [
+            "202601",
             "202512",
             "202511",
             "202510",
