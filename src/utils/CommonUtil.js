@@ -290,6 +290,7 @@ export function getCommonChartOption(params) {
         type: chartType,
         data: valueArr,
         date: dateArr,
+        emphasis: { focus: 'series' }
       });
     });
   } else {
@@ -306,6 +307,7 @@ export function getCommonChartOption(params) {
         type: chartType,
         data: valueArr,
         date: dateArr,
+        emphasis: { focus: 'series' }
       });
     });
   }

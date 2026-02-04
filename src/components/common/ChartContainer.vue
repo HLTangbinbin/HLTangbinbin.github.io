@@ -34,20 +34,21 @@
       </div>
       
       <!-- 折线图模式下第二行控件 -->
-      <div v-if="currentChartType === 'line' && !isHorizontal" class="line-mode-controls">
+      <div v-if="showOffsetControls" class="line-mode-controls">
         <div class="legend-control">
           <el-select v-model="selectedLegend" placeholder="选择图例" class="legend-selector">
             <el-option v-for="legend in legendList" :key="legend" :label="legend" :value="legend" />
           </el-select>
         </div>
-        
+
         <div class="offset-controls">
           <label class="year-label">折线偏移:</label>
           <div class="offset-slider-container">
             <el-slider v-model="offsetValue" :min=-30 :max=30 :step=1 class="year-slider" />
             <span class="offset-value">{{ offsetValue }}</span>
           </div>
-        </div>
+ 
+      </div>
       </div>
     </div>
 
@@ -149,6 +150,15 @@ export default {
         chartRef.value.toggleAllLegends(legendAllSelected.value);
       }
     };
+    // 计算属性：是否显示偏移功能
+    const showOffsetControls = computed(() => {
+      // 城市tab下不显示偏移功能
+      const isCityMode = props.config.cityCodeArr && props.config.cityCodeArr.length > 0;
+
+      return currentChartType.value === 'line' &&
+        !isHorizontal.value &&
+        !isCityMode;
+    });
 
     return {
       currentChartType,
@@ -158,6 +168,7 @@ export default {
       chartOption,
       setChartType,
       toggleAllLegends,
+      showOffsetControls,
       chartRef,
       selectedLegend,
       offsetValue,
