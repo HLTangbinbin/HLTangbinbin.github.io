@@ -1,5 +1,9 @@
 import { params_wh } from '@/utils/CommonUtil.js';
 
+const AREA_ND_CODES = ['A0502','A0503','A0504','A0505','A0506','A0507','A0508','A0509','A050A','A050B','A050C','A050D','A050E','A050F','A050G','A050H'];
+const AREA_YD_CODES = ['A0102','A0103','A0104','A0105','A0106','A0107','A0108','A0109','A010A','A010B','A010C','A010D','A010E','A010F','A010G','A010H'];
+
+
 export const WHEducationCharts = {
 
   source: {
@@ -205,6 +209,28 @@ export const WHNewHouseCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '',
+    },
+    {
+      id: 'HNYV-A',
+      title: '武汉各区域二手房年成交量',
+      subtitle: '',
+      period: 'yearly',
+      zbcodeArr: AREA_ND_CODES,
+      dbCode: 'nd',
+      chartType: 'bar',
+      exceptName: '',
+      legendTop: '70px',
+      gridTop: '55%',
+      pieConfig: {
+        enabled: true,
+        pies: [
+          {
+            triggerZbCodes: AREA_ND_CODES,
+            radius: '30%',
+            center: ['50%', '35%'],
+          }
+        ]
+      }
 
     },
     {
@@ -219,11 +245,11 @@ export const WHNewHouseCharts = {
 
     },
     {
-      id: 'HNYVA',
+      id: 'HNYV-A',
       title: '武汉各区域二手房月成交量',
       subtitle: '',
       period: 'monthly',
-      zbcodeArr: ['A0102','A0103','A0104','A0105','A0106','A0107','A0108','A0109','A010A','A010B','A010C','A010D','A010E','A010F','A010G','A010H'],
+      zbcodeArr: AREA_YD_CODES,
       dbCode: 'yd',
       chartType: 'bar',
       exceptName: '',
@@ -233,7 +259,7 @@ export const WHNewHouseCharts = {
         enabled: true,
         pies: [
           {
-            triggerZbCodes: ['A0102','A0103','A0104','A0105','A0106','A0107','A0108','A0109','A010A','A010B','A010C','A010D','A010E','A010F','A010G','A010H'],
+            triggerZbCodes: AREA_YD_CODES,
             radius: '30%',
             center: ['50%', '35%'],
           }
@@ -257,7 +283,7 @@ export const WHSecondHouseCharts = {
       title: '武汉二手房年成交量',
       subtitle: '',
       period: 'yearly',
-      zbcodeArr: ['A0502'],
+      zbcodeArr: ['A0601'],
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '二手房数',
