@@ -281,18 +281,7 @@ export function getCommonChartOption(params) {
         birthArr = valueArr;
         valueArr = offsetArray(valueArr, yearLimit, -1);
       } else if (chartType === 'line' && name === selectedLegend) {
-        let yearlength = yearLimit;
-        if (yearLimit >= dateArr.length) {
-          yearlength = dateArr.length
-        }
-        // 如果yearlimit大于了实际数据长度，会导致偏移出现问题
-        result = selectDataFromArr(data, zbCode, dbCode, '',  yearlength + (offsetValue > 0 ? offsetValue : 0))
-        valueArr = result.map(item => item.value);
-        valueArr = offsetArray(
-          valueArr,
-          yearlength,
-          offsetValue
-        );
+        valueArr = offsetArray(valueArr, Math.min(yearLimit, valueArr.length), offsetValue);
       }
 
       seriesData.push({
