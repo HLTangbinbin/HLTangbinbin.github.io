@@ -66,14 +66,23 @@ export function selectDataFromArr(returndata, zbCode, dbCode = 'nd', cityCode = 
   }
   dataArr = dataArr.slice(0, lastNonZeroIndex + 1);
 
-  // 返回 value 数组（升序）
-    // 返回 value 数组（升序），小数保留2位
-    return dataArr.map(d => {
-      const val = Number(d.value);
-      if (Number.isInteger(val)) return val;
+  // 返回包含 value 和 date 的对象数组
+  return dataArr.map(d => {
+    const val = Number(d.value);
+    let formattedValue;
+    
+    if (Number.isInteger(val)) {
+      formattedValue = val;
+    } else {
       const decimalPlaces = Math.abs(val) >= 1 ? 2 : 3;
-      return Number(val.toFixed(decimalPlaces));
-    });
+      formattedValue = Number(val.toFixed(decimalPlaces));
+    }
+    
+    return {
+      value: formattedValue,
+      date: d.date
+    };
+  });
 }
 
 // 图表统一绘制方法
@@ -243,7 +252,6 @@ export function getCommonChartOption(params) {
   const startTime = performance.now();
   let marriageArr = [], birthArr = [], nextBirth = 0;
   let seriesData = [];
-  let firstDate = '';
 
   // ----------------------------
   // 原有 series 数据生成逻辑（不改动）
@@ -264,16 +272,25 @@ export function getCommonChartOption(params) {
       }
 
       const name = cname + unit;
-      let valueArr = selectDataFromArr(data, zbCode, dbCode, '', yearLimit);
 
+      let result =  selectDataFromArr(data, zbCode, dbCode, '', yearLimit);
+      let valueArr = result.map(item => item.value);
+      let dateArr = result.map(item => item.date);
       if (enableBirthOffset && zbCode === 'A0P0C01') marriageArr = valueArr;
       else if (enableBirthOffset && zbCode === 'A030109') {
         birthArr = valueArr;
         valueArr = offsetArray(valueArr, yearLimit, -1);
       } else if (chartType === 'line' && name === selectedLegend) {
+        let yearlength = yearLimit;
+        if (yearLimit >= dateArr.length) {
+          yearlength = dateArr.length
+        }
+        // 如果yearlimit大于了实际数据长度，会导致偏移出现问题
+        result = selectDataFromArr(data, zbCode, dbCode, '',  yearlength + (offsetValue > 0 ? offsetValue : 0))
+        valueArr = result.map(item => item.value);
         valueArr = offsetArray(
-          selectDataFromArr(data, zbCode, dbCode, '', yearLimit + (offsetValue > 0 ? offsetValue : 0)),
-          yearLimit,
+          valueArr,
+          yearlength,
           offsetValue
         );
       }
@@ -283,18 +300,23 @@ export function getCommonChartOption(params) {
         zbCode, // 新增 zbCode 供饼图触发
         type: chartType,
         data: valueArr,
+        date: dateArr,
       });
     });
   } else {
     cityCodeArr.forEach(cityCode => {
       const city = data.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
-      const valueArr = selectDataFromArr(data, zbcodeArr[0], dbCode, cityCode, yearLimit) || [];
+
+      let result =  selectDataFromArr(data, zbcodeArr[0], dbCode, cityCode, yearLimit) || [];
+      let valueArr = result.map(item => item.value);
+      let dateArr = result.map(item => item.date);
       seriesData.push({
         name,
         zbCode:zbcodeArr[0], // 新增 zbCode 供饼图触发
         type: chartType,
         data: valueArr,
+        date: dateArr,
       });
     });
   }
@@ -339,18 +361,15 @@ export function getCommonChartOption(params) {
       },
     },
   };
-  // 优化年份处理
+  // 删除原来的年份处理逻辑，改用 seriesData 中的 date 数组
   let filteredYears = [];
-  const zbCode = zbcodeArr[0]
-  const zbDataArr = data.data[dbCode]?.[zbCode];
-  firstDate = zbDataArr.data[0]?.date;
-  const fullYears = (data.sj?.[dbCode] || []).sort((a, b) => a.localeCompare(b));
-  
-  if (firstDate === fullYears.slice(-1)[0]) {
-    filteredYears = fullYears.slice(-yearLimit);
-  }else {
-    
-    filteredYears = fullYears.slice(-yearLimit - 1, -1);
+
+  // 从 seriesData 中获取第一个有效数据的 date 数组
+  if (seriesData.length > 0) {
+    const firstSeries = seriesData[0];
+    if (firstSeries.date && Array.isArray(firstSeries.date) && firstSeries.date.length > 0) {
+      filteredYears = firstSeries.date;
+    }
   }
   const categoryAxisConfig = { type: 'category', data: filteredYears };
   // ----------------------------
@@ -392,7 +411,7 @@ export function getCommonChartOption(params) {
     }
     pieConfig.pies.forEach((pie, idx) => {
       const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
-      logger.debug('seriesData-targetSeries',seriesData,targetSeries)
+      // logger.debug('seriesData-targetSeries',seriesData,targetSeries)
      
       
       // 获取最后一个横坐标的索引
@@ -438,7 +457,7 @@ export function getCommonChartOption(params) {
     
   
   }
-  logger.debug('optionData',optionData)
+  // logger.debug('optionData',optionData)
   const endTime = performance.now();
   logger.debug(`[getCommonChartOption] 总耗时: ${Math.round(endTime - startTime)}ms, 标题: ${title}, series数量: ${seriesData.length}`);
   return optionData;
