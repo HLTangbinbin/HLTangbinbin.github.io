@@ -5096,6 +5096,12 @@
                 "unit": "套",
                 "data": [
                     {
+                        "date": "202601",
+                        "value": 3400.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
                         "date": "202512",
                         "value": 22152.0,
                         "cityName": "武汉",
@@ -5172,6 +5178,102 @@
                         "value": 28331.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 16767.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 10919.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 4564.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 5654.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 7819.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 8006.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 6058.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 4973.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 6013.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 2797.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 5380.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 11496.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 5802.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 12099.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 6976.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 7175.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -5179,6 +5281,12 @@
                 "cname": "江岸区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 139.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 884.0,
@@ -5256,6 +5364,102 @@
                         "value": 2709.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 1408.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 752.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 405.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 438.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 561.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 1018.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 613.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 669.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 495.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 177.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 349.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 875.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 489.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 1643.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 364.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 591.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -5263,6 +5467,12 @@
                 "cname": "江汉区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 89.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 306.0,
@@ -5340,6 +5550,102 @@
                         "value": 592.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 424.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 336.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 112.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 256.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 602.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 351.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 245.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 223.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 486.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 177.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 83.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 394.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 133.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 361.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 106.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 260.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -5347,6 +5653,12 @@
                 "cname": "硚口区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 154.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 1061.0,
@@ -5424,6 +5736,102 @@
                         "value": 1304.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 589.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 1342.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 413.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 300.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 593.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 525.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 538.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 436.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 392.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 240.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 435.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 507.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 657.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 934.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 860.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 1237.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -5431,6 +5839,12 @@
                 "cname": "汉阳区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 323.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 2351.0,
@@ -5508,6 +5922,102 @@
                         "value": 1468.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 2425.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 1095.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 484.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 600.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 565.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 579.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 607.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 397.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 780.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 496.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 314.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 686.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 567.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 1040.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 452.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 508.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -5515,6 +6025,12 @@
                 "cname": "青山区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 119.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 346.0,
@@ -5592,6 +6108,102 @@
                         "value": 462.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 1556.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 2341.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 305.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 170.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 307.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 205.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 235.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 75.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 102.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 25.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 59.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 601.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 119.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 281.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 669.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 343.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -5599,6 +6211,12 @@
                 "cname": "武昌区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 411.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 816.0,
@@ -5676,6 +6294,102 @@
                         "value": 967.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 633.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 686.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 226.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 272.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 551.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 456.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 248.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 490.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 188.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 66.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 450.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 850.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 893.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 1141.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 515.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 688.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -5683,6 +6397,12 @@
                 "cname": "洪山区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 267.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 340.0,
@@ -5760,6 +6480,102 @@
                         "value": 1099.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 689.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 1113.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 432.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 807.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 544.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 517.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 604.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 295.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 485.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 169.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 375.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 817.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 500.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 1723.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 397.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 526.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -5767,6 +6583,12 @@
                 "cname": "东西湖区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 216.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 1021.0,
@@ -5844,6 +6666,102 @@
                         "value": 3416.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 1340.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 664.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 552.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 414.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 518.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 604.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 632.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 374.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 510.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 304.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 282.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 613.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 393.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 787.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 425.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 391.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -5851,6 +6769,12 @@
                 "cname": "东湖高新区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 598.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 760.0,
@@ -5928,6 +6852,102 @@
                         "value": 2953.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 816.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 809.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 478.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 431.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 693.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 828.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 659.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 723.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 727.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 163.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 445.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 813.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 636.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 1216.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 413.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 401.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -5935,6 +6955,12 @@
                 "cname": "经济开发区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 98.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 382.0,
@@ -6012,6 +7038,102 @@
                         "value": 2072.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 387.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 653.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 172.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 242.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 861.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 336.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 538.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 232.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 330.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 180.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 140.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 489.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 270.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 708.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 276.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 325.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -6019,6 +7141,12 @@
                 "cname": "长江新区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 298.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 1208.0,
@@ -6073,6 +7201,12 @@
                 "cname": "江夏区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 319.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 6344.0,
@@ -6150,6 +7284,102 @@
                         "value": 2967.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 2710.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 308.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 300.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 170.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 667.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 330.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 263.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 366.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 425.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 398.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 635.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 798.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 112.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 544.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 319.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 209.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -6157,6 +7387,12 @@
                 "cname": "黄陂区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 252.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 596.0,
@@ -6234,6 +7470,102 @@
                         "value": 2661.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 1702.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 360.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 290.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 358.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 300.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 279.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 408.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 219.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 392.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 128.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 351.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 1214.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 283.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 771.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 874.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 409.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -6241,6 +7573,12 @@
                 "cname": "蔡甸区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 79.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 5468.0,
@@ -6318,6 +7656,102 @@
                         "value": 4032.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 1872.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 375.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 182.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 199.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 944.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 1791.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 284.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 209.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 330.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 118.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 162.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 376.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 229.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 609.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 915.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 432.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -6325,6 +7759,12 @@
                 "cname": "新洲区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 35.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 265.0,
@@ -6402,6 +7842,102 @@
                         "value": 901.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 203.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 37.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 28.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 932.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 110.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 170.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 181.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 122.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 186.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 145.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 1198.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 1747.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 477.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 313.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 263.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 277.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
                     }
                 ]
             },
@@ -6409,6 +7945,12 @@
                 "cname": "汉南区",
                 "unit": "套",
                 "data": [
+                    {
+                        "date": "202601",
+                        "value": 3.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
                     {
                         "date": "202512",
                         "value": 4.0,
@@ -6484,6 +8026,102 @@
                     {
                         "date": "202412",
                         "value": 728.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202411",
+                        "value": 13.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202410",
+                        "value": 48.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202409",
+                        "value": 185.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202408",
+                        "value": 65.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202407",
+                        "value": 3.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202406",
+                        "value": 17.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202405",
+                        "value": 3.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202404",
+                        "value": 143.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202403",
+                        "value": 185.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202402",
+                        "value": 11.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202401",
+                        "value": 102.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202312",
+                        "value": 716.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202311",
+                        "value": 44.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202310",
+                        "value": 28.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202309",
+                        "value": 128.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
+                        "date": "202308",
+                        "value": 578.0,
                         "cityName": "武汉",
                         "cityCode": "420100"
                     }
@@ -7078,7 +8716,23 @@
             "202503",
             "202502",
             "202501",
-            "202412"
+            "202412",
+            "202411",
+            "202410",
+            "202409",
+            "202408",
+            "202407",
+            "202406",
+            "202405",
+            "202404",
+            "202403",
+            "202402",
+            "202401",
+            "202312",
+            "202311",
+            "202310",
+            "202309",
+            "202308"
         ]
     },
     "zb": {
