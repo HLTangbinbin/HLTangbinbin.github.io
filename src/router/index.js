@@ -22,7 +22,7 @@ function generateRoutes(items, parentPath = '') {
     } else {
       // 遇到特殊的公积金图片页单独引入
       if (item.path === 'ProvidentFund') {
-        componentConfig = () => import('@/components/NationWide/ProvidentFund.vue');
+        componentConfig = () => import('@/components/SpecialPage/ProvidentFund.vue');
       } else {
         componentConfig = DynamicChartPage;
       }
