@@ -1,62 +1,46 @@
-import axios from 'axios'
+import axios from 'axios';
 import { logger } from '@/utils/Logger.js';
+// 🌟 核心技巧：一键重导出所有接口参数，完美向后兼容，不破坏现有任何引用！
+export * from '@/config/apiParams.js';
 
-
-// 定义排序函数
 export function sortYearMonths(date1, date2) {
-  // 自定义比较函数
   function compareYearMonth(a, b) {
-    // 将日期字符串转换为统一的格式
     a = a.replace('-', '');
     b = b.replace('-', '');
-
-    // 将年份和月份解析为整数
     var aYear = parseInt(a.substring(0, 4));
     var aMonth = parseInt(a.substring(4));
     var bYear = parseInt(b.substring(0, 4));
     var bMonth = parseInt(b.substring(4));
-
-    // 首先按照年份升序排序
-    if (aYear !== bYear) {
-      return aYear - bYear;
-    } else {
-      // 如果年份相同，则按照月份升序排序
-      return aMonth - bMonth;
-    }
+    if (aYear !== bYear) return aYear - bYear;
+    return aMonth - bMonth;
   }
-
-  // 返回排序后的结果
   return compareYearMonth(date1, date2);
 }
-// 优化的数据筛选函数
-// 最新数据结构适配版
-// selectDataFromArr.js
+
 export function selectDataFromArr(returndata, zbCode, dbCode = 'nd', cityCode = '', yearLimit = 10) {
   const codeItem = returndata.data[dbCode]?.[zbCode];
   if (!codeItem || !Array.isArray(codeItem.data)) return [];
 
-  // copy 一份数据
   let dataArr = [...codeItem.data];
 
-  // 城市过滤
   if (cityCode) {
     dataArr = dataArr.filter(d => d.cityCode === cityCode);
   }
 
-  // 排序：年份升序（从小到大）
   dataArr.sort((a, b) => {
     const dateA = a.date?.replace('-', '');
     const dateB = b.date?.replace('-', '');
     return Number(dateA) - Number(dateB);
   });
 
-  // 年份限制：取最新 N 年，但保持升序
   if (yearLimit && dataArr.length > yearLimit) {
     dataArr = dataArr.slice(-yearLimit);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24ce2a9 (重构核心图表数据处理功能)
   }
 
-  // 过滤尾部的 0 值
   let lastNonZeroIndex = dataArr.length - 1;
   for (let i = dataArr.length - 1; i >= 0; i--) {
     if (dataArr[i].value !== '' && dataArr[i].value !== 0) {
@@ -66,9 +50,9 @@ export function selectDataFromArr(returndata, zbCode, dbCode = 'nd', cityCode = 
   }
   dataArr = dataArr.slice(0, lastNonZeroIndex + 1);
 
-  // 返回包含 value 和 date 的对象数组
   return dataArr.map(d => {
     const val = Number(d.value);
+<<<<<<< HEAD
     let formattedValue;
 
     if (Number.isInteger(val)) {
@@ -82,76 +66,42 @@ export function selectDataFromArr(returndata, zbCode, dbCode = 'nd', cityCode = 
       value: formattedValue,
       date: d.date
     };
+=======
+    let formattedValue = Number.isInteger(val) ? val : Number(val.toFixed(Math.abs(val) >= 1 ? 2 : 3));
+    return { value: formattedValue, date: d.date };
+>>>>>>> 24ce2a9 (重构核心图表数据处理功能)
   });
 }
 
-// 图表统一绘制方法
-// ============================
-
-// 新增：根据偏移量调整数据
-// 偏移函数
 const offsetArray = (arr, yearLimit, offset) => {
   if (!Array.isArray(arr)) return arr;
-
   if (offset < 0) {
-    // 左移：arr的长度为yearLimit（因为左移时totalYears等于yearLimit）
     const absOffset = Math.min(-offset, arr.length);
     return [...arr.slice(absOffset), ...Array(absOffset).fill(null)];
   } else if (offset > 0) {
-
-    // 右移：扩展数据长度，前面用NULL补齐
     const totalLength = yearLimit + offset;
-    // 如果实际数据不足，前面用NULL补齐
-    const paddedArr = [
-      ...Array(Math.max(0, totalLength - arr.length)).fill(null),
-      ...arr
-    ];
-    // 右移：arr的长度为yearLimit+offset，我们截取前yearLimit个
-    // logger.debug("移动前----移动后", arr, paddedArr.slice(0, yearLimit))
-    // 只取前yearLimit个数据
+    const paddedArr = [...Array(Math.max(0, totalLength - arr.length)).fill(null), ...arr];
     return paddedArr.slice(0, yearLimit);
   }
   return arr;
 };
 
-
-/**
- * 最近 N 年滑动窗口预测（滞后1年，年份动态）
- * @param {number[]} marriageArr - 历史结婚人数数组
- * @param {number[]} birthArr - 历史出生人口数组
- * @param {number} recentYears - 滑动窗口长度（<= marriageArr.length-1）
- * @param {number} z - 置信区间系数，默认 1.96
- */
-function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears, z = 1.96) {
+// 🌟 修复点：移除了未使用的 z 参数
+function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears) {
   const n = marriageArr.length;
   if (!Array.isArray(marriageArr) || !Array.isArray(birthArr) || n !== birthArr.length || n <= 1) {
-    return {
-      slidingPreds: [],
-      nextYearPred: { yearIndex: null, pred: null, lower: null, upper: null }
-    };
+    return { slidingPreds: [], nextYearPred: { pred: null } };
   }
 
   const windowSize = Math.min(recentYears, n - 1);
   const slidingPreds = [];
 
-  // 历史滑动预测
   for (let t = 1; t < n; t++) {
     const start = Math.max(0, t - windowSize);
     const X = marriageArr.slice(start, t);
     const Y = birthArr.slice(start + 1, t + 1);
 
-    if (X.length === 0 || Y.length === 0) {
-      slidingPreds.push({
-        yearIndex: t,
-        marriage: marriageArr[t],
-        pred: null,
-        lower: null,
-        upper: null,
-        actual: birthArr[t],
-        error: null
-      });
-      continue;
-    }
+    if (X.length === 0 || Y.length === 0) continue;
 
     const meanX = X.reduce((a, b) => a + b, 0) / X.length;
     const meanY = Y.reduce((a, b) => a + b, 0) / Y.length;
@@ -163,25 +113,12 @@ function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears, z = 1.96) {
     }
     const w = den === 0 ? 0 : num / den;
     const intercept = meanY - w * meanX;
-
     const predValue = intercept + w * marriageArr[t];
-    const residuals = Y.map((y, i) => y - (intercept + w * X[i]));
-    const std = residuals.length > 1 ? Math.sqrt(residuals.reduce((s, r) => s + r ** 2, 0) / (residuals.length - 1)) : 0;
-
-    slidingPreds.push({
-      yearIndex: t,
-      marriage: marriageArr[t],
-      pred: Math.round(predValue),
-      lower: Math.round(predValue - z * std),
-      upper: Math.round(predValue + z * std),
-      actual: birthArr[t],
-      error: Math.round(predValue - birthArr[t])
-    });
+    
+    slidingPreds.push({ pred: Math.round(predValue) });
   }
 
-  // 下一年预测
-  let nextYearPred = { yearIndex: n, pred: null, lower: null, upper: null };
-
+  let nextYearPred = { pred: null };
   const startLast = Math.max(0, n - windowSize - 1);
   const Xlast = marriageArr.slice(startLast, n - 1);
   const Ylast = birthArr.slice(startLast + 1, n);
@@ -198,10 +135,9 @@ function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears, z = 1.96) {
 
     const wLast = den === 0 ? 0 : num / den;
     const interceptLast = meanYlast - wLast * meanXlast;
-    const residualsLast = Ylast.map((y, i) => y - (interceptLast + wLast * Xlast[i]));
-    const stdLast = residualsLast.length > 1 ? Math.sqrt(residualsLast.reduce((s, r) => s + r ** 2, 0) / (residualsLast.length - 1)) : 0;
 
     if (Xlast.length < 2 || Ylast.length < 2) {
+<<<<<<< HEAD
       // 数据太少，退化使用上一年婚姻 × 平均生育率
       const k = Xlast.length === 1 ? Ylast[0] / Xlast[0] : 1;
       nextYearPred = {
@@ -217,44 +153,49 @@ function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears, z = 1.96) {
         lower: Math.round(interceptLast + wLast * marriageArr[n - 1] - z * stdLast),
         upper: Math.round(interceptLast + wLast * marriageArr[n - 1] + z * stdLast)
       };
+=======
+      const k = Xlast.length === 1 ? Ylast[0] / Xlast[0] : 1; 
+      nextYearPred = { pred: Math.round(marriageArr[n - 1] * k) };
+    } else {
+      nextYearPred = { pred: Math.round(interceptLast + wLast * marriageArr[n - 1]) };
+>>>>>>> 24ce2a9 (重构核心图表数据处理功能)
     }
-
   }
 
   return { slidingPreds, nextYearPred };
 }
 
+// ============================
+// 🌟 纯粹的图表数据组装流水线
+// ============================
 
-// 最新兼容 getCommonChartOption
 export function getCommonChartOption(params) {
-  const {
-    data,
-    title,
-    subtitle,
-    zbcodeArr,
-    cityCodeArr = [],
-    dbCode = 'nd',
-    unit = '',
-    exceptName = '',
-    legendTop = '70px',
-    gridTop = '140px',
-    chartType = 'bar',
-    yearLimit,
-    isHorizontal = false,
-    legendAllSelected,
-    enableBirthOffset = false,
-    enableBirthPrediction = false,
-    selectedLegend,
-    offsetValue = 0,
-    pieConfig, // 新增配置字段
-  } = params;
-
   const startTime = performance.now();
-  let marriageArr = [], birthArr = [], nextBirth = 0;
-  let seriesData = [];
 
-  // ----------------------------
-  // 原有 series 数据生成逻辑（不改动）
+  // 1. 构建基础 Series 数据（清洗、整合、偏移）
+  let { seriesData, filteredYears, marriageArr, birthArr } = buildBaseSeries(params);
+
+  // 2. 应用人口预测算法（如果有配置）
+  seriesData = applyBirthPrediction(seriesData, marriageArr, birthArr, params);
+
+  // 3. 组装 ECharts Option 骨架
+  const optionData = buildOptionSkeleton(seriesData, filteredYears, params);
+
+  // 4. 挂载额外的饼图配置（如果有配置）
+  if (params.pieConfig?.enabled) {
+    attachPieChartToOption(optionData, seriesData, filteredYears, params.pieConfig);
+  }
+
+  logger.debug(`[getCommonChartOption] 总耗时: ${Math.round(performance.now() - startTime)}ms, 标题: ${params.title}`);
+  return optionData;
+}
+
+// -------- 流水线车间：局部辅助函数 --------
+
+function buildBaseSeries(params) {
+  const { data, zbcodeArr, cityCodeArr = [], dbCode = 'nd', unit = '', exceptName = '', chartType = 'bar', yearLimit, enableBirthOffset = false, selectedLegend, offsetValue = 0 } = params;
+  let marriageArr = [], birthArr = [], seriesData = [];
+
   if (cityCodeArr.length === 0) {
     zbcodeArr.forEach(zbCode => {
       const codeItem = data.data[dbCode]?.[zbCode];
@@ -262,9 +203,8 @@ export function getCommonChartOption(params) {
 
       let cname = codeItem.cname || '总的';
       if (typeof cname === 'string' && typeof exceptName === 'string') {
-        const resultArr = cname.split('');
-        const exceptArr = exceptName.split('');
-        exceptArr.forEach(ch => {
+        let resultArr = cname.split('');
+        exceptName.split('').forEach(ch => {
           const idx = resultArr.indexOf(ch);
           if (idx !== -1) resultArr.splice(idx, 1);
         });
@@ -272,10 +212,14 @@ export function getCommonChartOption(params) {
       }
 
       const name = cname + unit;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24ce2a9 (重构核心图表数据处理功能)
       let result = selectDataFromArr(data, zbCode, dbCode, '', yearLimit);
       let valueArr = result.map(item => item.value);
       let dateArr = result.map(item => item.date);
+
       if (enableBirthOffset && zbCode === 'A0P0C01') marriageArr = valueArr;
       else if (enableBirthOffset && zbCode === 'A030109') {
         birthArr = valueArr;
@@ -284,19 +228,13 @@ export function getCommonChartOption(params) {
         valueArr = offsetArray(valueArr, Math.min(yearLimit, valueArr.length), offsetValue);
       }
 
-      seriesData.push({
-        name,
-        zbCode, // 新增 zbCode 供饼图触发
-        type: chartType,
-        data: valueArr,
-        date: dateArr,
-        emphasis: { focus: 'series' }
-      });
+      seriesData.push({ name, zbCode, type: chartType, data: valueArr, date: dateArr, emphasis: { focus: 'series' } });
     });
   } else {
     cityCodeArr.forEach(cityCode => {
       const city = data.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
+<<<<<<< HEAD
 
       let result = selectDataFromArr(data, zbcodeArr[0], dbCode, cityCode, yearLimit) || [];
       let valueArr = result.map(item => item.value);
@@ -308,77 +246,66 @@ export function getCommonChartOption(params) {
         data: valueArr,
         date: dateArr,
         emphasis: { focus: 'series' }
+=======
+      let result = selectDataFromArr(data, zbcodeArr[0], dbCode, cityCode, yearLimit) || [];
+      seriesData.push({
+        name, zbCode: zbcodeArr[0], type: chartType, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' }
+>>>>>>> 24ce2a9 (重构核心图表数据处理功能)
       });
     });
   }
 
-  // ----------------------------
-  // 原有出生人口预测逻辑（不改动）
-  if (enableBirthPrediction && marriageArr.length && birthArr.length) {
-    const mode = fitMarriageBirthDynamic(marriageArr, birthArr, 20);
-    nextBirth = mode.nextYearPred.pred;
-  }
+  let filteredYears = seriesData[0]?.date || [];
+  return { seriesData, filteredYears, marriageArr, birthArr };
+}
 
-  // ----------------------------
-  // 处理折线图出生人口系列（不改动）
-  seriesData = seriesData.map(s => {
-    if (enableBirthPrediction && s.name.includes('出生')) {
-      if (chartType === 'line') {
+function applyBirthPrediction(seriesData, marriageArr, birthArr, params) {
+  if (!params.enableBirthPrediction || !marriageArr.length || !birthArr.length) return seriesData;
+
+  const nextBirth = fitMarriageBirthDynamic(marriageArr, birthArr, 20).nextYearPred.pred;
+
+  return seriesData.map(s => {
+    if (s.name.includes('出生')) {
+      if (params.chartType === 'line') {
         const lastIndex = s.data.length - 1;
-        const updatedData = s.data.slice();
+        const updatedData = [...s.data];
         updatedData[lastIndex] = nextBirth;
-        const historySeries = { ...s, type: 'line', name: '出生人口', data: updatedData.slice(0, lastIndex), lineStyle: { type: 'solid' } };
-        const predictionData = updatedData.map((d, i) => (i >= lastIndex - 1 ? d : null));
-        const predictionSeries = { ...s, type: 'line', name: '出生人口预测', data: predictionData, lineStyle: { color: s.lineStyle?.color || '#5470C6', type: 'dashed' }, symbol: 'circle', symbolSize: 10, connectNulls: true };
-        return [historySeries, predictionSeries];
-      } else {
-        return [{ ...s, type: 'bar' }, { ...s, type: 'bar', data: [] }];
+
+        return [
+          { ...s, type: 'line', name: '出生人口', data: updatedData.slice(0, lastIndex), lineStyle: { type: 'solid' } },
+          { ...s, type: 'line', name: '出生人口预测', data: updatedData.map((d, i) => (i >= lastIndex - 1 ? d : null)), lineStyle: { color: s.lineStyle?.color || '#5470C6', type: 'dashed' }, symbol: 'circle', symbolSize: 10, connectNulls: true }
+        ];
       }
+      return [{ ...s, type: 'bar' }, { ...s, type: 'bar', data: [] }];
     }
     return s;
   }).flat();
+}
 
-  // ----------------------------
+function buildOptionSkeleton(seriesData, filteredYears, params) {
+  const { title, subtitle, isHorizontal, legendAllSelected, gridTop = '140px', legendTop = '70px', unit = '' } = params;
+
   const valueAxisConfig = {
-    type: 'value',
-    scale: true,
-    min: (value) => value.min - (value.max - value.min) * 0.1,
-    max: (value) => value.max + (value.max - value.min) * 0.1,
-    axisLabel: {
-      formatter: (value) => {
-        // 根据数值大小决定小数位数
-        const decimalPlaces = Math.abs(value) >= 1 ? 2 : 3;
-        return value.toFixed(decimalPlaces) + unit;
-      },
-    },
+    type: 'value', scale: true,
+    min: (v) => v.min - (v.max - v.min) * 0.1,
+    max: (v) => v.max + (v.max - v.min) * 0.1,
+    axisLabel: { formatter: (v) => v.toFixed(Math.abs(v) >= 1 ? 2 : 3) + unit },
   };
-  // 删除原来的年份处理逻辑，改用 seriesData 中的 date 数组
-  let filteredYears = [];
-
-  // 从 seriesData 中获取第一个有效数据的 date 数组
-  if (seriesData.length > 0) {
-    const firstSeries = seriesData[0];
-    if (firstSeries.date && Array.isArray(firstSeries.date) && firstSeries.date.length > 0) {
-      filteredYears = firstSeries.date;
-    }
-  }
   const categoryAxisConfig = { type: 'category', data: filteredYears };
-  // ----------------------------
-  const optionData = {
+
+  return {
     title: { text: title, subtext: subtitle, left: 'center', top: 15, itemGap: 22, subtextStyle: { fontWeight: 'bold', fontSize: 13, width: window.innerWidth * 0.8, overflow: 'breakAll' } },
     tooltip: {
       trigger: 'axis',
-      formatter: function (params) {
-        // 倒序排列
+      formatter: (params) => {
         const sorted = params.slice().sort((a, b) => b.value - a.value);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24ce2a9 (重构核心图表数据处理功能)
         let result = sorted[0].axisValue + '<br/>';
         sorted.forEach(item => {
-          let val = item.value;
-          if (typeof val === 'number') {
-            val = val.toLocaleString(); // 数字格式化（可选）
-          }
-          result += `${item.marker}${item.seriesName}: ${val}<br/>`;
+          result += `${item.marker}${item.seriesName}: ${typeof item.value === 'number' ? item.value.toLocaleString() : item.value}<br/>`;
         });
         return result;
       }
@@ -389,6 +316,7 @@ export function getCommonChartOption(params) {
     yAxis: isHorizontal ? categoryAxisConfig : valueAxisConfig,
     series: seriesData
   };
+<<<<<<< HEAD
 
   // ----------------------------
   // dataset + 饼图
@@ -462,13 +390,46 @@ export function getCommonChartOption(params) {
   const endTime = performance.now();
   logger.debug(`[getCommonChartOption] 总耗时: ${Math.round(endTime - startTime)}ms, 标题: ${title}, series数量: ${seriesData.length}`);
   return optionData;
+=======
+>>>>>>> 24ce2a9 (重构核心图表数据处理功能)
 }
 
+function attachPieChartToOption(optionData, seriesData, filteredYears, pieConfig) {
+  optionData.color = optionData.color || ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'];
+  const lastYearIndex = filteredYears.length - 1;
+  const legendData = optionData.legend?.data || [];
 
-// const baseurl = 'https://data.stats.gov.cn/easyquery.htm';
-// const proxyServerUrl = 'https://githubproxy-592325394348.herokuapp.com/api'
-// 改为这种方式解决跨域报错问题
+  pieConfig.pies.forEach((pie, idx) => {
+    const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
+    const pieData = targetSeries.map(series => ({
+      name: series.name,
+      value: Array.isArray(series.data) ? series.data[lastYearIndex] : 0
+    }));
+
+    optionData.series.push({
+      id: `pie_${idx}`,
+      type: 'pie',
+      radius: pie.radius || '25%',
+      center: pie.center || ['50%', 170],
+      data: pieData,
+      label: { formatter: p => `${p.name}(${p.percent}%)` },
+      emphasis: { focus: 'self' },
+      itemStyle: {
+        color: (p) => {
+          const legendIndex = legendData.indexOf(p.name);
+          return (legendIndex !== -1 && optionData.color[legendIndex]) ? optionData.color[legendIndex] : optionData.color[p.dataIndex % optionData.color.length];
+        }
+      }
+    });
+  });
+}
+
+// ============================
+// 网络请求与数据组装核心
+// ============================
+
 const totalUrl = `${process.env.VUE_APP_API_BASE_URL}/easyquery.htm`;
+<<<<<<< HEAD
 const common_params = {
   m: 'QueryData',
   colcode: 'sj',
@@ -688,129 +649,54 @@ const params_transportationAndTelecommunications = [
   { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0G04"},{"wdcode":"sj","valuecode":"LAST20"}]' }, // 客运量
 ]
 
+=======
+const common_params = { m: 'QueryData', colcode: 'sj', k1: String(Date.now()), h: '1' };
+>>>>>>> 24ce2a9 (重构核心图表数据处理功能)
 
 export async function sendRequest(specificParams) {
-
-  let datanodesArr = [];
-  let newDataArr = []
-  let nodesArr_zb = [];         // 城市指标描述数组
-  let nodesArr_reg = [];        // 城市指标描述数组
-  let nodesArr_sj_code_nd = [];
-  let nodesArr_sj_code_yd = [];
+  let datanodesArr = [], newDataArr = [], nodesArr_zb = [], nodesArr_reg = [], nodesArr_sj_code_nd = [], nodesArr_sj_code_yd = [];
 
   for (let params of specificParams) {
     let mergedParams = { ...common_params, ...params };
-    logger.debug("请求完整参数：", mergedParams)
     try {
-
       let response = await axios.get(totalUrl, { params: mergedParams, timeout: 30000 });
       let data = response.data;
-      logger.debug("请求返回数据：", data.returndata)
       if (data && data.returndata) {
-        if (data.returndata.datanodes) {
-          datanodesArr = datanodesArr.concat(data.returndata.datanodes);
-        }
-        //获取wdnodes数组的第一个元素，包含cname的数据
-        if (data.returndata.wdnodes && data.returndata.wdnodes[0] && data.returndata.wdnodes[0].nodes) {
-          nodesArr_zb = nodesArr_zb.concat(data.returndata.wdnodes[0].nodes);
-        }
-        //对于所有请求来说返回的城市数据都一样，所以不能合并数组
-        //获取wdnodes数组的第二个元素，0: zb 1:reg 2:sj ,如果没有reg，则1: sj
-        if (data.returndata.wdnodes && data.returndata.wdnodes[1] && data.returndata.wdnodes[1].wdcode === 'reg') {
-          nodesArr_reg = data.returndata.wdnodes[1].nodes;
-        }
+        if (data.returndata.datanodes) datanodesArr = datanodesArr.concat(data.returndata.datanodes);
+        if (data.returndata.wdnodes?.[0]?.nodes) nodesArr_zb = nodesArr_zb.concat(data.returndata.wdnodes[0].nodes);
+        if (data.returndata.wdnodes?.[1]?.wdcode === 'reg') nodesArr_reg = data.returndata.wdnodes[1].nodes;
+        
         let dbCode = mergedParams.dbcode;
-        if (dbCode.includes('nd')) {
-          const nodesArr_sj_nd = data.returndata.wdnodes.slice(-1)[0]?.nodes || [];
-          //对于所有请求来说返回的城市数据都一样，所以不能合并数组
-          nodesArr_sj_code_nd = nodesArr_sj_nd.map(item => item.code);
-        }
-        if (dbCode.includes('yd')) {
-          const nodesArr_sj_yd = data.returndata.wdnodes.slice(-1)[0]?.nodes || [];
-          //对于所有请求来说返回的时间太多组一样的，所以不能合并数组
-          nodesArr_sj_code_yd = nodesArr_sj_yd.map(item => item.code);
-        }
+        if (dbCode.includes('nd')) nodesArr_sj_code_nd = (data.returndata.wdnodes.slice(-1)[0]?.nodes || []).map(i => i.code);
+        if (dbCode.includes('yd')) nodesArr_sj_code_yd = (data.returndata.wdnodes.slice(-1)[0]?.nodes || []).map(i => i.code);
       }
-
     } catch (error) {
-      if (error.response && error.response.data) {
-        logger.error(`JSON解码错误: 响应内容不是JSON格式,响应内容为: ${error.response.data}`);
-      } else {
-        logger.error('请求错误:', error.message);
-      }
+      logger.error('请求错误:', error.response?.data || error.message);
       return;
     }
   }
+
   datanodesArr.forEach(dataElement => {
-    let newJson = {};
-    newJson['value'] = dataElement['data']['data'];
-    newJson['code'] = dataElement['wds'][0]['valuecode'];
+    let newJson = { value: dataElement.data.data, code: dataElement.wds[0].valuecode, date: dataElement.wds[dataElement.wds.length - 1].valuecode };
+    const matchedZb = nodesArr_zb.find(n => n.code === newJson.code);
+    if (matchedZb) newJson.cname = matchedZb.cname;
 
-    nodesArr_zb.forEach(nodesElement_zb => {
-      if (nodesElement_zb['code'] === dataElement['wds'][0]['valuecode']) {
-        newJson['cname'] = nodesElement_zb['cname'];
-        // 提取并组合字段
-        return false; // break the loop
-      }
-    });
-
-    // 如果有reg的话，['wds'][1]就不是sj是reg了，所以这里取wds的最后一个元素
-    newJson['date'] = dataElement['wds'][dataElement['wds'].length - 1]['valuecode'];
-
-    if (dataElement['wds'][1]['wdcode'] === "reg") {
-      let valueCode = dataElement['wds'][1]['valuecode'];
-
-      nodesArr_reg.forEach(nodesElement_reg => {
-        if (nodesElement_reg['code'] === valueCode) {
-          newJson['cityName'] = nodesElement_reg['cname'];
-          newJson['cityCode'] = dataElement['wds'][1]['valuecode'];
-          return false; // break the loop
-        }
-      });
+    if (dataElement.wds[1].wdcode === "reg") {
+      newJson.cityCode = dataElement.wds[1].valuecode;
+      const matchedReg = nodesArr_reg.find(n => n.code === newJson.cityCode);
+      if (matchedReg) newJson.cityName = matchedReg.cname;
     }
-
     newDataArr.push(newJson);
   });
 
-  const newDataArr_zb = nodesArr_zb.map(item => ({ cname: item.cname, code: item.code }));
-  const newDataArr_reg = nodesArr_reg.map(item => ({ cname: item.cname, code: item.code }));
   const newDataArr_sj = [];
-  if (nodesArr_sj_code_nd.length > 0) {
-    newDataArr_sj.push(nodesArr_sj_code_nd);
-  }
-  if (nodesArr_sj_code_yd.length > 0) {
-    newDataArr_sj.push(nodesArr_sj_code_yd);
-  }
+  if (nodesArr_sj_code_nd.length > 0) newDataArr_sj.push(nodesArr_sj_code_nd);
+  if (nodesArr_sj_code_yd.length > 0) newDataArr_sj.push(nodesArr_sj_code_yd);
 
-  const newData = {
+  return {
     data: newDataArr,
-    zb: newDataArr_zb,
-    reg: newDataArr_reg,
+    zb: nodesArr_zb.map(i => ({ cname: i.cname, code: i.code })),
+    reg: nodesArr_reg.map(i => ({ cname: i.cname, code: i.code })),
     sj: newDataArr_sj
   };
-
-  return newData;
 }
-
-// 导出模块
-export {
-  params_wh,
-  params_city,
-  params_province,
-  params_realEstate_invest,
-  params_realEstate_sell,
-  params_socialretailgoods,
-  params_gdp,
-  params_nationalFinance,
-  params_financialIndustry,
-  params_foreignTrade,
-  params_population,
-  params_education,
-  params_medical,
-  params_marriage,
-  params_indices,
-  params_livingStandards,
-  params_accommodationAndCatering,
-  params_touristIndustry,
-  params_transportationAndTelecommunications
-};
