@@ -1,55 +1,51 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { navConfig } from '../config/navConfig';
-import loadPage, { preloadRelatedRoutes } from './lazyLoader';
+import GenericLayout from '@/components/common/GenericLayout.vue';
+import DynamicChartPage from '@/components/common/DynamicChartPage.vue';
 import { logger } from '@/utils/Logger';
 
-function cleanPathForImport(path) {
-  return path.startsWith('/') ? path.slice(1) : path;
-}
+// 递归生成路由
+function generateRoutes(items, parentPath = '') {
+  return items.map(item => {
+    const hasChildren = item.children && item.children.length > 0;
 
-function generateRoutes(config) {
-  return config.map(group => {
-    const groupPath = group.path;
-    const groupImportPath = cleanPathForImport(group.path);
-    
-    // logger.debug('Generating routes for group:', groupPath, 'importPath:', groupImportPath);
+    // 处理路径拼接，去掉多余的斜杠，确保给 NavBar 的 basePath 是标准的 /a/b 格式
+    const cleanItemPath = item.path.replace(/^\//, '');
+    const currentFullPath = parentPath === ''
+      ? `/${cleanItemPath}`
+      : `${parentPath}/${cleanItemPath}`;
 
-    const children = group.children?.map(child => {
-      // logger.debug('Processing child:', child.path, 'in group:', groupPath);
-      
-      if (child.children) {
-        // 处理三级嵌套路由
-        const childImportPath = cleanPathForImport(child.path);
-        // logger.debug('Creating nested route for:', child.path, 'with component:', loadPage(groupImportPath, childImportPath));
-        
-        return {
-          path: child.path,
-          component: loadPage(groupImportPath, childImportPath),
-          redirect: `${group.path}/${child.path}/${child.children[0].path}`,
-          children: child.children.map(sub => {
-            // logger.debug('Creating sub-route for:', sub.path, 'with component:', loadPage(groupImportPath, childImportPath, sub.path));
-            return {
-              path: sub.path,
-              component: loadPage(groupImportPath, childImportPath, sub.path)
-            };
-          })
-        };
+    let componentConfig;
+
+    if (hasChildren) {
+      componentConfig = GenericLayout;
+    } else {
+      // 遇到特殊的公积金图片页单独引入
+      if (item.path === 'ProvidentFund') {
+        componentConfig = () => import('@/components/NationWide/ProvidentFund.vue');
       } else {
-        // 处理二级路由
-        // logger.debug('Creating route for:', child.path, 'with component:', loadPage(groupImportPath, child.path));
-        return {
-          path: child.path,
-          component: loadPage(groupImportPath, child.path)
-        };
+        componentConfig = DynamicChartPage;
       }
-    });
+    }
 
-    return {
-      path: groupPath,
-      component: loadPage(groupImportPath),
-      redirect: children && children.length > 0 ? `${group.path}/${children[0].path}` : undefined,
-      children
+    const routeNode = {
+      path: item.path,
+      component: componentConfig,
     };
+
+    if (hasChildren) {
+      // 🌟 核心修复点：将当前层级的子菜单数组和路径，直接作为 props 传给 GenericLayout 组件！
+      routeNode.props = {
+        navItems: item.children,
+        currentBasePath: currentFullPath
+      };
+      
+      routeNode.children = generateRoutes(item.children, currentFullPath);
+      // 默认重定向到本层级的第一个子路由
+      routeNode.redirect = `${currentFullPath}/${item.children[0].path}`;
+    }
+
+    return routeNode;
   });
 }
 
@@ -63,25 +59,9 @@ const router = createRouter({
   routes
 });
 
-// 路由守卫：预加载相关路由
-router.beforeEach((to, from, next) => {
-  // 预加载目标路由相关的组件
-  if (to.path !== from.path) {
-    // 延迟预加载，避免阻塞导航
-    setTimeout(() => {
-      preloadRelatedRoutes(to.path);
-    }, 100);
-  }
-  
-  next();
-});
-
-// 路由后置钩子：性能监控
 router.afterEach((to, from) => {
-  // 记录路由切换性能
   if (from.path !== '/') {
-    const navigationTime = performance.now();
-    logger.debug(`路由切换: ${from.path} -> ${to.path}, 时间: ${navigationTime.toFixed(2)}ms`);
+    logger.debug(`路由切换: ${from.path} -> ${to.path}`);
   }
 });
 
