@@ -441,22 +441,22 @@ export default {
   }
 }
 
-/* 滑块样式覆盖 */
-::v-deep(.el-slider__bar) {
+/* 滑块样式覆盖 (使用 Vue3 推荐的 :deep 语法) */
+:deep(.el-slider__bar) {
   background-color: #0bc2d6 !important;
 }
 
-::v-deep(.el-slider__button) {
+:deep(.el-slider__button) {
   background-color: #0bc2d6 !important;
   border-color: #0bc2d6 !important;
 }
 
 /* 选legend择框圆角 */
-::v-deep(.legend-selector .el-select__wrapper) {
+:deep(.legend-selector .el-select__wrapper) {
   border-radius: 6px !important;
 }
 
-::v-deep(.legend-selector .el-select__tags) {
+:deep(.legend-selector .el-select__tags) {
   border-radius: 6px !important;
 }
 </style>
