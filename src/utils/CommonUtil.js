@@ -53,7 +53,7 @@ export function selectDataFromArr(returndata, zbCode, dbCode = 'nd', cityCode = 
   // 年份限制：取最新 N 年，但保持升序
   if (yearLimit && dataArr.length > yearLimit) {
     dataArr = dataArr.slice(-yearLimit);
-    
+
   }
 
   // 过滤尾部的 0 值
@@ -70,14 +70,14 @@ export function selectDataFromArr(returndata, zbCode, dbCode = 'nd', cityCode = 
   return dataArr.map(d => {
     const val = Number(d.value);
     let formattedValue;
-    
+
     if (Number.isInteger(val)) {
       formattedValue = val;
     } else {
       const decimalPlaces = Math.abs(val) >= 1 ? 2 : 3;
       formattedValue = Number(val.toFixed(decimalPlaces));
     }
-    
+
     return {
       value: formattedValue,
       date: d.date
@@ -203,14 +203,14 @@ function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears, z = 1.96) {
 
     if (Xlast.length < 2 || Ylast.length < 2) {
       // 数据太少，退化使用上一年婚姻 × 平均生育率
-      const k = Xlast.length === 1 ? Ylast[0] / Xlast[0] : 1; 
+      const k = Xlast.length === 1 ? Ylast[0] / Xlast[0] : 1;
       nextYearPred = {
         yearIndex: n,
         pred: Math.round(marriageArr[n - 1] * k),
         lower: null,
         upper: null
       };
-    }else {
+    } else {
       nextYearPred = {
         yearIndex: n,
         pred: Math.round(interceptLast + wLast * marriageArr[n - 1]),
@@ -273,7 +273,7 @@ export function getCommonChartOption(params) {
 
       const name = cname + unit;
 
-      let result =  selectDataFromArr(data, zbCode, dbCode, '', yearLimit);
+      let result = selectDataFromArr(data, zbCode, dbCode, '', yearLimit);
       let valueArr = result.map(item => item.value);
       let dateArr = result.map(item => item.date);
       if (enableBirthOffset && zbCode === 'A0P0C01') marriageArr = valueArr;
@@ -298,12 +298,12 @@ export function getCommonChartOption(params) {
       const city = data.reg?.find(r => r.code === cityCode);
       const name = city?.cname || '';
 
-      let result =  selectDataFromArr(data, zbcodeArr[0], dbCode, cityCode, yearLimit) || [];
+      let result = selectDataFromArr(data, zbcodeArr[0], dbCode, cityCode, yearLimit) || [];
       let valueArr = result.map(item => item.value);
       let dateArr = result.map(item => item.date);
       seriesData.push({
         name,
-        zbCode:zbcodeArr[0], // 新增 zbCode 供饼图触发
+        zbCode: zbcodeArr[0], // 新增 zbCode 供饼图触发
         type: chartType,
         data: valueArr,
         date: dateArr,
@@ -371,7 +371,7 @@ export function getCommonChartOption(params) {
       formatter: function (params) {
         // 倒序排列
         const sorted = params.slice().sort((a, b) => b.value - a.value);
-    
+
         let result = sorted[0].axisValue + '<br/>';
         sorted.forEach(item => {
           let val = item.value;
@@ -403,11 +403,11 @@ export function getCommonChartOption(params) {
     pieConfig.pies.forEach((pie, idx) => {
       const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
       // logger.debug('seriesData-targetSeries',seriesData,targetSeries)
-     
-      
+
+
       // 获取最后一个横坐标的索引
       const lastYearIndex = filteredYears.length - 1;
-      
+
       // 创建饼图数据：使用最后一年的数据
       const pieData = targetSeries.map(series => {
         // 获取最后一个年份的数据
@@ -417,10 +417,10 @@ export function getCommonChartOption(params) {
           value: lastValue  // 使用具体数值，不是整个data数组
         };
       });
-      
+
       // 获取饼图数据在 legend 中的索引
       const legendData = optionData.legend?.data || [];
-      
+
       optionData.series.push({
         id: `pie_${idx}`,
         type: 'pie',
@@ -428,25 +428,35 @@ export function getCommonChartOption(params) {
         center: pie.center || ['50%', 170],
         data: pieData,
         label: {
-          formatter: params => `${params.name}(${params.percent}%)`
+          formatter: params => {
+            // 动态获取当前屏幕宽度，<= 768px 认为是移动端
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+              // 移动端：在名称和百分比之间加入 \n 实现换行
+              return `${params.name}\n(${params.percent}%)`;
+            } else {
+              // PC 端：保持原样单行显示
+              return `${params.name}(${params.percent}%)`;
+            }
+          },
         },
         emphasis: { focus: 'self' },
         itemStyle: {
-          color: function(params) {
+          color: function (params) {
             const dataName = params.name;
             const legendIndex = legendData.indexOf(dataName);
-            
+
             if (legendIndex !== -1 && optionData.color && optionData.color[legendIndex]) {
               return optionData.color[legendIndex];
             }
-            
+
             return optionData.color[params.dataIndex % optionData.color.length];
           }
         }
       });
     });
-    
-  
+
+
   }
   // logger.debug('optionData',optionData)
   const endTime = performance.now();
@@ -674,8 +684,8 @@ const params_touristIndustry = [
 // 运输与邮电
 const params_transportationAndTelecommunications = [
   // 运输
-  {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0G02"},{"wdcode":"sj","valuecode":"LAST20"}]'}, // 运输长度
-  {'dbcode' : 'hgnd','rowcode' : 'zb','wds' : '[]','dfwds': '[{"wdcode":"zb","valuecode":"A0G04"},{"wdcode":"sj","valuecode":"LAST20"}]'}, // 客运量
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0G02"},{"wdcode":"sj","valuecode":"LAST20"}]' }, // 运输长度
+  { 'dbcode': 'hgnd', 'rowcode': 'zb', 'wds': '[]', 'dfwds': '[{"wdcode":"zb","valuecode":"A0G04"},{"wdcode":"sj","valuecode":"LAST20"}]' }, // 客运量
 ]
 
 

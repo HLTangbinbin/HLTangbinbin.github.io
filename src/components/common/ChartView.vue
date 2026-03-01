@@ -6,12 +6,12 @@
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue';
 import * as echarts from 'echarts/core';
 import { BarChart, LineChart, PieChart } from 'echarts/charts';
-import { TitleComponent,GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
+import { TitleComponent, GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 import { logger } from '@/utils/Logger.js';
 import debounce from 'lodash-es/debounce';
 
-echarts.use([TitleComponent,GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, PieChart,CanvasRenderer]);
+echarts.use([TitleComponent, GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, PieChart, CanvasRenderer]);
 
 export default {
   name: 'ChartView',
@@ -92,7 +92,17 @@ export default {
               id: `pie_${idx}`,
               data: pieData,
               label: {
-                formatter: params => `${params.name}(${params.percent}%)`
+                formatter: params => {
+                  // 动态获取当前屏幕宽度，<= 768px 认为是移动端
+                  const isMobile = window.innerWidth <= 768;
+                  if (isMobile) {
+                    // 移动端：在名称和百分比之间加入 \n 实现换行
+                    return `${params.name}\n(${params.percent}%)`;
+                  } else {
+                    // PC 端：保持原样单行显示
+                    return `${params.name}(${params.percent}%)`;
+                  }
+                },
               },
             }]
           });
@@ -121,7 +131,7 @@ export default {
       if (!newOption?.series?.length) return;
       logger.debug('updateChart方法调用')
       // 使用增量更新，提高性能
-      chartInstance.setOption(newOption, false, true);
+      chartInstance.setOption(newOption, true, true);
     };
 
 
