@@ -98,7 +98,6 @@ export default {
             series: [{
               id: `pie_${idx}`,
               data: pieData,
-<<<<<<< HEAD
               label: {
                 formatter: params => {
                   // 动态获取当前屏幕宽度，<= 768px 认为是移动端
@@ -112,9 +111,6 @@ export default {
                   }
                 },
               },
-=======
-              label: { formatter: params => `${params.name}(${params.percent}%)` }
->>>>>>> 1e4e24f (重构echart相关页面，优化性能)
             }]
           });
         });
@@ -134,13 +130,9 @@ export default {
         return;
       }
       if (!newOption?.series?.length) return;
-<<<<<<< HEAD
       logger.debug('updateChart方法调用')
       // 使用增量更新，提高性能
       chartInstance.setOption(newOption, true, true);
-=======
-      chartInstance.setOption(newOption, false, true);
->>>>>>> 1e4e24f (重构echart相关页面，优化性能)
     };
 
     // 🌟 修复点：使用 async/await 处理 nextTick 🌟

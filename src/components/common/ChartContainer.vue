@@ -293,12 +293,16 @@ export default {
 @media (max-width: 768px) {
   .controls-row {
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center; /* 🌟 确保所有换行的行都整体居中 */
     gap: 6px;
     margin-top: 8px;
   }
 
   .chart-controls {
+    display: flex;
     flex-wrap: wrap;
+    justify-content: center; /* 🌟 按钮组内部居中 */
     gap: 6px;
     margin-bottom: 0;
   }
@@ -311,6 +315,9 @@ export default {
 
   .time-control {
     width: 100%;
+    display: flex;
+    justify-content: center; /* 🌟 核心修复：让 100% 宽度的滑块容器内部元素居中 */
+    align-items: center;
     margin-top: 8px;
     padding: 4px 8px;
     border-radius: 8px;
@@ -335,6 +342,7 @@ export default {
   .line-mode-controls {
     flex-direction: row;
     flex-wrap: nowrap;
+    justify-content: center; /* 🌟 确保折线图第二行控件居中 */
     gap: 8px;
     margin-top: 8px;
     padding: 6px;
@@ -346,6 +354,8 @@ export default {
     min-width: 50px;
     max-width: 34%;
     margin-right: 8px;
+    display: flex;
+    justify-content: center;
   }
 
   .offset-controls {
@@ -354,6 +364,7 @@ export default {
     max-width: 80%;
     display: flex;
     flex-wrap: nowrap;
+    justify-content: center;
     gap: 6px;
   }
 
@@ -384,12 +395,8 @@ export default {
   }
 }
 
-<<<<<<< HEAD
 /* 滑块样式覆盖 (使用 Vue3 推荐的 :deep 语法) */
 :deep(.el-slider__bar) {
-=======
-::v-deep(.el-slider__bar) {
->>>>>>> 1e4e24f (重构echart相关页面，优化性能)
   background-color: #0bc2d6 !important;
 }
 
@@ -398,12 +405,8 @@ export default {
   border-color: #0bc2d6 !important;
 }
 
-<<<<<<< HEAD
 /* 选legend择框圆角 */
 :deep(.legend-selector .el-select__wrapper) {
-=======
-::v-deep(.legend-selector .el-select__wrapper) {
->>>>>>> 1e4e24f (重构echart相关页面，优化性能)
   border-radius: 6px !important;
 }
 
