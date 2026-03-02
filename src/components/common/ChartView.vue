@@ -8,8 +8,8 @@ import * as echarts from 'echarts/core';
 import { BarChart, LineChart, PieChart } from 'echarts/charts';
 import { TitleComponent, GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
-import { logger } from '@/utils/Logger.js';
 import debounce from 'lodash-es/debounce';
+import { logger } from '@/utils/Logger';
 
 echarts.use([TitleComponent, GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, PieChart, CanvasRenderer]);
 
@@ -17,7 +17,7 @@ export default {
   name: 'ChartView',
   props: {
     option: { type: Object, required: true },
-    chartId: { type: String, required: true }, // 从 ChartContainer 传入
+    chartId: { type: String, required: true },
     pieConfig: { type: Object, default: () => ({}) },
     initSelectAll: { type: Boolean, default: true }
   },
@@ -27,18 +27,27 @@ export default {
     let chartInstance = null;
     let resizeHandler = null;
 
+    // 暴露给父组件的方法
+    const toggleAllLegends = (selectAll) => {
+      if (!chartInstance) return;
+      const legends = chartInstance.getOption().legend?.[0]?.data || [];
+      legends.forEach(name => {
+        chartInstance.dispatchAction({
+          type: selectAll ? 'legendSelect' : 'legendUnSelect',
+          name
+        });
+      });
+    };
+    expose({ toggleAllLegends });
+
     const initChart = () => {
       if (!chartContainer.value || !props.option?.series?.length) return;
 
-      const startTime = performance.now();
-
-      // 如果实例已存在且未销毁，直接更新
       if (chartInstance && !chartInstance.isDisposed()) {
         updateChart(props.option);
         return;
       }
 
-      // 创建新实例
       chartInstance = echarts.init(chartContainer.value);
       chartInstance.setOption(props.option, true);
 
@@ -53,44 +62,43 @@ export default {
         });
       }
 
-      // 绑定事件（只绑定一次）
+      // 绑定图例点击事件
       chartInstance.on('legendselectchanged', (params) => {
         const allSelected = Object.values(params.selected).every(v => v === true);
         const noneSelected = Object.values(params.selected).every(v => v === false);
-
         if (allSelected) emit('legendStateChange', true);
         else if (noneSelected) emit('legendStateChange', false);
       });
-      // 饼状图联动事件
-      chartInstance.on('updateAxisPointer', function (event) {
-        // 在 setup() 或 initChart() 里
-        const seriesData = props.option?.series?.filter(s => s.type !== 'pie') || [];
 
+      // 🌟 性能优化核心：缓存上一次悬停的索引
+      let lastYearIndex = -1;
+      
+      chartInstance.on('updateAxisPointer', function (event) {
         const xAxisInfo = event.axesInfo?.[0];
         if (!xAxisInfo) return;
 
-        const yearIndex = xAxisInfo.value; // 对应 filteredYears 的索引
+
+        const yearIndex = xAxisInfo.value;
+        if (yearIndex === lastYearIndex) return; 
+        lastYearIndex = yearIndex;
+
         const pieConfig = props.pieConfig;
-        if (!pieConfig?.enabled || !Array.isArray(pieConfig.pies)) return; // ✅ 没有饼图直接返回
+        if (!pieConfig?.enabled || !Array.isArray(pieConfig.pies)) return;
 
-        pieConfig?.pies.forEach((pie, idx) => {
+        const seriesData = props.option?.series?.filter(s => s.type !== 'pie') || [];
+
+        pieConfig.pies.forEach((pie, idx) => {
           const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
-
-
-          // 创建饼图数据：使用最后一年的数据
-          const pieData = targetSeries.map(series => {
-            // 获取最后一个年份的数据
-            const lastValue = Array.isArray(series.data) ? series.data[yearIndex] : 0;
-            return {
-              name: series.name,
-              value: lastValue  // 使用具体数值，不是整个data数组
-            };
-          });
-
+          const pieData = targetSeries.map(series => ({
+            name: series.name,
+            value: Array.isArray(series.data) ? series.data[yearIndex] : 0
+          }));
+          logger.debug("updateAxisPointer调用");
           chartInstance.setOption({
             series: [{
               id: `pie_${idx}`,
               data: pieData,
+<<<<<<< HEAD
               label: {
                 formatter: params => {
                   // 动态获取当前屏幕宽度，<= 768px 认为是移动端
@@ -104,23 +112,20 @@ export default {
                   }
                 },
               },
+=======
+              label: { formatter: params => `${params.name}(${params.percent}%)` }
+>>>>>>> 1e4e24f (重构echart相关页面，优化性能)
             }]
           });
         });
       });
 
-      // 绑定窗口大小调整事件
       if (!resizeHandler) {
         resizeHandler = debounce(() => {
-          if (chartInstance && !chartInstance.isDisposed()) {
-            chartInstance.resize();
-          }
+          chartInstance?.resize();
         }, 200);
         window.addEventListener('resize', resizeHandler);
       }
-
-      const endTime = performance.now();
-      logger.debug(`[Chart ${props.chartId}] 图表初始化耗时: ${Math.round(endTime - startTime)}ms`);
     };
 
     const updateChart = (newOption) => {
@@ -129,31 +134,21 @@ export default {
         return;
       }
       if (!newOption?.series?.length) return;
+<<<<<<< HEAD
       logger.debug('updateChart方法调用')
       // 使用增量更新，提高性能
       chartInstance.setOption(newOption, true, true);
+=======
+      chartInstance.setOption(newOption, false, true);
+>>>>>>> 1e4e24f (重构echart相关页面，优化性能)
     };
 
-
-    const toggleAllLegends = (selectAll) => {
-      if (!chartInstance) return;
-      const legends = chartInstance.getOption().legend?.[0]?.data || [];
-      const startTime = performance.now();
-      legends.forEach(name => {
-        chartInstance.dispatchAction({
-          type: selectAll ? 'legendSelect' : 'legendUnSelect',
-          name
-        });
-      });
-      const endTime = performance.now();
-      logger.debug(`[Chart ${props.chartId}] toggleAllLegends耗时: ${Math.round(endTime - startTime)}ms`);
-    };
-
-    onMounted(() => {
-      nextTick(() => initChart());
+    // 🌟 修复点：使用 async/await 处理 nextTick 🌟
+    onMounted(async () => {
+      await nextTick();
+      initChart();
     });
 
-    // 使用浅监听，避免深度监听的性能开销
     watch(() => props.option, updateChart, { deep: false });
 
     onBeforeUnmount(() => {
@@ -164,8 +159,6 @@ export default {
       chartInstance?.dispose();
       chartInstance = null;
     });
-
-    expose({ toggleAllLegends });
 
     return { chartContainer };
   }

@@ -1,9 +1,7 @@
 <template>
   <div class="chart-container">
     <div class="controls-wrap">
-      <!-- PC端布局 - 所有控件在一行 -->
       <div class="controls-row">
-        <!-- 图表类型控件 -->
         <div class="chart-controls">
           <button :class="['chart-button', { 'is-active': currentChartType === 'bar' && !isHorizontal }]"
             @click="setChartType('bar', false)">
@@ -18,22 +16,19 @@
             折线图
           </button>
         </div>
-        
-        <!-- 一键全选控件 - 与图表类型按钮在同一行 -->
+
         <button class="toggle-legend-btn" :style="{ backgroundColor: legendAllSelected ? '#0bc2d6' : '#ccc' }"
           @click="toggleAllLegends">
           {{ legendAllSelected ? '一键未选' : '一键全选' }}
         </button>
-        
-        <!-- 时间选择控件 -->
+
         <div class="time-control">
           <label class="year-label">选择时间:</label>
-          <el-slider v-model="yearLimit" :min=1 :max=30 :step=1 class="year-slider" />
+          <el-slider v-model="yearLimit" :min="1" :max="30" :step="1" class="year-slider" />
           <span class="offset-value">{{ yearLimit }}</span>
         </div>
       </div>
-      
-      <!-- 折线图模式下第二行控件 -->
+
       <div v-if="showOffsetControls" class="line-mode-controls">
         <div class="legend-control">
           <el-select v-model="selectedLegend" placeholder="选择图例" class="legend-selector">
@@ -44,27 +39,24 @@
         <div class="offset-controls">
           <label class="year-label">折线偏移:</label>
           <div class="offset-slider-container">
-            <el-slider v-model="offsetValue" :min=-30 :max=30 :step=1 class="year-slider" />
+            <el-slider v-model="offsetValue" :min="-30" :max="30" :step="1" class="year-slider" />
             <span class="offset-value">{{ offsetValue }}</span>
           </div>
- 
-      </div>
+        </div>
       </div>
     </div>
 
-    <div class="chart-card " :style="{ height: chartHeight + 'px' }">
-      <ChartView ref="chartRef" :option="chartOption" :chartId="chart.id" :initSelectAll="legendAllSelected" :pieConfig="chart.pieConfig"
-        @legendStateChange="legendAllSelected = $event" />
+    <div class="chart-card" :style="{ height: chartHeight + 'px' }">
+      <ChartView ref="chartRef" :option="chartOption" :chartId="chart.id" :initSelectAll="legendAllSelected"
+        :pieConfig="chart.pieConfig" @legendStateChange="legendAllSelected = $event" />
     </div>
   </div>
 </template>
 
-
 <script>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue';
 import ChartView from './ChartView.vue';
 import { getCommonChartOption } from '@/utils/CommonUtil.js';
-import { logger } from '@/utils/Logger.js';
 
 export default {
   name: 'ChartContainer',
@@ -81,17 +73,25 @@ export default {
     const yearLimit = ref(10);
     const legendAllSelected = ref(true);
     const chartRef = ref(null);
-    // 新增状态
-    const selectedLegend = ref(null)
-    const offsetValue = ref(0)
-    const legendNames = ref([])
+    const selectedLegend = ref(null);
+    const offsetValue = ref(0);
+    const legendNames = ref([]);
 
-   // 必须这么写，不然在上面使用legendNames取不到数据，使用legendNames.value写法又报错
-    const legendList = computed(() => legendNames.value)
+    // 🌟 修复窗口宽度不更新的问题
+    const windowWidth = ref(window.innerWidth);
+    const onResize = () => { windowWidth.value = window.innerWidth; };
+    onMounted(() => window.addEventListener('resize', onResize));
+    onBeforeUnmount(() => window.removeEventListener('resize', onResize));
+
+    // 动态计算高度
+    const baseHeight = computed(() => (windowWidth.value > 768 ? 600 : 400));
+    const pieExtraHeight = computed(() => (props.chart.pieConfig?.enabled ? (windowWidth.value > 768 ? 150 : 100) : 0));
+    const chartHeight = computed(() => baseHeight.value + pieExtraHeight.value);
+
+    const legendList = computed(() => legendNames.value);
 
     const chartOption = computed(() => {
-
-      const chartConfig = {
+      return getCommonChartOption({
         data: props.returnData,
         title: props.chart.title || '默认标题',
         subtitle: props.chart.subtitle || '',
@@ -109,55 +109,32 @@ export default {
         enableBirthPrediction: props.chart.enableBirthPrediction || false,
         selectedLegend: selectedLegend.value,
         offsetValue: offsetValue.value,
-        pieConfig:props.chart.pieConfig,
-      };
-
-      const option = getCommonChartOption(chartConfig);
-
-      return option;
+        pieConfig: props.chart.pieConfig,
+      });
     });
 
-    const windowWidth = ref(window.innerWidth);
-    const baseHeight = computed(() => (windowWidth.value > 768 ? 600 : 400));
-    const pieExtraHeight = computed(() => (props.chart.pieConfig?.enabled ? (windowWidth.value > 768 ? 150 : 100) : 0));
-    const chartHeight = computed(() => baseHeight.value + pieExtraHeight.value);
-    logger.debug('当前的高度',chartHeight,pieExtraHeight)
-
-    // 监听 legendNames，初始化选中第一个
-    // ✅ 在 watch 里同步 legend，不会报 eslint 错
-    // watch returnData 或 chartOption 更新 legendNames
-    watch(chartOption, async (newOption) => {
-
-      legendNames.value = newOption?.legend?.data || []
-      // 默认选中第一个 legend
+    watch(chartOption, (newOption) => {
+      legendNames.value = newOption?.legend?.data || [];
       if (!selectedLegend.value && legendNames.value.length > 0) {
-        selectedLegend.value = legendNames.value[0]
+        selectedLegend.value = legendNames.value[0];
       }
+    }, { immediate: true });
 
-    }, { immediate: true })
-
-    // 切换图表类型
     const setChartType = (type, horizontal) => {
       currentChartType.value = type;
       isHorizontal.value = horizontal;
     };
 
-    // 一键全选/未选
     const toggleAllLegends = () => {
-      logger.debug('一键全选:', legendAllSelected.value);
       legendAllSelected.value = !legendAllSelected.value;
       if (chartRef.value) {
         chartRef.value.toggleAllLegends(legendAllSelected.value);
       }
     };
-    // 计算属性：是否显示偏移功能
-    const showOffsetControls = computed(() => {
-      // 城市tab下不显示偏移功能
-      const isCityMode = props.config.cityCodeArr && props.config.cityCodeArr.length > 0;
 
-      return currentChartType.value === 'line' &&
-        !isHorizontal.value &&
-        !isCityMode;
+    const showOffsetControls = computed(() => {
+      const isCityMode = props.config.cityCodeArr && props.config.cityCodeArr.length > 0;
+      return currentChartType.value === 'line' && !isHorizontal.value && !isCityMode;
     });
 
     return {
@@ -165,20 +142,21 @@ export default {
       isHorizontal,
       yearLimit,
       legendAllSelected,
-      chartOption,
-      setChartType,
-      toggleAllLegends,
-      showOffsetControls,
       chartRef,
       selectedLegend,
       offsetValue,
+      legendNames,
+      windowWidth,
+      chartHeight,
       legendList,
-      chartHeight
+      chartOption,
+      setChartType,
+      toggleAllLegends,
+      showOffsetControls
     };
   }
 };
 </script>
-
 
 <style scoped>
 .chart-container {
@@ -243,21 +221,20 @@ export default {
 .year-label {
   font-weight: 400;
   flex-shrink: 0;
-  padding: 8px 14px; /* PC端增大尺寸 */
-  font-size: 18px; /* PC端增大字体 */
-  /* color: rgb(113, 109, 109); */
+  padding: 8px 14px;
+  font-size: 18px;
   border-radius: 8px;
 }
 
 .year-slider {
-  min-width: 150px; /* PC端增大宽度 */
-  max-width: 250px; /* PC端增大宽度 */
+  min-width: 150px;
+  max-width: 250px;
 }
 
 .toggle-legend-btn {
   flex-shrink: 0;
-  padding: 8px 14px; /* PC端增大尺寸 */
-  font-size: 14px; /* PC端增大字体 */
+  padding: 8px 14px;
+  font-size: 14px;
   color: #fff;
   background-color: #0bc2d6;
   border: none;
@@ -273,8 +250,8 @@ export default {
 }
 
 .chart-button {
-  padding: 8px 14px; /* PC端增大尺寸 */
-  font-size: 14px; /* PC端增大字体 */
+  padding: 8px 14px;
+  font-size: 14px;
   color: #fff;
   background-color: #ccc;
   border: none;
@@ -316,133 +293,103 @@ export default {
 @media (max-width: 768px) {
   .controls-row {
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 6px;
     margin-top: 8px;
   }
-  
+
   .chart-controls {
-    display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 6px;
     margin-bottom: 0;
   }
-  
+
   .toggle-legend-btn {
     margin: 0;
     padding: 6px 10px;
     font-size: 12px;
   }
-  
-  /* 时间控件优化 */
+
   .time-control {
     width: 100%;
-    justify-content: center;
     margin-top: 8px;
-    flex-wrap: nowrap;
-    /* background-color: #f8f9fa; */
     padding: 4px 8px;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
   }
-  
+
   .time-control .year-label {
     padding: 4px 4px;
     font-size: 13px;
-    flex-shrink: 0;
   }
-  
+
   .time-control .year-slider {
     min-width: 100px;
     max-width: 150px;
     flex-grow: 1;
   }
-  
+
   .legend-selector {
-    max-width: 120px; /* 进一步减小图例选择框宽度 */
+    max-width: 120px;
     min-width: auto;
   }
-  
-  
-  /* 图例选择框和偏移控件布局优化 */
+
   .line-mode-controls {
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 8px;
     margin-top: 8px;
-    justify-content: center;
-    align-items: center;
-    /* background-color: #f8f9fa; */
     padding: 6px;
     border-radius: 8px;
-    width: 100%;
   }
-  
+
   .legend-control {
     flex: 1;
     min-width: 50px;
-    max-width: 34%; /* 限制最大宽度 */
-    justify-content: center;
+    max-width: 34%;
+    margin-right: 8px;
   }
-  
+
   .offset-controls {
     flex: 1;
     min-width: 150px;
-    max-width: 80%; /* 限制最大宽度 */
-    justify-content: center;
-  }
-  
-  /* 偏移控件内部优化 */
-  .offset-controls {
+    max-width: 80%;
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
     gap: 6px;
   }
-  
+
   .offset-slider-container {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
     gap: 4px;
     flex-grow: 1;
   }
-  
+
   .offset-controls .year-slider {
-    min-width: 120px; /* 减小滑块最小宽度 */
-    max-width: 200px; /* 减小滑块最大宽度 */
-    flex-grow: 1;
+    min-width: 120px;
+    max-width: 200px;
   }
-  
+
   .year-label {
     padding: 4px 8px;
     font-size: 13px;
     white-space: nowrap;
-    flex-shrink: 0;
   }
-  
+
   .chart-button {
     padding: 6px 10px;
     font-size: 12px;
   }
-  
+
   .offset-value {
     font-size: 12px;
     min-width: 25px;
-    flex-shrink: 0;
-  }
-  
-  /* 添加间距 */
-  .legend-control {
-    margin-right: 8px; /* 图例选择框右侧添加间距 */
   }
 }
 
+<<<<<<< HEAD
 /* 滑块样式覆盖 (使用 Vue3 推荐的 :deep 语法) */
 :deep(.el-slider__bar) {
+=======
+::v-deep(.el-slider__bar) {
+>>>>>>> 1e4e24f (重构echart相关页面，优化性能)
   background-color: #0bc2d6 !important;
 }
 
@@ -451,8 +398,12 @@ export default {
   border-color: #0bc2d6 !important;
 }
 
+<<<<<<< HEAD
 /* 选legend择框圆角 */
 :deep(.legend-selector .el-select__wrapper) {
+=======
+::v-deep(.legend-selector .el-select__wrapper) {
+>>>>>>> 1e4e24f (重构echart相关页面，优化性能)
   border-radius: 6px !important;
 }
 

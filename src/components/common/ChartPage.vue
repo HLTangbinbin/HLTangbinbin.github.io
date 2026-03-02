@@ -16,49 +16,55 @@
 </template>
 
 <script>
+import { ref, computed } from 'vue';
 import ChartContainer from './ChartContainer.vue';
 
 export default {
+  name: 'ChartPage',
   components: { ChartContainer },
   props: {
-    chartMetaList: Array,
-    returnData: Object,
-    config: Object,
-    showToggles: { type: Boolean, default: true },
+    chartMetaList: { type: Array, required: true },
+    returnData: { type: Object, required: true },
+    config: { type: Object, default: () => ({}) },
+    showToggles: { type: Boolean, default: true }
   },
-  data() {
-    return {
-      viewMode: 'monthly',
-    };
-  },
-  computed: {
-    internalShowToggles() {
-      if (!this.showToggles) return false;
-      const dbCodes = new Set(this.chartMetaList.map((c) => c.dbCode));
+  setup(props) {
+    const viewMode = ref('monthly');
+
+    const internalShowToggles = computed(() => {
+      if (!props.showToggles) return false;
+      const dbCodes = new Set(props.chartMetaList.map(c => c.dbCode));
       return dbCodes.has('yd') && dbCodes.has('nd');
-    },
-    defaultViewMode() {
-      const dbCodes = new Set(this.chartMetaList.map((c) => c.dbCode));
+    });
+
+    const defaultViewMode = () => {
+      const dbCodes = new Set(props.chartMetaList.map(c => c.dbCode));
       if (dbCodes.has('yd')) return 'monthly';
       if (dbCodes.has('nd')) return 'yearly';
       return 'monthly';
-    },
-    filteredCharts() {
-      if (!this.internalShowToggles) return this.chartMetaList;
-      return this.chartMetaList.filter((c) =>
-        this.viewMode === 'monthly' ? c.dbCode === 'yd' : c.dbCode === 'nd'
+    };
+    viewMode.value = defaultViewMode();
+
+    const filteredCharts = computed(() => {
+      if (!internalShowToggles.value) return props.chartMetaList;
+      return props.chartMetaList.filter(c =>
+        viewMode.value === 'monthly' ? c.dbCode === 'yd' : c.dbCode === 'nd'
       );
-    },
-    chartsToRender() {
-      return this.filteredCharts.filter((chart) => {
-        const sj = this.returnData?.sj?.[chart.dbCode];
+    });
+
+    const chartsToRender = computed(() => {
+      return filteredCharts.value.filter(chart => {
+        const sj = props.returnData?.sj?.[chart.dbCode];
         return Array.isArray(sj) && sj.length > 0;
       });
-    },
-  },
-  created() {
-    this.viewMode = this.defaultViewMode;
-  },
+    });
+
+    return {
+      viewMode,
+      internalShowToggles,
+      chartsToRender
+    };
+  }
 };
 </script>
 
@@ -68,7 +74,6 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 10px;
-
 }
 
 .segment-wrapper {
@@ -80,10 +85,8 @@ export default {
   border-radius: 15px;
   padding: 2px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  /* ✅ 外部阴影更明显 */
 }
 
-/* 背景高亮滑块 */
 .segment-bg {
   position: absolute;
   top: 2px;
@@ -103,7 +106,6 @@ export default {
   left: 50%;
 }
 
-/* 按钮本体 */
 .segment-button {
   position: relative;
   flex: 1;
@@ -122,6 +124,4 @@ export default {
 .segment-button.active {
   color: #fff;
 }
-
-
 </style>
