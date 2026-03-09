@@ -339,7 +339,8 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
 
   // 根据对比年数进行截取
   const availableYears = Object.keys(yearMap).sort((a, b) => b - a);
-  const selectedYears = availableYears.slice(0, params.compareYearCount);
+  const selectedYearsRaw = availableYears.slice(0, params.compareYearCount);
+  const selectedYears = selectedYearsRaw.sort((a, b) => a - b);
 
   const newSeries = [];
   const legendData = [];

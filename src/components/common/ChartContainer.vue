@@ -291,10 +291,11 @@ export default {
 
 /* 数值：靠左对齐，紧贴滑块，防止距离太远 */
 .ctrl-val {
-  font-size: 16px;
-  font-weight: 600;
-  color: #0f172a;
+  font-size: 14px;
+  font-weight: 400;
+  color: #475569;
   min-width: 24px; /* 缩小基础宽度 */
+  margin-left: 10px;
   text-align: left; /* 紧贴滑块核心 */
   font-variant-numeric: tabular-nums;
   flex-shrink: 0;
