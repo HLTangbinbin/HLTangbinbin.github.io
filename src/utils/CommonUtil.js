@@ -134,21 +134,40 @@ function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears) {
 export function getCommonChartOption(params) {
   const startTime = performance.now();
 
-  // 1. 构建基础 Series 数据（清洗、整合、偏移）
+  // 1. 构建基础 Series 数据
   let { seriesData, filteredYears, marriageArr, birthArr } = buildBaseSeries(params);
 
-  // 2. 应用人口预测算法（如果有配置）
+  // 🌟 修复 3：在数据被污染之前，把真正的原始指标名存下来（比如：财政收入、财政支出）
+  const originalLegendData = seriesData.map(s => s.name);
+
+  // 拦截同环比逻辑
+  if (params.isYearlyCompare) {
+    const compareOption = buildYearlyCompareOption(seriesData, filteredYears, params);
+    // 将原始指标名强行挂载到返回的 Option 里，给外部下拉框使用！
+    compareOption.originalLegendData = originalLegendData; 
+    if (typeof logger !== 'undefined') {
+      logger.debug(`[getCommonChartOption - 同环比模式] 耗时: ${Math.round(performance.now() - startTime)}ms`);
+    }
+    return compareOption;
+  }
+
+  // 2. 应用人口预测算法
   seriesData = applyBirthPrediction(seriesData, marriageArr, birthArr, params);
 
   // 3. 组装 ECharts Option 骨架
   const optionData = buildOptionSkeleton(seriesData, filteredYears, params);
 
-  // 4. 挂载额外的饼图配置（如果有配置）
+  // 同样挂载给正常模式使用
+  optionData.originalLegendData = originalLegendData;
+
+  // 4. 挂载额外的饼图配置
   if (params.pieConfig?.enabled) {
     attachPieChartToOption(optionData, seriesData, filteredYears, params.pieConfig);
   }
 
-  logger.debug(`[getCommonChartOption] 总耗时: ${Math.round(performance.now() - startTime)}ms, 标题: ${params.title}`);
+  if (typeof logger !== 'undefined') {
+    logger.debug(`[getCommonChartOption] 总耗时: ${Math.round(performance.now() - startTime)}ms, 标题: ${params.title}`);
+  }
   return optionData;
 }
 
@@ -286,6 +305,106 @@ function attachPieChartToOption(optionData, seriesData, filteredYears, pieConfig
       }
     });
   });
+}
+
+/**
+ * 构建年度同环比的 ECharts Option
+ * 将原本连续的时间序列 (如 202201, 202202...202301) 折叠合并
+ * 使得 X 轴固定为 1-12 月，折线(Series)变为不同的年份
+ */
+/**
+ * 构建年度同环比的 ECharts Option
+ */
+function buildYearlyCompareOption(seriesData, filteredYears, params) {
+  const xAxisData = ['01月', '02月', '03月', '04月', '05月', '06月', '07月', '08月', '09月', '10月', '11月', '12月'];
+  const yearMap = {};
+
+  filteredYears.forEach((dateStr, dateIndex) => {
+    if (!dateStr || dateStr.length < 6) return;
+    
+    const year = dateStr.substring(0, 4);
+    const monthIdx = parseInt(dateStr.substring(4, 6), 10) - 1; 
+
+    if (!yearMap[year]) {
+      yearMap[year] = {};
+    }
+
+    seriesData.forEach(series => {
+      if (!yearMap[year][series.name]) {
+        yearMap[year][series.name] = new Array(12).fill(null);
+      }
+      yearMap[year][series.name][monthIdx] = series.data[dateIndex];
+    });
+  });
+
+  // 根据对比年数进行截取
+  const availableYears = Object.keys(yearMap).sort((a, b) => b - a);
+  const selectedYears = availableYears.slice(0, params.compareYearCount);
+
+  const newSeries = [];
+  const legendData = [];
+
+  // 根据选中的下拉框进行过滤（比如：只看“财政收入”的同环比）
+  let targetSeriesData = seriesData;
+  if (params.selectedLegend && seriesData.length > 1) {
+    targetSeriesData = seriesData.filter(s => s.name === params.selectedLegend);
+    if (targetSeriesData.length === 0) targetSeriesData = [seriesData[0]];
+  }
+
+  const isSingleSeries = targetSeriesData.length === 1;
+
+  selectedYears.forEach(year => {
+    targetSeriesData.forEach(series => {
+      const seriesName = isSingleSeries ? year : `${series.name} (${year})`;
+      legendData.push(seriesName);
+      
+      newSeries.push({
+        name: seriesName,
+        type: 'line',
+        connectNulls: false,
+        symbolSize: 6,
+        data: yearMap[year][series.name] || new Array(12).fill(null)
+      });
+    });
+  });
+
+  return {
+    title: {
+      text: params.title || '',
+      subtext: params.subtitle || '年度同环比对比',
+      left: 'center'
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'line' },
+      valueFormatter: (value) => value !== null ? value + (params.unit || '') : '-'
+    },
+    legend: {
+      data: legendData,
+      top: params.legendTop || '8%',
+      type: 'scroll'
+    },
+    grid: {
+      top: params.gridTop || '20%',
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: xAxisData,
+      axisLabel: { interval: 0 }
+    },
+    yAxis: {
+      type: 'value',
+      name: params.unit || '',
+      alignTicks: true
+    },
+    series: newSeries,
+    dataZoom: [] 
+  };
 }
 
 // ============================

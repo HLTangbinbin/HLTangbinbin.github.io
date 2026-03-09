@@ -273,7 +273,8 @@ export const EducationStudentCharts = {
             center: ['50%', '30%'],
           }
         ]
-      }
+      },
+      enableOffset: true,
 
     },
     {
@@ -311,7 +312,8 @@ export const EducationStudentCharts = {
             center: ['50%', '30%'],
           }
         ]
-      }
+      },
+      enableOffset: true,
 
     },
     {
@@ -349,7 +351,8 @@ export const EducationStudentCharts = {
             center: ['50%', '30%'],
           }
         ]
-      }
+      },
+      enableOffset: true,
 
     }
   ]

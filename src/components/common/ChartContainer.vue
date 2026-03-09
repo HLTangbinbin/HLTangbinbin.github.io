@@ -1,49 +1,50 @@
 <template>
   <div class="chart-container">
-    <div class="controls-wrap">
-      <div class="controls-row">
-        <div class="chart-controls">
-          <button :class="['chart-button', { 'is-active': currentChartType === 'bar' && !isHorizontal }]"
-            @click="setChartType('bar', false)">
-            柱状图
-          </button>
-          <button :class="['chart-button', { 'is-active': currentChartType === 'bar' && isHorizontal }]"
-            @click="setChartType('bar', true)">
-            条形图
-          </button>
-          <button :class="['chart-button', { 'is-active': currentChartType === 'line' && !isHorizontal }]"
-            @click="setChartType('line', false)">
-            折线图
-          </button>
-        </div>
+    <div class="bi-toolbar">
 
-        <button class="toggle-legend-btn" :style="{ backgroundColor: legendAllSelected ? '#0bc2d6' : '#ccc' }"
+      <div class="toolbar-group">
+        <div class="group-label"><i class="el-icon-data-analysis"></i> 视图</div>
+        <el-radio-group v-model="chartTypeModel" size="medium" class="chart-type-radio">
+          <el-radio-button label="bar">柱状图</el-radio-button>
+          <el-radio-button label="hbar">条形图</el-radio-button>
+          <el-radio-button label="line">折线图</el-radio-button>
+        </el-radio-group>
+        <el-button size="medium" :type="legendAllSelected ? 'primary' : 'default'" :plain="!legendAllSelected"
           @click="toggleAllLegends">
           {{ legendAllSelected ? '一键未选' : '一键全选' }}
-        </button>
+        </el-button>
+      </div>
 
-        <div class="time-control">
-          <label class="year-label">选择时间:</label>
-          <el-slider v-model="yearLimit" :min="1" :max="30" :step="1" class="year-slider" />
-          <span class="offset-value">{{ yearLimit }}</span>
+      <div class="toolbar-group">
+        <div class="group-label"><i class="el-icon-time"></i> 维度</div>
+
+        <el-switch v-if="showCompareToggle" v-model="isYearlyCompare" active-text="同环比" inactive-text="连续"
+          class="compare-switch" />
+
+        <div class="slider-wrapper">
+          <span class="ctrl-text">{{ isYearlyCompare ? '对比年数' : '时间跨度' }}</span>
+          <el-slider v-model="yearLimit" :min="1" :max="30" :step="1" class="flex-slider" />
+          <span class="ctrl-val">{{ yearLimit }}{{ isYearlyCompare ? '年' : '' }}</span>
         </div>
       </div>
 
-      <div v-if="showOffsetControls" class="line-mode-controls">
-        <div class="legend-control">
-          <el-select v-model="selectedLegend" placeholder="选择图例" class="legend-selector">
-            <el-option v-for="legend in legendList" :key="legend" :label="legend" :value="legend" />
-          </el-select>
-        </div>
+      <div v-if="showLegendSelector || showOffsetControls" class="toolbar-group">
+        <div class="group-label"><i class="el-icon-set-up"></i> {{ showOffsetControls ? '高级' : '目标' }}</div>
 
-        <div class="offset-controls">
-          <label class="year-label">折线偏移:</label>
-          <div class="offset-slider-container">
-            <el-slider v-model="offsetValue" :min="-30" :max="30" :step="1" class="year-slider" />
-            <span class="offset-value">{{ offsetValue }}</span>
-          </div>
+        <el-select v-if="showLegendSelector" v-model="selectedLegend" size="medium" placeholder="切换指标"
+          class="legend-select">
+          <el-option v-for="legend in legendList" :key="legend" :label="legend" :value="legend" />
+        </el-select>
+
+        <div v-if="showOffsetControls" class="slider-wrapper offset-slider">
+          <span class="ctrl-text">偏移量</span>
+          <el-slider v-model="offsetValue" :min="-30" :max="30" :step="1" class="flex-slider" />
+          <span class="ctrl-val" :class="{ 'is-positive': offsetValue > 0, 'is-negative': offsetValue < 0 }">
+            {{ offsetValue > 0 ? '+' : '' }}{{ offsetValue }}
+          </span>
         </div>
       </div>
+
     </div>
 
     <div class="chart-card" :style="{ height: chartHeight + 'px' }">
@@ -64,8 +65,7 @@ export default {
   props: {
     chart: { type: Object, required: true },
     returnData: { type: Object, required: true, default: () => ({}) },
-    config: { type: Object, default: () => ({}) },
-    viewMode: { type: String, default: 'monthly' }
+    config: { type: Object, default: () => ({}) }
   },
   setup(props) {
     const currentChartType = ref('bar');
@@ -73,24 +73,47 @@ export default {
     const yearLimit = ref(10);
     const legendAllSelected = ref(true);
     const chartRef = ref(null);
+
+    const isYearlyCompare = ref(false);
     const selectedLegend = ref(null);
     const offsetValue = ref(0);
     const legendNames = ref([]);
 
-    // 🌟 修复窗口宽度不更新的问题
+    const chartTypeModel = computed({
+      get() {
+        if (currentChartType.value === 'bar') return isHorizontal.value ? 'hbar' : 'bar';
+        return 'line';
+      },
+      set(val) {
+        if (val === 'hbar') { currentChartType.value = 'bar'; isHorizontal.value = true; }
+        else if (val === 'bar') { currentChartType.value = 'bar'; isHorizontal.value = false; }
+        else { currentChartType.value = 'line'; isHorizontal.value = false; }
+      }
+    });
+
     const windowWidth = ref(window.innerWidth);
     const onResize = () => { windowWidth.value = window.innerWidth; };
     onMounted(() => window.addEventListener('resize', onResize));
     onBeforeUnmount(() => window.removeEventListener('resize', onResize));
 
-    // 动态计算高度
     const baseHeight = computed(() => (windowWidth.value > 768 ? 600 : 400));
     const pieExtraHeight = computed(() => (props.chart.pieConfig?.enabled ? (windowWidth.value > 768 ? 150 : 100) : 0));
     const chartHeight = computed(() => baseHeight.value + pieExtraHeight.value);
 
     const legendList = computed(() => legendNames.value);
 
+    // 🌟 核心判断：图表是否真的是月度数据！
+    const isMonthlyChart = computed(() => props.chart.dbCode === 'yd');
+
+    // 切到年度数据等其他情况时，强制关闭同环比
+    watch(isMonthlyChart, (isMonthly) => {
+      if (!isMonthly) isYearlyCompare.value = false;
+    }, { immediate: true });
+
     const chartOption = computed(() => {
+      // 🌟 修复 1：同环比模式下，去底层请求数据时，固定给 360 个月（30年）以防止切断。不要随滑块联动！
+      const actualDataLimit = (isYearlyCompare.value && isMonthlyChart.value) ? 360 : yearLimit.value;
+
       return getCommonChartOption({
         data: props.returnData,
         title: props.chart.title || '默认标题',
@@ -103,56 +126,58 @@ export default {
         legendTop: props.chart.legendTop,
         gridTop: props.chart.gridTop,
         chartType: currentChartType.value,
-        yearLimit: yearLimit.value,
+        yearLimit: actualDataLimit,       // 控制截取底层原始数据的条数
+        compareYearCount: yearLimit.value,// 控制同环比模式下画几条线
         isHorizontal: isHorizontal.value,
-        enableBirthOffset: props.chart.enableBirthOffset || false,
-        enableBirthPrediction: props.chart.enableBirthPrediction || false,
+        isYearlyCompare: isMonthlyChart.value ? isYearlyCompare.value : false,
         selectedLegend: selectedLegend.value,
         offsetValue: offsetValue.value,
         pieConfig: props.chart.pieConfig,
+        enableBirthOffset: props.chart.enableBirthOffset || false,
+        enableBirthPrediction: props.chart.enableBirthPrediction || false,
       });
     });
 
     watch(chartOption, (newOption) => {
-      legendNames.value = newOption?.legend?.data || [];
-      if (!selectedLegend.value && legendNames.value.length > 0) {
+      // 🌟 修复 3：强行读取底层传出来的 originalLegendData (原始指标名)，保证下拉框永远正确！
+      legendNames.value = newOption?.originalLegendData || newOption?.legend?.data || [];
+      // 如果当前选中的不在列表里，重置为第一个
+      if (!legendNames.value.includes(selectedLegend.value) && legendNames.value.length > 0) {
         selectedLegend.value = legendNames.value[0];
       }
     }, { immediate: true });
 
-    const setChartType = (type, horizontal) => {
-      currentChartType.value = type;
-      isHorizontal.value = horizontal;
-    };
+    watch(isYearlyCompare, (isCompare) => {
+      if (isCompare) offsetValue.value = 0;
+    });
 
     const toggleAllLegends = () => {
       legendAllSelected.value = !legendAllSelected.value;
-      if (chartRef.value) {
-        chartRef.value.toggleAllLegends(legendAllSelected.value);
-      }
+      if (chartRef.value) chartRef.value.toggleAllLegends(legendAllSelected.value);
     };
 
+    // 🌟 修复 2：绝对精准识别月度折线图才显示同环比开关
+    const showCompareToggle = computed(() => {
+      return isMonthlyChart.value && currentChartType.value === 'line' && !isHorizontal.value;
+    });
+
+    const showLegendSelector = computed(() => {
+      if (legendList.value.length <= 1) return false;
+      return isYearlyCompare.value || showOffsetControls.value;
+    });
+
     const showOffsetControls = computed(() => {
-      const isCityMode = props.config.cityCodeArr && props.config.cityCodeArr.length > 0;
-      return currentChartType.value === 'line' && !isHorizontal.value && !isCityMode;
+      return props.chart.enableOffset === true &&
+        currentChartType.value === 'line' &&
+        !isHorizontal.value &&
+        !isYearlyCompare.value;
     });
 
     return {
-      currentChartType,
-      isHorizontal,
-      yearLimit,
-      legendAllSelected,
-      chartRef,
-      selectedLegend,
-      offsetValue,
-      legendNames,
-      windowWidth,
-      chartHeight,
-      legendList,
-      chartOption,
-      setChartType,
-      toggleAllLegends,
-      showOffsetControls
+      chartTypeModel, currentChartType, isHorizontal, yearLimit, legendAllSelected,
+      chartRef, selectedLegend, offsetValue, legendNames, windowWidth, chartHeight,
+      legendList, chartOption, isYearlyCompare, showCompareToggle, showLegendSelector,
+      showOffsetControls, toggleAllLegends
     };
   }
 };
@@ -163,254 +188,185 @@ export default {
   width: 95%;
   max-width: 1500px;
   margin: 30px auto 60px;
-  padding: 16px;
+  padding: 24px;
   background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   box-sizing: border-box;
 }
 
-.controls-wrap {
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  margin: 0 auto;
-}
-
-.controls-row {
+/* 🌟 整体工具栏居中对齐 */
+.bi-toolbar {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  /* 整体居中，两边留白更协调 */
   gap: 16px;
-  margin-top: 16px;
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 24px;
 }
 
-.chart-controls {
-  display: flex;
-  gap: 12px;
-}
-
-.time-control {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.legend-control {
+/* 模块容器紧贴内容，不再强行拉伸 */
+.toolbar-group {
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-
-.offset-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.line-mode-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin-top: 30px;
-  width: 100%;
-}
-
-.year-label {
-  font-weight: 400;
-  flex-shrink: 0;
-  padding: 8px 14px;
-  font-size: 18px;
+  background: #fff;
+  padding: 10px 16px;
   border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  gap: 16px;
+  flex: 0 0 auto;
+  /* 禁止拉伸和挤压 */
+  white-space: nowrap;
+  /* 强制组内元素不换行 */
 }
 
-.year-slider {
-  min-width: 150px;
-  max-width: 250px;
-}
-
-.toggle-legend-btn {
-  flex-shrink: 0;
-  padding: 8px 14px;
+.group-label {
   font-size: 14px;
-  color: #fff;
-  background-color: #0bc2d6;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: inline-flex;
+  font-weight: 600;
+  color: #64748b;
+  display: flex;
   align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  padding-right: 12px;
+  border-right: 1px solid #e2e8f0;
 }
 
-.toggle-legend-btn:active {
-  transform: scale(0.98);
+.chart-type-radio {
+  flex-shrink: 0;
 }
 
-.chart-button {
-  padding: 8px 14px;
+.compare-switch {
+  --el-switch-on-color: #0bc2d6;
+  margin-right: 4px;
+}
+
+/* 🌟 强制 switch 文本不换行，解决挤压变形问题 */
+:deep(.compare-switch .el-switch__label) {
+  white-space: nowrap !important;
+}
+
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 220px;
+  /* 保证滑块区域有足够的基础宽度 */
+}
+
+.offset-slider {
+  margin-left: 8px;
+}
+
+.flex-slider {
+  flex: 1;
+  min-width: 100px;
+}
+
+.ctrl-text {
   font-size: 14px;
-  color: #fff;
-  background-color: #ccc;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
+  font-weight: 500;
+  color: #475569;
+  white-space: nowrap;
 }
 
-.chart-button.is-active {
-  background-color: #0bc2d6;
+.ctrl-val {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+  min-width: 40px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ctrl-val.is-positive {
+  color: #ef4444;
+}
+
+.ctrl-val.is-negative {
+  color: #22c55e;
+}
+
+/* 🌟 大幅缩小图例选择框的宽度 */
+.legend-select {
+  width: 110px;
+  flex-shrink: 0;
 }
 
 .chart-card {
-  width: 95%;
-  margin: 0 auto;
-  margin-top: 20px;
-}
-
-.legend-selector {
   width: 100%;
-  min-width: 250px;
-  max-width: 350px;
 }
 
-.offset-slider-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.offset-value {
-  flex-shrink: 0;
-  min-width: 30px;
-  font-size: 14px;
-  color: #606266;
-  text-align: center;
-}
-
+/* 移动端适配保持不变 */
 @media (max-width: 768px) {
-  .controls-row {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center; /* 🌟 确保所有换行的行都整体居中 */
-    gap: 6px;
-    margin-top: 8px;
+  .chart-container {
+    padding: 16px;
+    margin: 16px auto 40px;
   }
 
-  .chart-controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* 🌟 按钮组内部居中 */
-    gap: 6px;
-    margin-bottom: 0;
+  .bi-toolbar {
+    flex-direction: column;
+    padding: 12px;
+    gap: 12px;
+    justify-content: flex-start;
   }
 
-  .toggle-legend-btn {
-    margin: 0;
-    padding: 6px 10px;
-    font-size: 12px;
-  }
-
-  .time-control {
+  .toolbar-group {
     width: 100%;
-    display: flex;
-    justify-content: center; /* 🌟 核心修复：让 100% 宽度的滑块容器内部元素居中 */
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 12px;
+  }
+
+  .group-label {
+    border-right: none;
+    padding-right: 0;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+
+  .slider-wrapper {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .offset-slider {
+    margin-left: 0;
     margin-top: 8px;
-    padding: 4px 8px;
-    border-radius: 8px;
   }
 
-  .time-control .year-label {
-    padding: 4px 4px;
-    font-size: 13px;
+  .compare-switch {
+    width: 100%;
+    margin-bottom: 8px;
   }
 
-  .time-control .year-slider {
-    min-width: 100px;
-    max-width: 150px;
-    flex-grow: 1;
-  }
-
-  .legend-selector {
-    max-width: 120px;
-    min-width: auto;
-  }
-
-  .line-mode-controls {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center; /* 🌟 确保折线图第二行控件居中 */
-    gap: 8px;
-    margin-top: 8px;
-    padding: 6px;
-    border-radius: 8px;
-  }
-
-  .legend-control {
-    flex: 1;
-    min-width: 50px;
-    max-width: 34%;
-    margin-right: 8px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .offset-controls {
-    flex: 1;
-    min-width: 150px;
-    max-width: 80%;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .offset-slider-container {
-    gap: 4px;
-    flex-grow: 1;
-  }
-
-  .offset-controls .year-slider {
-    min-width: 120px;
-    max-width: 200px;
-  }
-
-  .year-label {
-    padding: 4px 8px;
-    font-size: 13px;
-    white-space: nowrap;
-  }
-
-  .chart-button {
-    padding: 6px 10px;
-    font-size: 12px;
-  }
-
-  .offset-value {
-    font-size: 12px;
-    min-width: 25px;
+  .legend-select {
+    width: 100%;
+    margin-bottom: 12px;
   }
 }
 
-/* 滑块样式覆盖 (使用 Vue3 推荐的 :deep 语法) */
+:deep(.el-radio-button__original-radio:checked + .el-radio-button__inner) {
+  background-color: #0bc2d6 !important;
+  border-color: #0bc2d6 !important;
+  box-shadow: -1px 0 0 0 #0bc2d6 !important;
+}
+
+:deep(.el-radio-button__inner:hover) {
+  color: #0bc2d6 !important;
+}
+
 :deep(.el-slider__bar) {
   background-color: #0bc2d6 !important;
 }
 
 :deep(.el-slider__button) {
-  background-color: #0bc2d6 !important;
   border-color: #0bc2d6 !important;
-}
-
-/* 选legend择框圆角 */
-:deep(.legend-selector .el-select__wrapper) {
-  border-radius: 6px !important;
-}
-
-:deep(.legend-selector .el-select__tags) {
-  border-radius: 6px !important;
+  border-width: 2px !important;
 }
 </style>
