@@ -3,7 +3,7 @@
     <div class="bi-toolbar">
 
       <div class="toolbar-group view-group">
-        <div class="group-label"><i class="el-icon-menu"></i> 操作</div>
+        <div class="group-label"><i class="el-icon-menu"></i> 图表</div>
 
         <el-radio-group v-model="chartTypeModel" :size="controlSize" class="chart-type-radio no-shrink">
           <el-radio-button label="bar">柱状</el-radio-button>
@@ -298,9 +298,11 @@ export default {
 }
 
 .dim-group, .flex-fill {
-  flex: 1 1 auto;
-  max-width: 700px; 
-  min-width: 300px;
+  /* 🌟 调整 1：将 flex: 1 1 auto 改为 0 1 auto，不再贪婪拉伸填满屏幕 */
+  flex: 0 1 auto; 
+  /* 🌟 调整 2：缩小最大宽度，让滑动条适中，且确保两个 block 完美居中 */
+  max-width: 550px; 
+  min-width: 380px;
 }
 .target-group { flex-shrink: 0 !important; }
 .legend-select { width: 140px; flex-shrink: 0 !important; margin-right: 8px; }
@@ -348,7 +350,7 @@ export default {
   transition: all 0.2s ease;
 }
 
-.btn-toggle-all { border-radius: 6px !important; margin-left: 4px; }
+.btn-toggle-all { border-radius: 12px !important; margin-left: 4px; }
 :deep(.el-radio-button:first-child .el-radio-button__inner) { border-radius: 6px 0 0 6px !important; }
 :deep(.el-radio-button:last-child .el-radio-button__inner) { border-radius: 0 6px 6px 0 !important; }
 
@@ -403,7 +405,10 @@ export default {
 
   .group-label { font-size: 13px; padding-right: 6px; }
 
-  .dim-group, .flex-fill { max-width: 100%; }
+  .dim-group, .flex-fill { 
+    max-width: 350px; 
+    min-width: 280px;
+  }
   
   .legend-select { width: 100px; flex-shrink: 0 !important; margin-right: 4px;}
   .slider-wrapper { min-width: 120px; flex: 1 0 auto; gap: 4px;} 
