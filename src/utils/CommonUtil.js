@@ -94,7 +94,7 @@ function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears) {
     const w = den === 0 ? 0 : num / den;
     const intercept = meanY - w * meanX;
     const predValue = intercept + w * marriageArr[t];
-    
+
     slidingPreds.push({ pred: Math.round(predValue) });
   }
 
@@ -117,7 +117,7 @@ function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears) {
     const interceptLast = meanYlast - wLast * meanXlast;
 
     if (Xlast.length < 2 || Ylast.length < 2) {
-      const k = Xlast.length === 1 ? Ylast[0] / Xlast[0] : 1; 
+      const k = Xlast.length === 1 ? Ylast[0] / Xlast[0] : 1;
       nextYearPred = { pred: Math.round(marriageArr[n - 1] * k) };
     } else {
       nextYearPred = { pred: Math.round(interceptLast + wLast * marriageArr[n - 1]) };
@@ -144,7 +144,7 @@ export function getCommonChartOption(params) {
   if (params.isYearlyCompare) {
     const compareOption = buildYearlyCompareOption(seriesData, filteredYears, params);
     // 将原始指标名强行挂载到返回的 Option 里，给外部下拉框使用！
-    compareOption.originalLegendData = originalLegendData; 
+    compareOption.originalLegendData = originalLegendData;
     if (typeof logger !== 'undefined') {
       logger.debug(`[getCommonChartOption - 同环比模式] 耗时: ${Math.round(performance.now() - startTime)}ms`);
     }
@@ -162,7 +162,7 @@ export function getCommonChartOption(params) {
 
   // 4. 挂载额外的饼图配置
   if (params.pieConfig?.enabled) {
-    attachPieChartToOption(optionData, seriesData, filteredYears, params.pieConfig);
+    attachPieChartToOption(optionData, seriesData, filteredYears, params);
   }
 
   if (typeof logger !== 'undefined') {
@@ -277,23 +277,41 @@ function buildOptionSkeleton(seriesData, filteredYears, params) {
   };
 }
 
-function attachPieChartToOption(optionData, seriesData, filteredYears, pieConfig) {
+function attachPieChartToOption(optionData, seriesData, filteredYears, params) {
   optionData.color = optionData.color || ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'];
   const lastYearIndex = filteredYears.length - 1;
   const legendData = optionData.legend?.data || [];
 
-  pieConfig.pies.forEach((pie, idx) => {
+  params.pieConfig.pies.forEach((pie, idx) => {
     const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
     const pieData = targetSeries.map(series => ({
       name: series.name,
       value: Array.isArray(series.data) ? series.data[lastYearIndex] : 0
     }));
+    // 🌟 1. 饼图半径等比缩放
+    let r = pie.radius || '25%';
+    if (params.isMobile && typeof r === 'string' && r.endsWith('px')) {
+        // 手机端半径打 0.65 折，比如 60px -> 39px
+        r = Math.max(Math.round(parseInt(r) * 0.65), 30) + 'px'; 
+    }
+
+    // 🌟 2. 饼图位置 (Y轴) 等比缩放！这是消灭间距的终极杀招！
+    let cx = (pie.center && pie.center[0]) ? pie.center[0] : '50%';
+    let cy = (pie.center && pie.center[1]) ? pie.center[1] : '170px';
+
+    if (params.isMobile && typeof cy === 'string' && cy.endsWith('px')) {
+        // 手机端圆心高度打 0.65 折！如果 JSON 配置的是 180px，这里直接算出 117px！
+        // 这样它就会完美地卡在 legend (35px) 和 gridTop (182px) 的正中间！
+        cy = Math.max(Math.round(parseInt(cy) * 0.65), 90) + 'px'; 
+    } else if (params.isMobile && typeof cy === 'number') {
+        cy = Math.max(Math.round(cy * 0.65), 90);
+    }
 
     optionData.series.push({
       id: `pie_${idx}`,
       type: 'pie',
-      radius: pie.radius || '25%',
-      center: pie.center || ['50%', 170],
+      radius: r,
+      center: [cx, cy],
       data: pieData,
       label: { formatter: p => `${p.name}(${p.percent}%)` },
       emphasis: { focus: 'self' },
@@ -321,9 +339,9 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
 
   filteredYears.forEach((dateStr, dateIndex) => {
     if (!dateStr || dateStr.length < 6) return;
-    
+
     const year = dateStr.substring(0, 4);
-    const monthIdx = parseInt(dateStr.substring(4, 6), 10) - 1; 
+    const monthIdx = parseInt(dateStr.substring(4, 6), 10) - 1;
 
     if (!yearMap[year]) {
       yearMap[year] = {};
@@ -358,7 +376,7 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
     targetSeriesData.forEach(series => {
       const seriesName = isSingleSeries ? year : `${series.name} (${year})`;
       legendData.push(seriesName);
-      
+
       newSeries.push({
         name: seriesName,
         type: 'line',
@@ -372,8 +390,9 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
   return {
     title: {
       text: params.title || '',
-      subtext: params.subtitle || '年度同环比对比',
-      left: 'center'
+      subtext: params.subtitle,
+      left: 'center',
+      top: params.titleTop || '15px',
     },
     tooltip: {
       trigger: 'axis',
@@ -382,11 +401,11 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
     },
     legend: {
       data: legendData,
-      top: params.legendTop || '8%',
+      top: params.legendTop || '50px',
       type: 'scroll'
     },
     grid: {
-      top: params.gridTop || '20%',
+      top: params.gridTop || '100px',
       left: '3%',
       right: '4%',
       bottom: '3%',
@@ -404,7 +423,7 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
       alignTicks: true
     },
     series: newSeries,
-    dataZoom: [] 
+    dataZoom: []
   };
 }
 
@@ -427,7 +446,7 @@ export async function sendRequest(specificParams) {
         if (data.returndata.datanodes) datanodesArr = datanodesArr.concat(data.returndata.datanodes);
         if (data.returndata.wdnodes?.[0]?.nodes) nodesArr_zb = nodesArr_zb.concat(data.returndata.wdnodes[0].nodes);
         if (data.returndata.wdnodes?.[1]?.wdcode === 'reg') nodesArr_reg = data.returndata.wdnodes[1].nodes;
-        
+
         let dbCode = mergedParams.dbcode;
         if (dbCode.includes('nd')) nodesArr_sj_code_nd = (data.returndata.wdnodes.slice(-1)[0]?.nodes || []).map(i => i.code);
         if (dbCode.includes('yd')) nodesArr_sj_code_yd = (data.returndata.wdnodes.slice(-1)[0]?.nodes || []).map(i => i.code);

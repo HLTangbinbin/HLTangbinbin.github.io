@@ -24,15 +24,12 @@ export const ProvincialEducationCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '70px',
-            gridTop: '55%',
+            gridTop: '350px',
             pieConfig: {
               enabled: true,
               pies: [
                 {
                   triggerZbCodes: ['A0M0103'],
-                  radius: '20%',
-                  center: ['50%', '30%'],
                 }
               ]
             }
@@ -47,15 +44,12 @@ export const ProvincialEducationCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '70px',
-            gridTop: '55%',
+            gridTop: '350px',
             pieConfig: {
               enabled: true,
               pies: [
                 {
                   triggerZbCodes: ['A0M0106'],
-                  radius: '20%',
-                  center: ['50%', '30%'],
                 }
               ]
             }
@@ -70,15 +64,12 @@ export const ProvincialEducationCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '70px',
-            gridTop: '55%',
+            gridTop: '350px',
             pieConfig: {
               enabled: true,
               pies: [
                 {
                   triggerZbCodes: ['A0M010C'],
-                  radius: '20%',
-                  center: ['50%', '30%'],
                 }
               ]
             }
@@ -103,15 +94,12 @@ export const ProvincialFinanceCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '70px',
-            gridTop: '55%',
+            gridTop: '350px',
             pieConfig: {
               enabled: true,
               pies: [
                 {
                   triggerZbCodes: ['A080101'],
-                  radius: '20%',
-                  center: ['50%', '30%'],
                 }
               ]
             }
@@ -126,15 +114,12 @@ export const ProvincialFinanceCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '70px',
-            gridTop: '55%',
+            gridTop: '350px',
             pieConfig: {
               enabled: true,
               pies: [
                 {
                   triggerZbCodes: ['A080201'],
-                  radius: '20%',
-                  center: ['50%', '30%'],
                 }
               ]
             }
@@ -171,15 +156,12 @@ export const ProvincialGDPCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '70px',
-            gridTop: '55%',
+            gridTop: '350px',
             pieConfig: {
               enabled: true,
               pies: [
                 {
                   triggerZbCodes: ['A020101'],
-                  radius: '20%',
-                  center: ['50%', '30%'],
                 }
               ]
             }
@@ -244,15 +226,12 @@ export const ProvincialPopulationCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '人口',
-      legendTop: '70px',
-      gridTop: '55%',
+      gridTop: '350px',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A030101'],
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -266,8 +245,6 @@ export const ProvincialPopulationCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '',
-      legendTop: '10%',
-      gridTop: '20%',
       unit: ''
     },
     {
@@ -279,8 +256,6 @@ export const ProvincialPopulationCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '',
-      legendTop: '10%',
-      gridTop: '20%',
       unit: '',
     },
     {
@@ -292,8 +267,6 @@ export const ProvincialPopulationCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '',
-      legendTop: '10%',
-      gridTop: '20%',
       unit: ''
     }
   ]
@@ -323,15 +296,12 @@ export const ProvincialRealEstateInvestCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '70px',
-            gridTop: '55%',
+            gridTop: '350px',
             pieConfig: {
               enabled: true,
               pies: [
                 {
                   triggerZbCodes: ['A050D02'],
-                  radius: '20%',
-                  center: ['50%', '30%'],
                 }
               ]
             }
@@ -365,15 +335,12 @@ export const ProvincialRealEstateSellCharts = {
             dbCode: 'nd',
             chartType: 'bar',
             exceptName: '',
-            legendTop: '70px',
-            gridTop: '55%',
+            gridTop: '350px',
             pieConfig: {
               enabled: true,
               pies: [
                 {
                   triggerZbCodes: ['A050H02'],
-                  radius: '20%',
-                  center: ['50%', '30%'],
                 }
               ]
             }

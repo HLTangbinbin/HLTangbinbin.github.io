@@ -255,8 +255,6 @@ export const EducationStudentCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '招生数',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
@@ -269,8 +267,6 @@ export const EducationStudentCharts = {
               'A0M020105', // 本专科招生
               'A0M020102',  // 研究生招生
             ],
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       },
@@ -294,8 +290,6 @@ export const EducationStudentCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '在校学生数',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
@@ -308,8 +302,6 @@ export const EducationStudentCharts = {
               'A0M020205', // 本专科在校
               'A0M020202', // 研究生在校
             ],
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       },
@@ -333,8 +325,6 @@ export const EducationStudentCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '毕业生数',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
@@ -347,8 +337,6 @@ export const EducationStudentCharts = {
               'A0M020305', // 本专科毕业
               'A0M020302', // 研究生毕业
             ],
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       },
@@ -374,15 +362,11 @@ export const ForeignTradeCharts = {
       zbcodeArr: ['A080101', 'A080105', 'A080109', 'A08010D'],
       dbCode: 'yd',
       exceptName: '_当期值',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A080105', 'A080109'],
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -408,15 +392,11 @@ export const ForeignTradeCharts = {
       zbcodeArr: ['A060105', 'A060106', 'A060107', 'A060108'],
       dbCode: 'nd',
       exceptName: '(百万美元)',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A060106', 'A060107'],
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -434,8 +414,6 @@ export const ForeignTradeCharts = {
       ],
       dbCode: 'nd',
       exceptName: '中国向出口总额',
-      legendTop: '70px',
-      gridTop: '50%',
       pieConfig: {
         enabled: true,
         pies: [
@@ -444,8 +422,6 @@ export const ForeignTradeCharts = {
               'A060502010H', 'A060502010Y', 'A0605020115', 'A0605020313',
               'A060502010C', 'A0605020304', 'A0605020305', 'A060502030A', 'A0605020503'
             ],
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -463,8 +439,6 @@ export const ForeignTradeCharts = {
       ],
       dbCode: 'nd',
       exceptName: '中国从进口总额',
-      legendTop: '70px',
-      gridTop: '50%',
       pieConfig: {
         enabled: true,
         pies: [
@@ -473,8 +447,6 @@ export const ForeignTradeCharts = {
               'A060503010H', 'A060503010Y', 'A0605030115', 'A0605030313',
               'A060503010C', 'A0605030304', 'A0605030305', 'A060503030A', 'A0605030503'
             ],
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -499,15 +471,11 @@ export const GDPCharts = {
       zbcodeArr: ['A020102', 'A020103', 'A020104', 'A020105'],
       dbCode: 'nd',
       exceptName: '增加值',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A020103', 'A020104', 'A020105'],  // 第一产业、第二产业、第三产业
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -630,14 +598,12 @@ export const MarriageCharts = {
       exceptName: '居民登记',
       enableBirthOffset: true,
       enableBirthPrediction: true,
-      legendTop: '100px',
-      gridTop: '45%',
+      legendTop: '90px',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A0P0C01', 'A0P0C06'],  // 现房/期房
-            radius: '20%',
             center: ['50%', '30%'],
           }
         ]
@@ -706,15 +672,11 @@ export const NationalFinanceCharts = {
       zbcodeArr: ['A0C0102', 'A0C0202'],
       dbCode: 'yd',
       exceptName: '国家财政(不含债务还本)_累计值',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A0C0102', 'A0C0202'],  // 收入/支出
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -740,20 +702,16 @@ export const NationalFinanceCharts = {
       zbcodeArr: ['A080201', 'A080202', 'A080203', 'A080301', 'A080302', 'A080303', 'A080206', 'A080207', 'A080208'],
       dbCode: 'nd',
       exceptName: '财政',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A080202', 'A080203'],
-            radius: '20%',
-            center: ['35%', '30%'],
+            center: ['35%', '25%'],
           },
           {
             triggerZbCodes: [ 'A080302', 'A080303'],
-            radius: '20%',
-            center: ['65%', '30%'],
+            center: ['65%', '25%'],
           }
         ]
       }
@@ -771,8 +729,8 @@ export const NationalFinanceCharts = {
       ],
       dbCode: 'nd',
       exceptName: '国家财政收入',
-      legendTop: '70px',
-      gridTop: '45%',
+      legendTop: '50px',
+      gridTop: '40%',
       pieConfig: {
         enabled: true,
         pies: [
@@ -782,7 +740,7 @@ export const NationalFinanceCharts = {
               'A08040109', 'A0804010G', 'A0804010K', 'A0804010S'
             ],
             radius: '20%',
-            center: ['50%', '30%'],
+            center: ['50%', '25%'],
           }
         ]
       }
@@ -800,8 +758,8 @@ export const NationalFinanceCharts = {
       ],
       dbCode: 'nd',
       exceptName: '国家财政支出',
-      legendTop: '70px',
-      gridTop: '45%',
+      legendTop: '50px',
+      gridTop: '40%',
       pieConfig: {
         enabled: true,
         pies: [
@@ -811,7 +769,7 @@ export const NationalFinanceCharts = {
               'A08050109', 'A0805010B', 'A0805010C', 'A0805010G'
             ],
             radius: '20%',
-            center: ['50%', '30%'],
+            center: ['50%', '25%'],
           }
         ]
       }
@@ -839,25 +797,24 @@ export const PopulationBasicCharts = {
       ],
       dbCode: 'nd',
       exceptName: '人口',
-      legendTop: '70px',
-      gridTop: '45%',
+   
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A030102', 'A030103'],  // 男性、女性
             radius: '20%',
-            center: ['20%', '30%'],
+            center: ['20%', '25%'],
           },
           {
             triggerZbCodes: ['A030104', 'A030105'],  // 城乡
             radius: '20%',
-            center: ['50%', '30%'],
+            center: ['50%', '25%'],
           },
           {
             triggerZbCodes: ['A030302', 'A030303', 'A030304'],  // 城乡
             radius: '20%',
-            center: ['80%', '30%'],
+            center: ['80%', '25%'],
           }
         ]
       }
@@ -916,15 +873,11 @@ export const PopulationSpotCharts = {
       zbcodeArr: AGE_CODES,
       dbCode: 'nd',
       exceptName: '人口数(人口抽样调查)',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: AGE_CODES,  // 男性、女性
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -939,15 +892,11 @@ export const PopulationSpotCharts = {
       zbcodeArr: AGE_SEX_CODES,
       dbCode: 'nd',
       exceptName: '性别比(女=100)(人口抽样调查)',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: AGE_SEX_CODES,  // 男性、女性
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -962,15 +911,11 @@ export const PopulationSpotCharts = {
       zbcodeArr: Eductor_CODES,
       dbCode: 'nd',
       exceptName: '6岁及6岁以上及以上人口数(人口抽样调查)',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: Eductor_CODES,  // 男性、女性
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -994,15 +939,11 @@ export const RealEstateInvestCharts = {
       zbcodeArr: ['A060101', 'A060105', 'A06010D', 'A06010R'],
       dbCode: 'yd',
       exceptName: '房地产投资_累计值',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A060105', 'A06010D'],  // 住宅/办公楼
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -1028,15 +969,11 @@ export const RealEstateInvestCharts = {
       zbcodeArr: ['A051102', 'A051104'],
       dbCode: 'nd',
       exceptName: '房地产开发投资额',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A051102', 'A051104'],  // 住宅/办公楼
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -1062,15 +999,11 @@ export const RealEstateSaleCharts = {
       zbcodeArr: ['A060B01', 'A060B03', 'A060B05'],
       dbCode: 'yd',
       exceptName: '商品住宅销售额_累计值',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A060B03', 'A060B05'],  // 现房/期房
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -1096,15 +1029,11 @@ export const RealEstateSaleCharts = {
       zbcodeArr: ['A060A01', 'A060A03', 'A060A05'],
       dbCode: 'yd',
       exceptName: '商品住宅销售面积_累计值',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A060A03', 'A060A05'],  // 现房/期房
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -1130,15 +1059,11 @@ export const RealEstateSaleCharts = {
       zbcodeArr: ['A051501', 'A051502', 'A051503', 'A051504', 'A051505'],
       dbCode: 'nd',
       exceptName: '商品房销售面积',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A051502', 'A051503', 'A051504', 'A051505'],  // 现房/期房
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -1153,15 +1078,11 @@ export const RealEstateSaleCharts = {
       zbcodeArr: ['A051601', 'A051602', 'A051603', 'A051604', 'A051605'],
       dbCode: 'nd',
       exceptName: '商品房销售额',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A051602', 'A051603', 'A051604', 'A051605'],  // 现房/期房
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -1193,8 +1114,6 @@ export const SocialRetailgoodsCharts = {
       ],
       dbCode: 'yd',
       exceptName: '消费类商品零售类值_当期值',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
@@ -1206,8 +1125,6 @@ export const SocialRetailgoodsCharts = {
               'A07040A01', 'A07040B01', 'A07040C01', 'A07040D01',
               'A07040E01', 'A07040F01'
             ],
-            radius: '25%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -1245,8 +1162,6 @@ export const SocialRetailgoodsCharts = {
       ],
       dbCode: 'yd',
       exceptName: '消费类商品零售类值_累计值',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
@@ -1258,8 +1173,6 @@ export const SocialRetailgoodsCharts = {
               'A07040A02', 'A07040B02', 'A07040C02', 'A07040D02',
               'A07040E02', 'A07040F02'
             ],
-            radius: '25%',
-            center: ['50%', '30%'],
           }
         ]
       }

@@ -42,15 +42,11 @@ export const WHFinanceCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '地方一般公共预算',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A0401','A0402'],  // 收入/支出
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -76,15 +72,11 @@ export const WHGDPCharts = {
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '增加值',
-      legendTop: '70px',
-      gridTop: '45%',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A0102','A0103', 'A0104'],  // 第一产业、第二产业、第三产业
-            radius: '20%',
-            center: ['50%', '30%'],
           }
         ]
       }
@@ -212,22 +204,21 @@ export const WHNewHouseCharts = {
     },
     {
       id: 'HNYV-A',
-      title: '武汉各区域二手房年成交量',
+      title: '武汉各区域新房年成交量',
       subtitle: '',
       period: 'yearly',
       zbcodeArr: AREA_ND_CODES,
       dbCode: 'nd',
       chartType: 'bar',
       exceptName: '',
-      legendTop: '70px',
-      gridTop: '55%',
+      gridTop: '320px',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: AREA_ND_CODES,
-            radius: '30%',
-            center: ['50%', '35%'],
+            radius: '80px',
+            center: ['50%', '200px'],
           }
         ]
       }
@@ -246,22 +237,21 @@ export const WHNewHouseCharts = {
     },
     {
       id: 'HNYV-A',
-      title: '武汉各区域二手房月成交量',
+      title: '武汉各区域新房月成交量',
       subtitle: '',
       period: 'monthly',
       zbcodeArr: AREA_YD_CODES,
       dbCode: 'yd',
       chartType: 'bar',
       exceptName: '',
-      legendTop: '70px',
-      gridTop: '55%',
+      gridTop: '320px',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: AREA_YD_CODES,
-            radius: '30%',
-            center: ['50%', '35%'],
+            radius: '80px',
+            center: ['50%', '200px'],
           }
         ]
       }
