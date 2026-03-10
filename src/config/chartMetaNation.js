@@ -599,12 +599,13 @@ export const MarriageCharts = {
       enableBirthOffset: true,
       enableBirthPrediction: true,
       legendTop: '90px',
+      gridTop: '320px',
       pieConfig: {
         enabled: true,
         pies: [
           {
             triggerZbCodes: ['A0P0C01', 'A0P0C06'],  // 现房/期房
-            center: ['50%', '30%'],
+            center: ['50%', '220px'],
           }
         ]
       }
