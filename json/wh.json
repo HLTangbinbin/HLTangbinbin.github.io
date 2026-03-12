@@ -7524,6 +7524,12 @@
                 "unit": "套",
                 "data": [
                     {
+                        "date": "2026",
+                        "value": 6970.0,
+                        "cityName": "武汉",
+                        "cityCode": "420100"
+                    },
+                    {
                         "date": "2025",
                         "value": 54189.0,
                         "cityName": "武汉",
