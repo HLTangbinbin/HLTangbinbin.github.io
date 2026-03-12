@@ -22,7 +22,7 @@
       <div class="toolbar-group time-group">
         <div class="group-label"><i class="el-icon-time"></i> 时间</div>
         <div class="slider-wrapper">
-          <el-slider v-model="yearLimit" :min="1" :max="30" :step="1" class="flex-slider" />
+          <el-slider v-model="yearLimit" :min="1" :max="40" :step="1" class="flex-slider" />
           <span class="ctrl-val no-shrink">{{ yearLimit }}</span>
         </div>
       </div>
@@ -44,7 +44,7 @@
 
         <div v-if="showOffsetControls" class="slider-wrapper offset-slider">
           <span class="ctrl-text no-shrink">偏移</span>
-          <el-slider v-model="offsetValue" :min="-30" :max="30" :step="1" class="flex-slider" />
+          <el-slider v-model="offsetValue" :min="-40" :max="40" :step="1" class="flex-slider" />
           <span class="ctrl-val no-shrink" :class="{ 'is-positive': offsetValue > 0, 'is-negative': offsetValue < 0 }">
             {{ offsetValue > 0 ? '+' : '' }}{{ offsetValue }}
           </span>
