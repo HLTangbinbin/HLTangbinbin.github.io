@@ -135,6 +135,7 @@ export default {
    🔘 经典 Segment 按钮样式还原 
 ========================================================= */
 .custom-segment {
+  margin-top: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   border-radius: 14px; 
   background: #fff;
@@ -181,23 +182,31 @@ export default {
   .page-header {
     /* 手机端横向空间极小，如果在同一行会被严重挤压 */
     /* 因此在手机端改为上下堆叠：导航在上，按钮居中在下 */
-    flex-direction: column; 
+    flex-direction: column;
     justify-content: center;
     gap: 8px;
     margin: 0 0 5px 0;
     padding: 6px 0;
     background: rgba(248, 250, 252, 0.9);
-    backdrop-filter: blur(8px); 
+    backdrop-filter: blur(8px);
   }
-  
-  .nav-area { width: 100%; }
+
+  .nav-area {
+    width: 100%;
+  }
+
+  .custom-segment {
+    margin-top: 0px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    border-radius: 14px;
+    background: #fff;
+  }
 
   .custom-segment :deep(.el-radio-button__inner) {
-    height: 28px !important; 
+    height: 28px !important;
     padding: 0 20px !important;
     font-size: 13px !important;
   }
-  
   .custom-segment :deep(.el-radio-button:first-child .el-radio-button__inner) {
     border-radius: 10px 0 0 10px !important;
   }
