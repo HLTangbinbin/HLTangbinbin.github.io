@@ -268,11 +268,13 @@ export default {
   box-sizing: border-box;
 }
 
+/* 🌟 优化 1：锁死工具栏的分组高度，绝对对齐！ */
 .toolbar-group {
   display: flex;
   align-items: center;
   background: #fff;
-  padding: 8px 14px;
+  /* 取消上下的 padding，改为由 height 锁死，内部自动垂直居中 */
+  padding: 0 14px; 
   border-radius: 10px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
@@ -280,8 +282,10 @@ export default {
   flex: 0 1 auto;
   min-width: 0;
   white-space: nowrap;
-  min-height: 44px;
-  overflow-y: hidden !important;
+  
+  height: 50px; /* 🌟 核心修复：替换原来的 min-height: 44px，强制固定物理高度 */
+  box-sizing: border-box;
+  overflow-y: hidden !important; 
 }
 
 .group-label {
@@ -381,6 +385,18 @@ export default {
   color: #22c55e;
 }
 
+/* 🌟 优化 2：强制压扁 el-select 下拉框，让它和普通的按钮 (36px) 完全一样高 */
+.legend-select :deep(.el-input__wrapper) {
+  height: 36px !important;
+  min-height: 36px !important;
+  box-sizing: border-box;
+  border-radius: 10px !important; /* 统一圆角 */
+  box-shadow: 0 0 0 1px #e2e8f0 inset !important; /* 统一边框风格 */
+}
+.legend-select :deep(.el-input__wrapper.is-focus) {
+  box-shadow: 0 0 0 1px #0bc2d6 inset !important; /* 聚焦时的青色边框 */
+}
+
 :deep(.el-slider__bar) {
   background-color: #0bc2d6 !important;
 }
@@ -447,6 +463,8 @@ export default {
   background-color: #f0fcfd !important;
 }
 
+
+
 @media (max-width: 768px) {
   .chart-container {
     padding: 10px;
@@ -462,64 +480,83 @@ export default {
     align-items: stretch;
   }
 
-  .toolbar-group {
+/* 🌟 优化 3：移动端同样锁死高度 */
+.toolbar-group {
     width: 100%;
-    padding: 4px 8px;
-    gap: 6px;
-    min-height: 32px;
+    padding: 0 8px; /* 取消上下 padding */
+    gap: 8px; 
+    height: 40px; /* 🌟 移动端固定为 40px 高度 */
     flex-wrap: nowrap !important;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
   }
 
   .toolbar-group::-webkit-scrollbar {
     display: none;
   }
 
+  /* 🌟 优化 1：固定左侧 Label 宽度，让三行控件的左边缘完美对齐！ */
   .group-label {
     font-size: 13px;
-    padding-right: 6px;
+    width: 45px; /* 固定宽度 */
+    padding-right: 4px;
+    flex-shrink: 0;
+    justify-content: flex-start;
   }
 
-  /* 🌟 移动端：解除宽度限制，铺满整行 */
-  .time-group {
+  /* 🌟 优化 2：解除宽度限制，铺满整行 */
+  .view-group, .time-group, .dim-group {
     width: 100%;
   }
 
-  .dim-group {
-    width: 100%;
+/* 🌟 优化 4：移动端下拉框强制 28px */
+.legend-select :deep(.el-input__wrapper) {
+    height: 28px !important;
+    min-height: 28px !important;
+    border-radius: 8px !important;
   }
 
+  .slider-wrapper {
+    min-width: 120px;
+    flex: 1 1 auto;
+    gap: 8px; /* 滑块周围多一点呼吸感 */
+  }
+
+  .flex-slider {
+    min-width: 50px;
+  }
+  
   .offset-slider {
     width: auto;
     flex: 1 1 auto;
     margin-left: 0;
   }
 
-  .legend-select {
-    width: 100px;
-    flex-shrink: 0 !important;
-    margin-right: 4px;
+  /* 🌟 优化 4：核心绝杀！让 Radio 按钮组变成弹性容器，内部按钮均分宽度 */
+  :deep(.el-radio-group) {
+    display: flex;
+    flex: 1 1 auto; /* 整个组撑满剩余空间 */
   }
-
-  .slider-wrapper {
-    min-width: 120px;
-    flex: 1 0 auto;
-    gap: 4px;
+  
+  :deep(.el-radio-button) {
+    flex: 1 1 auto; /* 内部每个按钮均分宽度 */
+    display: flex;
   }
-
-  .flex-slider {
-    min-width: 50px;
-  }
-
-  :deep(.el-radio-button__inner),
-  .btn-toggle-all {
-    height: 26px !important;
-    padding: 0 8px !important;
+  
+  :deep(.el-radio-button__inner) {
+    width: 100%; /* 文字居中，撑满按钮 */
+    height: 28px !important;
+    padding: 0 2px !important; /* 减小 padding 防止文字在小屏幕被挤压 */
     font-size: 12px !important;
   }
 
+  /* 全选按钮保持紧凑，不参与过度拉伸 */
   .btn-toggle-all {
+    height: 28px !important;
+    padding: 0 10px !important;
+    font-size: 12px !important;
+    flex: 0 0 auto; 
     border-radius: 8px !important;
   }
 
@@ -532,8 +569,8 @@ export default {
   }
 
   .split-line {
-    height: 12px;
-    margin: 0 1px;
+    height: 14px;
+    margin: 0 2px;
   }
 }
 

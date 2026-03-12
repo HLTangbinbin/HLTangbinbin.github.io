@@ -180,15 +180,13 @@ export default {
 ========================================================= */
 @media (max-width: 768px) {
   .page-header {
-    /* 手机端横向空间极小，如果在同一行会被严重挤压 */
-    /* 因此在手机端改为上下堆叠：导航在上，按钮居中在下 */
     flex-direction: column;
     justify-content: center;
-    gap: 8px;
+    gap: 6px; /* 🌟 稍微缩小间距 */
     margin: 0 0 5px 0;
-    padding: 6px 0;
-    background: rgba(248, 250, 252, 0.9);
-    backdrop-filter: blur(8px);
+    padding: 2px 0; /* 🌟 大幅缩小上下留白，去掉多余空隙 */
+    background-color: transparent; /* 🌟 核心修复：改为透明，完美融入你的原网页背景灰 */
+    backdrop-filter: none; /* 🌟 去掉毛玻璃效果，防止滚动时出现色差块 */
   }
 
   .nav-area {
