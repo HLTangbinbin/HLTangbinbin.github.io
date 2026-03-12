@@ -11,32 +11,36 @@
           <el-radio-button label="line">折线</el-radio-button>
         </el-radio-group>
 
-        <div v-if="showCompareToggle" class="split-line"></div>
+        <div class="split-line"></div>
+
+        <el-button :size="controlSize" class="no-shrink btn-toggle-all"
+          :type="legendAllSelected ? 'primary' : 'default'" :plain="!legendAllSelected" @click="toggleAllLegends">
+          {{ legendAllSelected ? '未选' : '全选' }}
+        </el-button>
+      </div>
+
+      <div class="toolbar-group time-group">
+        <div class="group-label"><i class="el-icon-time"></i> 时间</div>
+        <div class="slider-wrapper">
+          <el-slider v-model="yearLimit" :min="1" :max="30" :step="1" class="flex-slider" />
+          <span class="ctrl-val no-shrink">{{ yearLimit }}</span>
+        </div>
+      </div>
+
+      <div v-if="showCompareToggle || showLegendSelector || showOffsetControls" class="toolbar-group dim-group">
+        <div class="group-label"><i class="el-icon-s-data"></i> 操作</div>
+
         <el-radio-group v-if="showCompareToggle" v-model="isYearlyCompare" :size="controlSize" class="no-shrink">
           <el-radio-button :label="false">连续</el-radio-button>
           <el-radio-button :label="true">同比</el-radio-button>
         </el-radio-group>
 
-        <div class="split-line"></div>
-
-        <el-button :size="controlSize" class="no-shrink btn-toggle-all"
-          :type="legendAllSelected ? 'primary' : 'default'" :plain="!legendAllSelected" @click="toggleAllLegends">
-          {{ legendAllSelected ? '一键未选' : '一键全选' }}
-        </el-button>
-      </div>
-
-      <div class="toolbar-group flex-fill dim-group">
-        <div class="group-label"><i class="el-icon-s-data"></i> 选择</div>
+        <div v-if="showCompareToggle && (showLegendSelector || showOffsetControls)" class="split-line"></div>
 
         <el-select v-if="showLegendSelector" v-model="selectedLegend" :size="controlSize" placeholder="指标"
           class="legend-select no-shrink">
           <el-option v-for="legend in legendList" :key="legend" :label="legend" :value="legend" />
         </el-select>
-
-        <div class="slider-wrapper">
-          <el-slider v-model="yearLimit" :min="1" :max="30" :step="1" class="flex-slider" />
-          <span class="ctrl-val no-shrink">{{ yearLimit }}</span>
-        </div>
 
         <div v-if="showOffsetControls" class="slider-wrapper offset-slider">
           <span class="ctrl-text no-shrink">偏移</span>
@@ -58,7 +62,7 @@
 
 <script>
 // 🌟 JS 逻辑几乎 100% 保持你上一版的完美代码
-import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick} from 'vue';
+import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue';
 import ChartView from './ChartView.vue';
 import { getCommonChartOption } from '@/utils/CommonUtil.js';
 
@@ -111,14 +115,14 @@ export default {
 
     const chartHeight = computed(() => {
       if (isMobile.value) {
-        return isPieActive.value ? 420 : 350; 
+        return isPieActive.value ? 420 : 350;
       } else {
-        return isPieActive.value ? 650 : 550; 
+        return isPieActive.value ? 650 : 550;
       }
     });
 
     const adaptForMobile = (val, scale = 0.65, min = 10) => {
-      if (!val || String(val).includes('%')) return val; 
+      if (!val || String(val).includes('%')) return val;
       let num = parseInt(val);
       if (isNaN(num)) return val;
       return isMobile.value ? Math.max(Math.round(num * scale), min) + 'px' : val;
@@ -143,21 +147,21 @@ export default {
 
       let finalTitleTop = isMobile.value ? '10px' : '15px';
       let baseLegendTop = props.chart.legendTop || '50px';
-      let finalLegendTop = adaptForMobile(baseLegendTop, 0.85, 30); 
+      let finalLegendTop = adaptForMobile(baseLegendTop, 0.85, 30);
       let finalGridTop;
 
       if (isPieActiveVal) {
-        let baseGridTop = props.chart.gridTop || '280px'; 
-        finalGridTop = adaptForMobile(baseGridTop, 0.65, 170); 
+        let baseGridTop = props.chart.gridTop || '280px';
+        finalGridTop = adaptForMobile(baseGridTop, 0.65, 170);
       } else {
         if (hasPieConfig) {
           let lTopNum = parseInt(baseLegendTop) || 50;
-          let mobileLTop = Math.round(lTopNum * 0.7); 
-          let offset = isMobile.value ? 40 : 50; 
+          let mobileLTop = Math.round(lTopNum * 0.7);
+          let offset = isMobile.value ? 40 : 50;
           finalGridTop = (isMobile.value ? mobileLTop : lTopNum) + offset + 'px';
         } else {
           let baseGridTop = props.chart.gridTop || '100px';
-          finalGridTop = adaptForMobile(baseGridTop, 0.7, 90); 
+          finalGridTop = adaptForMobile(baseGridTop, 0.7, 90);
         }
       }
 
@@ -173,7 +177,7 @@ export default {
         titleTop: finalTitleTop,
         legendTop: finalLegendTop,
         gridTop: finalGridTop,
-        isMobile: isMobile.value, 
+        isMobile: isMobile.value,
         chartType: currentChartType.value,
         yearLimit: actualDataLimit,
         compareYearCount: yearLimit.value,
@@ -235,6 +239,7 @@ export default {
 };
 </script>
 
+
 <style scoped>
 /* 🌟 完全保持你的原样 CSS 不变 */
 .chart-container {
@@ -243,7 +248,7 @@ export default {
   margin: 10px auto 20px;
   padding: 10px;
   background-color: #fff;
-  border-radius: 16px; 
+  border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   box-sizing: border-box;
 }
@@ -252,7 +257,8 @@ export default {
   display: flex;
   flex-wrap: nowrap !important;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
+  /* 🌟 保证PC端整体完美居中 */
   gap: 16px;
   padding: 5px 5px;
   border-radius: 12px;
@@ -274,8 +280,8 @@ export default {
   flex: 0 1 auto;
   min-width: 0;
   white-space: nowrap;
-  min-height: 44px; 
-  overflow-y: hidden !important; 
+  min-height: 44px;
+  overflow-y: hidden !important;
 }
 
 .group-label {
@@ -289,6 +295,7 @@ export default {
   border-right: 1px solid #e2e8f0;
   flex-shrink: 0;
 }
+
 .split-line {
   width: 1px;
   height: 18px;
@@ -297,132 +304,242 @@ export default {
   flex-shrink: 0;
 }
 
-.dim-group, .flex-fill {
-  /* 🌟 调整 1：将 flex: 1 1 auto 改为 0 1 auto，不再贪婪拉伸填满屏幕 */
-  flex: 0 1 auto; 
-  /* 🌟 调整 2：缩小最大宽度，让滑动条适中，且确保两个 block 完美居中 */
-  max-width: 550px; 
-  min-width: 380px;
+/* 🌟 PC端：各组宽度智能分配 */
+.view-group {
+  flex: 0 1 auto;
+  /* 自然宽度 */
 }
-.target-group { flex-shrink: 0 !important; }
-.legend-select { width: 140px; flex-shrink: 0 !important; margin-right: 8px; }
+
+.time-group {
+  width: 280px;
+  /* 给时间滑块留出固定的舒适滑动空间 */
+  flex-shrink: 0;
+}
+
+.dim-group {
+  flex: 0 1 auto;
+  /* 根据内部控件（如偏移滑块）自然撑开宽度 */
+}
+
+.target-group {
+  flex-shrink: 0 !important;
+}
+
+.legend-select {
+  width: 140px;
+  flex-shrink: 0 !important;
+  margin-right: 0;
+}
 
 .slider-wrapper {
   display: flex;
   align-items: center;
-  gap: 8px; 
+  gap: 8px;
   flex: 1 1 auto;
   min-width: 0;
 }
-.offset-slider {
-  margin-left: 8px; 
-}
-.flex-slider { flex: 1 1 auto; min-width: 40px; margin: 0; }
 
-.ctrl-text { font-size: 14px; font-weight: 500; color: #475569; flex-shrink: 0; }
-.no-shrink { flex-shrink: 0 !important; }
+.offset-slider {
+  width: 200px;
+  /* 保证第三组内的偏移滑块有足够空间 */
+  margin-left: 8px;
+}
+
+.flex-slider {
+  flex: 1 1 auto;
+  min-width: 40px;
+  margin: 0;
+}
+
+.ctrl-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.no-shrink {
+  flex-shrink: 0 !important;
+}
+
 .ctrl-val {
   font-size: 14px;
   font-weight: 400;
   color: #475569;
-  min-width: 24px; 
+  min-width: 24px;
   margin-left: 10px;
-  text-align: left; 
-  font-variant-numeric: tabular-nums; 
+  text-align: left;
+  font-variant-numeric: tabular-nums;
   flex-shrink: 0;
 }
-.ctrl-val.is-positive { color: #ef4444; }
-.ctrl-val.is-negative { color: #22c55e; }
 
-:deep(.el-slider__bar) { background-color: #0bc2d6 !important; }
-:deep(.el-slider__button) { border-color: #0bc2d6 !important; border-width: 2px !important; width: 16px; height: 16px; }
+.ctrl-val.is-positive {
+  color: #ef4444;
+}
 
-:deep(.el-radio-button__inner), 
+.ctrl-val.is-negative {
+  color: #22c55e;
+}
+
+:deep(.el-slider__bar) {
+  background-color: #0bc2d6 !important;
+}
+
+:deep(.el-slider__button) {
+  border-color: #0bc2d6 !important;
+  border-width: 2px !important;
+  width: 16px;
+  height: 16px;
+}
+
+:deep(.el-radio-button__inner),
 .btn-toggle-all {
-  height: 36px !important; 
-  padding: 0 16px !important; 
+  height: 36px !important;
+  padding: 0 16px !important;
   font-size: 14px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
-  line-height: normal !important; 
+  line-height: normal !important;
   transition: all 0.2s ease;
 }
 
-.btn-toggle-all { border-radius: 12px !important; margin-left: 4px; }
-:deep(.el-radio-button:first-child .el-radio-button__inner) { border-radius: 6px 0 0 6px !important; }
-:deep(.el-radio-button:last-child .el-radio-button__inner) { border-radius: 0 6px 6px 0 !important; }
+.btn-toggle-all {
+  border-radius: 10px !important;
+  margin-left: 4px;
+}
+
+:deep(.el-radio-button:first-child .el-radio-button__inner) {
+  border-radius: 10px 0 0 10px !important;
+}
+
+:deep(.el-radio-button:last-child .el-radio-button__inner) {
+  border-radius: 0 10px 10px 0 !important;
+}
 
 :deep(.el-radio-button__original-radio:not(:checked) + .el-radio-button__inner) {
-  color: #64748b !important; 
-  background-color: #ffffff !important; 
-  box-shadow: none !important; 
+  color: #64748b !important;
+  background-color: #ffffff !important;
+  box-shadow: none !important;
 }
-:deep(.el-radio-button__original-radio:not(:checked) + .el-radio-button__inner:hover) { color: #0bc2d6 !important; }
+
+:deep(.el-radio-button__original-radio:not(:checked) + .el-radio-button__inner:hover) {
+  color: #0bc2d6 !important;
+}
+
 :deep(.el-radio-button__original-radio:checked + .el-radio-button__inner) {
   background-color: #0bc2d6 !important;
   border-color: #0bc2d6 !important;
   color: #ffffff !important;
   box-shadow: -1px 0 0 0 #0bc2d6 !important;
 }
+
 :deep(.el-button--primary.btn-toggle-all) {
   background-color: #0bc2d6 !important;
   border-color: #0bc2d6 !important;
   color: #ffffff !important;
 }
+
 :deep(.el-button--default.btn-toggle-all:hover) {
   color: #0bc2d6 !important;
   border-color: #0bc2d6 !important;
-  background-color: #f0fcfd !important; 
+  background-color: #f0fcfd !important;
 }
 
 @media (max-width: 768px) {
-  .chart-container { 
-    padding: 10px; 
-    margin: 10px auto 16px; 
-    border-radius: 12px; 
+  .chart-container {
+    padding: 10px;
+    margin: 10px auto 16px;
+    border-radius: 12px;
   }
-  
+
   .bi-toolbar {
     flex-direction: column !important;
-    padding: 6px; 
+    padding: 6px;
     gap: 6px;
-    margin-bottom: 0px; 
+    margin-bottom: 0px;
     align-items: stretch;
   }
 
   .toolbar-group {
     width: 100%;
-    padding: 4px 8px; 
-    gap: 6px; 
-    min-height: 32px; 
+    padding: 4px 8px;
+    gap: 6px;
+    min-height: 32px;
     flex-wrap: nowrap !important;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  .toolbar-group::-webkit-scrollbar { display: none; }
 
-  .group-label { font-size: 13px; padding-right: 6px; }
-
-  .dim-group, .flex-fill { 
-    max-width: 350px; 
-    min-width: 280px;
+  .toolbar-group::-webkit-scrollbar {
+    display: none;
   }
-  
-  .legend-select { width: 100px; flex-shrink: 0 !important; margin-right: 4px;}
-  .slider-wrapper { min-width: 120px; flex: 1 0 auto; gap: 4px;} 
-  .flex-slider { min-width: 50px; }
 
-  :deep(.el-radio-button__inner), 
+  .group-label {
+    font-size: 13px;
+    padding-right: 6px;
+  }
+
+  /* 🌟 移动端：解除宽度限制，铺满整行 */
+  .time-group {
+    width: 100%;
+  }
+
+  .dim-group {
+    width: 100%;
+  }
+
+  .offset-slider {
+    width: auto;
+    flex: 1 1 auto;
+    margin-left: 0;
+  }
+
+  .legend-select {
+    width: 100px;
+    flex-shrink: 0 !important;
+    margin-right: 4px;
+  }
+
+  .slider-wrapper {
+    min-width: 120px;
+    flex: 1 0 auto;
+    gap: 4px;
+  }
+
+  .flex-slider {
+    min-width: 50px;
+  }
+
+  :deep(.el-radio-button__inner),
   .btn-toggle-all {
-    height: 26px !important; 
-    padding: 0 8px !important; 
-    font-size: 12px !important; 
+    height: 26px !important;
+    padding: 0 8px !important;
+    font-size: 12px !important;
   }
 
-  .split-line { height: 12px; margin: 0 1px; }
+  .btn-toggle-all {
+    border-radius: 8px !important;
+  }
+
+  :deep(.el-radio-button:first-child .el-radio-button__inner) {
+    border-radius: 8px 0 0 8px !important;
+  }
+
+  :deep(.el-radio-button:last-child .el-radio-button__inner) {
+    border-radius: 0 8px 8px 0 !important;
+  }
+
+  .split-line {
+    height: 12px;
+    margin: 0 1px;
+  }
 }
 
-.chart-card { width: 100%; position: relative; z-index: 0 !important; }
+.chart-card {
+  width: 100%;
+  position: relative;
+  z-index: 0 !important;
+}
 </style>
