@@ -246,7 +246,7 @@ function applyBirthPrediction(seriesData, marriageArr, birthArr, params) {
 }
 
 function buildOptionSkeleton(seriesData, filteredYears, params) {
-  const { title, subtitle, isHorizontal, legendAllSelected, gridTop = '140px', legendTop = '70px', unit = '' } = params;
+  const { title, subtitle, isHorizontal, legendAllSelected, gridTop = '140px', legendTop = '70px', unit = '', isMobile, titleTop = '15px' } = params;
 
   const valueAxisConfig = {
     type: 'value', scale: true,
@@ -257,7 +257,22 @@ function buildOptionSkeleton(seriesData, filteredYears, params) {
   const categoryAxisConfig = { type: 'category', data: filteredYears };
 
   return {
-    title: { text: title, subtext: subtitle, left: 'center', top: 15, itemGap: 22, subtextStyle: { fontWeight: 'bold', fontSize: 13, width: window.innerWidth * 0.8, overflow: 'breakAll' } },
+    title: { 
+      text: title, 
+      subtext: subtitle, 
+      left: 'center', 
+      top: titleTop, // 👈 使用传过来的参数，解决间距问题
+      itemGap: 22, 
+      textStyle: {
+        fontSize: isMobile ? 14 : 18 // 👈 动态主标题大小
+      },
+      subtextStyle: { 
+        fontWeight: 'bold', 
+        fontSize: isMobile ? 12 : 13, // 👈 动态副标题大小
+        width: window.innerWidth * 0.8, 
+        overflow: 'breakAll' 
+      } 
+    },
     tooltip: {
       trigger: 'axis',
       formatter: (params) => {
@@ -289,10 +304,10 @@ function attachPieChartToOption(optionData, seriesData, filteredYears, params) {
       value: Array.isArray(series.data) ? series.data[lastYearIndex] : 0
     }));
     // 🌟 1. 饼图半径等比缩放
-    let r = pie.radius || '25%';
+    let r = pie.radius || '20%';
     if (params.isMobile && typeof r === 'string' && r.endsWith('px')) {
-        // 手机端半径打 0.65 折，比如 60px -> 39px
-        r = Math.max(Math.round(parseInt(r) * 0.65), 30) + 'px'; 
+      // 手机端半径打 0.65 折，比如 60px -> 39px
+      r = Math.max(Math.round(parseInt(r) * 0.65), 30) + 'px';
     }
 
     // 🌟 2. 饼图位置 (Y轴) 等比缩放！这是消灭间距的终极杀招！
@@ -300,11 +315,11 @@ function attachPieChartToOption(optionData, seriesData, filteredYears, params) {
     let cy = (pie.center && pie.center[1]) ? pie.center[1] : '170px';
 
     if (params.isMobile && typeof cy === 'string' && cy.endsWith('px')) {
-        // 手机端圆心高度打 0.65 折！如果 JSON 配置的是 180px，这里直接算出 117px！
-        // 这样它就会完美地卡在 legend (35px) 和 gridTop (182px) 的正中间！
-        cy = Math.max(Math.round(parseInt(cy) * 0.65), 90) + 'px'; 
+      // 手机端圆心高度打 0.65 折！如果 JSON 配置的是 180px，这里直接算出 117px！
+      // 这样它就会完美地卡在 legend (35px) 和 gridTop (182px) 的正中间！
+      cy = Math.max(Math.round(parseInt(cy) * 0.75), 90) + 'px';
     } else if (params.isMobile && typeof cy === 'number') {
-        cy = Math.max(Math.round(cy * 0.65), 90);
+      cy = Math.max(Math.round(cy * 0.75), 90);
     }
 
     optionData.series.push({
@@ -393,6 +408,12 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
       subtext: params.subtitle,
       left: 'center',
       top: params.titleTop || '15px',
+      textStyle: {
+        fontSize: params.isMobile ? 14 : 18, // 👈 动态主标题大小
+      },
+      subtextStyle: {
+        fontSize: params.isMobile ? 12 : 14, // 👈 动态副标题大小
+      }
     },
     tooltip: {
       trigger: 'axis',

@@ -115,7 +115,7 @@ export default {
 
     const chartHeight = computed(() => {
       if (isMobile.value) {
-        return isPieActive.value ? 420 : 350;
+        return isPieActive.value ? 450 : 350;
       } else {
         return isPieActive.value ? 650 : 550;
       }
@@ -152,7 +152,7 @@ export default {
 
       if (isPieActiveVal) {
         let baseGridTop = props.chart.gridTop || '280px';
-        finalGridTop = adaptForMobile(baseGridTop, 0.65, 170);
+        finalGridTop = adaptForMobile(baseGridTop, 0.7, 170);
       } else {
         if (hasPieConfig) {
           let lTopNum = parseInt(baseLegendTop) || 50;
