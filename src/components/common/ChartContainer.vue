@@ -3,7 +3,7 @@
     <div class="bi-toolbar">
 
       <div class="toolbar-group view-group">
-        <div class="group-label"><i class="el-icon-menu"></i> 图表</div>
+        <div class="group-label"><i class="el-icon-menu"></i> 视图</div>
 
         <el-radio-group v-model="viewModeDisplay" :size="controlSize" class="no-shrink" style="margin-right: 8px;">
           <el-radio-button label="chart">图表</el-radio-button>
@@ -85,7 +85,6 @@
           </el-button>
         </template>
       </div>
-
     </div>
 
     <el-drawer v-model="isDrawerVisible" :title="`选择对比${isProvince ? '省份' : '城市'} (最多5个)`"
@@ -94,11 +93,9 @@
       <div class="drawer-content">
         <div class="search-box">
           <el-input v-model="searchKeyword" :placeholder="`输入${isProvince ? '省份' : '城市'}名称搜索`" clearable>
-            <template #prefix>
-              <el-icon>
+            <template #prefix><el-icon>
                 <Search />
-              </el-icon>
-            </template>
+              </el-icon></template>
           </el-input>
         </div>
 
@@ -163,12 +160,21 @@ export default {
     viewMode: { type: String, default: 'monthly' },
   },
   setup(props) {
+    const windowWidth = ref(window.innerWidth);
+    const onResize = () => { windowWidth.value = window.innerWidth; };
+    onMounted(() => window.addEventListener('resize', onResize));
+    onBeforeUnmount(() => window.removeEventListener('resize', onResize));
+
+    const isMobile = computed(() => windowWidth.value <= 768);
+    const controlSize = computed(() => windowWidth.value > 768 ? 'large' : 'small');
+
+    // UI 状态
+    const viewModeDisplay = ref('chart');
     const currentChartType = ref('bar');
     const isHorizontal = ref(false);
     const yearLimit = ref(10);
     const legendAllSelected = ref(true);
     const chartRef = ref(null);
-
     const isYearlyCompare = ref(false);
     const selectedLegend = ref(null);
     const offsetValue = ref(0);
@@ -178,14 +184,19 @@ export default {
     const searchKeyword = ref('');
     const selectedExtraCities = ref([]);
 
-    // 视图模式状态：'chart' 或 'table'
-    const viewModeDisplay = ref('chart');
+    // 🌟 核心绝杀修复：无死角的 Tab 切换重置
+    // 直接把标题、ID、配置路径拼成一个字符串。只要切换了页面/图表，这个字符串 100% 会变！
+    const chartIdentityStr = computed(() => `${props.chart?.title}-${props.chart?.id}-${props.config?.localJson}`);
 
-    // 🌟 修复 4：极其严格的状态重置 (只要图表ID换了，彻底初始化)
-    watch(() => props.chart.id, () => {
-      viewModeDisplay.value = 'chart';
-      selectedExtraCities.value = [];
-      searchKeyword.value = '';
+    watch(chartIdentityStr, (newVal, oldVal) => {
+      if (newVal !== oldVal) {
+        // 瞬间清空所有状态，打回原形
+        viewModeDisplay.value = 'chart';
+        selectedExtraCities.value = [];
+        searchKeyword.value = '';
+        offsetValue.value = 0;
+        isYearlyCompare.value = false;
+      }
     });
 
     const chartTypeModel = computed({
@@ -201,12 +212,7 @@ export default {
       }
     });
 
-    const windowWidth = ref(window.innerWidth);
-    const onResize = () => { windowWidth.value = window.innerWidth; };
-    onMounted(() => window.addEventListener('resize', onResize));
-    onBeforeUnmount(() => window.removeEventListener('resize', onResize));
-
-    const isMobile = computed(() => windowWidth.value <= 768);
+    const isMonthlyChart = computed(() => props.chart.dbCode === 'yd' || props.viewMode === 'monthly');
     const isPieActive = computed(() => !isYearlyCompare.value && !!props.chart.pieConfig?.enabled);
 
     const chartHeight = computed(() => {
@@ -221,29 +227,26 @@ export default {
       return isMobile.value ? Math.max(Math.round(num * scale), min) + 'px' : val;
     };
 
-    const controlSize = computed(() => windowWidth.value > 768 ? 'large' : 'small');
-    const legendList = computed(() => legendNames.value);
-
-    const isMonthlyChart = computed(() => props.chart.dbCode === 'yd' || props.viewMode === 'monthly');
-
     watch(isMonthlyChart, (isMonthly) => {
       if (!isMonthly) isYearlyCompare.value = false;
       selectedExtraCities.value = [];
-      searchKeyword.value = '';
     }, { immediate: true });
 
-    watch(() => props.config.cityCodeArr, () => {
-      selectedExtraCities.value = [];
-      searchKeyword.value = '';
-    }, { deep: true });
-
-    // 🌟 修复 1：100% 还原你原代码的判断逻辑，绝不乱改！
+    // 🌟 坚固的城市池读取机制
     const currentExtraCityPool = computed(() => {
-      if (isMonthlyChart.value) {
-        return props.config.needAddCityCodeArr_yd || props.config.needAddCityCodeArr || [];
-      } else {
-        return props.config.needAddCityCodeArr_nd || props.config.needAddCityCodeArr || [];
+      const hasSplitConfig = props.config.needAddCityCodeArr_yd || props.config.needAddCityCodeArr_nd;
+      if (hasSplitConfig) {
+        return isMonthlyChart.value
+          ? (props.config.needAddCityCodeArr_yd || [])
+          : (props.config.needAddCityCodeArr_nd || []);
       }
+      return props.config.needAddCityCodeArr || [];
+    });
+
+    // 🌟 精准识别是否是省份 (靠读取配置路径，不再靠猜测文字)
+    const isProvince = computed(() => {
+      const jsonPath = props.config.localJson || '';
+      return jsonPath.includes('province');
     });
 
     const finalCityCodeArr = computed(() => {
@@ -251,6 +254,26 @@ export default {
       const extraCodes = selectedExtraCities.value || [];
       return Array.from(new Set([...defaultCodes, ...extraCodes]));
     });
+
+    const showCityAddToggle = computed(() => Array.isArray(currentExtraCityPool.value) && currentExtraCityPool.value.length > 0);
+
+    const filteredCities = computed(() => {
+      const allExtra = currentExtraCityPool.value;
+      const keyword = searchKeyword.value.trim().toLowerCase();
+      if (!keyword) return allExtra;
+      return allExtra.filter(c => c.cname && c.cname.toLowerCase().includes(keyword));
+    });
+
+    const getCityName = (code) => {
+      const city = currentExtraCityPool.value.find(c => c.code === code);
+      return city ? city.cname : code;
+    };
+
+    const toggleCity = (code) => {
+      const index = selectedExtraCities.value.indexOf(code);
+      if (index > -1) selectedExtraCities.value.splice(index, 1);
+      else if (selectedExtraCities.value.length < 5) selectedExtraCities.value.push(code);
+    };
 
     const chartOption = computed(() => {
       const actualDataLimit = (isYearlyCompare.value && isMonthlyChart.value) ? 360 : yearLimit.value;
@@ -263,17 +286,14 @@ export default {
       let finalGridTop;
 
       if (isPieActiveVal) {
-        let baseGridTop = props.chart.gridTop || '280px';
-        finalGridTop = adaptForMobile(baseGridTop, 0.7, 170);
+        finalGridTop = adaptForMobile(props.chart.gridTop || '280px', 0.7, 170);
       } else {
         if (hasPieConfig) {
           let lTopNum = parseInt(baseLegendTop) || 50;
-          let mobileLTop = Math.round(lTopNum * 0.7);
           let offset = isMobile.value ? 40 : 50;
-          finalGridTop = (isMobile.value ? mobileLTop : lTopNum) + offset + 'px';
+          finalGridTop = (isMobile.value ? Math.round(lTopNum * 0.7) : lTopNum) + offset + 'px';
         } else {
-          let baseGridTop = props.chart.gridTop || '100px';
-          finalGridTop = adaptForMobile(baseGridTop, 0.7, 90);
+          finalGridTop = adaptForMobile(props.chart.gridTop || '100px', 0.7, 90);
         }
       }
 
@@ -310,71 +330,12 @@ export default {
       }
     }, { immediate: true });
 
-    watch(isYearlyCompare, (isCompare) => {
-      if (isCompare) offsetValue.value = 0;
-    });
-
-    watch(chartHeight, () => {
-      nextTick(() => { window.dispatchEvent(new Event('resize')); });
-    });
-
-    const toggleAllLegends = () => {
-      legendAllSelected.value = !legendAllSelected.value;
-      if (chartRef.value) chartRef.value.toggleAllLegends(legendAllSelected.value);
-    };
-
-    const showCompareToggle = computed(() => {
-      return isMonthlyChart.value && currentChartType.value === 'line' && !isHorizontal.value;
-    });
-
-    const showLegendSelector = computed(() => {
-      if (legendList.value.length <= 1) return false;
-      return isYearlyCompare.value || showOffsetControls.value;
-    });
-
-    const showOffsetControls = computed(() => {
-      return props.chart.enableOffset === true &&
-        currentChartType.value === 'line' &&
-        !isHorizontal.value &&
-        !isYearlyCompare.value;
-    });
-
-    const showCityAddToggle = computed(() => {
-      return Array.isArray(currentExtraCityPool.value) && currentExtraCityPool.value.length > 0;
-    });
-
-    // 🌟 还原你原代码里最精准的省份判定：绝对不会把城市判定为省份
-    const isProvince = computed(() => {
-      if (currentExtraCityPool.value && currentExtraCityPool.value.length > 0) {
-        const sampleName = currentExtraCityPool.value[0].cname || '';
-        return sampleName.includes('省') || sampleName.includes('自治区');
-      }
-      return false;
-    });
-
-    const filteredCities = computed(() => {
-      const allExtra = currentExtraCityPool.value;
-      const keyword = searchKeyword.value.trim().toLowerCase();
-      if (!keyword) return allExtra;
-      return allExtra.filter(c => c.cname && c.cname.toLowerCase().includes(keyword));
-    });
-
-    const getCityName = (code) => {
-      const city = currentExtraCityPool.value.find(c => c.code === code);
-      return city ? city.cname : code;
-    };
-
-    const toggleCity = (code) => {
-      const index = selectedExtraCities.value.indexOf(code);
-      if (index > -1) selectedExtraCities.value.splice(index, 1);
-      else if (selectedExtraCities.value.length < 5) selectedExtraCities.value.push(code);
-    };
+    watch(isYearlyCompare, (isCompare) => { if (isCompare) offsetValue.value = 0; });
+    watch(chartHeight, () => { nextTick(() => { window.dispatchEvent(new Event('resize')); }); });
 
     // =========================================================
-    // 数据表格解析逻辑：绝对过滤多余的阴影/背景列
+    // 表格解析及导出
     // =========================================================
-
-    // 过滤掉所有 ECharts 强加进来的、没有名字的辅助柱子层
     const validSeries = computed(() => {
       if (!chartOption.value || !chartOption.value.series) return [];
       const seriesList = Array.isArray(chartOption.value.series) ? chartOption.value.series : [chartOption.value.series];
@@ -469,14 +430,23 @@ export default {
       ElMessage.success('数据导出成功！');
     };
 
+    const toggleAllLegends = () => {
+      legendAllSelected.value = !legendAllSelected.value;
+      if (chartRef.value) chartRef.value.toggleAllLegends(legendAllSelected.value);
+    };
+
+    const legendList = computed(() => legendNames.value);
+    const showCompareToggle = computed(() => isMonthlyChart.value && currentChartType.value === 'line' && !isHorizontal.value);
+    const showLegendSelector = computed(() => legendList.value.length > 1 && (isYearlyCompare.value || showOffsetControls.value));
+    const showOffsetControls = computed(() => props.chart.enableOffset === true && currentChartType.value === 'line' && !isHorizontal.value && !isYearlyCompare.value);
+
     return {
-      chartTypeModel, currentChartType, isHorizontal, yearLimit, legendAllSelected,
-      chartRef, selectedLegend, offsetValue, legendNames, windowWidth, chartHeight,
-      legendList, chartOption, isYearlyCompare, showCompareToggle, showLegendSelector,
-      showOffsetControls, controlSize, toggleAllLegends, showCityAddToggle,
-      isDrawerVisible, searchKeyword, selectedExtraCities, filteredCities, getCityName,
-      toggleCity, isMobile, isProvince, finalCityCodeArr,
-      viewModeDisplay, tableColumns, tableData, exportToCSV
+      viewModeDisplay, chartTypeModel, currentChartType, isHorizontal, yearLimit, legendAllSelected,
+      chartRef, selectedLegend, offsetValue, windowWidth, chartHeight, controlSize,
+      chartOption, isYearlyCompare, legendList, legendNames, tableColumns, tableData, finalCityCodeArr,
+      showCompareToggle, showLegendSelector, showOffsetControls, showCityAddToggle, isProvince, isMobile,
+      isDrawerVisible, searchKeyword, selectedExtraCities, filteredCities,
+      toggleAllLegends, getCityName, toggleCity, exportToCSV
     };
   }
 };
@@ -698,7 +668,7 @@ export default {
   background-color: #f0fcfd !important;
 }
 
-/* 🌟 新增功能相关样式 */
+/* 表格及新控件专属样式 */
 .data-table-wrapper {
   width: 100%;
   height: 100%;
