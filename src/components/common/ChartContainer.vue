@@ -251,6 +251,8 @@ export default {
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   box-sizing: border-box;
+  /* 🌟 新增：强制使用各系统最优秀的 UI 字体，拒绝浏览器乱猜 */
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", sans-serif;
 }
 
 .bi-toolbar {
@@ -357,7 +359,7 @@ export default {
 
 .ctrl-text {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: #475569;
   flex-shrink: 0;
 }
@@ -368,7 +370,7 @@ export default {
 
 .ctrl-val {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
   color: #475569;
   min-width: 24px;
   margin-left: 10px;
@@ -413,6 +415,7 @@ export default {
   height: 36px !important;
   padding: 0 16px !important;
   font-size: 14px !important;
+  font-weight: 600 !important; /* 🌟 新增：让按钮文字看起来更扎实 */
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -499,6 +502,7 @@ export default {
   /* 🌟 优化 1：固定左侧 Label 宽度，让三行控件的左边缘完美对齐！ */
   .group-label {
     font-size: 13px;
+    font-weight: bold;
     width: 45px; /* 固定宽度 */
     padding-right: 4px;
     flex-shrink: 0;

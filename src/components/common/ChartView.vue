@@ -7,11 +7,11 @@ import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue';
 import * as echarts from 'echarts/core';
 import { BarChart, LineChart, PieChart } from 'echarts/charts';
 import { TitleComponent, GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
+import { CanvasRenderer, SVGRenderer } from 'echarts/renderers';
 import debounce from 'lodash-es/debounce';
 import { logger } from '@/utils/Logger';
 
-echarts.use([TitleComponent, GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, PieChart, CanvasRenderer]);
+echarts.use([TitleComponent, GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, PieChart, CanvasRenderer, SVGRenderer]);
 
 export default {
   name: 'ChartView',
@@ -48,7 +48,8 @@ export default {
         return;
       }
 
-      chartInstance = echarts.init(chartContainer.value);
+      // 修改后：强制开启 SVG 矢量渲染 🚀
+      chartInstance = echarts.init(chartContainer.value, null, { renderer: 'svg' });
       chartInstance.setOption(props.option, true);
 
       // 初始化图例状态
