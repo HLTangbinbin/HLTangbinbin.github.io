@@ -130,44 +130,53 @@ function fitMarriageBirthDynamic(marriageArr, birthArr, recentYears) {
 // ============================
 // 🌟 纯粹的图表数据组装流水线
 // ============================
+// ============================
+// 🌟 纯粹的图表数据组装流水线 (支持高度扩展)
+// ============================
 
 export function getCommonChartOption(params) {
-  const startTime = performance.now();
+  const startTime = performance.now(); // 记录开始时间
 
-  // 1. 构建基础 Series 数据
+  // 1. 基础业务数据提取与计算 (包含你的婚姻预测、学生偏移逻辑)
   let { seriesData, filteredYears, marriageArr, birthArr } = buildBaseSeries(params);
 
-  // 🌟 修复 3：在数据被污染之前，把真正的原始指标名存下来（比如：财政收入、财政支出）
+  // 记录原始干净的指标名
   const originalLegendData = seriesData.map(s => s.name);
 
-  // 拦截同环比逻辑
   if (params.isYearlyCompare) {
     const compareOption = buildYearlyCompareOption(seriesData, filteredYears, params);
-    // 将原始指标名强行挂载到返回的 Option 里，给外部下拉框使用！
     compareOption.originalLegendData = originalLegendData;
+
+    // 🌟 修复：补回同环比模式的耗时打印
     if (typeof logger !== 'undefined') {
       logger.debug(`[getCommonChartOption - 同环比模式] 耗时: ${Math.round(performance.now() - startTime)}ms`);
     }
     return compareOption;
   }
 
-  // 2. 应用人口预测算法
+  // 2. 核心业务推导算法 (人口预测)
   seriesData = applyBirthPrediction(seriesData, marriageArr, birthArr, params);
 
-  // 3. 组装 ECharts Option 骨架
+  // 3. 插件化扩展 A：数学趋势拟合线 (Trendline)
+  if (params.enableTrendline && !params.isHorizontal) {
+    seriesData = applyTrendlines(seriesData);
+  }
+
+  // 4. 组装基础 ECharts 骨架
   const optionData = buildOptionSkeleton(seriesData, filteredYears, params);
 
-  // 同样挂载给正常模式使用
   optionData.originalLegendData = originalLegendData;
 
-  // 4. 挂载额外的饼图配置
+  // 6. 挂载饼图
   if (params.pieConfig?.enabled) {
     attachPieChartToOption(optionData, seriesData, filteredYears, params);
   }
 
+  // 🌟 修复：补回标准模式的耗时打印，消除 startTime 未使用报错
   if (typeof logger !== 'undefined') {
     logger.debug(`[getCommonChartOption] 总耗时: ${Math.round(performance.now() - startTime)}ms, 标题: ${params.title}`);
   }
+
   return optionData;
 }
 
@@ -257,21 +266,21 @@ function buildOptionSkeleton(seriesData, filteredYears, params) {
   const categoryAxisConfig = { type: 'category', data: filteredYears };
 
   return {
-    title: { 
-      text: title, 
-      subtext: subtitle, 
-      left: 'center', 
+    title: {
+      text: title,
+      subtext: subtitle,
+      left: 'center',
       top: titleTop, // 👈 使用传过来的参数，解决间距问题
-      itemGap: 22, 
+      itemGap: 22,
       textStyle: {
         fontSize: isMobile ? 14 : 18 // 👈 动态主标题大小
       },
-      subtextStyle: { 
-        fontWeight: 'bold', 
+      subtextStyle: {
+        fontWeight: 'bold',
         fontSize: isMobile ? 12 : 13, // 👈 动态副标题大小
-        width: window.innerWidth * 0.8, 
-        overflow: 'breakAll' 
-      } 
+        width: window.innerWidth * 0.8,
+        overflow: 'breakAll'
+      }
     },
     tooltip: {
       trigger: 'axis',
@@ -447,6 +456,50 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
     dataZoom: []
   };
 }
+
+// ----------------------------------------------------
+// 🌟 新增的独立扩展模块 (遵循高内聚低耦合原则)
+// ----------------------------------------------------
+
+// 【数学模块】最小二乘法线性回归
+function calculateLinearRegression(dataArr) {
+  let n = 0, sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+  dataArr.forEach((val, x) => {
+    let num = typeof val === 'object' && val !== null ? val.value : val;
+    num = Number(num);
+    if (!isNaN(num) && num !== null && val !== '') {
+      n++; sumX += x; sumY += num; sumXY += (x * num); sumXX += (x * x);
+    }
+  });
+  if (n < 2) return dataArr.map(() => '-');
+  const m = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+  const b = (sumY - m * sumX) / n;
+  return dataArr.map((_, x) => Number((m * x + b).toFixed(2)));
+}
+
+// 【渲染插件 A】注入趋势线
+function applyTrendlines(seriesData) {
+  const trendLines = [];
+  seriesData.forEach(s => {
+    if (s.type === 'line' || s.type === 'bar') {
+      const trendData = calculateLinearRegression(s.data);
+      trendLines.push({
+        name: s.name + ' (趋势)',
+        type: 'line',
+        data: trendData,
+        // 🌟 核心防御标记：告诉表格和外层，这是一个纯视觉辅助线，不属于业务数据
+        isTrendline: true,
+        lineStyle: { type: 'dashed', width: 2, opacity: 0.8 },
+        itemStyle: { color: s.itemStyle?.color },
+        symbol: 'none',
+        tooltip: { valueFormatter: value => value + ' (拟合)' }
+      });
+    }
+  });
+  return [...seriesData, ...trendLines];
+}
+
+
 
 // ============================
 // 网络请求与数据组装核心

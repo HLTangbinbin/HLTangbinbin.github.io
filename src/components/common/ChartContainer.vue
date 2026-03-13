@@ -35,11 +35,19 @@
       </div>
 
       <div
-        v-if="showCompareToggle || showLegendSelector || showOffsetControls || showCityAddToggle || viewModeDisplay === 'table'"
+        v-if="showCompareToggle || showLegendSelector || showOffsetControls || showCityAddToggle || viewModeDisplay === 'table' || showTrendlineToggle"
         class="toolbar-group dim-group">
         <div class="group-label"><i class="el-icon-s-data"></i> 操作</div>
 
         <template v-if="viewModeDisplay === 'chart'">
+
+          <el-checkbox-button v-if="showTrendlineToggle" v-model="enableTrendline" :size="controlSize" class="no-shrink"
+            style="margin-right: 8px;">
+            趋势拟合
+          </el-checkbox-button>
+
+          <div v-if="showTrendlineToggle" class="split-line"></div>
+
           <el-radio-group v-if="showCompareToggle" v-model="isYearlyCompare" :size="controlSize" class="no-shrink">
             <el-radio-button :label="false">连续</el-radio-button>
             <el-radio-button :label="true">同比</el-radio-button>
@@ -65,6 +73,13 @@
           <div v-if="(showLegendSelector || showOffsetControls) && showCityAddToggle" class="split-line"></div>
         </template>
 
+        <template v-if="viewModeDisplay === 'table'">
+          <el-checkbox-button v-model="enableHeatmap" :size="controlSize" class="no-shrink" style="margin-right: 8px;">
+            智能热力图
+          </el-checkbox-button>
+          <div class="split-line"></div>
+        </template>
+
         <div v-if="showCityAddToggle" class="compare-trigger no-shrink" @click="isDrawerVisible = true">
           <el-icon class="icon-plus" v-if="selectedExtraCities.length === 0">
             <Plus />
@@ -84,6 +99,15 @@
             </el-icon> <span class="export-text">导出</span>
           </el-button>
         </template>
+
+        <div class="split-line"></div>
+        <el-button :size="controlSize" type="primary" plain class="no-shrink export-btn" @click="copyShareLink"
+          title="复制当前视图专属链接">
+          <el-icon>
+            <Share />
+          </el-icon> <span class="export-text">分享</span>
+        </el-button>
+
       </div>
     </div>
 
@@ -131,9 +155,10 @@
         @legendStateChange="legendAllSelected = $event" />
 
       <div v-else class="data-table-wrapper">
-        <el-table :key="`table-${finalCityCodeArr.length}-${chartOption?.series?.length || 0}`" :data="tableData"
+        <el-table :key="`table-${finalCityCodeArr.length}-${tableColumns.length}`" :data="tableData"
           :height="chartHeight" border stripe style="width: 100%"
-          :header-cell-style="{ background: '#f8fafc', color: '#475569', fontWeight: 'bold' }">
+          :header-cell-style="{ background: '#f8fafc', color: '#475569', fontWeight: 'bold' }"
+          :cell-style="getTableCellStyle">
           <el-table-column v-for="col in tableColumns" :key="col.prop" :prop="col.prop" :label="col.label"
             :min-width="col.minWidth" :fixed="col.fixed" align="center" />
         </el-table>
@@ -145,14 +170,14 @@
 
 <script>
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue';
-import { Plus, Search, Check, Download } from '@element-plus/icons-vue';
+import { Plus, Search, Check, Download, Share } from '@element-plus/icons-vue';
 import ChartView from './ChartView.vue';
 import { getCommonChartOption } from '@/utils/CommonUtil.js';
 import { ElMessage } from 'element-plus';
 
 export default {
   name: 'ChartContainer',
-  components: { ChartView, Plus, Search, Check, Download },
+  components: { ChartView, Plus, Search, Check, Download, Share },
   props: {
     chart: { type: Object, required: true },
     returnData: { type: Object, required: true, default: () => ({}) },
@@ -168,13 +193,14 @@ export default {
     const isMobile = computed(() => windowWidth.value <= 768);
     const controlSize = computed(() => windowWidth.value > 768 ? 'large' : 'small');
 
-    // UI 状态
+    // UI 基础状态
     const viewModeDisplay = ref('chart');
-    const currentChartType = ref('bar');
+    const currentChartType = ref('line'); // 考虑到趋势拟合功能，默认线图更好
     const isHorizontal = ref(false);
     const yearLimit = ref(10);
     const legendAllSelected = ref(true);
     const chartRef = ref(null);
+
     const isYearlyCompare = ref(false);
     const selectedLegend = ref(null);
     const offsetValue = ref(0);
@@ -184,18 +210,21 @@ export default {
     const searchKeyword = ref('');
     const selectedExtraCities = ref([]);
 
-    // 🌟 核心绝杀修复：无死角的 Tab 切换重置
-    // 直接把标题、ID、配置路径拼成一个字符串。只要切换了页面/图表，这个字符串 100% 会变！
-    const chartIdentityStr = computed(() => `${props.chart?.title}-${props.chart?.id}-${props.config?.localJson}`);
+    // 🌟 高级功能开关
+    const enableTrendline = ref(false);
+    const enableHeatmap = ref(false);
 
+    // 彻底重置所有状态 (解决 Tab 切换幽灵状态)
+    const chartIdentityStr = computed(() => `${props.chart?.title}-${props.chart?.id}-${props.config?.localJson}`);
     watch(chartIdentityStr, (newVal, oldVal) => {
       if (newVal !== oldVal) {
-        // 瞬间清空所有状态，打回原形
         viewModeDisplay.value = 'chart';
         selectedExtraCities.value = [];
         searchKeyword.value = '';
         offsetValue.value = 0;
         isYearlyCompare.value = false;
+        enableTrendline.value = false;
+        enableHeatmap.value = false;
       }
     });
 
@@ -232,7 +261,6 @@ export default {
       selectedExtraCities.value = [];
     }, { immediate: true });
 
-    // 🌟 坚固的城市池读取机制
     const currentExtraCityPool = computed(() => {
       const hasSplitConfig = props.config.needAddCityCodeArr_yd || props.config.needAddCityCodeArr_nd;
       if (hasSplitConfig) {
@@ -243,7 +271,6 @@ export default {
       return props.config.needAddCityCodeArr || [];
     });
 
-    // 🌟 精准识别是否是省份 (靠读取配置路径，不再靠猜测文字)
     const isProvince = computed(() => {
       const jsonPath = props.config.localJson || '';
       return jsonPath.includes('province');
@@ -320,6 +347,8 @@ export default {
         pieConfig: isPieActiveVal ? props.chart.pieConfig : null,
         enableBirthOffset: props.chart.enableBirthOffset || false,
         enableBirthPrediction: props.chart.enableBirthPrediction || false,
+        // 传递给底层的拟合状态
+        enableTrendline: enableTrendline.value
       });
     });
 
@@ -333,15 +362,20 @@ export default {
     watch(isYearlyCompare, (isCompare) => { if (isCompare) offsetValue.value = 0; });
     watch(chartHeight, () => { nextTick(() => { window.dispatchEvent(new Event('resize')); }); });
 
+    const showTrendlineToggle = computed(() => {
+      return (currentChartType.value === 'line' || currentChartType.value === 'bar') && !isHorizontal.value;
+    });
+
     // =========================================================
-    // 表格解析及导出
+    // 🌟 表格解析引擎 (自带防火墙隔离)
     // =========================================================
     const validSeries = computed(() => {
       if (!chartOption.value || !chartOption.value.series) return [];
       const seriesList = Array.isArray(chartOption.value.series) ? chartOption.value.series : [chartOption.value.series];
       return seriesList
         .map((series, originalIdx) => ({ series, originalIdx }))
-        .filter(item => item.series.name && item.series.name.trim() !== '');
+        // 防火墙核心：过滤掉 isTrendline 标记的拟合线，保证表格数据绝对干净！
+        .filter(item => item.series.name && item.series.name.trim() !== '' && !item.series.isTrendline);
     });
 
     const getSafeAxisData = (axis) => {
@@ -408,6 +442,46 @@ export default {
       return [];
     });
 
+    // =========================================================
+    // 🌟 彭博级表格热力图引擎
+    // =========================================================
+    const tableColumnStats = computed(() => {
+      const stats = {};
+      validSeries.value.forEach(item => {
+        const numericData = item.series.data
+          .map(d => typeof d === 'object' && d !== null ? d.value : d)
+          .filter(d => typeof d === 'number' && !isNaN(d));
+
+        if (numericData.length > 0) {
+          stats[`col_${item.originalIdx}`] = {
+            max: Math.max(...numericData),
+            min: Math.min(...numericData)
+          };
+        }
+      });
+      return stats;
+    });
+
+    const getTableCellStyle = ({ row, column }) => {
+      if (!enableHeatmap.value || column.property === 'time' || row[column.property] === '-') return {};
+
+      const stats = tableColumnStats.value[column.property];
+      if (!stats || stats.max === stats.min) return {};
+
+      const val = Number(row[column.property]);
+      if (isNaN(val)) return {};
+
+      const ratio = (val - stats.min) / (stats.max - stats.min);
+      const alpha = ratio * 0.45;
+      return {
+        backgroundColor: `rgba(11, 194, 214, ${alpha})`,
+        color: ratio > 0.8 ? '#0f172a' : 'inherit'
+      };
+    };
+
+    // =========================================================
+    // 工具函数
+    // =========================================================
     const exportToCSV = () => {
       const cols = tableColumns.value;
       const data = tableData.value;
@@ -430,6 +504,14 @@ export default {
       ElMessage.success('数据导出成功！');
     };
 
+    const copyShareLink = () => {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        ElMessage.success('已复制当前视图链接，可发送给同事！');
+      }).catch(() => {
+        ElMessage.error('复制链接失败，请手动复制地址栏');
+      });
+    };
+
     const toggleAllLegends = () => {
       legendAllSelected.value = !legendAllSelected.value;
       if (chartRef.value) chartRef.value.toggleAllLegends(legendAllSelected.value);
@@ -441,19 +523,20 @@ export default {
     const showOffsetControls = computed(() => props.chart.enableOffset === true && currentChartType.value === 'line' && !isHorizontal.value && !isYearlyCompare.value);
 
     return {
-      viewModeDisplay, chartTypeModel, currentChartType, isHorizontal, yearLimit, legendAllSelected,
-      chartRef, selectedLegend, offsetValue, windowWidth, chartHeight, controlSize,
-      chartOption, isYearlyCompare, legendList, legendNames, tableColumns, tableData, finalCityCodeArr,
-      showCompareToggle, showLegendSelector, showOffsetControls, showCityAddToggle, isProvince, isMobile,
-      isDrawerVisible, searchKeyword, selectedExtraCities, filteredCities,
-      toggleAllLegends, getCityName, toggleCity, exportToCSV
+      chartTypeModel, currentChartType, isHorizontal, yearLimit, legendAllSelected,
+      chartRef, selectedLegend, offsetValue, legendNames, windowWidth, chartHeight,
+      legendList, chartOption, isYearlyCompare, showCompareToggle, showLegendSelector,
+      showOffsetControls, controlSize, toggleAllLegends, showCityAddToggle,
+      isDrawerVisible, searchKeyword, selectedExtraCities, filteredCities, getCityName,
+      toggleCity, isMobile, isProvince, finalCityCodeArr,
+      viewModeDisplay, tableColumns, tableData, exportToCSV, copyShareLink,
+      enableTrendline, enableHeatmap, showTrendlineToggle, getTableCellStyle
     };
   }
 };
 </script>
 
 <style scoped>
-/* 原有完全不变的 CSS */
 .chart-container {
   width: 95%;
   max-width: 1500px;
@@ -599,6 +682,29 @@ export default {
 
 .legend-select :deep(.el-input__wrapper.is-focus) {
   box-shadow: 0 0 0 1px #0bc2d6 inset !important;
+}
+
+/* 复选框按钮打磨 */
+:deep(.el-checkbox-button__inner) {
+  height: 36px !important;
+  padding: 0 16px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+:deep(.el-checkbox-button.is-checked .el-checkbox-button__inner) {
+  background-color: #0bc2d6 !important;
+  border-color: #0bc2d6 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
 }
 
 :deep(.el-slider__bar) {
@@ -864,11 +970,13 @@ export default {
     display: flex;
   }
 
-  :deep(.el-radio-button__inner) {
+  :deep(.el-radio-button__inner),
+  :deep(.el-checkbox-button__inner) {
     width: 100%;
     height: 28px !important;
-    padding: 0 2px !important;
+    padding: 0 4px !important;
     font-size: 12px !important;
+    border-radius: 6px !important;
   }
 
   .btn-toggle-all {
