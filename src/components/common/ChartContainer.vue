@@ -1,7 +1,6 @@
 <template>
   <div class="chart-container">
     <div class="bi-toolbar">
-
       <div class="toolbar-group view-group">
         <div class="group-label"><i class="el-icon-menu"></i> 图表</div>
 
@@ -27,7 +26,8 @@
         </div>
       </div>
 
-      <div v-if="showCompareToggle || showLegendSelector || showOffsetControls" class="toolbar-group dim-group">
+      <div v-if="showCompareToggle || showLegendSelector || showOffsetControls || showCityAddToggle"
+        class="toolbar-group dim-group">
         <div class="group-label"><i class="el-icon-s-data"></i> 操作</div>
 
         <el-radio-group v-if="showCompareToggle" v-model="isYearlyCompare" :size="controlSize" class="no-shrink">
@@ -35,7 +35,8 @@
           <el-radio-button :label="true">同比</el-radio-button>
         </el-radio-group>
 
-        <div v-if="showCompareToggle && (showLegendSelector || showOffsetControls)" class="split-line"></div>
+        <div v-if="(showCompareToggle) && (showLegendSelector || showOffsetControls || showCityAddToggle)"
+          class="split-line"></div>
 
         <el-select v-if="showLegendSelector" v-model="selectedLegend" :size="controlSize" placeholder="指标"
           class="legend-select no-shrink">
@@ -49,9 +50,60 @@
             {{ offsetValue > 0 ? '+' : '' }}{{ offsetValue }}
           </span>
         </div>
+
+        <div v-if="(showLegendSelector || showOffsetControls) && showCityAddToggle" class="split-line"></div>
+
+        <div v-if="showCityAddToggle" class="compare-trigger no-shrink" @click="isDrawerVisible = true">
+          <el-icon class="icon-plus" v-if="selectedExtraCities.length === 0">
+            <Plus />
+          </el-icon>
+          <span class="trigger-text">
+            {{ selectedExtraCities.length === 0 ? (isProvince ? '添加省份' : '添加城市') : `对比中 (${selectedExtraCities.length}/5)` }}
+          </span>
+        </div>
       </div>
 
     </div>
+
+    <el-drawer v-model="isDrawerVisible" :title="`选择对比${isProvince ? '省份' : '城市'} (最多5个)`"
+      :direction="isMobile ? 'btt' : 'rtl'" :size="isMobile ? '80%' : '380px'" :with-header="true"
+      class="custom-city-drawer" append-to-body>
+      <div class="drawer-content">
+        <div class="search-box">
+          <el-input v-model="searchKeyword" :placeholder="`输入${isProvince ? '省份' : '城市'}名称搜索`" clearable>
+            <template #prefix>
+              <el-icon>
+                <Search />
+              </el-icon>
+            </template>
+          </el-input>
+        </div>
+
+        <div class="selected-tags" v-if="selectedExtraCities.length > 0">
+          <div class="tags-header">已选：</div>
+          <div class="tags-list">
+            <el-tag v-for="code in selectedExtraCities" :key="code" closable @close="toggleCity(code)" type="primary"
+              class="city-tag">
+              {{ getCityName(code) }}
+            </el-tag>
+          </div>
+        </div>
+
+        <div class="city-list">
+          <div v-for="city in filteredCities" :key="city.code" class="city-item" :class="{
+            'is-active': selectedExtraCities.includes(city.code),
+            'is-disabled': !selectedExtraCities.includes(city.code) && selectedExtraCities.length >= 5
+          }" @click="toggleCity(city.code)">
+            <span class="city-name">{{ city.cname }}</span>
+            <el-icon v-if="selectedExtraCities.includes(city.code)" color="#0bc2d6" size="16">
+              <Check />
+            </el-icon>
+          </div>
+
+          <div v-if="filteredCities.length === 0" class="empty-text">未找到匹配项</div>
+        </div>
+      </div>
+    </el-drawer>
 
     <div class="chart-card" :style="{ height: chartHeight + 'px' }">
       <ChartView ref="chartRef" :option="chartOption" :chartId="chart.id" :initSelectAll="legendAllSelected"
@@ -61,21 +113,19 @@
 </template>
 
 <script>
-// 🌟 JS 逻辑几乎 100% 保持你上一版的完美代码
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue';
+import { Plus, Search, Check } from '@element-plus/icons-vue'; // 确保引入了这些图标
 import ChartView from './ChartView.vue';
 import { getCommonChartOption } from '@/utils/CommonUtil.js';
 
 export default {
   name: 'ChartContainer',
-  components: { ChartView },
-  // 🌟 去掉了 emits: ['update:viewMode']
+  components: { ChartView, Plus, Search, Check },
   props: {
     chart: { type: Object, required: true },
     returnData: { type: Object, required: true, default: () => ({}) },
-    config: { type: Object, default: () => ({}) },
+    config: { type: Object, default: () => ({}) }, // 期待包含 cityCodeArr 和 needAddCityCodeArr
     viewMode: { type: String, default: 'monthly' },
-    // 🌟 去掉了 allowModeChange prop
   },
   setup(props) {
     const currentChartType = ref('bar');
@@ -88,6 +138,11 @@ export default {
     const selectedLegend = ref(null);
     const offsetValue = ref(0);
     const legendNames = ref([]);
+
+    // 🌟 新增：城市对比功能的状态
+    const isDrawerVisible = ref(false);
+    const searchKeyword = ref('');
+    const selectedExtraCities = ref([]);
 
     const chartTypeModel = computed({
       get() {
@@ -138,7 +193,38 @@ export default {
 
     watch(isMonthlyChart, (isMonthly) => {
       if (!isMonthly) isYearlyCompare.value = false;
+      
+      // 🌟 新增：一旦发生“月/年”维度的切换，立刻清空已选的额外城市
+      // 防止用户在月度选了“丹东”，切到年度时找不到数据而报错
+      selectedExtraCities.value = [];
+      searchKeyword.value = '';
     }, { immediate: true });
+
+    // 🌟 新增：重置选择的城市
+    watch(() => props.config.cityCodeArr, () => {
+      // 当默认城市数组发生变化（说明切换了页面或大Tab）时，重置额外选择的城市
+      selectedExtraCities.value = [];
+      searchKeyword.value = '';
+    }, { deep: true });
+
+    // 🌟 2. 新增：智能判定当前该用哪个“城市池”
+    const currentExtraCityPool = computed(() => {
+      if (isMonthlyChart.value) {
+        // 如果是月度(yd)，优先取70城配置，如果没有则降级取通用配置
+        return props.config.needAddCityCodeArr_yd || props.config.needAddCityCodeArr || [];
+      } else {
+        // 如果是年度(nd)，优先取36城配置，如果没有则降级取通用配置
+        return props.config.needAddCityCodeArr_nd || props.config.needAddCityCodeArr || [];
+      }
+    });
+
+    // 🌟 新增：合并最终的城市/省份数组
+    const finalCityCodeArr = computed(() => {
+      const defaultCodes = props.config.cityCodeArr || [];
+      const extraCodes = selectedExtraCities.value || [];
+      // 使用 Set 去重
+      return Array.from(new Set([...defaultCodes, ...extraCodes]));
+    });
 
     const chartOption = computed(() => {
       const actualDataLimit = (isYearlyCompare.value && isMonthlyChart.value) ? 360 : yearLimit.value;
@@ -170,7 +256,10 @@ export default {
         title: props.chart.title || '默认标题',
         subtitle: props.chart.subtitle || '',
         zbcodeArr: props.chart.zbcodeArr || [],
-        cityCodeArr: props.config.cityCodeArr || [],
+
+        // 🌟 核心修改：传给图表的将是合并后的数组
+        cityCodeArr: finalCityCodeArr.value,
+
         dbCode: props.chart.dbCode || (props.viewMode === 'monthly' ? 'yd' : 'nd'),
         unit: props.chart.unit || '',
         exceptName: props.chart.exceptName || '',
@@ -229,19 +318,62 @@ export default {
         !isYearlyCompare.value;
     });
 
+    // 🌟 新增：是否显示城市选择器 (只在传了 needAddCityCodeArr 时显示)
+    const showCityAddToggle = computed(() => {
+      // 改为判断 currentExtraCityPool
+      return Array.isArray(currentExtraCityPool.value) && currentExtraCityPool.value.length > 0;
+    });
+
+    // 🌟 新增：判断文案是“省份”还是“城市” (通过看返回数据里是否包含省份关键字)
+    const isProvince = computed(() => {
+      if (props.config.needAddCityCodeArr && props.config.needAddCityCodeArr.length > 0) {
+        const sampleName = props.config.needAddCityCodeArr[0].cname || '';
+        return sampleName.includes('省') || sampleName.includes('自治区');
+      }
+      return false;
+    });
+
+    // 🌟 新增：搜索过滤逻辑
+    const filteredCities = computed(() => {
+      // 改为从 currentExtraCityPool 过滤
+      const allExtra = currentExtraCityPool.value;
+      const keyword = searchKeyword.value.trim().toLowerCase();
+      if (!keyword) return allExtra;
+      return allExtra.filter(c => c.cname && c.cname.toLowerCase().includes(keyword));
+    });
+
+    const getCityName = (code) => {
+      // 改为从 currentExtraCityPool 查找
+      const city = currentExtraCityPool.value.find(c => c.code === code);
+      return city ? city.cname : code;
+    };
+
+    const toggleCity = (code) => {
+      const index = selectedExtraCities.value.indexOf(code);
+      if (index > -1) {
+        selectedExtraCities.value.splice(index, 1);
+      } else {
+        if (selectedExtraCities.value.length >= 5) return; // 限制最多5个
+        selectedExtraCities.value.push(code);
+      }
+    };
+
+
     return {
       chartTypeModel, currentChartType, isHorizontal, yearLimit, legendAllSelected,
       chartRef, selectedLegend, offsetValue, legendNames, windowWidth, chartHeight,
       legendList, chartOption, isYearlyCompare, showCompareToggle, showLegendSelector,
-      showOffsetControls, controlSize, toggleAllLegends
+      showOffsetControls, controlSize, toggleAllLegends,
+      // 新增暴露的变量
+      showCityAddToggle, isDrawerVisible, searchKeyword, selectedExtraCities,
+      filteredCities, getCityName, toggleCity, isMobile, isProvince
     };
   }
 };
 </script>
 
-
 <style scoped>
-/* 🌟 完全保持你的原样 CSS 不变 */
+/* ================== 原有 CSS 保持不变 ================== */
 .chart-container {
   width: 95%;
   max-width: 1500px;
@@ -251,7 +383,6 @@ export default {
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   box-sizing: border-box;
-  /* 🌟 新增：强制使用各系统最优秀的 UI 字体，拒绝浏览器乱猜 */
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", sans-serif;
 }
 
@@ -260,7 +391,6 @@ export default {
   flex-wrap: nowrap !important;
   align-items: center;
   justify-content: center;
-  /* 🌟 保证PC端整体完美居中 */
   gap: 16px;
   padding: 5px 5px;
   border-radius: 12px;
@@ -270,13 +400,11 @@ export default {
   box-sizing: border-box;
 }
 
-/* 🌟 优化 1：锁死工具栏的分组高度，绝对对齐！ */
 .toolbar-group {
   display: flex;
   align-items: center;
   background: #fff;
-  /* 取消上下的 padding，改为由 height 锁死，内部自动垂直居中 */
-  padding: 0 14px; 
+  padding: 0 14px;
   border-radius: 10px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
@@ -284,10 +412,9 @@ export default {
   flex: 0 1 auto;
   min-width: 0;
   white-space: nowrap;
-  
-  height: 50px; /* 🌟 核心修复：替换原来的 min-height: 44px，强制固定物理高度 */
+  height: 50px;
   box-sizing: border-box;
-  overflow-y: hidden !important; 
+  overflow-y: hidden !important;
 }
 
 .group-label {
@@ -310,21 +437,17 @@ export default {
   flex-shrink: 0;
 }
 
-/* 🌟 PC端：各组宽度智能分配 */
 .view-group {
   flex: 0 1 auto;
-  /* 自然宽度 */
 }
 
 .time-group {
   width: 280px;
-  /* 给时间滑块留出固定的舒适滑动空间 */
   flex-shrink: 0;
 }
 
 .dim-group {
   flex: 0 1 auto;
-  /* 根据内部控件（如偏移滑块）自然撑开宽度 */
 }
 
 .target-group {
@@ -347,7 +470,6 @@ export default {
 
 .offset-slider {
   width: 200px;
-  /* 保证第三组内的偏移滑块有足够空间 */
   margin-left: 8px;
 }
 
@@ -387,16 +509,16 @@ export default {
   color: #22c55e;
 }
 
-/* 🌟 优化 2：强制压扁 el-select 下拉框，让它和普通的按钮 (36px) 完全一样高 */
 .legend-select :deep(.el-input__wrapper) {
   height: 36px !important;
   min-height: 36px !important;
   box-sizing: border-box;
-  border-radius: 10px !important; /* 统一圆角 */
-  box-shadow: 0 0 0 1px #e2e8f0 inset !important; /* 统一边框风格 */
+  border-radius: 10px !important;
+  box-shadow: 0 0 0 1px #e2e8f0 inset !important;
 }
+
 .legend-select :deep(.el-input__wrapper.is-focus) {
-  box-shadow: 0 0 0 1px #0bc2d6 inset !important; /* 聚焦时的青色边框 */
+  box-shadow: 0 0 0 1px #0bc2d6 inset !important;
 }
 
 :deep(.el-slider__bar) {
@@ -415,7 +537,7 @@ export default {
   height: 36px !important;
   padding: 0 16px !important;
   font-size: 14px !important;
-  font-weight: 600 !important; /* 🌟 新增：让按钮文字看起来更扎实 */
+  font-weight: 600 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -466,8 +588,108 @@ export default {
   background-color: #f0fcfd !important;
 }
 
+/* ================== 🌟 新增：触发器按钮与 Drawer 抽屉样式 ================== */
+.compare-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 36px;
+  padding: 0 16px;
+  background-color: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
 
+.compare-trigger:hover {
+  background-color: #f0fcfd;
+  border-color: #0bc2d6;
+  color: #0bc2d6;
+}
 
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.search-box {
+  padding-bottom: 16px;
+}
+
+.selected-tags {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 12px;
+}
+
+.tags-header {
+  font-size: 13px;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.city-tag {
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.city-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.city-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  font-size: 14px;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.city-item:hover:not(.is-disabled) {
+  background-color: #f1f5f9;
+}
+
+.city-item.is-active {
+  background-color: #f0fcfd;
+  color: #0bc2d6;
+  font-weight: bold;
+}
+
+.city-item.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+:deep(.custom-city-drawer .el-drawer__header) {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #1e293b;
+  font-weight: bold;
+}
+
+/* ================== 移动端适配 ================== */
 @media (max-width: 768px) {
   .chart-container {
     padding: 10px;
@@ -483,12 +705,11 @@ export default {
     align-items: stretch;
   }
 
-/* 🌟 优化 3：移动端同样锁死高度 */
-.toolbar-group {
+  .toolbar-group {
     width: 100%;
-    padding: 0 8px; /* 取消上下 padding */
-    gap: 8px; 
-    height: 40px; /* 🌟 移动端固定为 40px 高度 */
+    padding: 0 8px;
+    gap: 8px;
+    height: 40px;
     flex-wrap: nowrap !important;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -499,23 +720,22 @@ export default {
     display: none;
   }
 
-  /* 🌟 优化 1：固定左侧 Label 宽度，让三行控件的左边缘完美对齐！ */
   .group-label {
     font-size: 13px;
     font-weight: bold;
-    width: 45px; /* 固定宽度 */
+    width: 45px;
     padding-right: 4px;
     flex-shrink: 0;
     justify-content: flex-start;
   }
 
-  /* 🌟 优化 2：解除宽度限制，铺满整行 */
-  .view-group, .time-group, .dim-group {
+  .view-group,
+  .time-group,
+  .dim-group {
     width: 100%;
   }
 
-/* 🌟 优化 4：移动端下拉框强制 28px */
-.legend-select :deep(.el-input__wrapper) {
+  .legend-select :deep(.el-input__wrapper) {
     height: 28px !important;
     min-height: 28px !important;
     border-radius: 8px !important;
@@ -524,43 +744,41 @@ export default {
   .slider-wrapper {
     min-width: 120px;
     flex: 1 1 auto;
-    gap: 8px; /* 滑块周围多一点呼吸感 */
+    gap: 8px;
   }
 
   .flex-slider {
     min-width: 50px;
   }
-  
+
   .offset-slider {
     width: auto;
     flex: 1 1 auto;
     margin-left: 0;
   }
 
-  /* 🌟 优化 4：核心绝杀！让 Radio 按钮组变成弹性容器，内部按钮均分宽度 */
   :deep(.el-radio-group) {
     display: flex;
-    flex: 1 1 auto; /* 整个组撑满剩余空间 */
+    flex: 1 1 auto;
   }
-  
+
   :deep(.el-radio-button) {
-    flex: 1 1 auto; /* 内部每个按钮均分宽度 */
+    flex: 1 1 auto;
     display: flex;
   }
-  
+
   :deep(.el-radio-button__inner) {
-    width: 100%; /* 文字居中，撑满按钮 */
+    width: 100%;
     height: 28px !important;
-    padding: 0 2px !important; /* 减小 padding 防止文字在小屏幕被挤压 */
+    padding: 0 2px !important;
     font-size: 12px !important;
   }
 
-  /* 全选按钮保持紧凑，不参与过度拉伸 */
   .btn-toggle-all {
     height: 28px !important;
     padding: 0 10px !important;
     font-size: 12px !important;
-    flex: 0 0 auto; 
+    flex: 0 0 auto;
     border-radius: 8px !important;
   }
 
@@ -575,6 +793,16 @@ export default {
   .split-line {
     height: 14px;
     margin: 0 2px;
+  }
+
+  /* 🌟 移动端的触发器按钮，完美等高 */
+  .compare-trigger {
+    height: 28px;
+    padding: 0 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    flex: 1 1 auto;
+    margin-right: 4px;
   }
 }
 
