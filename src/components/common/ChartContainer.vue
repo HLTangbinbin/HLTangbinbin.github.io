@@ -1,21 +1,29 @@
 <template>
   <div class="chart-container">
     <div class="bi-toolbar">
+
       <div class="toolbar-group view-group">
         <div class="group-label"><i class="el-icon-menu"></i> 图表</div>
 
-        <el-radio-group v-model="chartTypeModel" :size="controlSize" class="chart-type-radio no-shrink">
-          <el-radio-button label="bar">柱状</el-radio-button>
-          <el-radio-button label="hbar">条形</el-radio-button>
-          <el-radio-button label="line">折线</el-radio-button>
+        <el-radio-group v-model="viewModeDisplay" :size="controlSize" class="no-shrink" style="margin-right: 8px;">
+          <el-radio-button label="chart">图表</el-radio-button>
+          <el-radio-button label="table">数据</el-radio-button>
         </el-radio-group>
 
-        <div class="split-line"></div>
+        <template v-if="viewModeDisplay === 'chart'">
+          <div class="split-line"></div>
+          <el-radio-group v-model="chartTypeModel" :size="controlSize" class="chart-type-radio no-shrink">
+            <el-radio-button label="bar">柱状</el-radio-button>
+            <el-radio-button label="hbar">条形</el-radio-button>
+            <el-radio-button label="line">折线</el-radio-button>
+          </el-radio-group>
 
-        <el-button :size="controlSize" class="no-shrink btn-toggle-all"
-          :type="legendAllSelected ? 'primary' : 'default'" :plain="!legendAllSelected" @click="toggleAllLegends">
-          {{ legendAllSelected ? '未选' : '全选' }}
-        </el-button>
+          <div class="split-line"></div>
+          <el-button :size="controlSize" class="no-shrink btn-toggle-all"
+            :type="legendAllSelected ? 'primary' : 'default'" :plain="!legendAllSelected" @click="toggleAllLegends">
+            {{ legendAllSelected ? '未选' : '全选' }}
+          </el-button>
+        </template>
       </div>
 
       <div class="toolbar-group time-group">
@@ -26,41 +34,56 @@
         </div>
       </div>
 
-      <div v-if="showCompareToggle || showLegendSelector || showOffsetControls || showCityAddToggle"
+      <div
+        v-if="showCompareToggle || showLegendSelector || showOffsetControls || showCityAddToggle || viewModeDisplay === 'table'"
         class="toolbar-group dim-group">
         <div class="group-label"><i class="el-icon-s-data"></i> 操作</div>
 
-        <el-radio-group v-if="showCompareToggle" v-model="isYearlyCompare" :size="controlSize" class="no-shrink">
-          <el-radio-button :label="false">连续</el-radio-button>
-          <el-radio-button :label="true">同比</el-radio-button>
-        </el-radio-group>
+        <template v-if="viewModeDisplay === 'chart'">
+          <el-radio-group v-if="showCompareToggle" v-model="isYearlyCompare" :size="controlSize" class="no-shrink">
+            <el-radio-button :label="false">连续</el-radio-button>
+            <el-radio-button :label="true">同比</el-radio-button>
+          </el-radio-group>
 
-        <div v-if="(showCompareToggle) && (showLegendSelector || showOffsetControls || showCityAddToggle)"
-          class="split-line"></div>
+          <div v-if="(showCompareToggle) && (showLegendSelector || showOffsetControls || showCityAddToggle)"
+            class="split-line"></div>
 
-        <el-select v-if="showLegendSelector" v-model="selectedLegend" :size="controlSize" placeholder="指标"
-          class="legend-select no-shrink">
-          <el-option v-for="legend in legendList" :key="legend" :label="legend" :value="legend" />
-        </el-select>
+          <el-select v-if="showLegendSelector" v-model="selectedLegend" :size="controlSize" placeholder="指标"
+            class="legend-select no-shrink">
+            <el-option v-for="legend in legendList" :key="legend" :label="legend" :value="legend" />
+          </el-select>
 
-        <div v-if="showOffsetControls" class="slider-wrapper offset-slider">
-          <span class="ctrl-text no-shrink">偏移</span>
-          <el-slider v-model="offsetValue" :min="-40" :max="40" :step="1" class="flex-slider" />
-          <span class="ctrl-val no-shrink" :class="{ 'is-positive': offsetValue > 0, 'is-negative': offsetValue < 0 }">
-            {{ offsetValue > 0 ? '+' : '' }}{{ offsetValue }}
-          </span>
-        </div>
+          <div v-if="showOffsetControls" class="slider-wrapper offset-slider">
+            <span class="ctrl-text no-shrink">偏移</span>
+            <el-slider v-model="offsetValue" :min="-40" :max="40" :step="1" class="flex-slider" />
+            <span class="ctrl-val no-shrink"
+              :class="{ 'is-positive': offsetValue > 0, 'is-negative': offsetValue < 0 }">
+              {{ offsetValue > 0 ? '+' : '' }}{{ offsetValue }}
+            </span>
+          </div>
 
-        <div v-if="(showLegendSelector || showOffsetControls) && showCityAddToggle" class="split-line"></div>
+          <div v-if="(showLegendSelector || showOffsetControls) && showCityAddToggle" class="split-line"></div>
+        </template>
 
         <div v-if="showCityAddToggle" class="compare-trigger no-shrink" @click="isDrawerVisible = true">
           <el-icon class="icon-plus" v-if="selectedExtraCities.length === 0">
             <Plus />
           </el-icon>
           <span class="trigger-text">
-            {{ selectedExtraCities.length === 0 ? (isProvince ? '添加省份' : '添加城市') : `对比中 (${selectedExtraCities.length}/5)` }}
+            {{ selectedExtraCities.length === 0 ? (isProvince ? '添加省份' : '添加城市') : `对比中
+            (${selectedExtraCities.length}/5)` }}
           </span>
         </div>
+
+        <template v-if="viewModeDisplay === 'table'">
+          <div v-if="showCityAddToggle" class="split-line"></div>
+          <el-button :size="controlSize" type="success" plain class="no-shrink export-btn" @click="exportToCSV"
+            title="导出当前视图数据">
+            <el-icon>
+              <Download />
+            </el-icon> <span class="export-text">导出</span>
+          </el-button>
+        </template>
       </div>
 
     </div>
@@ -99,32 +122,44 @@
               <Check />
             </el-icon>
           </div>
-
           <div v-if="filteredCities.length === 0" class="empty-text">未找到匹配项</div>
         </div>
       </div>
     </el-drawer>
 
     <div class="chart-card" :style="{ height: chartHeight + 'px' }">
-      <ChartView ref="chartRef" :option="chartOption" :chartId="chart.id" :initSelectAll="legendAllSelected"
-        :pieConfig="isYearlyCompare ? null : chart.pieConfig" @legendStateChange="legendAllSelected = $event" />
+
+      <ChartView v-if="viewModeDisplay === 'chart'" ref="chartRef" :option="chartOption" :chartId="chart.id"
+        :initSelectAll="legendAllSelected" :pieConfig="isYearlyCompare ? null : chart.pieConfig"
+        @legendStateChange="legendAllSelected = $event" />
+
+      <div v-else class="data-table-wrapper">
+        <el-table :key="`table-${finalCityCodeArr.length}-${chartOption?.series?.length || 0}`" :data="tableData"
+          :height="chartHeight" border stripe style="width: 100%"
+          :header-cell-style="{ background: '#f8fafc', color: '#475569', fontWeight: 'bold' }">
+          <el-table-column v-for="col in tableColumns" :key="col.prop" :prop="col.prop" :label="col.label"
+            :min-width="col.minWidth" :fixed="col.fixed" align="center" />
+        </el-table>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script>
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue';
-import { Plus, Search, Check } from '@element-plus/icons-vue'; // 确保引入了这些图标
+import { Plus, Search, Check, Download } from '@element-plus/icons-vue';
 import ChartView from './ChartView.vue';
 import { getCommonChartOption } from '@/utils/CommonUtil.js';
+import { ElMessage } from 'element-plus';
 
 export default {
   name: 'ChartContainer',
-  components: { ChartView, Plus, Search, Check },
+  components: { ChartView, Plus, Search, Check, Download },
   props: {
     chart: { type: Object, required: true },
     returnData: { type: Object, required: true, default: () => ({}) },
-    config: { type: Object, default: () => ({}) }, // 期待包含 cityCodeArr 和 needAddCityCodeArr
+    config: { type: Object, default: () => ({}) },
     viewMode: { type: String, default: 'monthly' },
   },
   setup(props) {
@@ -139,10 +174,19 @@ export default {
     const offsetValue = ref(0);
     const legendNames = ref([]);
 
-    // 🌟 新增：城市对比功能的状态
     const isDrawerVisible = ref(false);
     const searchKeyword = ref('');
     const selectedExtraCities = ref([]);
+
+    // 视图模式状态：'chart' 或 'table'
+    const viewModeDisplay = ref('chart');
+
+    // 🌟 修复 4：极其严格的状态重置 (只要图表ID换了，彻底初始化)
+    watch(() => props.chart.id, () => {
+      viewModeDisplay.value = 'chart';
+      selectedExtraCities.value = [];
+      searchKeyword.value = '';
+    });
 
     const chartTypeModel = computed({
       get() {
@@ -153,10 +197,7 @@ export default {
         if (val === 'hbar') { currentChartType.value = 'bar'; isHorizontal.value = true; }
         else if (val === 'bar') { currentChartType.value = 'bar'; isHorizontal.value = false; }
         else { currentChartType.value = 'line'; isHorizontal.value = false; }
-
-        if (currentChartType.value !== 'line') {
-          isYearlyCompare.value = false;
-        }
+        if (currentChartType.value !== 'line') isYearlyCompare.value = false;
       }
     });
 
@@ -169,11 +210,8 @@ export default {
     const isPieActive = computed(() => !isYearlyCompare.value && !!props.chart.pieConfig?.enabled);
 
     const chartHeight = computed(() => {
-      if (isMobile.value) {
-        return isPieActive.value ? 450 : 350;
-      } else {
-        return isPieActive.value ? 650 : 550;
-      }
+      if (isMobile.value) return isPieActive.value ? 450 : 350;
+      return isPieActive.value ? 650 : 550;
     });
 
     const adaptForMobile = (val, scale = 0.65, min = 10) => {
@@ -183,46 +221,34 @@ export default {
       return isMobile.value ? Math.max(Math.round(num * scale), min) + 'px' : val;
     };
 
-    const controlSize = computed(() => {
-      return windowWidth.value > 768 ? 'large' : 'small';
-    });
-
+    const controlSize = computed(() => windowWidth.value > 768 ? 'large' : 'small');
     const legendList = computed(() => legendNames.value);
 
     const isMonthlyChart = computed(() => props.chart.dbCode === 'yd' || props.viewMode === 'monthly');
 
     watch(isMonthlyChart, (isMonthly) => {
       if (!isMonthly) isYearlyCompare.value = false;
-      
-      // 🌟 新增：一旦发生“月/年”维度的切换，立刻清空已选的额外城市
-      // 防止用户在月度选了“丹东”，切到年度时找不到数据而报错
       selectedExtraCities.value = [];
       searchKeyword.value = '';
     }, { immediate: true });
 
-    // 🌟 新增：重置选择的城市
     watch(() => props.config.cityCodeArr, () => {
-      // 当默认城市数组发生变化（说明切换了页面或大Tab）时，重置额外选择的城市
       selectedExtraCities.value = [];
       searchKeyword.value = '';
     }, { deep: true });
 
-    // 🌟 2. 新增：智能判定当前该用哪个“城市池”
+    // 🌟 修复 1：100% 还原你原代码的判断逻辑，绝不乱改！
     const currentExtraCityPool = computed(() => {
       if (isMonthlyChart.value) {
-        // 如果是月度(yd)，优先取70城配置，如果没有则降级取通用配置
         return props.config.needAddCityCodeArr_yd || props.config.needAddCityCodeArr || [];
       } else {
-        // 如果是年度(nd)，优先取36城配置，如果没有则降级取通用配置
         return props.config.needAddCityCodeArr_nd || props.config.needAddCityCodeArr || [];
       }
     });
 
-    // 🌟 新增：合并最终的城市/省份数组
     const finalCityCodeArr = computed(() => {
       const defaultCodes = props.config.cityCodeArr || [];
       const extraCodes = selectedExtraCities.value || [];
-      // 使用 Set 去重
       return Array.from(new Set([...defaultCodes, ...extraCodes]));
     });
 
@@ -256,10 +282,7 @@ export default {
         title: props.chart.title || '默认标题',
         subtitle: props.chart.subtitle || '',
         zbcodeArr: props.chart.zbcodeArr || [],
-
-        // 🌟 核心修改：传给图表的将是合并后的数组
         cityCodeArr: finalCityCodeArr.value,
-
         dbCode: props.chart.dbCode || (props.viewMode === 'monthly' ? 'yd' : 'nd'),
         unit: props.chart.unit || '',
         exceptName: props.chart.exceptName || '',
@@ -292,9 +315,7 @@ export default {
     });
 
     watch(chartHeight, () => {
-      nextTick(() => {
-        window.dispatchEvent(new Event('resize'));
-      });
+      nextTick(() => { window.dispatchEvent(new Event('resize')); });
     });
 
     const toggleAllLegends = () => {
@@ -318,24 +339,20 @@ export default {
         !isYearlyCompare.value;
     });
 
-    // 🌟 新增：是否显示城市选择器 (只在传了 needAddCityCodeArr 时显示)
     const showCityAddToggle = computed(() => {
-      // 改为判断 currentExtraCityPool
       return Array.isArray(currentExtraCityPool.value) && currentExtraCityPool.value.length > 0;
     });
 
-    // 🌟 新增：判断文案是“省份”还是“城市” (通过看返回数据里是否包含省份关键字)
+    // 🌟 还原你原代码里最精准的省份判定：绝对不会把城市判定为省份
     const isProvince = computed(() => {
-      if (props.config.needAddCityCodeArr && props.config.needAddCityCodeArr.length > 0) {
-        const sampleName = props.config.needAddCityCodeArr[0].cname || '';
+      if (currentExtraCityPool.value && currentExtraCityPool.value.length > 0) {
+        const sampleName = currentExtraCityPool.value[0].cname || '';
         return sampleName.includes('省') || sampleName.includes('自治区');
       }
       return false;
     });
 
-    // 🌟 新增：搜索过滤逻辑
     const filteredCities = computed(() => {
-      // 改为从 currentExtraCityPool 过滤
       const allExtra = currentExtraCityPool.value;
       const keyword = searchKeyword.value.trim().toLowerCase();
       if (!keyword) return allExtra;
@@ -343,37 +360,130 @@ export default {
     });
 
     const getCityName = (code) => {
-      // 改为从 currentExtraCityPool 查找
       const city = currentExtraCityPool.value.find(c => c.code === code);
       return city ? city.cname : code;
     };
 
     const toggleCity = (code) => {
       const index = selectedExtraCities.value.indexOf(code);
-      if (index > -1) {
-        selectedExtraCities.value.splice(index, 1);
-      } else {
-        if (selectedExtraCities.value.length >= 5) return; // 限制最多5个
-        selectedExtraCities.value.push(code);
-      }
+      if (index > -1) selectedExtraCities.value.splice(index, 1);
+      else if (selectedExtraCities.value.length < 5) selectedExtraCities.value.push(code);
     };
 
+    // =========================================================
+    // 数据表格解析逻辑：绝对过滤多余的阴影/背景列
+    // =========================================================
+
+    // 过滤掉所有 ECharts 强加进来的、没有名字的辅助柱子层
+    const validSeries = computed(() => {
+      if (!chartOption.value || !chartOption.value.series) return [];
+      const seriesList = Array.isArray(chartOption.value.series) ? chartOption.value.series : [chartOption.value.series];
+      return seriesList
+        .map((series, originalIdx) => ({ series, originalIdx }))
+        .filter(item => item.series.name && item.series.name.trim() !== '');
+    });
+
+    const getSafeAxisData = (axis) => {
+      if (!axis) return null;
+      if (Array.isArray(axis)) return axis[0]?.data;
+      return axis.data;
+    };
+
+    const tableColumns = computed(() => {
+      const cols = [{ prop: 'time', label: '时间 / 指标', fixed: 'left', minWidth: 120 }];
+      validSeries.value.forEach(item => {
+        cols.push({
+          prop: `col_${item.originalIdx}`,
+          label: item.series.name,
+          minWidth: isMobile.value ? 100 : 140
+        });
+      });
+      return cols;
+    });
+
+    const tableData = computed(() => {
+      const categories = getSafeAxisData(chartOption.value.xAxis) || getSafeAxisData(chartOption.value.yAxis) || [];
+
+      if (categories.length > 0) {
+        return categories.map((cat, timeIdx) => {
+          const row = { time: cat };
+          validSeries.value.forEach(item => {
+            let val = '-';
+            if (Array.isArray(item.series.data)) {
+              const rawVal = item.series.data[timeIdx];
+              val = (rawVal !== null && typeof rawVal === 'object' && rawVal.value !== undefined) ? rawVal.value : rawVal;
+            }
+            row[`col_${item.originalIdx}`] = (val === undefined || val === null || val === '') ? '-' : val;
+          });
+          return row;
+        });
+      }
+
+      const rows = [];
+      const nameSet = new Set();
+      validSeries.value.forEach(item => {
+        if (Array.isArray(item.series.data)) {
+          item.series.data.forEach(dataItem => {
+            if (dataItem && typeof dataItem === 'object' && dataItem.name) nameSet.add(dataItem.name);
+          });
+        }
+      });
+
+      if (nameSet.size > 0) {
+        Array.from(nameSet).forEach(name => {
+          const row = { time: name };
+          validSeries.value.forEach(item => {
+            let val = '-';
+            if (Array.isArray(item.series.data)) {
+              const target = item.series.data.find(d => d && typeof d === 'object' && d.name === name);
+              if (target) val = target.value;
+            }
+            row[`col_${item.originalIdx}`] = (val === undefined || val === null || val === '') ? '-' : val;
+          });
+          rows.push(row);
+        });
+        return rows;
+      }
+      return [];
+    });
+
+    const exportToCSV = () => {
+      const cols = tableColumns.value;
+      const data = tableData.value;
+      if (cols.length === 0 || data.length === 0) {
+        ElMessage.warning('当前暂无可导出的数据');
+        return;
+      }
+      const header = cols.map(c => `"${c.label}"`).join(',');
+      const body = data.map(row => {
+        return cols.map(c => `"${row[c.prop] ?? '-'}"`).join(',');
+      }).join('\n');
+      const csvString = '\uFEFF' + header + '\n' + body;
+      const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${props.chart.title || '大唐数据导出'}_${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      ElMessage.success('数据导出成功！');
+    };
 
     return {
       chartTypeModel, currentChartType, isHorizontal, yearLimit, legendAllSelected,
       chartRef, selectedLegend, offsetValue, legendNames, windowWidth, chartHeight,
       legendList, chartOption, isYearlyCompare, showCompareToggle, showLegendSelector,
-      showOffsetControls, controlSize, toggleAllLegends,
-      // 新增暴露的变量
-      showCityAddToggle, isDrawerVisible, searchKeyword, selectedExtraCities,
-      filteredCities, getCityName, toggleCity, isMobile, isProvince
+      showOffsetControls, controlSize, toggleAllLegends, showCityAddToggle,
+      isDrawerVisible, searchKeyword, selectedExtraCities, filteredCities, getCityName,
+      toggleCity, isMobile, isProvince, finalCityCodeArr,
+      viewModeDisplay, tableColumns, tableData, exportToCSV
     };
   }
 };
 </script>
 
 <style scoped>
-/* ================== 原有 CSS 保持不变 ================== */
+/* 原有完全不变的 CSS */
 .chart-container {
   width: 95%;
   max-width: 1500px;
@@ -588,7 +698,25 @@ export default {
   background-color: #f0fcfd !important;
 }
 
-/* ================== 🌟 新增：触发器按钮与 Drawer 抽屉样式 ================== */
+/* 🌟 新增功能相关样式 */
+.data-table-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.data-table-wrapper :deep(.el-table) {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.export-btn {
+  border-radius: 8px !important;
+  font-weight: bold;
+}
+
 .compare-trigger {
   display: inline-flex;
   align-items: center;
@@ -689,7 +817,6 @@ export default {
   font-weight: bold;
 }
 
-/* ================== 移动端适配 ================== */
 @media (max-width: 768px) {
   .chart-container {
     padding: 10px;
@@ -795,7 +922,6 @@ export default {
     margin: 0 2px;
   }
 
-  /* 🌟 移动端的触发器按钮，完美等高 */
   .compare-trigger {
     height: 28px;
     padding: 0 10px;
@@ -803,6 +929,19 @@ export default {
     border-radius: 8px;
     flex: 1 1 auto;
     margin-right: 4px;
+  }
+
+  .data-table-wrapper {
+    padding: 4px;
+  }
+
+  .export-text {
+    display: none;
+  }
+
+  .export-btn {
+    width: 32px;
+    padding: 0 !important;
   }
 }
 
