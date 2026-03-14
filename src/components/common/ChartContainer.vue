@@ -28,9 +28,7 @@
         </div>
       </div>
 
-      <div
-        v-if="viewModeDisplay === 'chart' || viewModeDisplay === 'table'"
-        class="toolbar-group dim-group">
+      <div v-if="viewModeDisplay === 'chart' || viewModeDisplay === 'table'" class="toolbar-group dim-group">
         <div class="group-label"><i class="el-icon-s-data"></i> 操作</div>
 
         <template v-if="viewModeDisplay === 'chart'">
@@ -45,6 +43,13 @@
           <el-checkbox-button v-if="showTrendlineToggle" v-model="enableTrendline" :size="controlSize" class="no-shrink"
             style="margin-right: 8px;">
             趋势拟合
+          </el-checkbox-button>
+
+          <el-checkbox-button v-if="showTrendlineToggle" v-model="enableSmartAnalysis" :size="controlSize"
+            class="no-shrink" style="margin-right: 8px;">
+            <el-icon style="margin-right: 4px">
+              <MagicStick />
+            </el-icon>智能洞察
           </el-checkbox-button>
 
           <div v-if="showTrendlineToggle" class="split-line"></div>
@@ -141,6 +146,15 @@
       </div>
     </el-drawer>
 
+    <transition name="el-fade-in">
+      <div v-if="enableSmartAnalysis && viewModeDisplay === 'chart' && smartNarrative" class="smart-narrative-panel">
+        <div class="narrative-title"><el-icon>
+            <MagicStick />
+          </el-icon> AI 智能数据叙事</div>
+        <div class="narrative-content" v-html="smartNarrative"></div>
+      </div>
+    </transition>
+
     <div class="chart-card" :style="{ height: chartHeight + 'px' }">
 
       <ChartView v-if="viewModeDisplay === 'chart'" ref="chartRef" :option="chartOption" :chartId="chart.id"
@@ -163,14 +177,14 @@
 
 <script>
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue';
-import { Plus, Search, Check, Download } from '@element-plus/icons-vue';
+import { Plus, Search, Check, Download, MagicStick } from '@element-plus/icons-vue';
 import ChartView from './ChartView.vue';
-import { getCommonChartOption } from '@/utils/CommonUtil.js';
+import { getCommonChartOption, generateSmartNarrative } from '@/utils/CommonUtil.js';
 import { ElMessage } from 'element-plus';
 
 export default {
   name: 'ChartContainer',
-  components: { ChartView, Plus, Search, Check, Download },
+  components: { ChartView, Plus, Search, Check, Download, MagicStick },
   props: {
     chart: { type: Object, required: true },
     returnData: { type: Object, required: true, default: () => ({}) },
@@ -206,6 +220,7 @@ export default {
     // 🌟 高级功能开关
     const enableTrendline = ref(false);
     const enableHeatmap = ref(false);
+    const enableSmartAnalysis = ref(false);
 
     // 彻底重置所有状态 (解决 Tab 切换幽灵状态)
     const chartIdentityStr = computed(() => `${props.chart?.title}-${props.chart?.id}-${props.config?.localJson}`);
@@ -221,6 +236,7 @@ export default {
         isYearlyCompare.value = false;
         enableTrendline.value = false;
         enableHeatmap.value = false;
+        enableSmartAnalysis.value = false;
       }
     });
 
@@ -344,7 +360,8 @@ export default {
         enableBirthOffset: props.chart.enableBirthOffset || false,
         enableBirthPrediction: props.chart.enableBirthPrediction || false,
         // 传递给底层的拟合状态
-        enableTrendline: enableTrendline.value
+        enableTrendline: enableTrendline.value || enableSmartAnalysis.value,
+        enableSmartAnalysis: enableSmartAnalysis.value
       });
     });
 
@@ -358,8 +375,9 @@ export default {
     watch(isYearlyCompare, (isCompare) => { if (isCompare) offsetValue.value = 0; });
     watch(chartHeight, () => { nextTick(() => { window.dispatchEvent(new Event('resize')); }); });
 
+    // 🌟 1. 严格规范分析场景：智能洞察与趋势线仅在折线图（时序）下开放
     const showTrendlineToggle = computed(() => {
-      return (currentChartType.value === 'line') && !isHorizontal.value;
+      return currentChartType.value === 'line' && !isHorizontal.value;
     });
 
     // =========================================================
@@ -507,9 +525,16 @@ export default {
 
     const legendList = computed(() => legendNames.value);
     const showCompareToggle = computed(() => isMonthlyChart.value && currentChartType.value === 'line' && !isHorizontal.value);
-    const showLegendSelector = computed(() => legendList.value.length > 1 && (isYearlyCompare.value || showOffsetControls.value));
+    const showLegendSelector = computed(() =>
+      legendList.value.length > 1 &&
+      (isYearlyCompare.value || showOffsetControls.value || enableSmartAnalysis.value)
+    );
     const showOffsetControls = computed(() => props.chart.enableOffset === true && currentChartType.value === 'line' && !isHorizontal.value && !isYearlyCompare.value);
-
+    // 🌟 极简调用：只负责拿生成好的文本
+    const smartNarrative = computed(() => {
+      if (!enableSmartAnalysis.value || viewModeDisplay.value !== 'chart') return '';
+      return generateSmartNarrative(chartOption.value, selectedLegend.value);
+    });
     return {
       chartTypeModel, currentChartType, isHorizontal, yearLimit, legendAllSelected,
       chartRef, selectedLegend, offsetValue, legendNames, windowWidth, chartHeight,
@@ -518,7 +543,7 @@ export default {
       isDrawerVisible, searchKeyword, selectedExtraCities, filteredCities, getCityName,
       toggleCity, isMobile, isProvince, finalCityCodeArr,
       viewModeDisplay, tableColumns, tableData, exportToCSV,
-      enableTrendline, enableHeatmap, showTrendlineToggle, getTableCellStyle
+      enableTrendline, enableHeatmap, showTrendlineToggle, getTableCellStyle, enableSmartAnalysis, smartNarrative
     };
   }
 };
@@ -1014,5 +1039,41 @@ export default {
   width: 100%;
   position: relative;
   z-index: 0 !important;
+}
+
+/* AI 智能洞察面板专属样式 */
+.smart-narrative-panel {
+  background: linear-gradient(135deg, #f0fcfd 0%, #ffffff 100%);
+  border-left: 4px solid #0bc2d6;
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin: 0 auto 16px;
+  width: 95%;
+  max-width: 1500px;
+  box-shadow: 0 4px 16px rgba(11, 194, 214, 0.08);
+  box-sizing: border-box;
+}
+
+.narrative-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0bc2d6;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.narrative-content {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+}
+
+.narrative-content :deep(strong) {
+  color: #0f172a;
+  margin: 0 3px;
+  font-weight: 600;
 }
 </style>

@@ -139,35 +139,43 @@ export function getCommonChartOption(params) {
 
   // 1. 基础业务数据提取与计算 (包含你的婚姻预测、学生偏移逻辑)
   let { seriesData, filteredYears, marriageArr, birthArr } = buildBaseSeries(params);
-
-  // 记录原始干净的指标名
+  // 🌟 核心拼图 3：X 轴时光机 (向未来延展 3 个周期)
+  // 仅在非同比模式下开启未来预测，否则会破坏 1-12 月的固定坐标系
+  const futureSteps = (params.enableSmartAnalysis && !params.isYearlyCompare) ? 3 : 0;
+  if (futureSteps > 0 && filteredYears.length > 0) {
+    const isMonthly = params.dbCode === 'yd' || params.viewMode === 'monthly';
+    let current = String(filteredYears[filteredYears.length - 1]);
+    for (let i = 0; i < futureSteps; i++) {
+      if (isMonthly) {
+        let y = parseInt(current.substring(0, 4));
+        let m = parseInt(current.substring(4, 6));
+        m++;
+        if (m > 12) { m = 1; y++; }
+        current = `${y}${m.toString().padStart(2, '0')}`;
+      } else {
+        current = String(parseInt(current) + 1);
+      }
+      filteredYears.push(current); // 将未来时间塞入坐标轴
+    }
+  }
   const originalLegendData = seriesData.map(s => s.name);
 
   if (params.isYearlyCompare) {
     const compareOption = buildYearlyCompareOption(seriesData, filteredYears, params);
     compareOption.originalLegendData = originalLegendData;
-
-    // 🌟 修复：补回同环比模式的耗时打印
-    if (typeof logger !== 'undefined') {
-      logger.debug(`[getCommonChartOption - 同环比模式] 耗时: ${Math.round(performance.now() - startTime)}ms`);
-    }
     return compareOption;
   }
 
-  // 2. 核心业务推导算法 (人口预测)
   seriesData = applyBirthPrediction(seriesData, marriageArr, birthArr, params);
 
-  // 3. 插件化扩展 A：数学趋势拟合线 (Trendline)
-  if (params.enableTrendline && !params.isHorizontal) {
-    seriesData = applyTrendlines(seriesData);
+  // 确保 futureSteps 传递给底层算法引擎
+  if (params.enableTrendline || params.enableSmartAnalysis) {
+    seriesData = applyTrendlines(seriesData, params, futureSteps);
   }
 
-  // 4. 组装基础 ECharts 骨架
   const optionData = buildOptionSkeleton(seriesData, filteredYears, params);
-
   optionData.originalLegendData = originalLegendData;
 
-  // 6. 挂载饼图
   if (params.pieConfig?.enabled) {
     attachPieChartToOption(optionData, seriesData, filteredYears, params);
   }
@@ -457,15 +465,11 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
 }
 
 // ----------------------------------------------------
-// 🌟 新增的独立扩展模块 (遵循高内聚低耦合原则)
-// ----------------------------------------------------
-
-// 【数学模块】最小二乘法线性回归 (含 R² 和回归方程计算)
-function calculateLinearRegression(dataArr) {
+// 【数学模块】最小二乘法线性回归 (新增 近期动量拐点捕获)
+function calculateLinearRegression(dataArr, futureSteps = 0) {
   let n = 0, sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
   const validPoints = [];
 
-  // 🛡️ 核心修复 1：严格过滤空值，绝对不能把 null 或 undefined 当成 0 参与回归计算！
   dataArr.forEach((val, x) => {
     if (val === null || val === undefined || val === '') return;
     let num = typeof val === 'object' ? val.value : val;
@@ -473,54 +477,97 @@ function calculateLinearRegression(dataArr) {
 
     num = Number(num);
     if (!isNaN(num)) {
-      n++;
-      sumX += x;
-      sumY += num;
-      sumXY += (x * num);
-      sumXX += (x * x);
+      n++; sumX += x; sumY += num;
+      sumXY += (x * num); sumXX += (x * x);
       validPoints.push({ x, y: num });
     }
   });
 
   if (n < 2) return dataArr.map(() => '-');
 
+  // 全局趋势基准
   const denominator = (n * sumXX - sumX * sumX);
   const m = denominator === 0 ? 0 : (n * sumXY - sumX * sumY) / denominator;
   const b = (sumY - m * sumX) / n;
 
+  // 🌟 核心升级：近期动量修正 (专门捕获人口/经济的近期暴跌拐点)
+  let recentM = m;
+  if (validPoints.length >= 4) {
+    const recent = validPoints.slice(-5); // 提取最近 5 个周期测算局部动量
+    let rn = recent.length, rSumX = 0, rSumY = 0, rSumXY = 0, rSumXX = 0;
+    recent.forEach(p => {
+      rSumX += p.x; rSumY += p.y;
+      rSumXY += p.x * p.y; rSumXX += p.x * p.x;
+    });
+    const rDenom = (rn * rSumXX - rSumX * rSumX);
+    if (rDenom !== 0) recentM = (rn * rSumXY - rSumX * rSumY) / rDenom;
+  }
+
   const meanY = sumY / n;
-  let ssTot = 0, ssRes = 0;
+  let ssTot = 0, ssRes = 0, residualSqSum = 0;
   validPoints.forEach(p => {
     const predicted = m * p.x + b;
     ssTot += Math.pow(p.y - meanY, 2);
     ssRes += Math.pow(p.y - predicted, 2);
+    residualSqSum += Math.pow(p.y - predicted, 2);
   });
 
   const r2 = ssTot === 0 ? 1 : Math.max(0, 1 - (ssRes / ssTot));
+  const rmse = Math.sqrt(residualSqSum / Math.max(1, n - 2));
 
-  const sign = b >= 0 ? '+' : '-';
-  const formulaStr = `y = ${m.toFixed(2)}x ${sign} ${Math.abs(b).toFixed(2)}`;
-  const r2Str = r2.toFixed(4);
+  const formulaStr = `y = ${m.toFixed(2)}x ${b >= 0 ? '+' : '-'} ${Math.abs(b).toFixed(2)}`;
 
-  return dataArr.map((_, x) => {
-    const predY = Number((m * x + b).toFixed(2));
-    const isFlat = Math.abs(m / (meanY || 1)) < 0.001;
-    let statusText = '';
-    if (isFlat) {
-      statusText = '<span style="color: #94a3b8;">(高位平稳，随机波动)</span>';
-    } else if (r2 > 0.8) {
-      statusText = '<span style="color: #10b981;">(趋势强劲，可信度高)</span>';
-    } else if (r2 < 0.3) {
-      statusText = '<span style="color: #f59e0b;">(波动剧烈，缺乏线性规律)</span>';
+  const anomalies = [];
+  const trendData = [];
+  const lowerBand = [];
+  const bandDiff = [];
+  const totalLen = dataArr.length + futureSteps;
+
+  const lastRealX = validPoints[validPoints.length - 1].x;
+  const lastRealTrendY = m * lastRealX + b; // 历史拟合线的终点
+
+  for (let x = 0; x < totalLen; x++) {
+    let predY;
+
+    if (x <= lastRealX) {
+      // 历史区间：使用全局拟合，保证趋势平滑
+      predY = Number((m * x + b).toFixed(2));
+
+      let val = dataArr[x];
+      let num = val !== null && typeof val === 'object' ? val.value : val;
+      if (num !== null && num !== undefined && num !== '' && !isNaN(Number(num)) && rmse > 0) {
+        const diff = Number(num) - predY;
+        if (Math.abs(diff) > 2 * rmse) {
+          anomalies.push({ x, y: Number(num), diff: diff > 0 ? '超预期' : '低于预期' });
+        }
+      }
+    } else {
+      // 🌟 未来预测区间：从历史终点出发，使用近期动量(recentM)切线延伸！
+      // 这样哪怕前10年暴涨，只要近2年暴跌，预测线也会立刻朝下拐！
+      const stepsAhead = x - lastRealX;
+      predY = Number((lastRealTrendY + recentM * stepsAhead).toFixed(2));
     }
 
-    return {
-      value: predY,
-      formula: formulaStr,
-      r2: r2Str,
-      status: statusText
-    };
-  });
+    const isFlat = Math.abs(m / (meanY || 1)) < 0.001;
+    let statusText = isFlat ? '<span style="color: #94a3b8;">(平稳)</span>' : (r2 > 0.8 ? '<span style="color: #10b981;">(强劲)</span>' : '<span style="color: #f59e0b;">(波动)</span>');
+
+    trendData.push({ value: predY, formula: formulaStr, r2: r2.toFixed(4), status: statusText });
+
+    if (x >= dataArr.length - 1) {
+      const stepAhead = x - (dataArr.length - 1);
+      const baseMargin = Math.max(2 * rmse, Math.abs(predY) * 0.02);
+      const margin = baseMargin * (1 + stepAhead * 0.25);
+
+      lowerBand.push(Number((predY - margin).toFixed(2)));
+      bandDiff.push(Number((margin * 2).toFixed(2)));
+    } else {
+      lowerBand.push(null);
+      bandDiff.push(null);
+    }
+  }
+
+  Object.defineProperty(trendData, '_metadata', { value: { anomalies, rmse, lowerBand, bandDiff, recentM }, enumerable: false });
+  return trendData;
 }
 
 // 🌟 提取独立的高级 Tooltip 渲染引擎，供所有模式复用
@@ -530,7 +577,12 @@ function getAdvancedTooltipFormatter() {
     const paramsArray = Array.isArray(params) ? params : [params];
 
     // 🛡️ 核心修复 2：过滤掉所有可能的幽灵节点，防止 ECharts 传毒
-    const validParams = paramsArray.filter(p => p && p.value !== '-' && p.value != null && p.value !== '');
+    // 🛡️ 核心修复 2：过滤幽灵节点，并彻底屏蔽用于画扇形的隐藏辅助线
+    const validParams = paramsArray.filter(p =>
+      p && p.value !== '-' && p.value != null && p.value !== '' &&
+      !String(p.seriesName).includes('(预测下限)') &&
+      !String(p.seriesName).includes('(预测区间)')
+    );
 
     const sorted = validParams.sort((a, b) => {
       // 🛡️ 核心修复 3：全面使用可选链 ?. 防止 Cannot read properties of undefined
@@ -585,30 +637,149 @@ function getAdvancedTooltipFormatter() {
   };
 }
 
-// 【渲染插件 A】注入趋势线
-function applyTrendlines(seriesData) {
+// 【渲染插件 A】注入趋势线、异常打点与未来预测扇形
+// 【渲染插件 A】注入趋势线与预测扇形 (支持单图例聚焦)
+function applyTrendlines(seriesData, params = {}, futureSteps = 0) {
   const trendLines = [];
+  // 🌟 如果开启了智能分析且存在下拉框选择的指标，则只对该指标进行深入分析
+  const focusedLegend = params.enableSmartAnalysis ? params.selectedLegend : null;
+
   seriesData.forEach(s => {
     if (s.type === 'line' || s.type === 'bar') {
-      const trendData = calculateLinearRegression(s.data);
+
+      // 🌟 图层过滤：多图例时，屏蔽非选中图例的趋势线和异常针，防止画面凌乱
+      if (focusedLegend && s.name !== focusedLegend && seriesData.length > 1) return;
+
+      const trendData = calculateLinearRegression(s.data, futureSteps);
+      const meta = trendData._metadata;
+      const themeColor = s.itemStyle?.color || '#0bc2d6';
+
       trendLines.push({
         name: s.name + ' (趋势)',
         type: 'line',
         data: trendData,
-        // 🌟 核心防御标记：告诉表格和外层，这是一个纯视觉辅助线，不属于业务数据
         isTrendline: true,
         lineStyle: { type: 'dashed', width: 2, opacity: 0.8 },
-        itemStyle: { color: s.itemStyle?.color },
+        itemStyle: { color: themeColor },
         symbol: 'none',
-        tooltip: { valueFormatter: value => value + ' (拟合)' }
+        tooltip: { valueFormatter: value => value + ' (拟合)' },
+        z: 5
       });
+
+      if (params.enableSmartAnalysis && futureSteps > 0 && meta) {
+        trendLines.push({
+          name: s.name + ' (预测下限)',
+          type: 'line',
+          data: meta.lowerBand,
+          isTrendline: true,
+          stack: `conf-band-${s.name}`,
+          lineStyle: { opacity: 0 },
+          symbol: 'none',
+          tooltip: { show: false }
+        });
+        trendLines.push({
+          name: s.name + ' (预测区间)',
+          type: 'line',
+          data: meta.bandDiff,
+          isTrendline: true,
+          stack: `conf-band-${s.name}`,
+          lineStyle: { opacity: 0 },
+          areaStyle: { color: themeColor, opacity: 0.25 },
+          symbol: 'none',
+          tooltip: { show: false }
+        });
+      }
+
+      if (params.enableSmartAnalysis && meta && meta.anomalies.length > 0) {
+        s.markPoint = {
+          symbol: 'pin',
+          symbolSize: 45,
+          itemStyle: { color: '#ef4444', shadowBlur: 10, shadowColor: 'rgba(239,68,68,0.4)' },
+          label: { color: '#fff', fontSize: 10, formatter: '异常' },
+          data: meta.anomalies.map(a => ({ coord: [a.x, a.y], name: '异常点', value: a.diff }))
+        };
+      }
     }
   });
   return [...seriesData, ...trendLines];
 }
 
+// 🌟 智能数据叙事生成器 (支持多图例联动、跨指标关联推演、全局核心指标红字高亮)
+export function generateSmartNarrative(chartOption, selectedLegend = null) {
+  if (!chartOption || !chartOption.series) return '';
 
+  let mainSeries = null;
+  if (selectedLegend) {
+    mainSeries = chartOption.series.find(s => !s.isTrendline && s.name === selectedLegend);
+  }
+  if (!mainSeries) {
+    mainSeries = chartOption.series.find(s => !s.isTrendline);
+  }
 
+  if (!mainSeries || !Array.isArray(mainSeries.data)) return '';
+
+  const categories = chartOption.xAxis?.data || chartOption.xAxis?.[0]?.data || [];
+  const data = mainSeries.data.map(d => typeof d === 'object' && d !== null ? d.value : d);
+  const numericData = data.filter(d => typeof d === 'number' && !isNaN(d));
+
+  if (numericData.length < 2) return '数据积累不足，暂无法生成有效洞察。';
+
+  const max = Math.max(...numericData);
+  const min = Math.min(...numericData);
+  const maxDate = categories[data.indexOf(max)] || '';
+
+  const latest = numericData[numericData.length - 1];
+  const prev = numericData[numericData.length - 2];
+  const growth = prev === 0 ? 0 : ((latest - prev) / prev * 100).toFixed(1);
+
+  let growthText = '';
+  if (growth > 0) growthText = `较上期 <span style="color: #ef4444; font-weight: bold;">增长 ${growth}%</span>`;
+  else if (growth < 0) growthText = `较上期 <span style="color: #22c55e; font-weight: bold;">衰退 ${Math.abs(growth)}%</span>`;
+  else growthText = `与上期持平`;
+
+  // 异常数量与日期红色高亮
+  let anomaliesText = '';
+  if (mainSeries.markPoint?.data?.length > 0) {
+    const anomalies = mainSeries.markPoint.data;
+    const lastAnomalyIndex = anomalies[anomalies.length - 1].coord[0];
+    const lastAnomalyDate = categories[lastAnomalyIndex] || '近期';
+    anomaliesText = `系统基于 2σ 模型捕获到 <strong style="color: #ef4444;">${anomalies.length}</strong> 处异常，最近一次突变发生在 <strong style="color: #ef4444;">${lastAnomalyDate}</strong>，建议重点复盘。`;
+  } else {
+    anomaliesText = `数据完全在置信区间内平稳波动，未检测到异常突发点。`;
+  }
+
+  // 时序推演：上下行压力与预期中枢红色高亮
+  let forecastText = '';
+  const trendSeries = chartOption.series.find(s => s.isTrendline && s.name.includes('(趋势)') && s.name.includes(mainSeries.name));
+  if (trendSeries && trendSeries.data) {
+    const lastPredObj = trendSeries.data[trendSeries.data.length - 1];
+    const lastPred = typeof lastPredObj === 'object' ? lastPredObj.value : lastPredObj;
+
+    const meta = trendSeries.data._metadata;
+    let momentumAlert = '';
+    if (meta && meta.recentM < -0.01) momentumAlert = ' (受近期下行动量拖累)';
+    else if (meta && meta.recentM > 0.01) momentumAlert = ' (受近期上行动量拉升)';
+
+    const direction = lastPred > latest ? '上行空间' : '下行压力';
+    forecastText = `<br/><br/>🔮 <strong>未来推演：</strong>结合近期数据动量修正模型，预测未来 3 个周期内指标存在<strong style="color: #ef4444;">${direction}</strong>${momentumAlert}，预期中枢在 <strong style="color: #ef4444;">${lastPred}</strong> 左右，已生成扇形置信区间。`;
+  }
+
+  // 跨指标先行推演
+  let crossMetricText = '';
+  const crossPredSeries = chartOption.series.find(s => s.name && s.name.includes('预测') && !s.isTrendline);
+  if (crossPredSeries && Array.isArray(crossPredSeries.data)) {
+    const validPreds = crossPredSeries.data.filter(d => d !== null && d !== undefined);
+    if (validPreds.length > 0) {
+      const nextVal = typeof validPreds[validPreds.length - 1] === 'object' ? validPreds[validPreds.length - 1].value : validPreds[validPreds.length - 1];
+      const baseName = crossPredSeries.name.replace('预测', '').trim();
+      crossMetricText = `<br/><br/>🔗 <strong>先行指标推演：</strong>基于关联数据（婚姻登记）的历史转化率模型，系统独立推算下一周期 <strong>[${baseName}]</strong> 的规模预期约为 <strong style="color: #8b5cf6;">${nextVal}</strong>。`;
+    }
+  }
+
+  // 基础数据：最高点时间与峰值红色高亮
+  return `基于当前 <strong>${mainSeries.name}</strong> 数据测算：整体分布在 ${min} 至 ${max} 之间，并于 <strong style="color: #ef4444;">${maxDate}</strong> 触及峰值 <strong style="color: #ef4444;">${max}</strong>。
+  最新一期录得 <strong>${latest}</strong>，${growthText}。<br/>💡 ${anomaliesText} ${forecastText} ${crossMetricText}`;
+}
 // ============================
 // 网络请求与数据组装核心
 // ============================
