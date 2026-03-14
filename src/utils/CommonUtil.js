@@ -284,14 +284,10 @@ function buildOptionSkeleton(seriesData, filteredYears, params) {
     },
     tooltip: {
       trigger: 'axis',
-      formatter: (params) => {
-        const sorted = params.slice().sort((a, b) => b.value - a.value);
-        let result = sorted[0].axisValue + '<br/>';
-        sorted.forEach(item => {
-          result += `${item.marker}${item.seriesName}: ${typeof item.value === 'number' ? item.value.toLocaleString() : item.value}<br/>`;
-        });
-        return result;
-      }
+      confine: true,
+      enterable: true,
+      extraCssText: 'max-height: 450px; overflow-y: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.12); padding-right: 15px;',
+      formatter: getAdvancedTooltipFormatter()
     },
     legend: { type: 'scroll', left: 'center', top: legendTop, data: seriesData.map(s => s.name), selected: legendAllSelected ? seriesData.reduce((acc, s) => ({ ...acc, [s.name]: true }), {}) : {} },
     grid: { left: '1%', right: '1%', top: gridTop, bottom: '1%', containLabel: true },
@@ -357,6 +353,7 @@ function attachPieChartToOption(optionData, seriesData, filteredYears, params) {
 /**
  * 构建年度同环比的 ECharts Option
  */
+// 构建年度同环比的 ECharts Option
 function buildYearlyCompareOption(seriesData, filteredYears, params) {
   const xAxisData = ['01月', '02月', '03月', '04月', '05月', '06月', '07月', '08月', '09月', '10月', '11月', '12月'];
   const yearMap = {};
@@ -375,11 +372,12 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
       if (!yearMap[year][series.name]) {
         yearMap[year][series.name] = new Array(12).fill(null);
       }
-      yearMap[year][series.name][monthIdx] = series.data[dateIndex];
+      // 🛡️ 核心修复 4：强制将数据长度不一时产生的 undefined 转为 null，切断报错源头！
+      const safeValue = series.data[dateIndex] !== undefined ? series.data[dateIndex] : null;
+      yearMap[year][series.name][monthIdx] = safeValue;
     });
   });
 
-  // 根据对比年数进行截取
   const availableYears = Object.keys(yearMap).sort((a, b) => b - a);
   const selectedYearsRaw = availableYears.slice(0, params.compareYearCount);
   const selectedYears = selectedYearsRaw.sort((a, b) => a - b);
@@ -387,7 +385,6 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
   const newSeries = [];
   const legendData = [];
 
-  // 根据选中的下拉框进行过滤（比如：只看“财政收入”的同环比）
   let targetSeriesData = seriesData;
   if (params.selectedLegend && seriesData.length > 1) {
     targetSeriesData = seriesData.filter(s => s.name === params.selectedLegend);
@@ -411,34 +408,36 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
     });
   });
 
+  // 追加趋势拟合线
+  let finalSeries = newSeries;
+  if (params.enableTrendline) {
+    finalSeries = applyTrendlines(newSeries);
+  }
+
   return {
     title: {
       text: params.title || '',
       subtext: params.subtitle,
       left: 'center',
       top: params.titleTop || '15px',
-      textStyle: {
-        fontSize: params.isMobile ? 14 : 18, // 👈 动态主标题大小
-      },
-      subtextStyle: {
-        fontSize: params.isMobile ? 12 : 14, // 👈 动态副标题大小
-      }
+      textStyle: { fontSize: params.isMobile ? 14 : 18 },
+      subtextStyle: { fontSize: params.isMobile ? 12 : 14 }
     },
     tooltip: {
       trigger: 'axis',
-      axisPointer: { type: 'line' },
-      valueFormatter: (value) => value !== null ? value + (params.unit || '') : '-'
+      confine: true,
+      enterable: true,
+      extraCssText: 'max-height: 450px; overflow-y: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.12); padding-right: 15px;',
+      formatter: getAdvancedTooltipFormatter() // 接入高级装甲
     },
     legend: {
       data: legendData,
       top: params.legendTop || '50px',
-      type: 'scroll'
+      type: 'scroll',
     },
     grid: {
       top: params.gridTop || '100px',
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
+      left: '5%', right: '5%', bottom: '3%',
       containLabel: true
     },
     xAxis: {
@@ -452,7 +451,7 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
       name: params.unit || '',
       alignTicks: true
     },
-    series: newSeries,
+    series: finalSeries,
     dataZoom: []
   };
 }
@@ -461,20 +460,129 @@ function buildYearlyCompareOption(seriesData, filteredYears, params) {
 // 🌟 新增的独立扩展模块 (遵循高内聚低耦合原则)
 // ----------------------------------------------------
 
-// 【数学模块】最小二乘法线性回归
+// 【数学模块】最小二乘法线性回归 (含 R² 和回归方程计算)
 function calculateLinearRegression(dataArr) {
   let n = 0, sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+  const validPoints = [];
+
+  // 🛡️ 核心修复 1：严格过滤空值，绝对不能把 null 或 undefined 当成 0 参与回归计算！
   dataArr.forEach((val, x) => {
-    let num = typeof val === 'object' && val !== null ? val.value : val;
+    if (val === null || val === undefined || val === '') return;
+    let num = typeof val === 'object' ? val.value : val;
+    if (num === null || num === undefined || num === '') return;
+
     num = Number(num);
-    if (!isNaN(num) && num !== null && val !== '') {
-      n++; sumX += x; sumY += num; sumXY += (x * num); sumXX += (x * x);
+    if (!isNaN(num)) {
+      n++;
+      sumX += x;
+      sumY += num;
+      sumXY += (x * num);
+      sumXX += (x * x);
+      validPoints.push({ x, y: num });
     }
   });
+
   if (n < 2) return dataArr.map(() => '-');
-  const m = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+
+  const denominator = (n * sumXX - sumX * sumX);
+  const m = denominator === 0 ? 0 : (n * sumXY - sumX * sumY) / denominator;
   const b = (sumY - m * sumX) / n;
-  return dataArr.map((_, x) => Number((m * x + b).toFixed(2)));
+
+  const meanY = sumY / n;
+  let ssTot = 0, ssRes = 0;
+  validPoints.forEach(p => {
+    const predicted = m * p.x + b;
+    ssTot += Math.pow(p.y - meanY, 2);
+    ssRes += Math.pow(p.y - predicted, 2);
+  });
+
+  const r2 = ssTot === 0 ? 1 : Math.max(0, 1 - (ssRes / ssTot));
+
+  const sign = b >= 0 ? '+' : '-';
+  const formulaStr = `y = ${m.toFixed(2)}x ${sign} ${Math.abs(b).toFixed(2)}`;
+  const r2Str = r2.toFixed(4);
+
+  return dataArr.map((_, x) => {
+    const predY = Number((m * x + b).toFixed(2));
+    const isFlat = Math.abs(m / (meanY || 1)) < 0.001;
+    let statusText = '';
+    if (isFlat) {
+      statusText = '<span style="color: #94a3b8;">(高位平稳，随机波动)</span>';
+    } else if (r2 > 0.8) {
+      statusText = '<span style="color: #10b981;">(趋势强劲，可信度高)</span>';
+    } else if (r2 < 0.3) {
+      statusText = '<span style="color: #f59e0b;">(波动剧烈，缺乏线性规律)</span>';
+    }
+
+    return {
+      value: predY,
+      formula: formulaStr,
+      r2: r2Str,
+      status: statusText
+    };
+  });
+}
+
+// 🌟 提取独立的高级 Tooltip 渲染引擎，供所有模式复用
+function getAdvancedTooltipFormatter() {
+  return (params) => {
+    if (!params) return '';
+    const paramsArray = Array.isArray(params) ? params : [params];
+
+    // 🛡️ 核心修复 2：过滤掉所有可能的幽灵节点，防止 ECharts 传毒
+    const validParams = paramsArray.filter(p => p && p.value !== '-' && p.value != null && p.value !== '');
+
+    const sorted = validParams.sort((a, b) => {
+      // 🛡️ 核心修复 3：全面使用可选链 ?. 防止 Cannot read properties of undefined
+      let valA = typeof a.value === 'object' ? a.value?.value : a.value;
+      let valB = typeof b.value === 'object' ? b.value?.value : b.value;
+      return Number(valB || 0) - Number(valA || 0);
+    });
+
+    if (sorted.length === 0) return paramsArray[0]?.axisValue || paramsArray[0]?.name || '';
+
+    const title = sorted[0].axisValue || sorted[0].name || '';
+    let result = `<div style="font-size: 14px; margin-bottom: 8px; color: #1e293b;">${title}</div>`;
+
+    sorted.forEach(item => {
+      let rawValue = typeof item.value === 'object' ? item.value?.value : item.value;
+      let val = typeof rawValue === 'number' ? rawValue.toLocaleString() : (rawValue || '-');
+
+      let markerHtml = item.marker || `<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${item.color || '#ccc'};"></span>`;
+
+      // 🌟 核心视觉修复：引入 BI 级左右分布排版、统一字体族、数字等宽渲染
+      result += `
+        <div style="margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <div style="display: flex; align-items: center; color: #475569; font-size: 13px;">
+            ${markerHtml} 
+            <span style="margin-left: 2px;">${item.seriesName || item.name}</span>
+          </div>
+          <div style="font-weight: 600; color: #1e293b; font-size: 14px; margin-left: 24px; font-variant-numeric: tabular-nums;">
+            ${val}
+          </div>
+        </div>`;
+
+      // ... 下面的 if (item.data && item.data.formula && item.data.r2) { ... } 保持不变
+      if (item.data && item.data.formula && item.data.r2) {
+        result += `
+          <div style="margin-top: 6px; margin-bottom: 10px; padding: 8px 10px; background: rgba(11, 194, 214, 0.06); border-radius: 6px; border-left: 3px solid #0bc2d6; font-size: 12px; color: #64748b; font-family: 'Consolas', 'Courier New', monospace; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);">
+            <div style="margin-bottom: 4px; display: flex; justify-content: space-between;">
+              <span>回归方程：</span>
+              <span style="color: #0f172a; font-weight: 600;">${item.data.formula}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>拟合优度 (R²)：</span>
+              <span style="font-weight: 600;">
+                <span style="color: ${item.data.r2 > 0.8 ? '#10b981' : '#f59e0b'}; margin-right: 6px;">${item.data.r2}</span>
+                ${item.data.status || ''}
+              </span>
+            </div>
+          </div>
+        `;
+      }
+    });
+    return result;
+  };
 }
 
 // 【渲染插件 A】注入趋势线
