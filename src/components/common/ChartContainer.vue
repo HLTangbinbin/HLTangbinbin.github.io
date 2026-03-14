@@ -17,12 +17,6 @@
             <el-radio-button label="hbar">条形</el-radio-button>
             <el-radio-button label="line">折线</el-radio-button>
           </el-radio-group>
-
-          <div class="split-line"></div>
-          <el-button :size="controlSize" class="no-shrink btn-toggle-all"
-            :type="legendAllSelected ? 'primary' : 'default'" :plain="!legendAllSelected" @click="toggleAllLegends">
-            {{ legendAllSelected ? '未选' : '全选' }}
-          </el-button>
         </template>
       </div>
 
@@ -35,11 +29,18 @@
       </div>
 
       <div
-        v-if="showCompareToggle || showLegendSelector || showOffsetControls || showCityAddToggle || viewModeDisplay === 'table' || showTrendlineToggle"
+        v-if="viewModeDisplay === 'chart' || viewModeDisplay === 'table'"
         class="toolbar-group dim-group">
         <div class="group-label"><i class="el-icon-s-data"></i> 操作</div>
 
         <template v-if="viewModeDisplay === 'chart'">
+
+
+          <el-button :size="controlSize" class="no-shrink btn-toggle-all"
+            :type="legendAllSelected ? 'primary' : 'default'" :plain="!legendAllSelected" @click="toggleAllLegends">
+            {{ legendAllSelected ? '反选' : '全选' }}
+          </el-button>
+          <div class="split-line"></div>
 
           <el-checkbox-button v-if="showTrendlineToggle" v-model="enableTrendline" :size="controlSize" class="no-shrink"
             style="margin-right: 8px;">
@@ -99,14 +100,6 @@
             </el-icon> <span class="export-text">导出</span>
           </el-button>
         </template>
-
-        <div class="split-line"></div>
-        <el-button :size="controlSize" type="primary" plain class="no-shrink export-btn" @click="copyShareLink"
-          title="复制当前视图专属链接">
-          <el-icon>
-            <Share />
-          </el-icon> <span class="export-text">分享</span>
-        </el-button>
 
       </div>
     </div>
@@ -170,14 +163,14 @@
 
 <script>
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue';
-import { Plus, Search, Check, Download, Share } from '@element-plus/icons-vue';
+import { Plus, Search, Check, Download } from '@element-plus/icons-vue';
 import ChartView from './ChartView.vue';
 import { getCommonChartOption } from '@/utils/CommonUtil.js';
 import { ElMessage } from 'element-plus';
 
 export default {
   name: 'ChartContainer',
-  components: { ChartView, Plus, Search, Check, Download, Share },
+  components: { ChartView, Plus, Search, Check, Download },
   props: {
     chart: { type: Object, required: true },
     returnData: { type: Object, required: true, default: () => ({}) },
@@ -195,7 +188,7 @@ export default {
 
     // UI 基础状态
     const viewModeDisplay = ref('chart');
-    const currentChartType = ref('line'); // 考虑到趋势拟合功能，默认线图更好
+    const currentChartType = ref('bar'); // 考虑到趋势拟合功能，默认线图更好
     const isHorizontal = ref(false);
     const yearLimit = ref(10);
     const legendAllSelected = ref(true);
@@ -219,6 +212,9 @@ export default {
     watch(chartIdentityStr, (newVal, oldVal) => {
       if (newVal !== oldVal) {
         viewModeDisplay.value = 'chart';
+        currentChartType.value = 'bar';
+        isHorizontal.value = false;
+
         selectedExtraCities.value = [];
         searchKeyword.value = '';
         offsetValue.value = 0;
@@ -363,7 +359,7 @@ export default {
     watch(chartHeight, () => { nextTick(() => { window.dispatchEvent(new Event('resize')); }); });
 
     const showTrendlineToggle = computed(() => {
-      return (currentChartType.value === 'line' || currentChartType.value === 'bar') && !isHorizontal.value;
+      return (currentChartType.value === 'line') && !isHorizontal.value;
     });
 
     // =========================================================
@@ -504,14 +500,6 @@ export default {
       ElMessage.success('数据导出成功！');
     };
 
-    const copyShareLink = () => {
-      navigator.clipboard.writeText(window.location.href).then(() => {
-        ElMessage.success('已复制当前视图链接，可发送给同事！');
-      }).catch(() => {
-        ElMessage.error('复制链接失败，请手动复制地址栏');
-      });
-    };
-
     const toggleAllLegends = () => {
       legendAllSelected.value = !legendAllSelected.value;
       if (chartRef.value) chartRef.value.toggleAllLegends(legendAllSelected.value);
@@ -529,7 +517,7 @@ export default {
       showOffsetControls, controlSize, toggleAllLegends, showCityAddToggle,
       isDrawerVisible, searchKeyword, selectedExtraCities, filteredCities, getCityName,
       toggleCity, isMobile, isProvince, finalCityCodeArr,
-      viewModeDisplay, tableColumns, tableData, exportToCSV, copyShareLink,
+      viewModeDisplay, tableColumns, tableData, exportToCSV,
       enableTrendline, enableHeatmap, showTrendlineToggle, getTableCellStyle
     };
   }
