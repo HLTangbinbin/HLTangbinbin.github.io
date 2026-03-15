@@ -184,7 +184,18 @@ export function getCommonChartOption(params) {
   if (typeof logger !== 'undefined') {
     logger.debug(`[getCommonChartOption] 总耗时: ${Math.round(performance.now() - startTime)}ms, 标题: ${params.title}`);
   }
-
+  /* 🌟 终极同步：在所有数据（包括同比、趋势线）生成完毕后，统一清理图例 */
+  /* 确保图例中只显示有名字、且未被标记为隐藏的指标 */
+  if (optionData.series && optionData.legend) {
+    /* 这里的 logic 兼容了字符串数组和对象数组两种情况 */
+    optionData.legend.data = optionData.series
+      .filter(s => {
+        /* 过滤掉标记为隐藏的辅助线（如预测下限、预测区间） */
+        /* 同时确保只有具备有效名称的序列才会出现在图例中 */
+        return s.name && s.hideInLegend !== true && s.isTrendline !== true;
+      })
+      .map(s => String(s.name));
+  }
   return optionData;
 }
 
@@ -699,31 +710,33 @@ function applyTrendlines(seriesData, params = {}, futureSteps = 0) {
         z: 5
       });
       if (params.enableSmartAnalysis && futureSteps > 0 && meta) {
-        // 预测下限：作为透明支撑架，名字设为空字符串，防止报错且在图例中隐身，开启 silent 禁用交互
+        // 预测下限：作为透明支撑架
         trendLines.push({
-          name: '', 
+          name: `${s.name} (预测下限)`, // 赋予合法名字，确保表格等逻辑不报错
           type: 'line',
           data: meta.lowerBand,
           isTrendline: true,
+          hideInLegend: true, // 🌟 专业标记：告诉图例组件忽略我
           stack: `conf-band-${s.name}`,
           lineStyle: { opacity: 0 },
           symbol: 'none',
           tooltip: { show: false },
-          silent: true 
+          silent: true
         });
 
-        // 预测区间：作为阴影填充层，名字设为空字符串，防止报错且在图例中隐身，开启 silent 禁用交互
+        // 预测区间：作为阴影填充层
         trendLines.push({
-          name: '', 
+          name: `${s.name} (预测区间)`, // 赋予合法名字
           type: 'line',
           data: meta.bandDiff,
           isTrendline: true,
+          hideInLegend: true, // 🌟 专业标记
           stack: `conf-band-${s.name}`,
           lineStyle: { opacity: 0 },
           areaStyle: { color: themeColor, opacity: 0.25 },
           symbol: 'none',
           tooltip: { show: false },
-          silent: true 
+          silent: true
         });
       }
 
