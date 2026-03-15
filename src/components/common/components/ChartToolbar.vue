@@ -39,10 +39,7 @@ ChartToolbar.vue<template>
         <div class="split-line"></div>
 
         <el-checkbox-button v-if="store.showSmartAnalysisToggle.value" v-model="store.enableSmartAnalysis.value"
-          :size="store.controlSize.value" class="no-shrink" style="margin-right: 8px;">
-          <el-icon style="margin-right: 4px">
-            <MagicStick />
-          </el-icon>智能洞察
+          :size="store.controlSize.value" class="no-shrink" style="margin-right: 8px;">智能分析
         </el-checkbox-button>
         <div v-if="store.showSmartAnalysisToggle.value" class="split-line"></div>
 
@@ -74,7 +71,7 @@ ChartToolbar.vue<template>
 
       <template v-if="store.viewModeDisplay.value === 'table'">
         <el-checkbox-button v-model="store.enableHeatmap.value" :size="store.controlSize.value" class="no-shrink"
-          style="margin-right: 8px;">智能热力图</el-checkbox-button>
+          style="margin-right: 8px;">热力图</el-checkbox-button>
         <div class="split-line"></div>
       </template>
 
@@ -104,7 +101,7 @@ ChartToolbar.vue<template>
 
 <script setup>
 import { inject, defineEmits } from 'vue';
-import { Plus, Download, MagicStick } from '@element-plus/icons-vue';
+import { Plus, Download } from '@element-plus/icons-vue';
 
 const store = inject('chartStore');
 defineEmits(['toggleAllLegends']);
@@ -176,8 +173,8 @@ defineEmits(['toggleAllLegends']);
 }
 
 .legend-select {
-  min-width: 120px;
-  max-width: 200px;
+  min-width: 80px;
+  max-width: 120px;
   flex: 0 1 auto;
   margin-right: 0;
   height: 36px !important;
@@ -422,8 +419,8 @@ defineEmits(['toggleAllLegends']);
   .legend-select {
     height: 28px !important;
     line-height: 28px !important;
-    min-width: 80px;
-    max-width: none;
+    min-width: 86px;
+    max-width: 100px;
     flex: 1 1 auto;
   }
 

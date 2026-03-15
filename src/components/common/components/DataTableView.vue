@@ -3,7 +3,7 @@
     <el-table 
       :key="`table-${store.finalCityCodeArr.value.length}-${store.tableColumns.value.length}`" 
       :data="store.tableData.value"
-      :height="store.chartHeight.value" 
+      :height="store.chartHeight.value - 40" 
       border 
       stripe 
       style="width: 100%"
@@ -34,7 +34,8 @@ const store = inject('chartStore');
 .data-table-wrapper {
   width: 100%;
   height: 100%;
-  padding: 10px 20px;
+  /* 🌟 核心修复：上间距 10px，左右 20px，下间距留出充足的 30px */
+  padding: 10px 20px 30px 20px; 
   box-sizing: border-box;
 }
 
@@ -46,7 +47,8 @@ const store = inject('chartStore');
 
 @media (max-width: 768px) {
   .data-table-wrapper {
-    padding: 4px;
+    /* 移动端紧凑一点，底部留 16px */
+    padding: 4px 4px 16px 4px; 
   }
 }
 </style>
