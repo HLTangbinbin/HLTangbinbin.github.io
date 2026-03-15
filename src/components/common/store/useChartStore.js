@@ -29,7 +29,7 @@ export function createChartStore(props) {
   const isProvince = computed(() => (props.config?.localJson || '').includes('province'));
 
   const chartIdentityStr = computed(() => `${props.chart?.title}-${props.chart?.id}-${props.config?.localJson}`);
-  
+
   watch(chartIdentityStr, (newVal, oldVal) => {
     if (newVal !== oldVal) {
       viewModeDisplay.value = 'chart';
@@ -52,7 +52,7 @@ export function createChartStore(props) {
       if (val === 'hbar') { currentChartType.value = 'bar'; isHorizontal.value = true; }
       else if (val === 'bar') { currentChartType.value = 'bar'; isHorizontal.value = false; }
       else { currentChartType.value = 'line'; isHorizontal.value = false; }
-      
+
       if (currentChartType.value !== 'line') isYearlyCompare.value = false;
       enableSmartAnalysis.value = false;
     }
@@ -75,7 +75,7 @@ export function createChartStore(props) {
     if (hasSplitConfig) return isMonthlyChart.value ? (props.config.needAddCityCodeArr_yd || []) : (props.config.needAddCityCodeArr_nd || []);
     return props.config?.needAddCityCodeArr || [];
   });
-  
+
   const finalCityCodeArr = computed(() => Array.from(new Set([...(props.config?.cityCodeArr || []), ...selectedExtraCities.value])));
   const showCityAddToggle = computed(() => Array.isArray(currentExtraCityPool.value) && currentExtraCityPool.value.length > 0);
   const filteredCities = computed(() => {
@@ -117,7 +117,7 @@ export function createChartStore(props) {
       }
     }
 
-    return buildChartOption({
+    let finalOption = buildChartOption({
       data: props.returnData,
       title: props.chart?.title || '默认标题',
       subtitle: props.chart?.subtitle || '',
@@ -142,6 +142,20 @@ export function createChartStore(props) {
       enableBirthPrediction: props.chart?.enableBirthPrediction || false,
       enableSmartAnalysis: enableSmartAnalysis.value
     });
+    // 🌟 终极防弹级修复：一键反选时，从物理层面抽干辅助线的数据！
+    if (finalOption.legend && finalOption.series) {
+      // 每次重新计算 Option 时，重置状态字典
+      finalOption.legend.selected = {}; 
+      
+      finalOption.series.forEach(s => {
+        // 核心：不管是主线还是辅助的趋势线、扇形区间
+        // 统统与 legendAllSelected 的真假值强行绑定！
+        // 点“反选”(false) 就全灭，点“全选”(true) 就全亮，绝对不留一丝死角！
+        finalOption.legend.selected[s.name] = legendAllSelected.value;
+      });
+    }
+
+    return finalOption;
   });
 
   watch(chartOption, (newOption) => {
