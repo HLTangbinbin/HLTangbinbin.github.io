@@ -40,19 +40,15 @@
           </el-button>
           <div class="split-line"></div>
 
-          <el-checkbox-button v-if="showTrendlineToggle" v-model="enableTrendline" :size="controlSize" class="no-shrink"
-            style="margin-right: 8px;">
-            趋势拟合
-          </el-checkbox-button>
 
-          <el-checkbox-button v-if="showTrendlineToggle" v-model="enableSmartAnalysis" :size="controlSize"
+          <el-checkbox-button v-if="showSmartAnalysisToggle" v-model="enableSmartAnalysis" :size="controlSize"
             class="no-shrink" style="margin-right: 8px;">
             <el-icon style="margin-right: 4px">
               <MagicStick />
             </el-icon>智能洞察
           </el-checkbox-button>
 
-          <div v-if="showTrendlineToggle" class="split-line"></div>
+          <div v-if="showSmartAnalysisToggle" class="split-line"></div>
 
           <el-radio-group v-if="showCompareToggle" v-model="isYearlyCompare" :size="controlSize" class="no-shrink">
             <el-radio-button :label="false">连续</el-radio-button>
@@ -62,7 +58,7 @@
           <div v-if="(showCompareToggle) && (showLegendSelector || showOffsetControls || showCityAddToggle)"
             class="split-line"></div>
 
-          <el-select v-if="showLegendSelector" v-model="selectedLegend" :size="controlSize" placeholder="指标"
+          <el-select v-if="showLegendSelector" v-model="selectedLegend" placeholder="指标"
             class="legend-select no-shrink">
             <el-option v-for="legend in legendList" :key="legend" :label="legend" :value="legend" />
           </el-select>
@@ -217,8 +213,7 @@ export default {
     const searchKeyword = ref('');
     const selectedExtraCities = ref([]);
 
-    // 🌟 高级功能开关
-    const enableTrendline = ref(false);
+    // 🌟 高级功能开关;
     const enableHeatmap = ref(false);
     const enableSmartAnalysis = ref(false);
 
@@ -234,7 +229,6 @@ export default {
         searchKeyword.value = '';
         offsetValue.value = 0;
         isYearlyCompare.value = false;
-        enableTrendline.value = false;
         enableHeatmap.value = false;
         enableSmartAnalysis.value = false;
       }
@@ -250,6 +244,8 @@ export default {
         else if (val === 'bar') { currentChartType.value = 'bar'; isHorizontal.value = false; }
         else { currentChartType.value = 'line'; isHorizontal.value = false; }
         if (currentChartType.value !== 'line') isYearlyCompare.value = false;
+        // 👇 加上这一行：只要切换了图表类型，立刻关闭智能洞察
+        enableSmartAnalysis.value = false;
       }
     });
 
@@ -360,7 +356,6 @@ export default {
         enableBirthOffset: props.chart.enableBirthOffset || false,
         enableBirthPrediction: props.chart.enableBirthPrediction || false,
         // 传递给底层的拟合状态
-        enableTrendline: enableTrendline.value || enableSmartAnalysis.value,
         enableSmartAnalysis: enableSmartAnalysis.value
       });
     });
@@ -375,8 +370,8 @@ export default {
     watch(isYearlyCompare, (isCompare) => { if (isCompare) offsetValue.value = 0; });
     watch(chartHeight, () => { nextTick(() => { window.dispatchEvent(new Event('resize')); }); });
 
-    // 🌟 1. 严格规范分析场景：智能洞察与趋势线仅在折线图（时序）下开放
-    const showTrendlineToggle = computed(() => {
+
+    const showSmartAnalysisToggle = computed(() => {
       return currentChartType.value === 'line' && !isHorizontal.value;
     });
 
@@ -543,7 +538,7 @@ export default {
       isDrawerVisible, searchKeyword, selectedExtraCities, filteredCities, getCityName,
       toggleCity, isMobile, isProvince, finalCityCodeArr,
       viewModeDisplay, tableColumns, tableData, exportToCSV,
-      enableTrendline, enableHeatmap, showTrendlineToggle, getTableCellStyle, enableSmartAnalysis, smartNarrative
+      enableHeatmap, getTableCellStyle, enableSmartAnalysis, smartNarrative, showSmartAnalysisToggle
     };
   }
 };
@@ -684,16 +679,54 @@ export default {
   color: #22c55e;
 }
 
-.legend-select :deep(.el-input__wrapper) {
+/* ==========================================
+   PC端下拉框：弹性宽度，自动呼吸
+   ========================================== */
+.legend-select {
+  /* 删除了死板的 width: 140px 和 flex-shrink: 0 */
+  min-width: 120px;
+  /* 🌟 核心：给个保底宽度，防止里面没字时缩成一团 */
+  max-width: 200px;
+  /* 🌟 核心：给个上限，防止超长指标名霸占整个屏幕 */
+  flex: 0 1 auto;
+  /* 🌟 核心：允许它在空间不够时适度缩小 (flex-shrink: 1) */
+  margin-right: 0;
+
+  /* 高度保持之前的完美配置不变 */
   height: 36px !important;
-  min-height: 36px !important;
-  box-sizing: border-box;
-  border-radius: 10px !important;
-  box-shadow: 0 0 0 1px #e2e8f0 inset !important;
+  line-height: 36px !important;
 }
 
-.legend-select :deep(.el-input__wrapper.is-focus) {
-  box-shadow: 0 0 0 1px #0bc2d6 inset !important;
+/* 强制内部外壳完全填满根节点的 36px */
+.legend-select :deep(.el-input__wrapper),
+.legend-select :deep(.el-select__wrapper) {
+  height: 100% !important;
+  /* 🌟 核心：填满父级 */
+  min-height: 100% !important;
+  padding: 0 12px !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  border: 1px solid #e2e8f0 !important;
+  background-color: transparent !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* 聚焦高亮 */
+.legend-select :deep(.el-input__wrapper.is-focus),
+.legend-select :deep(.el-select__wrapper.is-focused) {
+  border-color: #0bc2d6 !important;
+  box-shadow: none !important;
+}
+
+/* 内部文字排版 */
+.legend-select :deep(.el-input__inner),
+.legend-select :deep(.el-select__placeholder) {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #475569 !important;
+  line-height: normal !important;
 }
 
 /* 复选框按钮打磨 */
@@ -950,10 +983,34 @@ export default {
     width: 100%;
   }
 
-  .legend-select :deep(.el-input__wrapper) {
+  /* ==========================================
+     移动端下拉框响应式：见缝插针，自动填满
+     ========================================== */
+  .legend-select {
+    /* 高度保持 28px 不变 */
     height: 28px !important;
-    min-height: 28px !important;
-    border-radius: 8px !important;
+    line-height: 28px !important;
+
+    /* 🌟 移动端专属宽度魔法 */
+    min-width: 80px;
+    /* 手机上保底宽度可以小一点 */
+    max-width: none;
+    /* 解除上限 */
+    flex: 1 1 auto;
+    /* 🌟 核心：flex-grow设为1，让它自动伸展，填满工具栏的剩余空白！ */
+  }
+
+  /* 调整手机端的圆角和边距 */
+  .legend-select :deep(.el-input__wrapper),
+  .legend-select :deep(.el-select__wrapper) {
+    padding: 0 8px !important;
+    border-radius: 6px !important;
+  }
+
+  /* 缩小手机端的字号 */
+  .legend-select :deep(.el-input__inner),
+  .legend-select :deep(.el-select__placeholder) {
+    font-size: 12px !important;
   }
 
   .slider-wrapper {
