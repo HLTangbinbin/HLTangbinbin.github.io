@@ -1,4 +1,4 @@
-import { params_city } from '@/utils/CommonUtil.js';
+import { params_city } from '@/config/apiParams.js';
 // 请把原来的 import 替换成这句：
 import cityData from '../../public/json/city.json';
 

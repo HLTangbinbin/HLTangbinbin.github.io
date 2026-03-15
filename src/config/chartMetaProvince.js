@@ -1,4 +1,4 @@
-import { params_province } from '@/utils/CommonUtil.js';
+import { params_province } from '@/config/apiParams.js';
 import provinceData from '../../public/json/province.json';
 
 const PROVINCE_CODES = [

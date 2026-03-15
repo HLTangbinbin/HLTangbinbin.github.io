@@ -1,5 +1,5 @@
 // utils/dataLoader.js
-import { sendRequest } from '@/utils/CommonUtil.js';
+import { sendRequest } from '@/utils/dataEngine.js';
 import { logger } from '@/utils/Logger.js';
 // 🌟 核心修复：引入了你写好的完美单例加载器
 import { loadJsonOnce } from '@/utils/loadJsonOnce.js'; 

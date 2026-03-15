@@ -3,7 +3,7 @@ import {
   , params_population, params_realEstate_invest, params_realEstate_sell, params_socialretailgoods,
   params_touristIndustry,
   params_transportationAndTelecommunications
-} from '@/utils/CommonUtil.js';
+} from '@/config/apiParams.js';
 
 const AGE_CODES = [
   'A03060102', 'A03060103', 'A03060104', 'A03060105',
