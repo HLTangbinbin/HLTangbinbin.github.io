@@ -8,13 +8,13 @@
 
         <div class="chart-card" :style="{ height: chartStore.chartHeight.value + 'px' }">
 
-            <ChartView v-if="chartStore.viewModeDisplay.value === 'chart'" ref="echartsInstanceRef"
-                :option="chartStore.chartOption.value" :chartId="chart.id"
+            <ChartView v-if="chartStore.viewModeDisplay.value === 'chart' || chartStore.viewModeDisplay.value === 'map'"
+                ref="echartsInstanceRef" :option="chartStore.chartOption.value" :chartId="chart.id"
                 :initSelectAll="chartStore.legendAllSelected.value"
                 :pieConfig="chartStore.isYearlyCompare.value ? null : chart.pieConfig"
                 @legendStateChange="chartStore.legendAllSelected.value = $event" />
 
-            <DataTableView v-else />
+            <DataTableView v-else-if="chartStore.viewModeDisplay.value === 'table'" />
 
         </div>
     </div>

@@ -242,30 +242,43 @@ export const LegendFilterPlugin = (option) => {
 };
 
 // 新增：地图与时间轴融合插件
+// chartPlugins.js 
+
 export const MapTimelinePlugin = (option, ctx) => {
-  // 如果当前不是地图模式，直接放行原有的柱状图/折线图配置
+  // 1. 如果当前不是地图模式，直接放行原有的柱状图/折线图配置
   if (ctx.params.chartType !== 'map') return option;
 
-  const { mapType, mapTimelineData, metricName, unit } = ctx.params;
-  const { years, timelineData } = mapTimelineData;
+  // 2. 🛡️ 防弹级解构：外层参数如果丢失，默认给空对象
+  const { mapType, mapTimelineData = {}, metricName = '指标', unit = '' } = ctx.params || {};
 
-  if (years.length === 0) return option;
+  // 3. 🛡️ 核心修复：强制赋予默认空数组！就算上游没传 years 或 timelineData，默认 fallback 到 []
+  const { years = [], timelineData = [] } = mapTimelineData;
 
-  // 计算全局最大最小值，用于统一的 VisualMap（热力色带）
+  // 4. 优雅拦截：如果没有有效年份数据，打印警告并放弃渲染 Timeline，绝不报错
+  if (years.length === 0 || timelineData.length === 0) {
+    console.warn('⚠️【大唐地图引擎】拦截到空数据。请核查 dataEngine 是否返回了正确的 { years, timelineData } 结构。');
+    return option;
+  }
+
+  // 5. 计算全局最大最小值，用于统一的 VisualMap（热力色带）
   let allValues = [];
   timelineData.forEach(td => {
-      allValues = allValues.concat(td.data.map(item => item.value));
+    // 🛡️ 再次防弹：确保 td.data 是数组
+    if (Array.isArray(td.data)) {
+      allValues = allValues.concat(td.data.map(item => Number(item.value) || 0));
+    }
   });
+
   const maxVal = allValues.length ? Math.max(...allValues) : 100;
   const minVal = allValues.length ? Math.min(...allValues) : 0;
 
-  // 抛弃原有的 option，重构为 Timeline 结构的 Option
+  // 6. 抛弃原有的 option，重构为 Timeline 结构的 Option
   const mapOption = {
     baseOption: {
       timeline: {
         axisType: 'category',
-        autoPlay: true,           // 自动播放，高逼格 BI 必备
-        playInterval: 1500,       // 每 1.5 秒切换一年
+        autoPlay: true,
+        playInterval: 1500,
         data: years,
         bottom: 10,
         left: 30,
@@ -282,7 +295,7 @@ export const MapTimelinePlugin = (option, ctx) => {
         trigger: 'item',
         formatter: (params) => {
           if (!params.name) return '';
-          const val = params.value !== undefined ? params.value : '暂无数据';
+          const val = params.value !== undefined && !isNaN(params.value) ? params.value : '暂无数据';
           return `${params.name}<br/>${metricName}: <strong>${val}</strong> ${unit}`;
         }
       },
@@ -293,15 +306,14 @@ export const MapTimelinePlugin = (option, ctx) => {
         bottom: '15%',
         text: ['高', '低'],
         calculable: true,
-        // 大唐统计局御用热力配色：从浅蓝到深红的渐变
         inRange: { color: ['#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027'] }
       },
       geo: {
         map: mapType,
-        roam: true, // 允许鼠标缩放和平移
+        roam: true,
         zoom: 1.1,
         itemStyle: {
-          areaColor: '#f3f4f6', // 无数据区域的底色
+          areaColor: '#f3f4f6',
           borderColor: '#ffffff'
         },
         emphasis: { itemStyle: { areaColor: '#d1d5db' } }
@@ -310,7 +322,7 @@ export const MapTimelinePlugin = (option, ctx) => {
         {
           name: metricName,
           type: 'map',
-          geoIndex: 0, // 关联到上面的 geo 配置
+          geoIndex: 0,
           data: []
         }
       ]
@@ -321,6 +333,7 @@ export const MapTimelinePlugin = (option, ctx) => {
       series: [{ data: td.data }]
     }))
   };
-
+  // 🌟 新增这一行！强行在根目录挂载一个 series，骗过可能存在的包装器拦截机制！
+  mapOption.series = mapOption.baseOption.series;
   return mapOption;
 };

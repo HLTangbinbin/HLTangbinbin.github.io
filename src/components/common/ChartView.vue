@@ -5,13 +5,13 @@
 <script>
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue';
 import * as echarts from 'echarts/core';
-import { BarChart, LineChart, PieChart } from 'echarts/charts';
-import { TitleComponent, GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
+import { BarChart, LineChart, PieChart, MapChart } from 'echarts/charts';
+import { TitleComponent, GridComponent, TooltipComponent, LegendComponent, TimelineComponent, VisualMapComponent, GeoComponent} from 'echarts/components';
 import { CanvasRenderer, SVGRenderer } from 'echarts/renderers';
 import debounce from 'lodash-es/debounce';
 import { logger } from '@/utils/Logger';
 
-echarts.use([TitleComponent, GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, PieChart, CanvasRenderer, SVGRenderer]);
+echarts.use([TitleComponent, GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, PieChart, CanvasRenderer, SVGRenderer, TimelineComponent, VisualMapComponent, GeoComponent, MapChart]);
 
 export default {
   name: 'ChartView',

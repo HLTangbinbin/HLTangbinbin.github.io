@@ -67,36 +67,68 @@ export const offsetArray = (arr, yearLimit, offset) => {
 };
 
 // 新增：提取带时间轴的地图截面数据
-export const selectMapTimelineData = (returndata, zbCode, dbCode = 'nd') => {
-  const codeItem = returndata.data[dbCode]?.[zbCode];
-  if (!codeItem || !Array.isArray(codeItem.data)) return { years: [], seriesData: [] };
+// dataEngine.js (完全覆盖原有的 selectMapTimelineData 方法)
+export const selectMapTimelineData = (returndata, zbCode, dbCode = 'nd', yearLimit = 10) => {
+  // 1. 数据源兜底检查
+  const codeItem = returndata.data?.[dbCode]?.[zbCode];
+  if (!codeItem || !Array.isArray(codeItem.data)) {
+    console.error('❌【地图引擎】数据源中找不到对应的指标数据:', dbCode, zbCode);
+    return { years: [], timelineData: [] };
+  }
 
-  // 1. 获取所有存在数据的年份，并按升序排列（Timeline 习惯从老到新播放）
+  // 2. 提取所有有数据的年份并排序
   const yearsSet = new Set(codeItem.data.map(d => d.date?.substring(0, 4)));
-  const years = Array.from(yearsSet).filter(Boolean).sort((a, b) => a - b);
+  let years = Array.from(yearsSet).filter(Boolean).sort((a, b) => a - b);
 
-  // 2. 按年份对地域数据进行分组
+  if (yearLimit && years.length > yearLimit) {
+    years = years.slice(-yearLimit);
+  }
+
+  // 3. 💥 核心修复：构建地域字典 (你的原始数据只有 cityCode，必须来这里捞中文名！)
+  const regMap = {};
+  if (Array.isArray(returndata.reg)) {
+    returndata.reg.forEach(r => {
+      regMap[r.code] = r.cname;
+    });
+  }
+
+  // 4. 组装 Timeline 数据
   const timelineData = years.map(year => {
     const yearData = codeItem.data
       .filter(d => d.date && d.date.substring(0, 4) === year)
       .map(d => {
-        // ⚠️ 极度重要：确保这里的 name 和你修改后的 GeoJSON 里的 name 完全一致！
-        // 如果底图叫 "北京市"，这里就得是 "北京市"；如果底图叫 "北京"，这里就得把 "市" 删掉。
-        // 假设你目前的 city.json 叫 "北京"，geo_city.json 里也叫 "北京"
-        let mappedName = d.cityName; 
-        
+        // 💥 从字典中精确匹配中文地名
+        let mappedName = d.cityName || regMap[d.cityCode] || '';
+        mappedName = mappedName + "市"
+        // 💥 修正数值提取：把真正的空字符串拦截掉，但保留 0
+        let rawVal = typeof d.value === 'object' ? d.value.value : d.value;
+        let val = (rawVal === '' || rawVal === null || rawVal === undefined) ? null : Number(rawVal);
+
         return {
           name: mappedName,
-          value: typeof d.value === 'object' ? d.value.value : d.value,
+          value: val,
           cityCode: d.cityCode
         };
       })
-      .filter(d => d.value !== null && !isNaN(d.value));
+      // 💥 严密清洗：放行 0！只拦截 null、NaN，并且必须要有 name！
+      .filter(d => d.value !== null && !isNaN(d.value) && d.name !== '');
 
     return { year, data: yearData };
   });
 
-  return { years, timelineData };
+  // 5. 剔除完全没有有效数据的空壳年份
+  const validTimeline = timelineData.filter(td => td.data.length > 0);
+  const finalYears = validTimeline.map(t => t.year);
+
+  // 🚨 终极核查日志：按 F12 打开控制台，必须看到这行打印！
+  console.log('✅【地图底层重构完毕】最终年份:', finalYears);
+  if (validTimeline.length > 0) {
+    console.log('✅【地图第一年数据切片】长这样:', validTimeline[0].data);
+  } else {
+    console.error('❌【地图灾难】清洗完毕后数据全军覆没，请检查上方逻辑！');
+  }
+
+  return { years: finalYears, timelineData: validTimeline };
 };
 
 const totalUrl = `${process.env.VUE_APP_API_BASE_URL}/easyquery.htm`;

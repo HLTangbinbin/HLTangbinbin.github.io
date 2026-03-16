@@ -1,5 +1,6 @@
 import { selectDataFromArr, offsetArray, selectMapTimelineData } from './dataEngine.js';
 import { ComparePlugin, SmartAnalysisPlugin, PiePlugin, BirthPredictionPlugin, LegendFilterPlugin, MapTimelinePlugin } from './chartPlugins.js';
+import { logger } from "@/utils/Logger";
 
 class ChartBuilder {
   constructor(params) {
@@ -12,26 +13,23 @@ class ChartBuilder {
   initContext() {
     const { data, zbcodeArr, cityCodeArr = [], dbCode = 'nd', unit = '', exceptName = '', chartType = 'bar', yearLimit, enableBirthOffset = false, selectedLegend, offsetValue = 0 } = this.params;
     if (chartType === 'map') {
-      // 地图通常只看一个维度的宏观分布，所以取第一个核心指标
-      const mainZbCode = zbcodeArr[0]; 
-      
-      // 调用专门针对地图的时间轴切片提取器
-      const mapTimelineData = selectMapTimelineData(data, mainZbCode, dbCode);
-
-      // 将提取的数据挂载到 params 上，供 MapTimelinePlugin 插件读取
-      this.params.mapTimelineData = mapTimelineData;
-      
-      // 智能提取指标名称和单位
-      this.params.metricName = exceptName || data.data[dbCode]?.[mainZbCode]?.cname || '指标';
-      this.params.unit = data.data[dbCode]?.[mainZbCode]?.unit || '';
-
-      // 💥 核心拦截：直接返回地图专属的 Context，彻底跳过下面的柱状/折线图组装逻辑！
-      return { 
-        isMapContext: true, 
-        seriesData: [], // 地图不需要常规的 seriesData
-        params: this.params 
-      };
-    }
+        const mainZbCode = zbcodeArr[0]; 
+        const mapTimelineData = selectMapTimelineData(data, mainZbCode, dbCode, yearLimit);
+        logger.debug('当前的mapTimelineData',mapTimelineData)
+        this.params.mapTimelineData = mapTimelineData;
+        this.params.metricName = exceptName || data.data[dbCode]?.[mainZbCode]?.cname || '指标';
+        this.params.unit = data.data[dbCode]?.[mainZbCode]?.unit || '';
+  
+        // 💥 修复点：在这里补上 filteredYears: []，以及其他插件可能依赖的空数组，防止下游解构崩溃
+        return { 
+          isMapContext: true, 
+          seriesData: [], 
+          filteredYears: [], // <--- 关键防弹衣！让 [...this.ctx.filteredYears] 变成展开空数组而不报错
+          marriageArr: [], 
+          birthArr: [],
+          params: this.params 
+        };
+      }
 
 
     let marriageArr = [], birthArr = [], seriesData = [];
@@ -183,6 +181,7 @@ class ChartBuilder {
       finalOption = plugin(finalOption, this.ctx);
     });
     finalOption.originalLegendData = this.ctx.seriesData.map(s => s.name);
+    logger.debug('finalOption',finalOption)
     return finalOption;
   }
 }
