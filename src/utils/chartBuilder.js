@@ -1,5 +1,5 @@
-import { selectDataFromArr, offsetArray } from './dataEngine.js';
-import { ComparePlugin, SmartAnalysisPlugin, PiePlugin, BirthPredictionPlugin, LegendFilterPlugin } from './chartPlugins.js';
+import { selectDataFromArr, offsetArray, selectMapTimelineData } from './dataEngine.js';
+import { ComparePlugin, SmartAnalysisPlugin, PiePlugin, BirthPredictionPlugin, LegendFilterPlugin, MapTimelinePlugin } from './chartPlugins.js';
 
 class ChartBuilder {
   constructor(params) {
@@ -11,6 +11,29 @@ class ChartBuilder {
 
   initContext() {
     const { data, zbcodeArr, cityCodeArr = [], dbCode = 'nd', unit = '', exceptName = '', chartType = 'bar', yearLimit, enableBirthOffset = false, selectedLegend, offsetValue = 0 } = this.params;
+    if (chartType === 'map') {
+      // 地图通常只看一个维度的宏观分布，所以取第一个核心指标
+      const mainZbCode = zbcodeArr[0]; 
+      
+      // 调用专门针对地图的时间轴切片提取器
+      const mapTimelineData = selectMapTimelineData(data, mainZbCode, dbCode);
+
+      // 将提取的数据挂载到 params 上，供 MapTimelinePlugin 插件读取
+      this.params.mapTimelineData = mapTimelineData;
+      
+      // 智能提取指标名称和单位
+      this.params.metricName = exceptName || data.data[dbCode]?.[mainZbCode]?.cname || '指标';
+      this.params.unit = data.data[dbCode]?.[mainZbCode]?.unit || '';
+
+      // 💥 核心拦截：直接返回地图专属的 Context，彻底跳过下面的柱状/折线图组装逻辑！
+      return { 
+        isMapContext: true, 
+        seriesData: [], // 地图不需要常规的 seriesData
+        params: this.params 
+      };
+    }
+
+
     let marriageArr = [], birthArr = [], seriesData = [];
 
     if (cityCodeArr.length === 0) {
@@ -166,7 +189,8 @@ class ChartBuilder {
 
 export const buildChartOption = (params) => {
   const builder = new ChartBuilder(params);
-  
+  // 注入地图插件
+  builder.use(MapTimelinePlugin);
   if (params.isYearlyCompare) builder.use(ComparePlugin);
   else if (params.enableBirthPrediction) builder.use(BirthPredictionPlugin);
   
@@ -174,5 +198,6 @@ export const buildChartOption = (params) => {
   if (params.pieConfig?.enabled && !params.isYearlyCompare) builder.use(PiePlugin);
   
   builder.use(LegendFilterPlugin); 
+
   return builder.build();
 };

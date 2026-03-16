@@ -66,6 +66,39 @@ export const offsetArray = (arr, yearLimit, offset) => {
   return arr;
 };
 
+// 新增：提取带时间轴的地图截面数据
+export const selectMapTimelineData = (returndata, zbCode, dbCode = 'nd') => {
+  const codeItem = returndata.data[dbCode]?.[zbCode];
+  if (!codeItem || !Array.isArray(codeItem.data)) return { years: [], seriesData: [] };
+
+  // 1. 获取所有存在数据的年份，并按升序排列（Timeline 习惯从老到新播放）
+  const yearsSet = new Set(codeItem.data.map(d => d.date?.substring(0, 4)));
+  const years = Array.from(yearsSet).filter(Boolean).sort((a, b) => a - b);
+
+  // 2. 按年份对地域数据进行分组
+  const timelineData = years.map(year => {
+    const yearData = codeItem.data
+      .filter(d => d.date && d.date.substring(0, 4) === year)
+      .map(d => {
+        // ⚠️ 极度重要：确保这里的 name 和你修改后的 GeoJSON 里的 name 完全一致！
+        // 如果底图叫 "北京市"，这里就得是 "北京市"；如果底图叫 "北京"，这里就得把 "市" 删掉。
+        // 假设你目前的 city.json 叫 "北京"，geo_city.json 里也叫 "北京"
+        let mappedName = d.cityName; 
+        
+        return {
+          name: mappedName,
+          value: typeof d.value === 'object' ? d.value.value : d.value,
+          cityCode: d.cityCode
+        };
+      })
+      .filter(d => d.value !== null && !isNaN(d.value));
+
+    return { year, data: yearData };
+  });
+
+  return { years, timelineData };
+};
+
 const totalUrl = `${process.env.VUE_APP_API_BASE_URL}/easyquery.htm`;
 const common_params = { m: 'QueryData', colcode: 'sj', k1: String(Date.now()), h: '1' };
 

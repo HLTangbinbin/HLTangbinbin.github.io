@@ -2,6 +2,7 @@ import { ref, computed, watch } from 'vue';
 import { buildChartOption } from '@/utils/chartBuilder.js';
 import { generateSmartNarrative } from '@/utils/narrativeEngine.js';
 import { useTableEngine } from './useTableEngine.js';
+import { resolveMapType } from '@/utils/mapProvider.js';
 
 export function createChartStore(props) {
   const windowWidth = ref(window.innerWidth);
@@ -29,6 +30,13 @@ export function createChartStore(props) {
   const isProvince = computed(() => (props.config?.localJson || '').includes('province'));
 
   const chartIdentityStr = computed(() => `${props.chart?.title}-${props.chart?.id}-${props.config?.localJson}`);
+
+  // 智能检测当前数据源是否支持地图
+  const mapType = computed(() => resolveMapType(props.config?.localJson));
+  // 规则：必须有对应底图，且通常年度数据(nd)才做热力图演进
+  const isMapSupported = computed(() => {
+    return mapType.value !== null; 
+  });
 
   watch(chartIdentityStr, (newVal, oldVal) => {
     if (newVal !== oldVal) {
@@ -130,7 +138,7 @@ export function createChartStore(props) {
       legendTop: finalLegendTop,
       gridTop: finalGridTop,
       isMobile: isMobile.value,
-      chartType: currentChartType.value,
+      chartType: viewModeDisplay.value === 'map' ? 'map' : currentChartType.value,
       yearLimit: actualDataLimit,
       compareYearCount: yearLimit.value,
       isHorizontal: isHorizontal.value,
@@ -140,7 +148,8 @@ export function createChartStore(props) {
       pieConfig: isPieActiveVal ? props.chart?.pieConfig : null,
       enableBirthOffset: props.chart?.enableBirthOffset || false,
       enableBirthPrediction: props.chart?.enableBirthPrediction || false,
-      enableSmartAnalysis: enableSmartAnalysis.value
+      enableSmartAnalysis: enableSmartAnalysis.value,
+      mapType: mapType.value,
     });
     // 🌟 终极防弹级修复：一键反选时，从物理层面抽干辅助线的数据！
     if (finalOption.legend && finalOption.series) {
@@ -193,7 +202,7 @@ export function createChartStore(props) {
     enableSmartAnalysis, isDrawerVisible, searchKeyword, selectedExtraCities,
     isProvince, finalCityCodeArr, showCityAddToggle, filteredCities, getCityName, toggleCity,
     showSmartAnalysisToggle, showCompareToggle, showLegendSelector, showOffsetControls, legendList,
-    chartOption, smartNarrative,
+    chartOption, smartNarrative,isMapSupported,
     ...tableEngine
   };
 }

@@ -16,6 +16,7 @@
 import NavBar from "@/components/common/NavBar.vue";
 import { navConfig } from "@/config/navConfig";
 import { logger } from "@/utils/Logger";
+import { registerAllMaps } from '@/utils/mapProvider.js';
 
 export default {
   name: "App",
@@ -27,13 +28,15 @@ export default {
       navItems: navConfig.map(item => ({ label: item.label, path: item.path.replace('/', '') }))
     };
   },
-  mounted() {
-    // 移除臃肿的硬编码预加载，首屏渲染立刻放行！
-    // 具体的图表数据加载已经交给 DynamicChartPage 和 dataLoader 去处理了
+  async mounted() {
+    // 1. 等待地图物料从网络下载并注册完毕
+    await registerAllMaps();
+
+    // 2. 地图准备就绪后，再关闭全屏 Loading 并放行渲染
     setTimeout(() => {
       this.loading = false;
       logger.debug("系统初始化完成");
-    }, 300); // 给个极其短暂的动画缓冲，提升体验
+    }, 300);
   }
 };
 </script>

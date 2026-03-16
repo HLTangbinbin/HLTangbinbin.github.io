@@ -240,3 +240,87 @@ export const LegendFilterPlugin = (option) => {
   }
   return option;
 };
+
+// 新增：地图与时间轴融合插件
+export const MapTimelinePlugin = (option, ctx) => {
+  // 如果当前不是地图模式，直接放行原有的柱状图/折线图配置
+  if (ctx.params.chartType !== 'map') return option;
+
+  const { mapType, mapTimelineData, metricName, unit } = ctx.params;
+  const { years, timelineData } = mapTimelineData;
+
+  if (years.length === 0) return option;
+
+  // 计算全局最大最小值，用于统一的 VisualMap（热力色带）
+  let allValues = [];
+  timelineData.forEach(td => {
+      allValues = allValues.concat(td.data.map(item => item.value));
+  });
+  const maxVal = allValues.length ? Math.max(...allValues) : 100;
+  const minVal = allValues.length ? Math.min(...allValues) : 0;
+
+  // 抛弃原有的 option，重构为 Timeline 结构的 Option
+  const mapOption = {
+    baseOption: {
+      timeline: {
+        axisType: 'category',
+        autoPlay: true,           // 自动播放，高逼格 BI 必备
+        playInterval: 1500,       // 每 1.5 秒切换一年
+        data: years,
+        bottom: 10,
+        left: 30,
+        right: 30,
+        label: { formatter: '{value} 年' }
+      },
+      title: {
+        text: `${metricName} 地域演进`,
+        left: 'center',
+        top: 10,
+        textStyle: { fontSize: 18, color: '#333' }
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: (params) => {
+          if (!params.name) return '';
+          const val = params.value !== undefined ? params.value : '暂无数据';
+          return `${params.name}<br/>${metricName}: <strong>${val}</strong> ${unit}`;
+        }
+      },
+      visualMap: {
+        min: minVal,
+        max: maxVal,
+        left: 'left',
+        bottom: '15%',
+        text: ['高', '低'],
+        calculable: true,
+        // 大唐统计局御用热力配色：从浅蓝到深红的渐变
+        inRange: { color: ['#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027'] }
+      },
+      geo: {
+        map: mapType,
+        roam: true, // 允许鼠标缩放和平移
+        zoom: 1.1,
+        itemStyle: {
+          areaColor: '#f3f4f6', // 无数据区域的底色
+          borderColor: '#ffffff'
+        },
+        emphasis: { itemStyle: { areaColor: '#d1d5db' } }
+      },
+      series: [
+        {
+          name: metricName,
+          type: 'map',
+          geoIndex: 0, // 关联到上面的 geo 配置
+          data: []
+        }
+      ]
+    },
+    // 将每年切片数据塞入 options 数组
+    options: timelineData.map(td => ({
+      title: { text: `${metricName} 地域演进 (${td.year})` },
+      series: [{ data: td.data }]
+    }))
+  };
+
+  return mapOption;
+};
