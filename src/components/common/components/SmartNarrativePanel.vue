@@ -5,7 +5,7 @@
       <div class="narrative-title">
         <el-icon>
           <MagicStick />
-        </el-icon> AI 智能数据叙事
+        </el-icon> 数据解读
       </div>
       <div class="narrative-content" v-html="store.smartNarrative.value"></div>
     </div>

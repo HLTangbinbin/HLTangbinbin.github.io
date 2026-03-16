@@ -21,7 +21,7 @@ ChartToolbar.vue<template>
     <div class="toolbar-group time-group">
       <div class="group-label"><i class="el-icon-time"></i> 时间</div>
       <div class="slider-wrapper">
-        <el-slider v-model="store.yearLimit.value" :min="1" :max="40" :step="1" class="flex-slider" />
+        <el-slider v-model="store.yearLimit.value" :show-tooltip="false" :min="1" :max="40" :step="1" class="flex-slider" />
         <span class="ctrl-val no-shrink">{{ store.yearLimit.value }}</span>
       </div>
     </div>
