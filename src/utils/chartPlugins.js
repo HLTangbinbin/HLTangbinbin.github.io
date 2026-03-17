@@ -251,166 +251,136 @@ export const MapTimelinePlugin = (option, ctx) => {
 
   if (years.length === 0 || timelineData.length === 0) return option;
 
-  // 🌟 1. 核心引擎升级：动态涨跌幅 + 动态色带探针
+  // 🌟 1. 锻造【全局唯一标尺】
+  let allValidValues = [];
+  timelineData.forEach(td => {
+    if (Array.isArray(td.data)) {
+      td.data.forEach(item => {
+        if (item.value !== null && item.value !== '' && item.value !== undefined && !isNaN(item.value)) {
+          allValidValues.push(Number(item.value));
+        }
+      });
+    }
+  });
+
+  let globalMin = 0;
+  let globalMax = 100;
+  if (allValidValues.length > 0) {
+    const absoluteMin = Math.min(...allValidValues);
+    const absoluteMax = Math.max(...allValidValues);
+    const diff = absoluteMax - absoluteMin;
+
+    if (diff === 0) {
+      globalMin = absoluteMin === 0 ? -1 : absoluteMin - Math.abs(absoluteMin * 0.1);
+      globalMax = absoluteMax === 0 ? 1 : absoluteMax + Math.abs(absoluteMax * 0.1);
+    } else {
+      const buffer = diff * 0.05;
+      globalMin = absoluteMin - buffer;
+      globalMax = absoluteMax + buffer;
+      if (absoluteMin >= 0 && globalMin < 0) globalMin = 0;
+      if (absoluteMax <= 0 && globalMax > 0) globalMax = 0;
+    }
+  }
+
+  // 🌟 2. 组装每年的帧数据
   const enrichedOptions = timelineData.map((td, index, arr) => {
-    // 💡 提取上一期的数据
     const prevData = index > 0 ? arr[index - 1].data : [];
 
-    const validData = td.data.filter(item => item.value !== null && !isNaN(item.value));
-    validData.sort((a, b) => b.value - a.value);
+    const validData = td.data
+      .filter(item => item.value !== null && item.value !== '' && item.value !== undefined && !isNaN(item.value))
+      .map(item => ({ ...item, value: Number(item.value) }))
+      .sort((a, b) => b.value - a.value);
 
-    // 用于计算极值占比的第一名数值
-    const currentYearMax = validData.length > 0 ? validData[0].value : 1;
-
-    // --- 👇 新增：智能色带探针 3.0 (完美兼容财政赤字等负数场景) 👇 ---
-    const currentYearValues = validData.map(v => v.value);
-    let yearMin = 0;
-    let yearMax = 100;
-
-    if (currentYearValues.length > 0) {
-      const absoluteMin = Math.min(...currentYearValues);
-      const absoluteMax = Math.max(...currentYearValues);
-      const diff = absoluteMax - absoluteMin;
-
-      if (diff === 0) {
-        // 容错：全量数据一模一样时，无论正负都要向外撑开空间
-        yearMin = absoluteMin === 0 ? -1 : absoluteMin - Math.abs(absoluteMin * 0.1);
-        yearMax = absoluteMax === 0 ? 1 : absoluteMax + Math.abs(absoluteMax * 0.1);
-      } else {
-        // 🌟 终极通用算法：用极差 (diff) 的固定比例做加减法缓冲！
-        const bufferRatio = diff <= 20 ? 0.1 : 0.05; // 率值留 10% 缓冲，大数留 5% 缓冲
-        const buffer = diff * bufferRatio;
-
-        // 无论正负，最小值减去 buffer，最大值加上 buffer，逻辑绝对自洽
-        yearMin = absoluteMin - buffer;
-        yearMax = absoluteMax + buffer;
-
-        // 💡 UI 洁癖优化：防止缓冲带跨越 0 轴导致刻度难看
-        // 如果原本全是正数，减去缓冲后变成了微小的负数，强制兜底回 0
-        if (absoluteMin >= 0 && yearMin < 0) {
-          yearMin = 0;
-        }
-        // 如果原本全是负数(如财政赤字)，加上缓冲后变成了微小的正数，强制兜底回 0
-        if (absoluteMax <= 0 && yearMax > 0) {
-          yearMax = 0;
-        }
-      }
-    }
-    // --- 👆 智能色带探针结束 👆 ---
+    const currentYearMaxForRatio = validData.length > 0 ? validData[0].value : 1;
 
     const enrichedData = td.data.map(item => {
-      if (item.value === null || isNaN(item.value)) return item;
-
+      if (item.value === null || item.value === '' || item.value === undefined || isNaN(item.value)) {
+        return { name: item.name }; 
+      }
+      const val = Number(item.value);
       const rank = validData.findIndex(v => v.name === item.name) + 1;
-      const ratio = ((item.value / currentYearMax) * 100).toFixed(1);
+      const ratio = currentYearMaxForRatio === 0 ? 0 : ((val / currentYearMaxForRatio) * 100).toFixed(1);
 
-      // 💡 涨跌幅计算逻辑
       let growth = null;
       if (prevData.length > 0) {
         const prevItem = prevData.find(p => p.name === item.name);
-        if (prevItem && prevItem.value !== null && !isNaN(prevItem.value) && prevItem.value !== 0) {
-          growth = (((item.value - prevItem.value) / Math.abs(prevItem.value)) * 100).toFixed(1);
+        if (prevItem && prevItem.value !== null && prevItem.value !== '' && !isNaN(prevItem.value) && Number(prevItem.value) !== 0) {
+          growth = (((val - Number(prevItem.value)) / Math.abs(Number(prevItem.value))) * 100).toFixed(1);
         }
       }
 
-      return { ...item, rank, ratio, growth };
+      return { ...item, value: val, rank, ratio, growth };
     });
 
-    // 返回当前时间帧的配置（自动覆盖全局配置）
     return {
-      title: { text: `${metricName} 地域演进 (${td.year})` },
-
-      // 🚀 核心绝杀：每一帧都有自己的高精度色带！
-      visualMap: {
-        min: yearMin,
-        max: yearMax,
-        // 智能精度：跨度极小的率值自动开启2位小数显示，大数则不要小数
-        precision: (yearMax - yearMin) <= 20 ? 2 : 0,
-      },
-
+      title: { text: `${metricName} (${td.year})` },
       series: [{
         data: enrichedData,
         label: {
-          show: true,
-          color: '#333333',
-          fontSize: 10,
-          formatter: (p) => (p.value !== undefined && p.value !== null && !isNaN(p.value)) ? p.name : ''
+          show: true, color: '#333333', fontSize: 10,
+          // 🚨 暴力修复 2：恢复最严格的 NaN 校验，港澳台文字绝对不会再冒出来！
+          formatter: (p) => (p.value !== undefined && p.value !== null && p.value !== '' && !isNaN(p.value)) ? p.name : ''
         },
         emphasis: { label: { show: true, color: '#000000', fontWeight: 'bold' } }
       }]
     };
   });
 
-  // 🌟 2. 组装最终地图配置 (包含我们调好的 Tooltip 和事件拦截)
+  // 🌟 3. 组装外层配置
   const mapOption = {
-    xAxis: { show: false },
-    yAxis: { show: false },
-    grid: { show: false },
+    xAxis: { show: false }, yAxis: { show: false }, grid: { show: false },
     toolbox: { show: true, right: '5%', top: '5%', feature: { restore: { title: '居中还原' } } },
-
     timeline: {
-      axisType: 'category',
-      autoPlay: true,
-      loop: false, // 停止无限洗脑循环
-      playInterval: 1000,
-      data: years,
-      bottom: 10, left: 30, right: 30,
-      label: { formatter: '{value} 年' }
+      axisType: 'category', autoPlay: true, loop: false, playInterval: 1000,
+      data: years, bottom: 10, left: 30, right: 30, label: { formatter: '{value} 年' }
     },
-
     title: { text: `${metricName}`, left: 'center', top: 10, textStyle: { fontSize: 18, color: '#333' } },
+
+    visualMap: {
+      type: 'continuous',
+      min: globalMin,
+      max: globalMax,
+      precision: (globalMax - globalMin) <= 20 ? 2 : 0,
+      left: '5%', bottom: '15%', calculable: true, text: ['高', '低'],
+      inRange: { color: ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026'] },
+      outOfRange: { color: ['#F3F4F6'] }
+    },
 
     tooltip: {
       trigger: 'item',
-      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-      borderColor: '#E5E7EB',
-      borderWidth: 1,
-      padding: 14,
+      backgroundColor: 'rgba(255, 255, 255, 0.95)', borderColor: '#E5E7EB', borderWidth: 1, padding: 14,
       extraCssText: 'box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-radius: 8px;',
       textStyle: { color: '#333' },
       formatter: (params) => {
-        // 🛑 拦截雷达：如果鼠标指的不是省份（比如指在时间轴上），只显示年份，防止数字错乱！
-        if (params.componentType !== 'series') {
-          return `<div style="padding: 4px 8px; font-weight: bold;">${params.name} 年</div>`;
-        }
-
-        if (!params.name || params.value === undefined || isNaN(params.value)) return '';
-
-        // 强行干掉 JS 浮点数黑洞，最多保留两位小数，并去除末尾无效的 0 (如 6.10 -> 6.1)
-        const displayValue = parseFloat(Number(params.value).toFixed(2));
+        if (params.componentType !== 'series') return `<div style="padding: 4px 8px; font-weight: bold;">${params.name} 年</div>`;
+        // Tooltip 也加上严格拦截
+        if (params.value === undefined || params.value === null || params.value === '' || isNaN(params.value)) return '';
 
         const data = params.data || {};
+        const displayValue = parseFloat(Number(params.value).toFixed(2));
         const rank = data.rank ? `<span style="background: rgba(0, 194, 168, 0.1); color: #00C2A8; padding: 2px 8px; border-radius: 4px; font-weight: bold;">第 ${data.rank} 名</span>` : '-';
         const ratio = data.ratio || 0;
 
         let growthHtml = '<span style="color: #9CA3AF;">-</span>';
         if (data.growth !== null && data.growth !== undefined) {
           const gVal = Number(data.growth);
-          if (gVal > 0) {
-            growthHtml = `<span style="color: #EF4444; font-weight: bold;">+${gVal}% 🔺</span>`;
-          } else if (gVal < 0) {
-            growthHtml = `<span style="color: #10B981; font-weight: bold;">${gVal}% 🔻</span>`;
-          } else {
-            growthHtml = `<span style="color: #6B7280;">持平 -</span>`;
-          }
+          if (gVal > 0) growthHtml = `<span style="color: #EF4444; font-weight: bold;">+${gVal}% 🔺</span>`;
+          else if (gVal < 0) growthHtml = `<span style="color: #10B981; font-weight: bold;">${gVal}% 🔻</span>`;
+          else growthHtml = `<span style="color: #6B7280;">持平 -</span>`;
         }
 
         return `
           <div style="min-width: 190px; font-family: sans-serif; color: #374151;">
-            <div style="font-size: 15px; font-weight: bold; border-bottom: 1px solid #F3F4F6; padding-bottom: 8px; margin-bottom: 10px; color: #111827;">
-              ${params.name}
-            </div>
+            <div style="font-size: 15px; font-weight: bold; border-bottom: 1px solid #F3F4F6; padding-bottom: 8px; margin-bottom: 10px; color: #111827;">${params.name}</div>
             <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
               <span style="color: #6B7280;">${metricName}</span>
               <span style="color: #00C2A8; font-weight: bold; font-size: 15px;">${displayValue} <span style="font-size: 12px; font-weight: normal;">${unit}</span></span>
             </div>
             <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px;">
-              <span style="color: #6B7280;">较上一年</span>
-              ${growthHtml}
+              <span style="color: #6B7280;">较上一年</span>${growthHtml}
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 12px;">
-              <span style="color: #6B7280;">当年排名</span>
-              ${rank}
+              <span style="color: #6B7280;">当年排名</span>${rank}
             </div>
             <div style="display: flex; align-items: center; font-size: 12px;">
               <span style="color: #6B7280; width: 55px;">极值占比</span>
@@ -419,17 +389,8 @@ export const MapTimelinePlugin = (option, ctx) => {
               </div>
               <span style="color: #00C2A8; font-weight: bold; font-size: 12px; width: 35px; text-align: right;">${ratio}%</span>
             </div>
-          </div>
-        `;
+          </div>`;
       }
-    },
-
-    // 底层默认 visualMap (主要用于提供渐变色数组，min/max 会被每一帧的 option 覆盖)
-    visualMap: {
-      type: 'continuous',
-      left: '5%', bottom: '15%',
-      calculable: true, text: ['高', '低'],
-      inRange: { color: ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026'] }
     },
 
     series: [{
@@ -438,8 +399,6 @@ export const MapTimelinePlugin = (option, ctx) => {
       emphasis: { itemStyle: { areaColor: '#FFD700' } },
       data: []
     }],
-
-    // 挂载包含动态色带的 Timeline 数据
     options: enrichedOptions
   };
 

@@ -15,7 +15,6 @@
 <script>
 import NavBar from "@/components/common/NavBar.vue";
 import { navConfig } from "@/config/navConfig";
-import { logger } from "@/utils/Logger";
 import { registerAllMaps } from '@/utils/mapProvider.js';
 
 export default {
@@ -35,7 +34,6 @@ export default {
     // 2. 地图准备就绪后，再关闭全屏 Loading 并放行渲染
     setTimeout(() => {
       this.loading = false;
-      logger.debug("系统初始化完成");
     }, 300);
   }
 };

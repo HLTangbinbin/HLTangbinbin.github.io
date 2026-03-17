@@ -3,7 +3,6 @@ import { buildChartOption } from '@/utils/chartBuilder.js';
 import { generateSmartNarrative } from '@/utils/narrativeEngine.js';
 import { useTableEngine } from './useTableEngine.js';
 import { resolveMapType } from '@/utils/mapProvider.js';
-import { logger } from '@/utils/Logger.js';
 
 export function createChartStore(props) {
   const windowWidth = ref(window.innerWidth);
@@ -38,7 +37,6 @@ export function createChartStore(props) {
   const isMapSupported = computed(() => {
     return mapType.value === 'province';
   });
-  logger.debug('当前的mapType和isMapSupported', mapType, isMapSupported);
 
   watch(chartIdentityStr, (newVal, oldVal) => {
     if (newVal !== oldVal) {

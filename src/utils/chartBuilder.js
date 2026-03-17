@@ -1,6 +1,5 @@
 import { selectDataFromArr, offsetArray, selectMapTimelineData } from './dataEngine.js';
 import { ComparePlugin, SmartAnalysisPlugin, PiePlugin, BirthPredictionPlugin, LegendFilterPlugin, MapTimelinePlugin } from './chartPlugins.js';
-import { logger } from "@/utils/Logger";
 
 class ChartBuilder {
   constructor(params) {
@@ -15,7 +14,6 @@ class ChartBuilder {
     if (chartType === 'map') {
         const mainZbCode = zbcodeArr[0]; 
         const mapTimelineData = selectMapTimelineData(data, mainZbCode, dbCode, yearLimit);
-        logger.debug('当前的mapTimelineData',mapTimelineData)
         this.params.mapTimelineData = mapTimelineData;
         this.params.metricName = exceptName || data.data[dbCode]?.[mainZbCode]?.cname || '指标';
         this.params.unit = data.data[dbCode]?.[mainZbCode]?.unit || '';
@@ -181,7 +179,6 @@ class ChartBuilder {
       finalOption = plugin(finalOption, this.ctx);
     });
     finalOption.originalLegendData = this.ctx.seriesData.map(s => s.name);
-    logger.debug('finalOption',finalOption)
     return finalOption;
   }
 }

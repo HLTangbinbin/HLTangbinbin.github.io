@@ -72,7 +72,6 @@ export const selectMapTimelineData = (returndata, zbCode, dbCode = 'nd', yearLim
   // 1. 数据源兜底检查
   const codeItem = returndata.data?.[dbCode]?.[zbCode];
   if (!codeItem || !Array.isArray(codeItem.data)) {
-    console.error('❌【地图引擎】数据源中找不到对应的指标数据:', dbCode, zbCode);
     return { years: [], timelineData: [] };
   }
 
@@ -121,15 +120,6 @@ export const selectMapTimelineData = (returndata, zbCode, dbCode = 'nd', yearLim
   // 5. 剔除完全没有有效数据的空壳年份
   const validTimeline = timelineData.filter(td => td.data.length > 0);
   const finalYears = validTimeline.map(t => t.year);
-
-  // 🚨 终极核查日志：按 F12 打开控制台，必须看到这行打印！
-  console.log('✅【地图底层重构完毕】最终年份:', finalYears);
-  if (validTimeline.length > 0) {
-    console.log('✅【地图第一年数据切片】长这样:', validTimeline[0].data);
-  } else {
-    console.error('❌【地图灾难】清洗完毕后数据全军覆没，请检查上方逻辑！');
-  }
-
   return { years: finalYears, timelineData: validTimeline };
 };
 
