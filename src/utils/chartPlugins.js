@@ -243,16 +243,14 @@ export const LegendFilterPlugin = (option) => {
 
 // 新增：地图与时间轴融合插件
 // chartPlugins.js 
-
 export const MapTimelinePlugin = (option, ctx) => {
   if (ctx.params.chartType !== 'map') return option;
 
-  const { mapType, mapTimelineData = {}, metricName = '指标'} = ctx.params || {};
+  const { mapType, mapTimelineData = {}, metricName = '指标', unit = '' } = ctx.params || {};
   const { years = [], timelineData = [] } = mapTimelineData;
 
   if (years.length === 0 || timelineData.length === 0) return option;
 
-  // 计算最大最小值，确保 visualMap 色带映射准确
   let allValues = [];
   timelineData.forEach(td => {
     if (Array.isArray(td.data)) {
@@ -262,83 +260,137 @@ export const MapTimelinePlugin = (option, ctx) => {
   const maxVal = allValues.length ? Math.max(...allValues) : 100;
   const minVal = allValues.length ? Math.min(...allValues) : 0;
 
-  // 恢复你最初能用的 baseOption 结构！
-  const mapOption = {
-    baseOption: {
-      timeline: {
-        axisType: 'category',
-        autoPlay: false,
-        playInterval: 2000,
-        data: years,
-        bottom: 10,
-        left: 30,
-        right: 30,
-        label: { formatter: '{value} 年' }
-      },
-      title: {
-        text: `${metricName}`,
-        left: 'center',
-        top: 10,
-        textStyle: { fontSize: 18, color: '#333' }
-      },
+  // 🌟 1. 核心引擎升级：加入“回头看”能力，计算涨跌幅！
+  const enrichedOptions = timelineData.map((td, index, arr) => {
+    // 💡 提取上一期的数据（如果是第一年，这里就是个空数组）
+    const prevData = index > 0 ? arr[index - 1].data : [];
 
-      visualMap: {
-        min: minVal,
-        max: maxVal,
-        left: 50,
-        bottom: '20%',
-        text: ['高', '低'],
-        calculable: true,
-        // 主流大厂的经典热力红配色（从浅黄过渡到深血红）
-        inRange: {
-          color: ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026']
-        },
-      },
-      // 清除旧图表残留
-      xAxis: { show: false },
-      yAxis: { show: false },
-      grid: { show: false },
+    const validData = td.data.filter(item => item.value !== null && !isNaN(item.value));
+    validData.sort((a, b) => b.value - a.value);
+    const currentYearMax = validData.length > 0 ? validData[0].value : 1;
 
-      series: [
-        {
-          name: metricName,
-          type: 'map',
-          map: mapType,
-          roam: false, // 禁止缩放和移动
-          zoom: 1.1,
-          top: '20%',
-          itemStyle: {
-            areaColor: '#F3F4F6', // 没有数据的城市统一显示干净的浅灰色
-            borderColor: '#FFFFFF'
-          },
-          label: {
-            show: true,
-            color: '#333333',
-            fontSize: 10,
-            // 🌟 核心：智能拦截！只有带数据的城市才显示名字！
-            formatter: (params) => {
-              if (params.value !== undefined && params.value !== null && !isNaN(params.value)) {
-                return params.name; // 有数据，显示名字
-              }
-              return ''; // 没数据，返回空字符串（不显示）
-            }
-          },
-          emphasis: {
-            label: { show: true },
-            itemStyle: { areaColor: '#FFD700' }
-          },
-          data: []
+    const enrichedData = td.data.map(item => {
+      if (item.value === null || isNaN(item.value)) return item;
+
+      const rank = validData.findIndex(v => v.name === item.name) + 1;
+      const ratio = ((item.value / currentYearMax) * 100).toFixed(1);
+
+      // 💡 涨跌幅计算逻辑：(本期 - 上期) / 上期 * 100
+      let growth = null;
+      if (prevData.length > 0) {
+        const prevItem = prevData.find(p => p.name === item.name);
+        // 确保上一期有数据，且不为 0（防止除以 0 报错）
+        if (prevItem && prevItem.value !== null && !isNaN(prevItem.value) && prevItem.value !== 0) {
+          growth = (((item.value - prevItem.value) / Math.abs(prevItem.value)) * 100).toFixed(1);
         }
-      ]
-    },
-    options: timelineData.map(td => ({
-      title: { text: `${metricName} (地域演进) (${td.year})` },
-      series: [{ data: td.data }]
-    }))
-  };
+      }
 
-  // 这一行保留！为了通过你的 Vue 组件 wrapper 校验
-  mapOption.series = mapOption.baseOption.series;
+      return { ...item, rank, ratio, growth }; // 把涨跌幅 (growth) 塞进去
+    });
+
+    return {
+      title: { text: `${metricName} 地域演进 (${td.year})` },
+      series: [{
+        data: enrichedData,
+        label: {
+          show: true,
+          color: '#333333',
+          fontSize: 10,
+          formatter: (p) => (p.value !== undefined && p.value !== null && !isNaN(p.value)) ? p.name : ''
+        },
+        emphasis: { label: { show: true, color: '#000000', fontWeight: 'bold' } }
+      }]
+    };
+  });
+
+  const mapOption = {
+    xAxis: { show: false },
+    yAxis: { show: false },
+    grid: { show: false },
+    toolbox: { show: true, right: '5%', top: '5%', feature: { restore: { title: '居中还原' } } },
+    timeline: {
+      axisType: 'category', autoPlay: false, playInterval: 2000, data: years,
+      bottom: 10, left: 30, right: 30, label: { formatter: '{value} 年' }
+    },
+    title: { text: `${metricName}`, left: 'center', top: 10, textStyle: { fontSize: 18, color: '#333' } },
+
+    // 🌟 2. UI 风格彻底重构：清新商务白底风 + 红涨绿跌
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: 'rgba(255, 255, 255, 0.95)', 
+      borderColor: '#E5E7EB', 
+      borderWidth: 1,
+      padding: 14,
+      extraCssText: 'box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-radius: 8px;', 
+      textStyle: { color: '#333' },
+      formatter: (params) => {
+        if (!params.name || params.value === undefined || isNaN(params.value)) return '';
+
+        const data = params.data || {};
+        const rank = data.rank ? `<span style="background: rgba(0, 194, 168, 0.1); color: #00C2A8; padding: 2px 8px; border-radius: 4px; font-weight: bold;">第 ${data.rank} 名</span>` : '-';
+        const ratio = data.ratio || 0;
+
+        let growthHtml = '<span style="color: #9CA3AF;">-</span>'; 
+        if (data.growth !== null && data.growth !== undefined) {
+          const gVal = Number(data.growth);
+          if (gVal > 0) {
+            growthHtml = `<span style="color: #EF4444; font-weight: bold;">+${gVal}% 🔺</span>`;
+          } else if (gVal < 0) {
+            growthHtml = `<span style="color: #10B981; font-weight: bold;">${gVal}% 🔻</span>`;
+          } else {
+            growthHtml = `<span style="color: #6B7280;">持平 -</span>`; 
+          }
+        }
+
+        return `
+          <div style="min-width: 190px; font-family: sans-serif; color: #374151;">
+            <div style="font-size: 15px; font-weight: bold; border-bottom: 1px solid #F3F4F6; padding-bottom: 8px; margin-bottom: 10px; color: #111827;">
+              ${params.name}
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+              <span style="color: #6B7280;">${metricName}</span>
+              <span style="color: #00C2A8; font-weight: bold; font-size: 15px;">${params.value} <span style="font-size: 12px; font-weight: normal;">${unit}</span></span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+              <span style="color: #6B7280;">较上一期</span>
+              ${growthHtml}
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 10px;">
+              <span style="color: #6B7280;">本期排名</span>
+              ${rank}
+            </div>
+            
+            <div style="display: flex; align-items: center; font-size: 12px;">
+              <span style="color: #6B7280; width: 55px;">极值占比</span>
+              <div style="flex: 1; margin: 0 8px; height: 6px; background-color: #E5E7EB; border-radius: 3px; overflow: hidden;">
+                <div style="width: ${ratio}%; height: 100%; background: #00C2A8; border-radius: 3px; transition: width 0.3s;"></div>
+              </div>
+              <span style="color: #00C2A8; font-weight: bold; font-size: 12px; width: 35px; text-align: right;">${ratio}%</span>
+            </div>
+          </div>
+        `;
+      }
+    },
+
+    visualMap: {
+      type: 'continuous', min: minVal, max: maxVal * 0.5, left: '5%', bottom: '15%',
+      calculable: true, text: ['高', '低'],
+      inRange: { color: ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026'] }
+    },
+
+    series: [
+      {
+        name: metricName, type: 'map', map: mapType, roam: false, zoom: 1.1, top: '18%',
+        itemStyle: { areaColor: '#F3F4F6', borderColor: '#FFFFFF' },
+        emphasis: { itemStyle: { areaColor: '#FFD700' } },
+        data: []
+      }
+    ],
+    options: enrichedOptions
+  };
 
   return mapOption;
 };
