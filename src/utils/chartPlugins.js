@@ -281,19 +281,12 @@ export const MapTimelinePlugin = (option, ctx) => {
         top: 10,
         textStyle: { fontSize: 18, color: '#333' }
       },
-      // tooltip: {
-      //   trigger: 'item',
-      //   formatter: (params) => {
-      //     if (!params.name) return '';
-      //     const val = params.value !== undefined && !isNaN(params.value) ? params.value : '暂无数据';
-      //     return `${params.name}<br/>${metricName}: <strong>${val}</strong> ${unit}`;
-      //   }
-      // },
+
       visualMap: {
         min: minVal,
         max: maxVal,
-        left: 'left',
-        bottom: '15%',
+        left: 50,
+        bottom: '20%',
         text: ['高', '低'],
         calculable: true,
         // 主流大厂的经典热力红配色（从浅黄过渡到深血红）
@@ -311,8 +304,9 @@ export const MapTimelinePlugin = (option, ctx) => {
           name: metricName,
           type: 'map',
           map: mapType,
-          roam: true,
+          roam: false, // 禁止缩放和移动
           zoom: 1.1,
+          top: '20%',
           itemStyle: {
             areaColor: '#F3F4F6', // 没有数据的城市统一显示干净的浅灰色
             borderColor: '#FFFFFF'
@@ -338,7 +332,7 @@ export const MapTimelinePlugin = (option, ctx) => {
       ]
     },
     options: timelineData.map(td => ({
-      title: { text: `${metricName} 地域演进 (${td.year})` },
+      title: { text: `${metricName} (地域演进) (${td.year})` },
       series: [{ data: td.data }]
     }))
   };

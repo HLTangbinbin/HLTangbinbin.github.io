@@ -34,11 +34,11 @@ export function createChartStore(props) {
 
   // 智能检测当前数据源是否支持地图
   const mapType = computed(() => resolveMapType(props.config?.localJson));
-  // 规则：必须有对应底图，且通常年度数据(nd)才做热力图演进
+  // 🌟 终极收敛：只有底图是 'province'（省市）时，才显示热力图按钮！武汉也不给了！
   const isMapSupported = computed(() => {
-    return mapType.value !== null; 
+    return mapType.value === 'province';
   });
-  logger.debug('当前的mapType和isMapSupported',mapType,isMapSupported);
+  logger.debug('当前的mapType和isMapSupported', mapType, isMapSupported);
 
   watch(chartIdentityStr, (newVal, oldVal) => {
     if (newVal !== oldVal) {
@@ -156,8 +156,8 @@ export function createChartStore(props) {
     // 🌟 终极防弹级修复：一键反选时，从物理层面抽干辅助线的数据！
     if (finalOption.legend && finalOption.series) {
       // 每次重新计算 Option 时，重置状态字典
-      finalOption.legend.selected = {}; 
-      
+      finalOption.legend.selected = {};
+
       finalOption.series.forEach(s => {
         // 核心：不管是主线还是辅助的趋势线、扇形区间
         // 统统与 legendAllSelected 的真假值强行绑定！
@@ -204,7 +204,7 @@ export function createChartStore(props) {
     enableSmartAnalysis, isDrawerVisible, searchKeyword, selectedExtraCities,
     isProvince, finalCityCodeArr, showCityAddToggle, filteredCities, getCityName, toggleCity,
     showSmartAnalysisToggle, showCompareToggle, showLegendSelector, showOffsetControls, legendList,
-    chartOption, smartNarrative,mapType,isMapSupported,
+    chartOption, smartNarrative, mapType, isMapSupported,
     ...tableEngine
   };
 }
