@@ -251,11 +251,12 @@ export const MapTimelinePlugin = (option, ctx) => {
 
   if (years.length === 0 || timelineData.length === 0) return option;
 
-  // 🌟 1. 锻造【全局唯一标尺】
+  // 🌟 1. 扫描所有数据，计算绝对极值
   let allValidValues = [];
   timelineData.forEach(td => {
     if (Array.isArray(td.data)) {
       td.data.forEach(item => {
+        // 允许 0 进入计算池
         if (item.value !== null && item.value !== '' && item.value !== undefined && !isNaN(item.value)) {
           allValidValues.push(Number(item.value));
         }
@@ -265,21 +266,29 @@ export const MapTimelinePlugin = (option, ctx) => {
 
   let globalMin = 0;
   let globalMax = 100;
+  let isNegativeMetric = false;
+
   if (allValidValues.length > 0) {
     const absoluteMin = Math.min(...allValidValues);
     const absoluteMax = Math.max(...allValidValues);
-    const diff = absoluteMax - absoluteMin;
 
-    if (diff === 0) {
-      globalMin = absoluteMin === 0 ? -1 : absoluteMin - Math.abs(absoluteMin * 0.1);
-      globalMax = absoluteMax === 0 ? 1 : absoluteMax + Math.abs(absoluteMax * 0.1);
-    } else {
-      const buffer = diff * 0.05;
-      globalMin = absoluteMin - buffer;
-      globalMax = absoluteMax + buffer;
-      if (absoluteMin >= 0 && globalMin < 0) globalMin = 0;
-      if (absoluteMax <= 0 && globalMax > 0) globalMax = 0;
+    // 🚀 绝杀 1：强行锚定 0 刻度！
+    // 正数指标（GDP）：min 锁定为 0。遇到 0 数据自动归入最底端。
+    // 负数指标（赤字）：max 锁定为 0。遇到 0 数据自动归入最高端。
+    globalMin = Math.min(absoluteMin, 0);
+    globalMax = Math.max(absoluteMax, 0);
+
+    // 判断是否为全负数指标（如财政赤字）
+    if (absoluteMax <= 0 && absoluteMin < 0) {
+      isNegativeMetric = true;
     }
+  }
+
+  // 🚀 绝杀 2：智能翻转色带！
+  let inRangeColors = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026'];
+  if (isNegativeMetric) {
+    // 财政赤字：翻转色带！让最小值(-8202)变红，让最大值(0)变黄！
+    inRangeColors.reverse();
   }
 
   // 🌟 2. 组装每年的帧数据
@@ -291,15 +300,17 @@ export const MapTimelinePlugin = (option, ctx) => {
       .map(item => ({ ...item, value: Number(item.value) }))
       .sort((a, b) => b.value - a.value);
 
-    const currentYearMaxForRatio = validData.length > 0 ? validData[0].value : 1;
+    const currentYearMax = validData.length > 0 ? validData[0].value : 1;
 
     const enrichedData = td.data.map(item => {
+      // 拦截空数据，原样返回不带 value，防止 ECharts 强行计算
       if (item.value === null || item.value === '' || item.value === undefined || isNaN(item.value)) {
-        return { name: item.name }; 
+        return { name: item.name };
       }
+
       const val = Number(item.value);
       const rank = validData.findIndex(v => v.name === item.name) + 1;
-      const ratio = currentYearMaxForRatio === 0 ? 0 : ((val / currentYearMaxForRatio) * 100).toFixed(1);
+      const ratio = currentYearMax === 0 ? 0 : ((val / currentYearMax) * 100).toFixed(1);
 
       let growth = null;
       if (prevData.length > 0) {
@@ -318,8 +329,8 @@ export const MapTimelinePlugin = (option, ctx) => {
         data: enrichedData,
         label: {
           show: true, color: '#333333', fontSize: 10,
-          // 🚨 暴力修复 2：恢复最严格的 NaN 校验，港澳台文字绝对不会再冒出来！
-          formatter: (p) => (p.value !== undefined && p.value !== null && p.value !== '' && !isNaN(p.value)) ? p.name : ''
+          // 🚨 修复港澳幽灵文字：极其严格的 NaN 和空值拦截！
+          formatter: (p) => (!isNaN(p.value) && p.value !== null && p.value !== '') ? p.name : ''
         },
         emphasis: { label: { show: true, color: '#000000', fontWeight: 'bold' } }
       }]
@@ -342,8 +353,8 @@ export const MapTimelinePlugin = (option, ctx) => {
       max: globalMax,
       precision: (globalMax - globalMin) <= 20 ? 2 : 0,
       left: '5%', bottom: '15%', calculable: true, text: ['高', '低'],
-      inRange: { color: ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026'] },
-      outOfRange: { color: ['#F3F4F6'] }
+      // 挂载我们计算好的自适应颜色带
+      inRange: { color: inRangeColors }
     },
 
     tooltip: {
@@ -353,7 +364,8 @@ export const MapTimelinePlugin = (option, ctx) => {
       textStyle: { color: '#333' },
       formatter: (params) => {
         if (params.componentType !== 'series') return `<div style="padding: 4px 8px; font-weight: bold;">${params.name} 年</div>`;
-        // Tooltip 也加上严格拦截
+
+        // 严格拦截空数据，不展示 Tooltip
         if (params.value === undefined || params.value === null || params.value === '' || isNaN(params.value)) return '';
 
         const data = params.data || {};
