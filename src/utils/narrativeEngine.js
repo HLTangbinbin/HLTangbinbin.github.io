@@ -68,5 +68,5 @@ export const generateSmartNarrative = (chartOption, selectedLegend = null) => {
 
     // 🌟 核心修复：给 mainSeries.name 加上红色的行内样式
     return `<strong>🧐 数据分析：</strong>基于当前 <strong style="color: #ef4444;">${mainSeries.name}</strong> 数据测算：整体分布在 ${min} 至 ${max} 之间，并于 <strong style="color: #ef4444;">${maxDate}</strong> 触及峰值 <strong style="color: #ef4444;">${max}</strong>。
-  最新一期录得 <strong>${latest}</strong>，${growthText}。<br/>💡 ${anomaliesText} ${forecastText} ${crossMetricText}`;
-};
+  最新一期录得 <strong style="color: #ef4444;">${latest}</strong>，${growthText}。<br/>💡 ${anomaliesText} ${forecastText} ${crossMetricText}`;
+}; 

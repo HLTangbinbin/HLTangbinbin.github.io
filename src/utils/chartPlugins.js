@@ -354,7 +354,7 @@ export const MapTimelinePlugin = (option, ctx) => {
             </div>
             
             <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
-              <span style="color: #6B7280;">较上一期</span>
+              <span style="color: #6B7280;">较上一年</span>
               ${growthHtml}
             </div>
 

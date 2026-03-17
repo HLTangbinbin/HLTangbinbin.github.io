@@ -5,7 +5,7 @@ ChartToolbar.vue<template>
       <el-radio-group v-model="store.viewModeDisplay.value" :size="store.controlSize.value" class="no-shrink"
         style="margin-right: 8px;">
         <el-radio-button label="chart">图表</el-radio-button>
-        <el-radio-button label="table">数据</el-radio-button>
+        <el-radio-button label="table">表格</el-radio-button>
         <el-radio-button v-if="store?.isMapSupported?.value" label="map">
         热力图
       </el-radio-button>
