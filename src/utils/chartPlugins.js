@@ -289,7 +289,7 @@ export const MapTimelinePlugin = (option, ctx) => {
     });
 
     return {
-      title: { text: `${metricName} 地域演进 (${td.year})` },
+      title: { text: `${metricName} (${td.year})` },
       series: [{
         data: enrichedData,
         label: {
@@ -309,7 +309,7 @@ export const MapTimelinePlugin = (option, ctx) => {
     grid: { show: false },
     toolbox: { show: true, right: '5%', top: '5%', feature: { restore: { title: '居中还原' } } },
     timeline: {
-      axisType: 'category', autoPlay: false, playInterval: 2000, data: years,
+      axisType: 'category', autoPlay: false, loop: false,playInterval: 1000, data: years,
       bottom: 10, left: 30, right: 30, label: { formatter: '{value} 年' }
     },
     title: { text: `${metricName}`, left: 'center', top: 10, textStyle: { fontSize: 18, color: '#333' } },
@@ -317,11 +317,11 @@ export const MapTimelinePlugin = (option, ctx) => {
     // 🌟 2. UI 风格彻底重构：清新商务白底风 + 红涨绿跌
     tooltip: {
       trigger: 'item',
-      backgroundColor: 'rgba(255, 255, 255, 0.95)', 
-      borderColor: '#E5E7EB', 
+      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+      borderColor: '#E5E7EB',
       borderWidth: 1,
       padding: 14,
-      extraCssText: 'box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-radius: 8px;', 
+      extraCssText: 'box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-radius: 8px;',
       textStyle: { color: '#333' },
       formatter: (params) => {
         if (!params.name || params.value === undefined || isNaN(params.value)) return '';
@@ -330,7 +330,7 @@ export const MapTimelinePlugin = (option, ctx) => {
         const rank = data.rank ? `<span style="background: rgba(0, 194, 168, 0.1); color: #00C2A8; padding: 2px 8px; border-radius: 4px; font-weight: bold;">第 ${data.rank} 名</span>` : '-';
         const ratio = data.ratio || 0;
 
-        let growthHtml = '<span style="color: #9CA3AF;">-</span>'; 
+        let growthHtml = '<span style="color: #9CA3AF;">-</span>';
         if (data.growth !== null && data.growth !== undefined) {
           const gVal = Number(data.growth);
           if (gVal > 0) {
@@ -338,7 +338,7 @@ export const MapTimelinePlugin = (option, ctx) => {
           } else if (gVal < 0) {
             growthHtml = `<span style="color: #10B981; font-weight: bold;">${gVal}% 🔻</span>`;
           } else {
-            growthHtml = `<span style="color: #6B7280;">持平 -</span>`; 
+            growthHtml = `<span style="color: #6B7280;">持平 -</span>`;
           }
         }
 

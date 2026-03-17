@@ -6,7 +6,7 @@
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue';
 import * as echarts from 'echarts/core';
 import { BarChart, LineChart, PieChart, MapChart } from 'echarts/charts';
-import { TitleComponent, GridComponent, TooltipComponent, LegendComponent, TimelineComponent, VisualMapComponent, GeoComponent} from 'echarts/components';
+import { TitleComponent, GridComponent, TooltipComponent, LegendComponent, TimelineComponent, VisualMapComponent, GeoComponent } from 'echarts/components';
 import { CanvasRenderer, SVGRenderer } from 'echarts/renderers';
 import debounce from 'lodash-es/debounce';
 import { logger } from '@/utils/Logger';
@@ -73,14 +73,14 @@ export default {
 
       // 🌟 性能优化核心：缓存上一次悬停的索引
       let lastYearIndex = -1;
-      
+
       chartInstance.on('updateAxisPointer', function (event) {
         const xAxisInfo = event.axesInfo?.[0];
         if (!xAxisInfo) return;
 
 
         const yearIndex = xAxisInfo.value;
-        if (yearIndex === lastYearIndex) return; 
+        if (yearIndex === lastYearIndex) return;
         lastYearIndex = yearIndex;
 
         const pieConfig = props.pieConfig;
@@ -115,6 +115,30 @@ export default {
             }]
           });
         });
+      });
+
+      // 🌟 绝杀拦截器：直接挂载原生事件！
+      chartInstance.on('timelineplaychanged', (params) => {
+        // playState 为 true 代表用户按下了“播放”键
+        if (params.playState) {
+          // 获取当前图表的最新配置状态
+          const currentOption = chartInstance.getOption();
+          if (!currentOption || !currentOption.timeline || currentOption.timeline.length === 0) return;
+
+          const timelineOpt = currentOption.timeline[0];
+          const currentIndex = timelineOpt.currentIndex;
+          const dataLength = timelineOpt.data.length;
+
+          // 核心判断：如果用户点了播放，但当前已经停在最后一年
+          if (currentIndex === dataLength - 1) {
+            // 强行把时间轴的指针拨回第一年 (index: 0)
+            chartInstance.dispatchAction({
+              type: 'timelineChange',
+              currentIndex: 0
+            });
+            // ECharts 收到 playState: true 且 index 变为 0 后，会自动顺畅地往后继续播！
+          }
+        }
       });
 
       if (!resizeHandler) {
