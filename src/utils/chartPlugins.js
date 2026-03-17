@@ -245,40 +245,30 @@ export const LegendFilterPlugin = (option) => {
 // chartPlugins.js 
 
 export const MapTimelinePlugin = (option, ctx) => {
-  // 1. 如果当前不是地图模式，直接放行原有的柱状图/折线图配置
   if (ctx.params.chartType !== 'map') return option;
 
-  // 2. 🛡️ 防弹级解构：外层参数如果丢失，默认给空对象
-  const { mapType, mapTimelineData = {}, metricName = '指标', unit = '' } = ctx.params || {};
-
-  // 3. 🛡️ 核心修复：强制赋予默认空数组！就算上游没传 years 或 timelineData，默认 fallback 到 []
+  const { mapType, mapTimelineData = {}, metricName = '指标'} = ctx.params || {};
   const { years = [], timelineData = [] } = mapTimelineData;
 
-  // 4. 优雅拦截：如果没有有效年份数据，打印警告并放弃渲染 Timeline，绝不报错
-  if (years.length === 0 || timelineData.length === 0) {
-    console.warn('⚠️【大唐地图引擎】拦截到空数据。请核查 dataEngine 是否返回了正确的 { years, timelineData } 结构。');
-    return option;
-  }
+  if (years.length === 0 || timelineData.length === 0) return option;
 
-  // 5. 计算全局最大最小值，用于统一的 VisualMap（热力色带）
+  // 计算最大最小值，确保 visualMap 色带映射准确
   let allValues = [];
   timelineData.forEach(td => {
-    // 🛡️ 再次防弹：确保 td.data 是数组
     if (Array.isArray(td.data)) {
       allValues = allValues.concat(td.data.map(item => Number(item.value) || 0));
     }
   });
-
   const maxVal = allValues.length ? Math.max(...allValues) : 100;
   const minVal = allValues.length ? Math.min(...allValues) : 0;
 
-  // 6. 抛弃原有的 option，重构为 Timeline 结构的 Option
+  // 恢复你最初能用的 baseOption 结构！
   const mapOption = {
     baseOption: {
       timeline: {
         axisType: 'category',
-        autoPlay: true,
-        playInterval: 1500,
+        autoPlay: false,
+        playInterval: 2000,
         data: years,
         bottom: 10,
         left: 30,
@@ -286,19 +276,19 @@ export const MapTimelinePlugin = (option, ctx) => {
         label: { formatter: '{value} 年' }
       },
       title: {
-        text: `${metricName} 地域演进`,
+        text: `${metricName}`,
         left: 'center',
         top: 10,
         textStyle: { fontSize: 18, color: '#333' }
       },
-      tooltip: {
-        trigger: 'item',
-        formatter: (params) => {
-          if (!params.name) return '';
-          const val = params.value !== undefined && !isNaN(params.value) ? params.value : '暂无数据';
-          return `${params.name}<br/>${metricName}: <strong>${val}</strong> ${unit}`;
-        }
-      },
+      // tooltip: {
+      //   trigger: 'item',
+      //   formatter: (params) => {
+      //     if (!params.name) return '';
+      //     const val = params.value !== undefined && !isNaN(params.value) ? params.value : '暂无数据';
+      //     return `${params.name}<br/>${metricName}: <strong>${val}</strong> ${unit}`;
+      //   }
+      // },
       visualMap: {
         min: minVal,
         max: maxVal,
@@ -306,34 +296,55 @@ export const MapTimelinePlugin = (option, ctx) => {
         bottom: '15%',
         text: ['高', '低'],
         calculable: true,
-        inRange: { color: ['#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027'] }
-      },
-      geo: {
-        map: mapType,
-        roam: true,
-        zoom: 1.1,
-        itemStyle: {
-          areaColor: '#f3f4f6',
-          borderColor: '#ffffff'
+        // 主流大厂的经典热力红配色（从浅黄过渡到深血红）
+        inRange: {
+          color: ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026']
         },
-        emphasis: { itemStyle: { areaColor: '#d1d5db' } }
       },
+      // 清除旧图表残留
+      xAxis: { show: false },
+      yAxis: { show: false },
+      grid: { show: false },
+
       series: [
         {
           name: metricName,
           type: 'map',
-          geoIndex: 0,
+          map: mapType,
+          roam: true,
+          zoom: 1.1,
+          itemStyle: {
+            areaColor: '#F3F4F6', // 没有数据的城市统一显示干净的浅灰色
+            borderColor: '#FFFFFF'
+          },
+          label: {
+            show: true,
+            color: '#333333',
+            fontSize: 10,
+            // 🌟 核心：智能拦截！只有带数据的城市才显示名字！
+            formatter: (params) => {
+              if (params.value !== undefined && params.value !== null && !isNaN(params.value)) {
+                return params.name; // 有数据，显示名字
+              }
+              return ''; // 没数据，返回空字符串（不显示）
+            }
+          },
+          emphasis: {
+            label: { show: true },
+            itemStyle: { areaColor: '#FFD700' }
+          },
           data: []
         }
       ]
     },
-    // 将每年切片数据塞入 options 数组
     options: timelineData.map(td => ({
       title: { text: `${metricName} 地域演进 (${td.year})` },
       series: [{ data: td.data }]
     }))
   };
-  // 🌟 新增这一行！强行在根目录挂载一个 series，骗过可能存在的包装器拦截机制！
+
+  // 这一行保留！为了通过你的 Vue 组件 wrapper 校验
   mapOption.series = mapOption.baseOption.series;
+
   return mapOption;
 };
