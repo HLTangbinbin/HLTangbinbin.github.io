@@ -99,7 +99,9 @@ export const selectMapTimelineData = (returndata, zbCode, dbCode = 'nd', yearLim
       .map(d => {
         // 💥 从字典中精确匹配中文地名
         let mappedName = d.cityName || regMap[d.cityCode] || '';
-        mappedName = mappedName + "市"
+        if (mappedName && !/[省市区州盟县]$/.test(mappedName)) {
+          mappedName += "市";
+        }
         // 💥 修正数值提取：把真正的空字符串拦截掉，但保留 0
         let rawVal = typeof d.value === 'object' ? d.value.value : d.value;
         let val = (rawVal === '' || rawVal === null || rawVal === undefined) ? null : Number(rawVal);
