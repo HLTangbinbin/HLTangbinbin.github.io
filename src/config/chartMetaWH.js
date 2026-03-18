@@ -13,7 +13,7 @@ export const WHEducationCharts = {
   charts: [
     {
       id: 'EC',
-      title: '教育(万人)',
+      title: '普通本专科在校学生数(万人)',
       subtitle: '',
       period: 'yearly',
       zbcodeArr: ['A0801'],
