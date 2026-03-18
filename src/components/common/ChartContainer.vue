@@ -55,14 +55,16 @@ const handleToggleAllLegends = () => {
 <style scoped>
 /* 最外层大卡片：控制白底、阴影、圆角和图表之间的间距 */
 .chart-container {
-    width: 95%;
+    width: 98%;
     max-width: 1500px;
-    /* margin-bottom: 20px 就是让图表之间不挨着的关键！ */
     margin: 10px auto 20px;
     padding: 10px;
     background-color: #fff;
     border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    /* 核心修复：增加细微描边，强制勾勒出物理边界，拒绝与背景融合 */
+    border: 1px solid #e2e8f0;
+    /* 稍微收敛阴影的扩散范围并略微增加力度，让卡片悬浮得更扎实 */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     box-sizing: border-box;
 }
 

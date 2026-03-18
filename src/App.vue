@@ -1,7 +1,8 @@
 <template>
   <div class="app-root">
     <h1 class="main-title">大唐统计局</h1>
-    <NavBar :navItems="navItems" basePath="/" />
+    
+    <NavBar :navConfig="navConfig" />
 
     <div v-if="loading" class="loading-overlay">
       <div class="spinner"></div>
@@ -23,15 +24,14 @@ export default {
   data() {
     return {
       loading: true,
-      // 直接从唯一的真理来源 navConfig 中提取顶层菜单，不用手写了！
-      navItems: navConfig.map(item => ({ label: item.label, path: item.path.replace('/', '') }))
+      navConfig 
     };
   },
   async mounted() {
-    // 1. 等待地图物料从网络下载并注册完毕
+    // 等待地图物料从网络下载并注册完毕
     await registerAllMaps();
 
-    // 2. 地图准备就绪后，再关闭全屏 Loading 并放行渲染
+    // 地图准备就绪后，关闭全屏Loading并放行渲染
     setTimeout(() => {
       this.loading = false;
     }, 300);

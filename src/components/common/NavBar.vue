@@ -1,212 +1,225 @@
 <template>
-  <div class="nav-wrapper" ref="wrapper">
-    <nav class="nav-container">
-      <router-link
-        v-for="item in items"
-        :key="item.path"
-        :to="item.fullPath"
-        class="nav-link"
-        :class="{ active: isActive(item.fullPath) }"
-      >
-        {{ item.label }}
-      </router-link>
-    </nav>
+  <div class="super-nav-wrapper">
+    <div class="nav-track scrollable-track" ref="mainTrack">
+
+      <div class="nav-section level-1">
+        <router-link v-for="l1 in navConfig" :key="l1.path" :to="l1.path" class="nav-pill l1-pill"
+          :class="{ active: isL1Active(l1.path) }">
+          {{ l1.label }}
+        </router-link>
+      </div>
+
+      <div class="nav-divider" v-if="currentL2Items.length > 0"></div>
+
+      <div class="nav-section level-2 scrollable-sub-track" v-if="currentL2Items.length > 0">
+        <router-link v-for="l2 in currentL2Items" :key="l2.fullPath" :to="l2.fullPath" class="nav-pill l2-pill"
+          :class="{ active: isL2Active(l2.fullPath) }">
+          {{ l2.label }}
+        </router-link>
+      </div>
+
+      <div class="nav-divider" v-if="currentL3Items.length > 0"></div>
+
+      <div class="nav-section level-3" v-if="currentL3Items.length > 0">
+        <router-link v-for="l3 in currentL3Items" :key="l3.fullPath" :to="l3.fullPath" class="nav-pill l3-pill"
+          active-class="active">
+          {{ l3.label }}
+        </router-link>
+      </div>
+
+    </div>
   </div>
 </template>
 
 <script>
-import { useRoute } from "vue-router";
-import { ref, computed, watch, onMounted, nextTick } from "vue";
+import { computed, watch, nextTick, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default {
   name: "NavBar",
   props: {
-    navItems: { type: Array, required: true },
-    basePath: { type: String, required: true }
+    navConfig: { type: Array, required: true }
   },
   setup(props) {
     const route = useRoute();
-    const wrapper = ref(null);
+    const mainTrack = ref(null);
 
-    const items = computed(() =>
-      props.navItems.map(item => ({
-        ...item,
-        fullPath: `${props.basePath.replace(/\/$/, "")}/${item.path}`
-      }))
-    );
+    const currentL1 = computed(() => {
+      return props.navConfig.find(l1 => {
+        const p = l1.path.startsWith('/') ? l1.path : `/${l1.path}`;
+        return route.path.startsWith(p);
+      }) || props.navConfig[0];
+    });
 
-    const isActive = path => route.path.startsWith(path);
+    const currentL2Items = computed(() => {
+      if (!currentL1.value || !currentL1.value.children) return [];
+      const p1 = currentL1.value.path.startsWith('/') ? currentL1.value.path : `/${currentL1.value.path}`;
+      return currentL1.value.children.map(l2 => ({
+        ...l2,
+        fullPath: `${p1}/${l2.path.replace(/^\//, '')}`
+      }));
+    });
 
+    const currentL3Items = computed(() => {
+      for (const l1 of props.navConfig) {
+        const p1 = l1.path.startsWith('/') ? l1.path : `/${l1.path}`;
+        if (route.path.startsWith(p1) && l1.children) {
+          for (const l2 of l1.children) {
+            const p2 = `${p1}/${l2.path.replace(/^\//, '')}`;
+            if (route.path.startsWith(p2) && l2.children && l2.children.length > 0) {
+              return l2.children.map(l3 => ({
+                ...l3,
+                fullPath: `${p2}/${l3.path.replace(/^\//, '')}`
+              }));
+            }
+          }
+        }
+      }
+      return [];
+    });
+
+    const isL1Active = (path) => {
+      const p = path.startsWith('/') ? path : `/${path}`;
+      return route.path.startsWith(p);
+    };
+
+    const isL2Active = (path) => route.path.startsWith(path);
+    // 智能滚动居中逻辑（彻底修复向左不回滚的问题）
     const scrollToActive = () => {
       nextTick(() => {
-        const wrapperEl = wrapper.value;
-        const activeEl = wrapperEl?.querySelector(".nav-link.active");
-        if (activeEl && wrapperEl) {
-          const offset =
-            activeEl.offsetLeft + activeEl.offsetWidth / 2 - wrapperEl.offsetWidth / 2;
-          wrapperEl.scrollTo({ left: offset, behavior: "smooth" });
-        }
+        const activeEl = document.querySelector('.l3-pill.active') ||
+          document.querySelector('.l2-pill.active') ||
+          document.querySelector('.l1-pill.active');
+
+        if (!activeEl) return;
+
+        // 直接使用浏览器原生 API，无论向左向右，强制在父容器中水平居中平滑滚动！
+        activeEl.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
       });
     };
 
     onMounted(scrollToActive);
     watch(() => route.path, scrollToActive);
 
-    return { wrapper, items, isActive };
+    return { currentL2Items, currentL3Items, isL1Active, isL2Active, mainTrack };
   }
 };
 </script>
 
 <style scoped>
-/* =========================================================
-   🏠 1. 最外层包裹器 (控制整体外边距、横向滚动)
-========================================================= */
-.nav-wrapper {
-  max-width: 1500px;
-  margin: 0 auto;
-  overflow-x: auto;
-  white-space: nowrap;
+.super-nav-wrapper {
   width: 95%;
-  /* 🌟 调整：大幅缩小上下外围的留白 (原 12px 0 16px -> 8px 0 10px) */
-  padding: 8px 0 10px; 
-  -webkit-overflow-scrolling: touch;
-  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: center;
 }
 
-/* 隐藏横向滚动条，保持底部清爽 */
-.nav-wrapper::-webkit-scrollbar {
+.nav-track {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  background: #fff;
+  border-radius: 30px;
+  padding: 12px 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  position: relative;
+  /* 配合 offsetLeft 计算偏移量 */
+}
+
+.nav-section {
+  display: flex;
+  align-items: center;
+}
+
+.level-1 {
+  flex-shrink: 0;
+}
+
+.level-3 {
+  flex-shrink: 0;
+}
+
+.level-2 {
+  flex: 0 1 auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.level-2::-webkit-scrollbar {
   display: none;
 }
 
-/* =========================================================
-   📦 2. 导航条底板 (那个带阴影的白色大圆角胶囊)
-========================================================= */
-.nav-container {
-  display: inline-flex;
-  justify-content: flex-start;
-  align-items: center;
-  /* 🌟 调整：压低白色底板的高度 (原 10px 16px -> 6px 12px) */
-  padding: 8px 14px; 
-  background: #fff;
-  border-radius: 999px; /* 极致圆角 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), 0 -2px 8px rgba(0, 0, 0, 0.02); /* 阴影调弱一点，更显高级 */
-  margin: 0 auto;
+/* 分隔线加粗加深，存在感增强 */
+.nav-divider {
+  width: 2px;
+  height: 22px;
+  background-color: #cbd5e1;
+  border-radius: 2px;
+  margin: 0 12px;
+  flex-shrink: 0;
 }
 
-/* =========================================================
-   🔘 3. 单个导航按钮 (如：GDP、人口、财政)
-========================================================= */
-.nav-link {
-  /* 🌟 调整：压扁按钮本身的高度，拉近文字边缘 (原 10px 20px -> 6px 16px) */
-  padding: 8px 18px; 
-  /* 🌟 调整：缩小按钮之间的左右间隙 (原 0 10px -> 0 4px) */
-  margin: 0 4px; 
-  font-weight: bold;
+/* 统一字体加粗与所有层级的高亮状态 */
+.nav-pill {
+  padding: 6px 16px;
+  margin: 0 3px;
   border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #1e293b; /* 核心修改：从浅灰 #64748b 改为极深炭黑 #1e293b */
   text-decoration: none;
-  color: #000;
-  transition: all 0.3s ease;
-  display: inline-block;
+  white-space: nowrap;
+  transition: all 0.2s ease;
   position: relative;
 }
 
-/* 选中时的状态：青色背景，白色文字 */
-.nav-link.active {
-  background-color: #0bc2d6;
-  color: #fff;
-}
-
-/* 未选中时的悬浮状态：浅蓝背景，青色文字 */
-.nav-link:not(.active):hover {
-  background-color: #f0f9ff;
+.nav-pill:not(.active):hover {
   color: #0bc2d6;
+  background-color: #f8fafc;
 }
 
-/* =========================================================
-   📱 4. 平板端适配 (max-width: 768px)
-========================================================= */
+/* 一切层级激活效果众生平等，保持视觉锚点高度一致 */
+.nav-pill.active {
+  background-color: #0bc2d6 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(11, 194, 214, 0.3) !important;
+}
+
 @media (max-width: 768px) {
-  .nav-wrapper {
-    /* 平板进一步缩小外围留白 */
-    padding: 6px 0 8px; 
+  .super-nav-wrapper {
+    margin: 0 auto 10px;
   }
 
-  .nav-container {
-    /* 平板进一步压扁底板 */
-    padding: 4px 8px; 
-  }
-  
-  .nav-link {
-    /* 平板按钮缩减 */
-    padding: 6px 14px; 
-    margin: 0 2px; /* 按钮挨得更紧 */
-    font-size: 0.9rem; 
-    border-radius: 18px; 
-  }
-}
-
-/* =========================================================
-   📱 5. 移动端小屏适配 (max-width: 480px)
-========================================================= */
-@media (max-width: 480px) {
-  .nav-wrapper {
-    /* 手机端极限压缩外围留白 */
-    padding: 4px 0 6px; 
+  .nav-track {
+    padding: 6px 8px;
+    border-radius: 12px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .nav-container {
-    /* 手机端极限压扁底板 */
-    padding: 4px 6px; 
+  .nav-track::-webkit-scrollbar {
+    display: none;
   }
-  
-  .nav-link {
-    /* 手机端按钮极限缩减 */
-    padding: 4px 12px; 
-    margin: 0 2px; 
-    font-size: 0.85rem; 
-    border-radius: 16px; 
-  }
-}
 
-/* =========================================================
-   👆 6. 触摸目标优化 (隐形扩大点击热区，防误触)
-========================================================= */
-.nav-link::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: calc(100% + 12px); /* 因为间距变小了，热区外扩也适当缩小，防止重叠 */
-  height: calc(100% + 12px);
-}
+  .level-2 {
+    overflow-x: visible;
+  }
 
-/* 平板端热区微调 */
-@media (max-width: 768px) {
-  .nav-link::after {
-    width: calc(100% + 8px);
-    height: calc(100% + 8px);
+  .nav-pill {
+    padding: 5px 14px;
+    font-size: 13px;
+    margin: 0 2px;
   }
-  
-  /* 如果你的 active 带有下方小圆点，这里控制它的大小 */
-  .nav-link.active::before {
-    bottom: -4px;
-    width: 4px;
-    height: 4px;
-  }
-}
 
-/* 手机端热区微调 */
-@media (max-width: 480px) {
-  .nav-link::after {
-    width: calc(100% + 6px);
-    height: calc(100% + 6px);
-  }
-  
-  .nav-link.active::before {
-    bottom: -3px;
-    width: 3px;
-    height: 3px;
+  .nav-divider {
+    margin: 0 8px;
   }
 }
 </style>
