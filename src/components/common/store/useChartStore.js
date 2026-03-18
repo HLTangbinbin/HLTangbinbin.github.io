@@ -181,7 +181,7 @@ export function createChartStore(props) {
     return generateSmartNarrative(chartOption.value, selectedLegend.value);
   });
 
-  const tableEngine = useTableEngine(chartOption, isMobile, props.chart?.title);
+  const tableEngine = useTableEngine(chartOption, isMobile, props.chart?.title, chartIdentityStr);
 
   const toggleCity = (code) => {
     const index = selectedExtraCities.value.indexOf(code);

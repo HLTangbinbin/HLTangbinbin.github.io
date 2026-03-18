@@ -1,9 +1,13 @@
 <template>
   <div class="data-table-wrapper">
+    <div class="table-header-container">
+      <h3 class="chart-table-title">{{ store.props.chart.title || '详细数据表格' }}</h3>
+    </div>
+
     <el-table 
       :key="`table-${store.finalCityCodeArr.value.length}-${store.tableColumns.value.length}`" 
       :data="store.tableData.value"
-      :height="store.chartHeight.value - 40" 
+      :height="store.chartHeight.value - 80" 
       border 
       stripe 
       style="width: 100%"
@@ -31,24 +35,28 @@ const store = inject('chartStore');
 </script>
 
 <style scoped>
+/* 确保外部容器纵向排布，不干扰外部布局 */
 .data-table-wrapper {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
-  /* 🌟 核心修复：上间距 10px，左右 20px，下间距留出充足的 30px */
-  padding: 10px 20px 30px 20px; 
-  box-sizing: border-box;
 }
 
-.data-table-wrapper :deep(.el-table) {
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+/* 标题容器居中对齐，并留出底部呼吸空间 */
+.table-header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 16px;
+  padding-top: 8px;
 }
 
-@media (max-width: 768px) {
-  .data-table-wrapper {
-    /* 移动端紧凑一点，底部留 16px */
-    padding: 4px 4px 16px 4px; 
-  }
+/* 标题文字样式，采用沉稳的深石板色，与你们青色主题搭配非常高级 */
+.chart-table-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e293b; 
+  letter-spacing: 1px;
 }
 </style>
