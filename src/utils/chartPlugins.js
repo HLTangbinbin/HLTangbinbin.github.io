@@ -251,12 +251,14 @@ export const MapTimelinePlugin = (option, ctx) => {
 
   if (years.length === 0 || timelineData.length === 0) return option;
 
-  // 🌟 1. 扫描所有数据，计算绝对极值
+  // 🌟 UI 探针：检测是否为移动端屏幕 (小于 768px 视为移动端)
+  const isMobile = window.innerWidth <= 768;
+
+  // 🌟 1. 扫描所有数据，计算绝对极值与色带翻转逻辑 (已完美修复的底层)
   let allValidValues = [];
   timelineData.forEach(td => {
     if (Array.isArray(td.data)) {
       td.data.forEach(item => {
-        // 允许 0 进入计算池
         if (item.value !== null && item.value !== '' && item.value !== undefined && !isNaN(item.value)) {
           allValidValues.push(Number(item.value));
         }
@@ -272,22 +274,16 @@ export const MapTimelinePlugin = (option, ctx) => {
     const absoluteMin = Math.min(...allValidValues);
     const absoluteMax = Math.max(...allValidValues);
 
-    // 🚀 绝杀 1：强行锚定 0 刻度！
-    // 正数指标（GDP）：min 锁定为 0。遇到 0 数据自动归入最底端。
-    // 负数指标（赤字）：max 锁定为 0。遇到 0 数据自动归入最高端。
     globalMin = Math.min(absoluteMin, 0);
     globalMax = Math.max(absoluteMax, 0);
 
-    // 判断是否为全负数指标（如财政赤字）
     if (absoluteMax <= 0 && absoluteMin < 0) {
       isNegativeMetric = true;
     }
   }
 
-  // 🚀 绝杀 2：智能翻转色带！
   let inRangeColors = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026'];
   if (isNegativeMetric) {
-    // 财政赤字：翻转色带！让最小值(-8202)变红，让最大值(0)变黄！
     inRangeColors.reverse();
   }
 
@@ -303,7 +299,7 @@ export const MapTimelinePlugin = (option, ctx) => {
     const currentYearMax = validData.length > 0 ? validData[0].value : 1;
 
     const enrichedData = td.data.map(item => {
-      // 拦截空数据，原样返回不带 value，防止 ECharts 强行计算
+      // 拦截空数据
       if (item.value === null || item.value === '' || item.value === undefined || isNaN(item.value)) {
         return { name: item.name };
       }
@@ -328,8 +324,7 @@ export const MapTimelinePlugin = (option, ctx) => {
       series: [{
         data: enrichedData,
         label: {
-          show: true, color: '#333333', fontSize: 10,
-          // 🚨 修复港澳幽灵文字：极其严格的 NaN 和空值拦截！
+          show: true, color: '#333333', fontSize: isMobile ? 8 : 10, // 移动端字号稍微调小
           formatter: (p) => (!isNaN(p.value) && p.value !== null && p.value !== '') ? p.name : ''
         },
         emphasis: { label: { show: true, color: '#000000', fontWeight: 'bold' } }
@@ -340,21 +335,54 @@ export const MapTimelinePlugin = (option, ctx) => {
   // 🌟 3. 组装外层配置
   const mapOption = {
     xAxis: { show: false }, yAxis: { show: false }, grid: { show: false },
-    toolbox: { show: true, right: '5%', top: '5%', feature: { restore: { title: '居中还原' } } },
-    timeline: {
-      axisType: 'category', autoPlay: true, loop: false, playInterval: 1000,
-      data: years, bottom: 10, left: 30, right: 30, label: { formatter: '{value} 年' }
-    },
-    title: { text: `${metricName}`, left: 'center', top: 10, textStyle: { fontSize: 18, color: '#333' } },
+    toolbox: { show: !isMobile, right: '5%', top: '5%', feature: { restore: { title: '居中还原' } } }, // 移动端隐藏还原按钮省空间
 
+    // 🎨 UI 升级 3：时间轴全面换装“青色 (Cyan)”主题！
+    timeline: {
+      axisType: 'category', autoPlay: true, loop: false, playInterval: 2000,
+      data: years,
+      bottom: isMobile ? 0 : 10, left: isMobile ? 10 : 30, right: isMobile ? 10 : 30,
+      label: { formatter: '{value} 年', color: '#6B7280', fontSize: isMobile ? 10 : 12 },
+      // 轨道底色
+      lineStyle: { color: '#E5E7EB', width: 2 },
+      // 未激活的节点
+      itemStyle: { color: '#E5E7EB', borderColor: '#E5E7EB' },
+      // 核心：当前激活的播放点（大圆圈）和光晕
+      checkpointStyle: {
+        color: '#00C2A8',
+        borderColor: 'rgba(0, 194, 168, 0.25)',
+        borderWidth: 5,
+        symbolSize: isMobile ? 10 : 14
+      },
+      // 核心：播放过的轨道颜色
+      progress: {
+        lineStyle: { color: '#00C2A8', width: 2 },
+        itemStyle: { color: '#00C2A8', borderColor: '#00C2A8' }
+      },
+      // 播放控制按钮 (左侧那个播放/暂停)
+      controlStyle: {
+        showNextBtn: false, showPrevBtn: false, // 隐藏多余的前进后退按钮，保持界面极简
+        color: '#9CA3AF', borderColor: '#9CA3AF',
+        itemSize: isMobile ? 14 : 20
+      }
+    },
+
+    title: { text: `${metricName}`, left: 'center', top: isMobile ? 0 : 10, textStyle: { fontSize: isMobile ? 15 : 18, color: '#333' } },
+
+    // 🎨 UI 升级 2：响应式 visualMap 柱子！
     visualMap: {
       type: 'continuous',
       min: globalMin,
       max: globalMax,
       precision: (globalMax - globalMin) <= 20 ? 2 : 0,
-      left: '5%', bottom: '15%', calculable: true, text: ['高', '低'],
-      // 挂载我们计算好的自适应颜色带
-      inRange: { color: inRangeColors }
+      calculable: true, text: ['高', '低'],
+      inRange: { color: inRangeColors },
+      // 根据屏幕宽度自动调整热力图柱子的高度和粗细
+      itemHeight: isMobile ? 80 : 120,
+      itemWidth: isMobile ? 10 : 16,
+      left: isMobile ? '2%' : '5%',
+      bottom: isMobile ? '10%' : '15%',
+      textStyle: { color: '#6B7280', fontSize: isMobile ? 10 : 12 }
     },
 
     tooltip: {
@@ -363,9 +391,7 @@ export const MapTimelinePlugin = (option, ctx) => {
       extraCssText: 'box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-radius: 8px;',
       textStyle: { color: '#333' },
       formatter: (params) => {
-        if (params.componentType !== 'series') return `<div style="padding: 4px 8px; font-weight: bold;">${params.name} 年</div>`;
-
-        // 严格拦截空数据，不展示 Tooltip
+        if (params.componentType !== 'series') return;
         if (params.value === undefined || params.value === null || params.value === '' || isNaN(params.value)) return '';
 
         const data = params.data || {};
@@ -406,9 +432,20 @@ export const MapTimelinePlugin = (option, ctx) => {
     },
 
     series: [{
-      name: metricName, type: 'map', map: mapType, roam: false, zoom: 1.1, top: '18%',
-      itemStyle: { areaColor: '#F3F4F6', borderColor: '#FFFFFF' },
-      emphasis: { itemStyle: { areaColor: '#FFD700' } },
+      name: metricName, type: 'map', map: mapType, roam: false,
+      zoom: isMobile ? 1.2 : 1.15, // 移动端稍微放大一点地图
+      top: isMobile ? '12%' : '15%',
+      bottom: isMobile ? '10%' : '15%',
+      // 🎨 UI 升级 1：给地图本体加上“立体投影”阴影效果！打破白底单调！
+      itemStyle: {
+        areaColor: '#F3F4F6',
+        borderColor: '#FFFFFF',
+        borderWidth: 1,
+        shadowColor: 'rgba(0, 0, 0, 0.12)', // 极具大厂质感的浅色投影
+        shadowBlur: 15,
+        shadowOffsetY: 8
+      },
+      emphasis: { itemStyle: { areaColor: '#FFD700', shadowColor: 'rgba(0,0,0,0.2)', shadowBlur: 20 } },
       data: []
     }],
     options: enrichedOptions
