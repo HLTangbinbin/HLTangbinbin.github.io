@@ -47,6 +47,18 @@ body {
   padding: 0;
   height: 100%;
 }
+/* 禁止文字选中 */
+body, html, #app {
+  user-select: none;       /* 标准 */
+  -webkit-user-select: none; /* Safari/Chrome */
+  -moz-user-select: none;  /* Firefox */
+  -ms-user-select: none;   /* IE/Edge */
+}
+
+/* 禁止右键菜单（可选） */
+body, html, #app {
+  -webkit-touch-callout: none; /* iOS Safari */
+}
 
 *,
 *::before,
