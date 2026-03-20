@@ -1,5 +1,6 @@
 import { params_wh } from '@/config/apiParams.js';
 
+
 const AREA_ND_CODES = ['A0502','A0503','A0504','A0505','A0506','A0507','A0508','A0509','A050A','A050B','A050C','A050D','A050E','A050F','A050G','A050H'];
 const AREA_YD_CODES = ['A0102','A0103','A0104','A0105','A0106','A0107','A0108','A0109','A010A','A010B','A010C','A010D','A010E','A010F','A010G','A010H'];
 
@@ -7,7 +8,7 @@ const AREA_YD_CODES = ['A0102','A0103','A0104','A0105','A0106','A0107','A0108','
 export const WHEducationCharts = {
 
   source: {
-    localJson: './json/wh.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -29,7 +30,7 @@ export const WHEducationCharts = {
 export const WHFinanceCharts = {
 
   source: {
-    localJson: './json/wh.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -59,7 +60,7 @@ export const WHFinanceCharts = {
 export const WHGDPCharts = {
 
   source: {
-    localJson: './json/wh.json',
+   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -89,7 +90,7 @@ export const WHGDPCharts = {
 export const WHMedicalCharts = {
 
   source: {
-    localJson: './json/wh.json',
+   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -111,7 +112,7 @@ export const WHMedicalCharts = {
 export const WHPopulationCharts = {
 
   source: {
-    localJson: './json/wh.json',
+   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -133,7 +134,7 @@ export const WHPopulationCharts = {
 export const WHRealEstateInvestCharts = {
 
   source: {
-    localJson: './json/wh.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -155,7 +156,7 @@ export const WHRealEstateInvestCharts = {
 export const WHRealEstateSellCharts = {
 
   source: {
-    localJson: './json/wh.json',
+   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -188,7 +189,7 @@ export const WHRealEstateSellCharts = {
 export const WHNewHouseCharts = {
 
   source: {
-    localJson: './json/wh.json',
+   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -264,7 +265,7 @@ export const WHNewHouseCharts = {
 export const WHSecondHouseCharts = {
 
   source: {
-    localJson: './json/wh.json',
+   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
     apiParams: params_wh
   },
   charts: [

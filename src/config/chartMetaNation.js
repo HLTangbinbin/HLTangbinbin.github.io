@@ -5,6 +5,7 @@ import {
   params_transportationAndTelecommunications
 } from '@/config/apiParams.js';
 
+
 const AGE_CODES = [
   'A03060102', 'A03060103', 'A03060104', 'A03060105',
   'A03060106', 'A03060107', 'A03060108', 'A03060109',
@@ -30,7 +31,7 @@ const Eductor_CODES = [
 export const FinancialCurrencyCharts = {
 
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_financialIndustry
   },
   charts: [
@@ -85,7 +86,7 @@ export const FinancialCurrencyCharts = {
 export const FinancialSocialFinancingCharts = {
 
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_financialIndustry
   },
   charts: [
@@ -105,7 +106,7 @@ export const FinancialSocialFinancingCharts = {
 export const FinancialSecurityCharts = {
 
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_financialIndustry
   },
   charts: [
@@ -137,7 +138,7 @@ export const FinancialSecurityCharts = {
 export const FinancialInsuranceCharts = {
 
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_financialIndustry
   },
   charts: [
@@ -167,7 +168,7 @@ export const FinancialInsuranceCharts = {
 };
 export const EducationSchoolCharts = {
   source: {
-    localJson: './json/nation.json', // ✅ 根据实际路径调整
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`, // ✅ 根据实际路径调整
     apiParams: params_education // ✅ 替换为你的API参数对象
   },
   charts: [
@@ -209,7 +210,7 @@ export const EducationSchoolCharts = {
 };
 export const EducationTeacherCharts = {
   source: {
-    localJson: './json/nation.json', // ✅ 根据实际路径调整
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`, // ✅ 根据实际路径调整
     apiParams: params_education // ✅ 替换为你的API参数对象
   },
   charts: [
@@ -234,7 +235,7 @@ export const EducationTeacherCharts = {
 };
 export const EducationStudentCharts = {
   source: {
-    localJson: './json/nation.json', // ✅ 根据实际路径调整
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`, // ✅ 根据实际路径调整
     apiParams: params_education // ✅ 替换为你的API参数对象
   },
   charts: [
@@ -349,7 +350,7 @@ export const EducationStudentCharts = {
 
 export const ForeignTradeCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_foreignTrade
   },
   charts: [
@@ -458,7 +459,7 @@ export const ForeignTradeCharts = {
 
 export const GDPCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_gdp
   },
   charts: [
@@ -486,7 +487,7 @@ export const GDPCharts = {
 
 export const IndicesCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_indices
   },
   charts: [
@@ -520,7 +521,7 @@ export const IndicesCharts = {
 
 export const LivingStandardsCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_livingStandards
   },
   charts: [
@@ -579,7 +580,7 @@ export const LivingStandardsCharts = {
 
 export const MarriageCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_marriage
   },
   charts: [
@@ -617,7 +618,7 @@ export const MarriageCharts = {
 
 export const MedicalCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_medical
   },
   charts: [
@@ -660,7 +661,7 @@ export const MedicalCharts = {
 
 export const NationalFinanceCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_nationalFinance
   },
   charts: [
@@ -782,7 +783,7 @@ export const NationalFinanceCharts = {
 
 export const PopulationBasicCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_population
   },
   charts: [
@@ -861,7 +862,7 @@ export const PopulationBasicCharts = {
 };
 export const PopulationSpotCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_population
   },
   charts: [
@@ -927,7 +928,7 @@ export const PopulationSpotCharts = {
 
 export const RealEstateInvestCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_realEstate_invest
   },
   charts: [
@@ -987,7 +988,7 @@ export const RealEstateInvestCharts = {
 
 export const RealEstateSaleCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_realEstate_sell
   },
   charts: [
@@ -1096,7 +1097,7 @@ export const RealEstateSaleCharts = {
 
 export const SocialRetailgoodsCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_socialretailgoods
   },
   charts: [
@@ -1202,7 +1203,7 @@ export const SocialRetailgoodsCharts = {
 
 export const AccommodationAndCateringIndustryCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_accommodationAndCatering
   },
   charts: [
@@ -1244,7 +1245,7 @@ export const AccommodationAndCateringIndustryCharts = {
 
 export const TouristIndustryCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_touristIndustry
   },
   charts: [
@@ -1275,7 +1276,7 @@ export const TouristIndustryCharts = {
 
 export const TransportationAndTelecommunicationsCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/nation.json`,
     apiParams: params_transportationAndTelecommunications
   },
   charts: [
