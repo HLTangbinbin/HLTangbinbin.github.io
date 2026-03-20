@@ -8,16 +8,15 @@ const PROVINCE_CODES = [
   '500000', '510000',];
 
 /// 中国大陆 31 个省级行政区完整 code 列表
-const ALL_PROVINCE_CODES = [
-  '110000', '120000', '130000', '140000', '150000', '210000', '220000', '230000', '310000', '320000', 
-  '330000', '340000', '350000', '360000', '370000', '410000', '420000', '430000', '440000', '450000', 
-  '460000', '500000', '510000', '520000', '530000', '540000', '610000', '620000', '630000', '640000', 
-  '650000'
-];
+const ALL_PROVINCE_CODES = [{"code":"110000","cname":"北京市"},{"code":"120000","cname":"天津市"},{"code":"130000","cname":"河北省"},{"code":"140000","cname":"山西省"},{"code":"150000","cname":"内蒙古自治区"},{"code":"210000","cname":"辽宁省"} ,
+  {"code":"220000","cname":"吉林省"},{"code":"230000","cname":"黑龙江省"},{"code":"310000","cname":"上海市"},{"code":"320000","cname":"江苏省"},{"code":"330000","cname":"浙江省"},{"code":"340000","cname":"安徽省"} ,
+  {"code":"350000","cname":"福建省"},{"code":"360000","cname":"江西省"},{"code":"370000","cname":"山东省"},{"code":"410000","cname":"河南省"},{"code":"420000","cname":"湖北省"},{"code":"430000","cname":"湖南省"} ,
+  {"code":"440000","cname":"广东省"},{"code":"450000","cname":"广西壮族自治区"},{"code":"460000","cname":"海南省"},{"code":"500000","cname":"重庆市"},{"code":"510000","cname":"四川省"},{"code":"520000","cname":"贵州省"} ,
+  {"code":"530000","cname":"云南省"},{"code":"540000","cname":"西藏自治区"},{"code":"610000","cname":"陕西省"},{"code":"620000","cname":"甘肃省"},{"code":"630000","cname":"青海省"},{"code":"640000","cname":"宁夏回族自治区"},{"code":"650000","cname":"新疆维吾尔自治区"}]
 
 // 🌟 同步计算：过滤出除了核心省份之外的其余省份
 export const ADD_PROVINCE_CODES = ALL_PROVINCE_CODES.filter(
-  code => !PROVINCE_CODES.includes(code)
+  city => !PROVINCE_CODES.includes(city.code)
 );
 
 export const ProvincialEducationCharts = {

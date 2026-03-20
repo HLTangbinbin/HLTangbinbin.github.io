@@ -16,7 +16,7 @@ export const registerAllMaps = async () => {
     // 使用 Promise.all 并发发起 1 个请求，极致压缩加载时间
     // 注意：这里的路径以 / 开头，代表直接访问 public 目录下的文件
     const [provinceRes] = await Promise.all([
-      axios.get('/json/geo_province.json'),
+      axios.get(`${process.env.VUE_APP_DATA_BASE_URL}/geo_province.json`),
     ]);
 
     // 拿到数据后，注册到 ECharts
