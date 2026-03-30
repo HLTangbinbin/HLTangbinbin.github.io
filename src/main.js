@@ -14,6 +14,9 @@ const app = createApp(App)
 // 全局挂载性能监控
 app.config.globalProperties.$performance = performanceMonitor
 window.performanceMonitor = performanceMonitor
+window.router = router
+performanceMonitor.start()
+performanceMonitor.observeNavigation(router)
 
 // 路由性能监控
 router.beforeEach((to, from, next) => {
@@ -52,4 +55,3 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.mount('#app')
-

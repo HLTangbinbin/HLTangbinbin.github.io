@@ -2,7 +2,10 @@ const logLevels = ['debug', 'info', 'warn', 'error'];
 
 // 默认：生产环境日志等级为 warn，开发环境为 debug
 const defaultLevel = process.env.NODE_ENV === 'production' ? 'warn' : 'debug';
-const currentLevel = process.env.debug_LEVEL || defaultLevel;
+const envLogLevel = process.env.VUE_APP_DEBUG_LEVEL
+  || process.env.DEBUG_LEVEL
+  || process.env.debug_LEVEL;
+const currentLevel = logLevels.includes(envLogLevel) ? envLogLevel : defaultLevel;
 
 function shouldLog(level) {
   return logLevels.indexOf(level) >= logLevels.indexOf(currentLevel);
@@ -30,15 +33,14 @@ export const logger = {
     }
   },
   time: (...args) => {
-    if (shouldLog('time')) {
+    if (shouldLog('info')) {
       console.time('[INFO]', ...args);
     }
   },
   timeEnd: (...args) => {
-    if (shouldLog('timeEnd')) {
+    if (shouldLog('info')) {
       console.timeEnd('[INFO]', ...args);
     }
   },
 };
-
 

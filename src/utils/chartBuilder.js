@@ -75,7 +75,7 @@ class ChartBuilder {
   }
 
   buildBaseOption() {
-    const { title, subtitle, isHorizontal, legendAllSelected, gridTop = '140px', legendTop = '70px', unit = '', isMobile, titleTop = '15px' } = this.params;
+    const { title, subtitle, isHorizontal, legendAllSelected, linkedLegend, gridTop = '140px', legendTop = '70px', unit = '', isMobile, titleTop = '15px' } = this.params;
     
     const valueAxisConfig = {
       type: 'value', scale: true,
@@ -84,6 +84,11 @@ class ChartBuilder {
       axisLabel: { formatter: (v) => v.toFixed(Math.abs(v) >= 1 ? 2 : 3) + unit },
     };
     const categoryAxisConfig = { type: 'category', data: [...this.ctx.filteredYears] };
+
+    const baseLegendData = this.ctx.seriesData.map(s => s.name);
+    const linkedSelectedMap = linkedLegend && baseLegendData.includes(linkedLegend)
+      ? baseLegendData.reduce((acc, name) => ({ ...acc, [name]: name === linkedLegend }), {})
+      : baseLegendData.reduce((acc, name) => ({ ...acc, [name]: !!legendAllSelected }), {});
 
     return {
       title: {
@@ -98,8 +103,8 @@ class ChartBuilder {
       },
       legend: { 
         type: 'scroll', left: 'center', top: legendTop, 
-        data: this.ctx.seriesData.map(s => s.name), 
-        selected: legendAllSelected ? this.ctx.seriesData.reduce((acc, s) => ({ ...acc, [s.name]: true }), {}) : {} 
+        data: baseLegendData, 
+        selected: linkedSelectedMap
       },
       grid: { left: '1%', right: '1%', top: gridTop, bottom: '1%', containLabel: true },
       xAxis: isHorizontal ? valueAxisConfig : categoryAxisConfig,

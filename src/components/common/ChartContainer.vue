@@ -1,27 +1,30 @@
 <template>
-    <div class="chart-container">
-        <ChartToolbar @toggleAllLegends="handleToggleAllLegends" />
+  <div class="chart-container">
+    <ChartToolbar @toggleAllLegends="handleToggleAllLegends" />
 
-        <CityDrawer />
+    <CityDrawer />
 
-        <SmartNarrativePanel />
+    <SmartNarrativePanel />
 
-        <div class="chart-card" :style="{ height: chartStore.chartHeight.value + 'px' }">
+    <div class="chart-card" :style="{ height: chartStore.chartHeight.value + 'px' }">
+      <ChartView
+        v-if="chartStore.viewModeDisplay.value === 'chart' || chartStore.viewModeDisplay.value === 'map'"
+        ref="echartsInstanceRef"
+        :option="chartStore.chartOption.value"
+        :chartId="chart.id"
+        :initSelectAll="chartStore.legendAllSelected.value"
+        :pieConfig="chartStore.isYearlyCompare.value ? null : chart.pieConfig"
+        @legendStateChange="chartStore.legendAllSelected.value = $event"
+        @dataPointClick="handleDataPointClick"
+      />
 
-            <ChartView v-if="chartStore.viewModeDisplay.value === 'chart' || chartStore.viewModeDisplay.value === 'map'"
-                ref="echartsInstanceRef" :option="chartStore.chartOption.value" :chartId="chart.id"
-                :initSelectAll="chartStore.legendAllSelected.value"
-                :pieConfig="chartStore.isYearlyCompare.value ? null : chart.pieConfig"
-                @legendStateChange="chartStore.legendAllSelected.value = $event" />
-
-            <DataTableView v-else-if="chartStore.viewModeDisplay.value === 'table'" />
-
-        </div>
+      <DataTableView v-else-if="chartStore.viewModeDisplay.value === 'table'" />
     </div>
+  </div>
 </template>
 
 <script setup>
-import { provide, ref, defineProps } from 'vue';
+import { provide, ref, defineEmits, defineProps } from 'vue';
 import { createChartStore } from './store/useChartStore.js';
 import ChartToolbar from './components/ChartToolbar.vue';
 import CityDrawer from './components/CityDrawer.vue';
@@ -30,11 +33,13 @@ import DataTableView from './components/DataTableView.vue';
 import ChartView from './ChartView.vue'; // 用户底层的 ECharts 包装器
 
 const props = defineProps({
-    chart: { type: Object, required: true },
-    returnData: { type: Object, required: true, default: () => ({}) },
-    config: { type: Object, default: () => ({}) },
-    viewMode: { type: String, default: 'monthly' }
+  chart: { type: Object, required: true },
+  returnData: { type: Object, required: true, default: () => ({}) },
+  config: { type: Object, default: () => ({}) },
+  viewMode: { type: String, default: 'monthly' },
+  linkedSelection: { type: Object, default: () => null }
 });
+const emit = defineEmits(['linkSelect']);
 
 // 初始化当前图表实例的唯一真理之源
 const chartStore = createChartStore(props);
@@ -45,10 +50,18 @@ provide('chartStore', chartStore);
 // 获取 ECharts 组件实例，用于触发内部方法
 const echartsInstanceRef = ref(null);
 const handleToggleAllLegends = () => {
-    chartStore.legendAllSelected.value = !chartStore.legendAllSelected.value;
-    if (echartsInstanceRef.value) {
-        echartsInstanceRef.value.toggleAllLegends(chartStore.legendAllSelected.value);
-    }
+  chartStore.legendAllSelected.value = !chartStore.legendAllSelected.value;
+  if (echartsInstanceRef.value) {
+    echartsInstanceRef.value.toggleAllLegends(chartStore.legendAllSelected.value);
+  }
+};
+
+const handleDataPointClick = (payload) => {
+  emit('linkSelect', {
+    ...payload,
+    chartId: props.chart?.id,
+    chartTitle: props.chart?.title || '当前图表'
+  });
 };
 </script>
 

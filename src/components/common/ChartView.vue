@@ -21,7 +21,7 @@ export default {
     pieConfig: { type: Object, default: () => ({}) },
     initSelectAll: { type: Boolean, default: true }
   },
-  emits: ['legendStateChange'],
+  emits: ['legendStateChange', 'dataPointClick'],
   setup(props, { expose, emit }) {
     const chartContainer = ref(null);
     let chartInstance = null;
@@ -69,6 +69,24 @@ export default {
         const noneSelected = Object.values(params.selected).every(v => v === false);
         if (allSelected) emit('legendStateChange', true);
         else if (noneSelected) emit('legendStateChange', false);
+      });
+
+      chartInstance.on('click', (params) => {
+        const legends = props.option?.originalLegendData || props.option?.legend?.data || [];
+        let linkValue = '';
+
+        if (params?.seriesType === 'map') {
+          linkValue = String(params.name || '').trim();
+        } else if (legends.length > 1) {
+          linkValue = String(params.seriesName || '').trim();
+        }
+
+        if (!linkValue) return;
+
+        emit('dataPointClick', {
+          value: linkValue,
+          sourceType: params?.seriesType || 'series'
+        });
       });
 
       // 🌟 性能优化核心：缓存上一次悬停的索引

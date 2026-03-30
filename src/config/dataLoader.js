@@ -1,5 +1,6 @@
 // utils/dataLoader.js
 import { sendRequest } from '@/utils/dataEngine.js';
+import { getDataSourceMode, resolveDataJsonUrl } from '@/config/dataSource.js';
 import { logger } from '@/utils/Logger.js';
 // 🌟 核心修复：引入了你写好的完美单例加载器
 import { loadJsonOnce } from '@/utils/loadJsonOnce.js'; 
@@ -22,9 +23,10 @@ const performanceMetrics = {
 
 export async function loadChartData({ localJson, apiParams }, options = {}) {
   const { forceRefresh = false } = options;
-  
-  const isLocal = process.env.VUE_APP_REQUEST_IS_LOCAL === 'true';
-  const cacheKey = isLocal ? localJson : JSON.stringify(apiParams);
+  const sourceMode = getDataSourceMode();
+  const jsonUrl = resolveDataJsonUrl(localJson);
+  const shouldUseJson = Boolean(jsonUrl) && (sourceMode === 'local' || sourceMode === 'remote');
+  const cacheKey = shouldUseJson ? jsonUrl : JSON.stringify(apiParams);
 
   if (!forceRefresh && dataCache[cacheKey]) {
     const { data, time } = dataCache[cacheKey];
@@ -52,10 +54,10 @@ export async function loadChartData({ localJson, apiParams }, options = {}) {
   try {
     let result;
     
-    if (isLocal) {
+    if (shouldUseJson) {
       // 🌟 核心修复：使用 loadJsonOnce 彻底阻断并发网络请求！
       // 无论多少个图表同时索要数据，浏览器网络面板里永远只有一个 fetch！
-      result = await loadJsonOnce(localJson);
+      result = await loadJsonOnce(jsonUrl);
     } else {
       result = await sendRequest(apiParams);
     }
@@ -96,7 +98,7 @@ export async function smartPreload(configs, options = {}) {
       const batch = remainingConfigs.slice(i, i + maxConcurrent);
       await Promise.allSettled(
         batch.map(config => {
-          const cacheKey = config.source.localJson || JSON.stringify(config.source.apiParams);
+          const cacheKey = resolveDataJsonUrl(config.source.localJson) || JSON.stringify(config.source.apiParams);
           preloadQueue.add(cacheKey);
           preloadStatus.set(cacheKey, 'loading');
           

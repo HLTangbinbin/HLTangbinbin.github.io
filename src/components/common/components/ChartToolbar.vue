@@ -1,4 +1,4 @@
-ChartToolbar.vue<template>
+<template>
   <div class="bi-toolbar">
     <div class="toolbar-group view-group">
       <div class="group-label"><i class="el-icon-menu"></i> 视图</div>

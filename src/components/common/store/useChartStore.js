@@ -77,6 +77,11 @@ export function createChartStore(props) {
   const showCompareToggle = computed(() => isMonthlyChart.value && currentChartType.value === 'line' && !isHorizontal.value);
   const showLegendSelector = computed(() => legendList.value.length > 1 && (isYearlyCompare.value || showOffsetControls.value || enableSmartAnalysis.value));
   const showOffsetControls = computed(() => props.chart?.enableOffset === true && currentChartType.value === 'line' && !isHorizontal.value && !isYearlyCompare.value);
+  const linkedLegend = computed(() => {
+    const value = String(props.linkedSelection?.value || '').trim();
+    if (!value) return null;
+    return legendNames.value.includes(value) ? value : null;
+  });
 
   const currentExtraCityPool = computed(() => {
     const hasSplitConfig = props.config?.needAddCityCodeArr_yd || props.config?.needAddCityCodeArr_nd;
@@ -144,6 +149,7 @@ export function createChartStore(props) {
       isHorizontal: isHorizontal.value,
       isYearlyCompare: isMonthlyChart.value ? isYearlyCompare.value : false,
       selectedLegend: selectedLegend.value,
+      linkedLegend: linkedLegend.value,
       offsetValue: offsetValue.value,
       pieConfig: isPieActiveVal ? props.chart?.pieConfig : null,
       enableBirthOffset: props.chart?.enableBirthOffset || false,
@@ -151,17 +157,14 @@ export function createChartStore(props) {
       enableSmartAnalysis: enableSmartAnalysis.value,
       mapType: mapType.value,
     });
-    // 🌟 终极防弹级修复：一键反选时，从物理层面抽干辅助线的数据！
     if (finalOption.legend && finalOption.series) {
-      // 每次重新计算 Option 时，重置状态字典
-      finalOption.legend.selected = {};
+      const legendData = finalOption.legend.data || [];
+      const activeLegend = linkedLegend.value;
 
-      finalOption.series.forEach(s => {
-        // 核心：不管是主线还是辅助的趋势线、扇形区间
-        // 统统与 legendAllSelected 的真假值强行绑定！
-        // 点“反选”(false) 就全灭，点“全选”(true) 就全亮，绝对不留一丝死角！
-        finalOption.legend.selected[s.name] = legendAllSelected.value;
-      });
+      finalOption.legend.selected = legendData.reduce((acc, name) => {
+        acc[name] = activeLegend ? name === activeLegend : legendAllSelected.value;
+        return acc;
+      }, {});
     }
 
     return finalOption;
@@ -169,7 +172,7 @@ export function createChartStore(props) {
 
   watch(chartOption, (newOption) => {
     legendNames.value = newOption?.originalLegendData || newOption?.legend?.data || [];
-    if (!legendNames.value.includes(selectedLegend.value) && legendNames.value.length > 0) {
+    if (selectedLegend.value && !legendNames.value.includes(selectedLegend.value) && legendNames.value.length > 0) {
       selectedLegend.value = legendNames.value[0];
     }
   }, { immediate: true });
@@ -178,7 +181,7 @@ export function createChartStore(props) {
 
   const smartNarrative = computed(() => {
     if (!enableSmartAnalysis.value || viewModeDisplay.value !== 'chart') return '';
-    return generateSmartNarrative(chartOption.value, selectedLegend.value);
+    return generateSmartNarrative(chartOption.value, linkedLegend.value || selectedLegend.value);
   });
 
   const tableEngine = useTableEngine(chartOption, isMobile, props.chart?.title, chartIdentityStr);
@@ -202,7 +205,7 @@ export function createChartStore(props) {
     enableSmartAnalysis, isDrawerVisible, searchKeyword, selectedExtraCities,
     isProvince, finalCityCodeArr, showCityAddToggle, filteredCities, getCityName, toggleCity,
     showSmartAnalysisToggle, showCompareToggle, showLegendSelector, showOffsetControls, legendList,
-    chartOption, smartNarrative, mapType, isMapSupported,
+    chartOption, smartNarrative, mapType, isMapSupported, linkedLegend,
     ...tableEngine
   };
 }

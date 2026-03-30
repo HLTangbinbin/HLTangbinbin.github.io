@@ -22,9 +22,6 @@ class PerformanceMonitor {
     // 监控页面加载性能
     this.observePageLoad();
     
-    // 监控路由切换性能
-    this.observeNavigation();
-    
     // 监控内存使用
     this.observeMemory();
     
@@ -70,29 +67,32 @@ class PerformanceMonitor {
   }
 
   // 监控路由切换性能
-  observeNavigation() {
-    if (window.router) {
-      const originalPush = window.router.push;
-      window.router.push = function(...args) {
+  observeNavigation(router) {
+    if (this._routerObserverAttached || !router?.push) return;
+
+    const originalPush = router.push.bind(router);
+    router.push = (...args) => {
         const startTime = performance.now();
-        const result = originalPush.apply(this, args);
-        
-        result.then(() => {
+        const fromPath = router.currentRoute.value?.path;
+        const result = originalPush(...args);
+
+        Promise.resolve(result).then(() => {
           const endTime = performance.now();
           const metrics = {
             timestamp: Date.now(),
             type: 'navigation',
-            from: window.router.currentRoute.value?.path,
+            from: fromPath,
             to: args[0],
             duration: endTime - startTime
           };
-          
+
           this.recordMetric('navigation', metrics);
         });
-        
+
         return result;
-      }.bind(this);
-    }
+      };
+
+    this._routerObserverAttached = true;
   }
 
   // 监控内存使用

@@ -25,9 +25,10 @@ export const ComparePlugin = (option, ctx) => {
   const newSeries = [];
   const legendData = [];
 
+  const focusLegend = ctx.params.linkedLegend || ctx.params.selectedLegend;
   let targetSeriesData = ctx.seriesData;
-  if (ctx.params.selectedLegend && ctx.seriesData.length > 1) {
-    targetSeriesData = ctx.seriesData.filter(s => s.name === ctx.params.selectedLegend);
+  if (focusLegend && ctx.seriesData.length > 1) {
+    targetSeriesData = ctx.seriesData.filter(s => s.name === focusLegend);
     if (targetSeriesData.length === 0) targetSeriesData = [ctx.seriesData[0]];
   }
 
@@ -79,7 +80,7 @@ export const SmartAnalysisPlugin = (option, ctx) => {
   }
 
   const trendLines = [];
-  const focusedLegend = ctx.params.selectedLegend;
+  const focusedLegend = ctx.params.linkedLegend || ctx.params.selectedLegend;
 
   option.series.forEach(s => {
     if (s.type === 'line' || s.type === 'bar') {
