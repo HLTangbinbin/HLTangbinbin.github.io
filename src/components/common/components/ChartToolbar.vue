@@ -128,11 +128,11 @@ defineEmits(['toggleAllLegends']);
 .toolbar-group {
   display: flex;
   align-items: center;
-  background: #fff;
+  background: var(--bg-card);
   padding: 0 14px;
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-soft);
   gap: 12px;
   flex: 0 1 auto;
   min-width: 0;
@@ -145,19 +145,19 @@ defineEmits(['toggleAllLegends']);
 .group-label {
   font-size: 15px;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   gap: 6px;
   padding-right: 12px;
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid var(--border-default);
   flex-shrink: 0;
 }
 
 .split-line {
   width: 1px;
   height: 18px;
-  background-color: #cbd5e1;
+  background-color: var(--border-strong);
   margin: 0 4px;
   flex-shrink: 0;
 }
@@ -191,8 +191,8 @@ defineEmits(['toggleAllLegends']);
   padding: 0 12px !important;
   border-radius: 10px !important;
   box-shadow: none !important;
-  border: 1px solid #e2e8f0 !important;
-  background-color: transparent !important;
+  border: 1px solid var(--border-default) !important;
+  background-color: var(--bg-card) !important;
   box-sizing: border-box !important;
   display: flex !important;
   align-items: center !important;
@@ -200,7 +200,7 @@ defineEmits(['toggleAllLegends']);
 
 .legend-select :deep(.el-input__wrapper.is-focus),
 .legend-select :deep(.el-select__wrapper.is-focused) {
-  border-color: #0bc2d6 !important;
+  border-color: var(--color-accent) !important;
   box-shadow: none !important;
 }
 
@@ -208,7 +208,7 @@ defineEmits(['toggleAllLegends']);
 .legend-select :deep(.el-select__placeholder) {
   font-size: 14px !important;
   font-weight: 600 !important;
-  color: #475569 !important;
+  color: var(--text-secondary) !important;
   line-height: normal !important;
 }
 
@@ -234,7 +234,7 @@ defineEmits(['toggleAllLegends']);
 .ctrl-text {
   font-size: 14px;
   font-weight: 600;
-  color: #475569;
+  color: var(--text-secondary);
   flex-shrink: 0;
 }
 
@@ -245,7 +245,7 @@ defineEmits(['toggleAllLegends']);
 .ctrl-val {
   font-size: 14px;
   font-weight: 600;
-  color: #475569;
+  color: var(--text-secondary);
   min-width: 24px;
   margin-left: 10px;
   text-align: left;
@@ -272,26 +272,29 @@ defineEmits(['toggleAllLegends']);
   box-sizing: border-box !important;
   border-radius: 10px !important;
   box-shadow: none !important;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-default);
   transition: all 0.2s ease;
+  background-color: var(--bg-card) !important;
+  color: var(--text-muted) !important;
 }
 
 :deep(.el-checkbox-button.is-checked .el-checkbox-button__inner) {
-  background-color: #0bc2d6 !important;
-  border-color: #0bc2d6 !important;
-  color: #ffffff !important;
+  background-color: var(--color-accent-fill) !important;
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent-contrast) !important;
   box-shadow: none !important;
 }
 
 :deep(.el-slider__bar) {
-  background-color: #0bc2d6 !important;
+  background-color: var(--color-accent) !important;
 }
 
 :deep(.el-slider__button) {
-  border-color: #0bc2d6 !important;
+  border-color: var(--color-accent) !important;
   border-width: 2px !important;
   width: 16px;
   height: 16px;
+  background-color: var(--bg-card) !important;
 }
 
 :deep(.el-radio-button__inner),
@@ -322,32 +325,33 @@ defineEmits(['toggleAllLegends']);
 }
 
 :deep(.el-radio-button__original-radio:not(:checked) + .el-radio-button__inner) {
-  color: #64748b !important;
-  background-color: #ffffff !important;
+  color: var(--text-muted) !important;
+  background-color: var(--bg-card) !important;
   box-shadow: none !important;
+  border-color: var(--border-default) !important;
 }
 
 :deep(.el-radio-button__original-radio:not(:checked) + .el-radio-button__inner:hover) {
-  color: #0bc2d6 !important;
+  color: var(--color-accent) !important;
 }
 
 :deep(.el-radio-button__original-radio:checked + .el-radio-button__inner) {
-  background-color: #0bc2d6 !important;
-  border-color: #0bc2d6 !important;
-  color: #ffffff !important;
-  box-shadow: -1px 0 0 0 #0bc2d6 !important;
+  background-color: var(--color-accent-fill) !important;
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent-contrast) !important;
+  box-shadow: -1px 0 0 0 var(--color-accent) !important;
 }
 
 :deep(.el-button--primary.btn-toggle-all) {
-  background-color: #0bc2d6 !important;
-  border-color: #0bc2d6 !important;
-  color: #ffffff !important;
+  background-color: var(--color-accent-fill) !important;
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent-contrast) !important;
 }
 
 :deep(.el-button--default.btn-toggle-all:hover) {
-  color: #0bc2d6 !important;
-  border-color: #0bc2d6 !important;
-  background-color: #f0fcfd !important;
+  color: var(--color-accent) !important;
+  border-color: var(--color-accent) !important;
+  background-color: var(--color-accent-soft) !important;
 }
 
 .compare-trigger {
@@ -357,26 +361,47 @@ defineEmits(['toggleAllLegends']);
   gap: 4px;
   height: 36px;
   padding: 0 16px;
-  background-color: #f8fafc;
-  border: 1px dashed #cbd5e1;
+  background-color: var(--bg-card-soft);
+  border: 1px dashed var(--border-strong);
   border-radius: 10px;
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  user-select: none;
 }
 
 .compare-trigger:hover {
-  background-color: #f0fcfd;
-  border-color: #0bc2d6;
-  color: #0bc2d6;
+  background-color: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 .export-btn {
   border-radius: 8px !important;
   font-weight: bold;
+}
+
+:deep(.el-button--default.btn-toggle-all) {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-default) !important;
+  color: var(--text-secondary) !important;
+}
+
+:deep(.el-button--success.is-plain.export-btn) {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-default) !important;
+  color: var(--text-secondary) !important;
+}
+
+:deep(.el-button--success.is-plain.export-btn:hover) {
+  background-color: var(--color-accent-soft) !important;
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent) !important;
+}
+
+:deep(.el-slider__runway) {
+  background-color: var(--border-default) !important;
 }
 
 /* 移动端响应式 */

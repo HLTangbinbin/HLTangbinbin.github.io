@@ -17,6 +17,7 @@ export default {
   props: {
     option: { type: Object, required: true },
     chartId: { type: String, required: true },
+    themeMode: { type: String, default: 'light' },
     pieConfig: { type: Object, default: () => ({}) },
     initSelectAll: { type: Boolean, default: true }
   },
@@ -48,7 +49,7 @@ export default {
       }
 
       // 修改后：强制开启 SVG 矢量渲染 🚀
-      chartInstance = echarts.init(chartContainer.value, null, { renderer: 'svg' });
+      chartInstance = echarts.init(chartContainer.value, props.themeMode === 'dark' ? 'dark' : null, { renderer: 'svg' });
       chartInstance.setOption(props.option, true);
 
       // 初始化图例状态
@@ -182,6 +183,15 @@ export default {
     });
 
     watch(() => props.option, updateChart, { deep: false });
+    watch(() => props.themeMode, async () => {
+      if (!chartContainer.value) return;
+      if (chartInstance && !chartInstance.isDisposed()) {
+        chartInstance.dispose();
+        chartInstance = null;
+      }
+      await nextTick();
+      initChart();
+    });
 
     onBeforeUnmount(() => {
       if (resizeHandler) {

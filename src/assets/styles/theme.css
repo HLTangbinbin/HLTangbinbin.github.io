@@ -1,0 +1,15 @@
+html,
+body,
+#app {
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+body {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--text-primary);
+}

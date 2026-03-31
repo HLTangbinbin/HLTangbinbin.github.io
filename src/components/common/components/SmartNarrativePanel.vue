@@ -23,21 +23,21 @@ const store = inject('chartStore');
 <style scoped>
 /* AI 智能洞察面板专属样式 */
 .smart-narrative-panel {
-  background: linear-gradient(135deg, #f0fcfd 0%, #ffffff 100%);
-  border-left: 4px solid #0bc2d6;
+  background: linear-gradient(135deg, var(--color-accent-soft) 0%, var(--bg-card) 100%);
+  border-left: 4px solid var(--color-accent);
   padding: 16px 20px;
   border-radius: 12px;
   margin: 0 auto 16px;
   width: 95%;
   max-width: 1500px;
-  box-shadow: 0 4px 16px rgba(11, 194, 214, 0.08);
+  box-shadow: var(--shadow-soft);
   box-sizing: border-box;
 }
 
 .narrative-title {
   font-size: 15px;
   font-weight: 700;
-  color: #0bc2d6;
+  color: var(--color-accent-strong);
   margin-bottom: 8px;
   display: flex;
   align-items: center;
@@ -46,14 +46,14 @@ const store = inject('chartStore');
 
 .narrative-content {
   font-size: 14px;
-  color: #475569;
+  color: var(--text-secondary);
   line-height: 1.8;
   letter-spacing: 0.5px;
 }
 
 /* 因为 v-html 渲染的内容是不受 scoped 直接控制的，所以必须用 :deep() 穿透 */
 .narrative-content :deep(strong) {
-  color: #0f172a;
+  color: var(--text-primary);
   margin: 0 3px;
   font-weight: 600;
 }

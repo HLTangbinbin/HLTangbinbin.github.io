@@ -1,7 +1,11 @@
 <template>
   <el-drawer v-model="store.isDrawerVisible.value" :title="`选择对比${store.isProvince.value ? '省份' : '城市'} (最多5个)`"
     :direction="store.isMobile.value ? 'btt' : 'rtl'" :size="store.isMobile.value ? '80%' : '380px'" :with-header="true"
-    class="custom-city-drawer" append-to-body>
+    class="custom-city-drawer"
+    body-class="custom-city-drawer-body"
+    header-class="custom-city-drawer-header"
+    modal-class="custom-city-drawer-modal"
+    append-to-body>
     <div class="drawer-content">
 
       <div class="search-box">
@@ -31,12 +35,12 @@
           'is-disabled': !store.selectedExtraCities.value.includes(city.code) && store.selectedExtraCities.value.length >= 5
         }" @click="store.toggleCity(city.code)">
           <span class="city-name">{{ city.cname }}</span>
-          <el-icon v-if="store.selectedExtraCities.value.includes(city.code)" color="#0bc2d6" size="16">
+          <el-icon v-if="store.selectedExtraCities.value.includes(city.code)" color="var(--color-accent)" size="16">
             <Check />
           </el-icon>
         </div>
         <div v-if="store.filteredCities.value.length === 0" class="empty-text"
-          style="text-align: center; padding: 20px; color: #94a3b8; font-size: 14px;">
+          style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 14px;">
           未找到匹配项
         </div>
       </div>
@@ -66,13 +70,13 @@ const store = inject('chartStore');
 
 .selected-tags {
   padding-bottom: 12px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--border-default);
   margin-bottom: 12px;
 }
 
 .tags-header {
   font-size: 13px;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 8px;
 }
 
@@ -99,7 +103,7 @@ const store = inject('chartStore');
 }
 
 .city-list::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
+  background-color: var(--border-strong);
   border-radius: 4px;
 }
 
@@ -110,20 +114,20 @@ const store = inject('chartStore');
   padding: 12px 16px;
   margin-bottom: 6px;
   border-radius: 8px;
-  background-color: #f8fafc;
+  background-color: var(--bg-card-soft);
   font-size: 14px;
-  color: #334155;
+  color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .city-item:hover:not(.is-disabled) {
-  background-color: #f1f5f9;
+  background-color: var(--bg-elevated);
 }
 
 .city-item.is-active {
-  background-color: #f0fcfd;
-  color: #0bc2d6;
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent-strong);
   font-weight: bold;
 }
 
@@ -132,11 +136,59 @@ const store = inject('chartStore');
   cursor: not-allowed;
 }
 
-:deep(.custom-city-drawer .el-drawer__header) {
-  margin-bottom: 16px;
+:global(.custom-city-drawer .el-drawer__header),
+:global(.custom-city-drawer-header) {
+  margin-bottom: 0 !important;
   padding-bottom: 16px;
-  border-bottom: 1px solid #e2e8f0;
-  color: #1e293b;
+  border-bottom: 1px solid var(--border-default) !important;
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
   font-weight: bold;
+}
+
+:global(.custom-city-drawer .el-drawer) {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+}
+
+:global(.custom-city-drawer .el-drawer__body),
+:global(.custom-city-drawer-body) {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  padding-top: 16px !important;
+}
+
+:global(.custom-city-drawer .el-input__wrapper),
+:global(.custom-city-drawer-body .el-input__wrapper) {
+  background: var(--bg-card-soft) !important;
+  background-color: var(--bg-card-soft) !important;
+  box-shadow: 0 0 0 1px var(--border-default) inset !important;
+  border: 0 !important;
+}
+
+:global(.custom-city-drawer .el-input__inner),
+:global(.custom-city-drawer-body .el-input__inner) {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+}
+
+:global(.custom-city-drawer .el-input__inner::placeholder),
+:global(.custom-city-drawer-body .el-input__inner::placeholder) {
+  color: var(--text-muted) !important;
+}
+
+:global(.custom-city-drawer .el-tag),
+:global(.custom-city-drawer-body .el-tag) {
+  background: var(--color-accent-soft) !important;
+  border-color: rgba(var(--color-accent-rgb), 0.28) !important;
+  color: var(--color-accent-strong) !important;
+}
+
+:global(.custom-city-drawer .el-drawer__close-btn) {
+  color: var(--text-muted) !important;
+}
+
+:global(.custom-city-drawer-modal) {
+  background: rgba(15, 23, 42, 0.6) !important;
 }
 </style>

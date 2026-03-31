@@ -1,4 +1,5 @@
 import { calculateLinearRegression, fitMarriageBirthDynamic } from './analysisEngine.js';
+import { getChartThemeTokens } from './theme.js';
 
 export const ComparePlugin = (option, ctx) => {
   const xAxisData = ['01月', '02月', '03月', '04月', '05月', '06月', '07月', '08月', '09月', '10月', '11月', '12月'];
@@ -55,6 +56,7 @@ export const ComparePlugin = (option, ctx) => {
 };
 
 export const SmartAnalysisPlugin = (option, ctx) => {
+  const theme = getChartThemeTokens();
   const futureSteps = ctx.params.isYearlyCompare ? 0 : 3;
 
   if (futureSteps > 0 && ctx.filteredYears.length > 0) {
@@ -88,7 +90,7 @@ export const SmartAnalysisPlugin = (option, ctx) => {
 
       const trendData = calculateLinearRegression(s.data, futureSteps);
       const meta = trendData._metadata;
-      const themeColor = s.itemStyle?.color || '#0bc2d6';
+      const themeColor = s.itemStyle?.color || theme.accent;
 
       trendLines.push({
         name: s.name + ' (趋势)',
@@ -136,7 +138,7 @@ export const SmartAnalysisPlugin = (option, ctx) => {
           symbol: 'pin',
           symbolSize: 45,
           itemStyle: { color: '#ef4444', shadowBlur: 10, shadowColor: 'rgba(239,68,68,0.4)' },
-          label: { color: '#fff', fontSize: 10, formatter: '异常' },
+          label: { color: theme.textInverse, fontSize: 10, formatter: '异常' },
           data: meta.anomalies.map(a => ({ coord: [a.x, a.y], name: '异常点', value: a.diff }))
         };
       }
@@ -150,7 +152,8 @@ export const SmartAnalysisPlugin = (option, ctx) => {
 export const PiePlugin = (option, ctx) => {
   if (!ctx.seriesData || ctx.seriesData.length === 0 || !ctx.filteredYears || ctx.filteredYears.length === 0) return option;
 
-  option.color = option.color || ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'];
+  const theme = getChartThemeTokens();
+  option.color = option.color || theme.palette;
   const futureSteps = (ctx.params.enableSmartAnalysis && !ctx.params.isYearlyCompare) ? 3 : 0;
   const targetIndex = Math.max(0, ctx.filteredYears.length - 1 - futureSteps);
   const legendData = option.legend?.data || [];
@@ -246,6 +249,7 @@ export const LegendFilterPlugin = (option) => {
 // chartPlugins.js 
 export const MapTimelinePlugin = (option, ctx) => {
   if (ctx.params.chartType !== 'map') return option;
+  const theme = getChartThemeTokens();
 
   const { mapType, mapTimelineData = {}, metricName = '指标', unit = '' } = ctx.params || {};
   const { years = [], timelineData = [] } = mapTimelineData;
@@ -283,10 +287,15 @@ export const MapTimelinePlugin = (option, ctx) => {
     }
   }
 
-  let inRangeColors = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026'];
+  let inRangeColors = theme.themeMode === 'dark'
+    ? ['#163244', '#1b4760', '#215d7a', '#287594', '#2e8dae', '#35a5c8', '#48bddb']
+    : ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026'];
   if (isNegativeMetric) {
     inRangeColors.reverse();
   }
+
+  const mapLabelColor = theme.themeMode === 'dark' ? '#e2e8f0' : theme.textPrimary;
+  const mapLabelEmphasisColor = theme.themeMode === 'dark' ? '#f8fafc' : theme.textPrimary;
 
   // 🌟 2. 组装每年的帧数据
   const enrichedOptions = timelineData.map((td, index, arr) => {
@@ -325,10 +334,20 @@ export const MapTimelinePlugin = (option, ctx) => {
       series: [{
         data: enrichedData,
         label: {
-          show: true, color: '#333333', fontSize: isMobile ? 8 : 10, // 移动端字号稍微调小
+          show: true, color: mapLabelColor, fontSize: isMobile ? 8 : 10,
+          textBorderColor: theme.themeMode === 'dark' ? 'rgba(15, 23, 42, 0.8)' : 'rgba(255,255,255,0.7)',
+          textBorderWidth: 2,
           formatter: (p) => (!isNaN(p.value) && p.value !== null && p.value !== '') ? p.name : ''
         },
-        emphasis: { label: { show: true, color: '#000000', fontWeight: 'bold' } }
+        emphasis: {
+          label: {
+            show: true,
+            color: mapLabelEmphasisColor,
+            fontWeight: 'bold',
+            textBorderColor: theme.themeMode === 'dark' ? 'rgba(15, 23, 42, 0.9)' : 'rgba(255,255,255,0.82)',
+            textBorderWidth: 2
+          }
+        }
       }]
     };
   });
@@ -343,32 +362,27 @@ export const MapTimelinePlugin = (option, ctx) => {
       axisType: 'category', autoPlay: true, loop: false, playInterval: 2000,
       data: years,
       bottom: isMobile ? 0 : 10, left: isMobile ? 10 : 30, right: isMobile ? 10 : 30,
-      label: { formatter: '{value} 年', color: '#6B7280', fontSize: isMobile ? 10 : 12 },
-      // 轨道底色
-      lineStyle: { color: '#E5E7EB', width: 2 },
-      // 未激活的节点
-      itemStyle: { color: '#E5E7EB', borderColor: '#E5E7EB' },
-      // 核心：当前激活的播放点（大圆圈）和光晕
+      label: { formatter: '{value} 年', color: theme.textMuted, fontSize: isMobile ? 10 : 12 },
+      lineStyle: { color: theme.borderDefault, width: 2 },
+      itemStyle: { color: theme.borderDefault, borderColor: theme.borderDefault },
       checkpointStyle: {
-        color: '#00C2A8',
-        borderColor: 'rgba(0, 194, 168, 0.25)',
+        color: theme.accentStrong,
+        borderColor: theme.accentSoft,
         borderWidth: 5,
         symbolSize: isMobile ? 10 : 14
       },
-      // 核心：播放过的轨道颜色
       progress: {
-        lineStyle: { color: '#00C2A8', width: 2 },
-        itemStyle: { color: '#00C2A8', borderColor: '#00C2A8' }
+        lineStyle: { color: theme.accentStrong, width: 2 },
+        itemStyle: { color: theme.accentStrong, borderColor: theme.accentStrong }
       },
-      // 播放控制按钮 (左侧那个播放/暂停)
       controlStyle: {
-        showNextBtn: false, showPrevBtn: false, // 隐藏多余的前进后退按钮，保持界面极简
-        color: '#9CA3AF', borderColor: '#9CA3AF',
+        showNextBtn: false, showPrevBtn: false,
+        color: theme.textMuted, borderColor: theme.textMuted,
         itemSize: isMobile ? 14 : 20
       }
     },
 
-    title: { text: `${metricName}`, left: 'center', top: isMobile ? 0 : 10, textStyle: { fontSize: isMobile ? 15 : 18, color: '#333' } },
+    title: { text: `${metricName}`, left: 'center', top: isMobile ? 0 : 10, textStyle: { fontSize: isMobile ? 15 : 18, color: theme.textPrimary } },
 
     // 🎨 UI 升级 2：响应式 visualMap 柱子！
     visualMap: {
@@ -383,50 +397,50 @@ export const MapTimelinePlugin = (option, ctx) => {
       itemWidth: isMobile ? 10 : 16,
       left: isMobile ? '2%' : '5%',
       bottom: isMobile ? '10%' : '15%',
-      textStyle: { color: '#6B7280', fontSize: isMobile ? 10 : 12 }
+      textStyle: { color: theme.textMuted, fontSize: isMobile ? 10 : 12 }
     },
 
     tooltip: {
       trigger: 'item',
-      backgroundColor: 'rgba(255, 255, 255, 0.95)', borderColor: '#E5E7EB', borderWidth: 1, padding: 14,
+      backgroundColor: theme.bgCard, borderColor: theme.borderDefault, borderWidth: 1, padding: 14,
       extraCssText: 'box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-radius: 8px;',
-      textStyle: { color: '#333' },
+      textStyle: { color: theme.textPrimary },
       formatter: (params) => {
         if (params.componentType !== 'series') return;
         if (params.value === undefined || params.value === null || params.value === '' || isNaN(params.value)) return '';
 
         const data = params.data || {};
         const displayValue = parseFloat(Number(params.value).toFixed(2));
-        const rank = data.rank ? `<span style="background: rgba(0, 194, 168, 0.1); color: #00C2A8; padding: 2px 8px; border-radius: 4px; font-weight: bold;">第 ${data.rank} 名</span>` : '-';
+        const rank = data.rank ? `<span style="background: ${theme.accentSoft}; color: ${theme.accent}; padding: 2px 8px; border-radius: 4px; font-weight: bold;">第 ${data.rank} 名</span>` : '-';
         const ratio = data.ratio || 0;
 
-        let growthHtml = '<span style="color: #9CA3AF;">-</span>';
+        let growthHtml = `<span style="color: ${theme.textMuted};">-</span>`;
         if (data.growth !== null && data.growth !== undefined) {
           const gVal = Number(data.growth);
           if (gVal > 0) growthHtml = `<span style="color: #EF4444; font-weight: bold;">+${gVal}% 🔺</span>`;
           else if (gVal < 0) growthHtml = `<span style="color: #10B981; font-weight: bold;">${gVal}% 🔻</span>`;
-          else growthHtml = `<span style="color: #6B7280;">持平 -</span>`;
+          else growthHtml = `<span style="color: ${theme.textMuted};">持平 -</span>`;
         }
 
         return `
-          <div style="min-width: 190px; font-family: sans-serif; color: #374151;">
-            <div style="font-size: 15px; font-weight: bold; border-bottom: 1px solid #F3F4F6; padding-bottom: 8px; margin-bottom: 10px; color: #111827;">${params.name}</div>
+          <div style="min-width: 190px; font-family: sans-serif; color: ${theme.textSecondary};">
+            <div style="font-size: 15px; font-weight: bold; border-bottom: 1px solid ${theme.borderDefault}; padding-bottom: 8px; margin-bottom: 10px; color: ${theme.textPrimary};">${params.name}</div>
             <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
-              <span style="color: #6B7280;">${metricName}</span>
-              <span style="color: #00C2A8; font-weight: bold; font-size: 15px;">${displayValue} <span style="font-size: 12px; font-weight: normal;">${unit}</span></span>
+              <span style="color: ${theme.textMuted};">${metricName}</span>
+              <span style="color: ${theme.accentStrong}; font-weight: bold; font-size: 15px;">${displayValue} <span style="font-size: 12px; font-weight: normal;">${unit}</span></span>
             </div>
             <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px;">
-              <span style="color: #6B7280;">较上一年</span>${growthHtml}
+              <span style="color: ${theme.textMuted};">较上一年</span>${growthHtml}
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 12px;">
-              <span style="color: #6B7280;">当年排名</span>${rank}
+              <span style="color: ${theme.textMuted};">当年排名</span>${rank}
             </div>
             <div style="display: flex; align-items: center; font-size: 12px;">
-              <span style="color: #6B7280; width: 55px;">极值占比</span>
-              <div style="flex: 1; margin: 0 8px; height: 6px; background-color: #E5E7EB; border-radius: 3px; overflow: hidden;">
-                <div style="width: ${ratio}%; height: 100%; background: #00C2A8; border-radius: 3px; transition: width 0.3s;"></div>
+              <span style="color: ${theme.textMuted}; width: 55px;">极值占比</span>
+              <div style="flex: 1; margin: 0 8px; height: 6px; background-color: ${theme.borderDefault}; border-radius: 3px; overflow: hidden;">
+                <div style="width: ${ratio}%; height: 100%; background: ${theme.accentStrong}; border-radius: 3px; transition: width 0.3s;"></div>
               </div>
-              <span style="color: #00C2A8; font-weight: bold; font-size: 12px; width: 35px; text-align: right;">${ratio}%</span>
+              <span style="color: ${theme.accentStrong}; font-weight: bold; font-size: 12px; width: 35px; text-align: right;">${ratio}%</span>
             </div>
           </div>`;
       }
@@ -439,14 +453,20 @@ export const MapTimelinePlugin = (option, ctx) => {
       bottom: isMobile ? '10%' : '15%',
       // 🎨 UI 升级 1：给地图本体加上“立体投影”阴影效果！打破白底单调！
       itemStyle: {
-        areaColor: '#F3F4F6',
-        borderColor: '#FFFFFF',
+        areaColor: theme.themeMode === 'dark' ? '#182233' : theme.bgCardSoft,
+        borderColor: theme.themeMode === 'dark' ? '#334155' : theme.bgCard,
         borderWidth: 1,
-        shadowColor: 'rgba(0, 0, 0, 0.12)', // 极具大厂质感的浅色投影
+        shadowColor: theme.themeMode === 'dark' ? 'rgba(2, 6, 23, 0.32)' : 'rgba(0, 0, 0, 0.12)',
         shadowBlur: 15,
         shadowOffsetY: 8
       },
-      emphasis: { itemStyle: { areaColor: '#FFD700', shadowColor: 'rgba(0,0,0,0.2)', shadowBlur: 20 } },
+      emphasis: {
+        itemStyle: {
+          areaColor: theme.themeMode === 'dark' ? '#2b6f86' : theme.accent,
+          shadowColor: 'rgba(0,0,0,0.2)',
+          shadowBlur: 20
+        }
+      },
       data: []
     }],
     options: enrichedOptions

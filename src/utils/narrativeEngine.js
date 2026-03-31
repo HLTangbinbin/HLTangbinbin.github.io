@@ -1,4 +1,7 @@
+import { getChartThemeTokens } from './theme.js';
+
 export const generateSmartNarrative = (chartOption, selectedLegend = null) => {
+    const theme = getChartThemeTokens();
     if (!chartOption || !chartOption.series) return '';
 
     let mainSeries = null;
@@ -62,11 +65,10 @@ export const generateSmartNarrative = (chartOption, selectedLegend = null) => {
         if (validPreds.length > 0) {
             const nextVal = typeof validPreds[validPreds.length - 1] === 'object' ? validPreds[validPreds.length - 1].value : validPreds[validPreds.length - 1];
             const baseName = crossPredSeries.name.replace('预测', '').trim();
-            crossMetricText = `<br/>🔗 <strong>指标推演：</strong>基于关联数据（婚姻登记）的历史转化率模型，系统独立推算下一周期 <strong>[${baseName}]</strong> 的规模预期约为 <strong style="color: #8b5cf6;">${nextVal}</strong>。`;
+            crossMetricText = `<br/>🔗 <strong>指标推演：</strong>基于关联数据（婚姻登记）的历史转化率模型，系统独立推算下一周期 <strong>[${baseName}]</strong> 的规模预期约为 <strong style="color: ${theme.accentStrong};">${nextVal}</strong>。`;
         }
     }
 
-    // 🌟 核心修复：给 mainSeries.name 加上红色的行内样式
     return `<strong>🧐 数据分析：</strong>基于当前 <strong style="color: #ef4444;">${mainSeries.name}</strong> 数据测算：整体分布在 ${min} 至 ${max} 之间，并于 <strong style="color: #ef4444;">${maxDate}</strong> 触及峰值 <strong style="color: #ef4444;">${max}</strong>。
   最新一期录得 <strong style="color: #ef4444;">${latest}</strong>，${growthText}。<br/>💡 ${anomaliesText} ${forecastText} ${crossMetricText}`;
-}; 
+};

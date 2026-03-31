@@ -1,5 +1,6 @@
 import { computed, ref, watch } from 'vue';
 import { ElMessage } from 'element-plus';
+import { getCssVar } from '@/utils/theme.js';
 
 export function useTableEngine(chartOption, isMobile, chartTitle, chartIdentityStr) {
   const enableHeatmap = ref(false);
@@ -103,11 +104,12 @@ export function useTableEngine(chartOption, isMobile, chartTitle, chartIdentityS
 
     // 文字颜色：抛弃所有反白逻辑，回归最纯粹的深色与警示红
     const isNegative = val < 0;
-    const textColor = isNegative ? '#dc3545' : '#0f172a';
+    const textColor = isNegative ? '#dc3545' : getCssVar('--text-primary', '#0f172a');
     const fontWeight = isNegative ? 'bold' : 'normal';
+    const accentRgb = getCssVar('--color-accent-rgb', '11, 194, 214');
 
     return {
-      backgroundColor: `rgba(11, 194, 214, ${finalOpacity})`,
+      backgroundColor: `rgba(${accentRgb}, ${finalOpacity})`,
       color: textColor,
       fontWeight: fontWeight
     };

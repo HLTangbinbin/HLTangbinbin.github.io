@@ -164,31 +164,31 @@ function dedupeAlerts(items) {
 }
 
 .alert-card.tone-healthy {
-  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
-  border-color: #bbf7d0;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, var(--bg-card) 100%);
+  border-color: rgba(16, 185, 129, 0.28);
 }
 
 .alert-card.tone-warn {
-  background: linear-gradient(135deg, #fffbeb 0%, #fefce8 100%);
-  border-color: #fde68a;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.16) 0%, var(--bg-card) 100%);
+  border-color: rgba(245, 158, 11, 0.28);
 }
 
 .alert-card.tone-critical {
-  background: linear-gradient(135deg, #fff1f2 0%, #fef2f2 100%);
-  border-color: #fecdd3;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.16) 0%, var(--bg-card) 100%);
+  border-color: rgba(239, 68, 68, 0.28);
 }
 
 .alert-title {
   margin-bottom: 8px;
   font-size: 15px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
 .alert-body {
   font-size: 13px;
   line-height: 1.75;
-  color: #475569;
+  color: var(--text-secondary);
 }
 
 @media (max-width: 768px) {

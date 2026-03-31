@@ -41,7 +41,7 @@ export default {
 }
 
 .hint-text {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 14px;
   margin-bottom: 16px;
 }
@@ -50,7 +50,7 @@ export default {
   width: 95%;
   max-width: 1000px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-soft);
   cursor: pointer; /* 提示用户可点击 */
 }
 
@@ -60,8 +60,8 @@ export default {
   align-items: center;
   width: 100%;
   height: 300px;
-  background: #f5f7fa;
-  color: #909399;
+  background: var(--bg-card-soft);
+  color: var(--text-muted);
   font-size: 14px;
 }
 </style>

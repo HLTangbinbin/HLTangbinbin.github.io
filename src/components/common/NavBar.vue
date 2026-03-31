@@ -123,10 +123,11 @@ export default {
   display: inline-flex;
   max-width: 100%;
   align-items: center;
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 30px;
   padding: 12px 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-soft);
   box-sizing: border-box;
   position: relative;
   /* 配合 offsetLeft 计算偏移量 */
@@ -159,7 +160,7 @@ export default {
 .nav-divider {
   width: 2px;
   height: 22px;
-  background-color: #cbd5e1;
+  background-color: var(--border-strong);
   border-radius: 2px;
   margin: 0 12px;
   flex-shrink: 0;
@@ -172,7 +173,7 @@ export default {
   border-radius: 20px;
   font-size: 16px;
   font-weight: bold;
-  color: #1e293b; /* 核心修改：从浅灰 #64748b 改为极深炭黑 #1e293b */
+  color: var(--text-primary);
   text-decoration: none;
   white-space: nowrap;
   transition: all 0.2s ease;
@@ -180,15 +181,16 @@ export default {
 }
 
 .nav-pill:not(.active):hover {
-  color: #0bc2d6;
-  background-color: #f8fafc;
+  color: var(--color-accent-strong);
+  background-color: var(--bg-card-soft);
 }
 
 /* 一切层级激活效果众生平等，保持视觉锚点高度一致 */
 .nav-pill.active {
-  background-color: #0bc2d6 !important;
-  color: #ffffff !important;
-  box-shadow: 0 2px 6px rgba(11, 194, 214, 0.3) !important;
+  background-color: var(--color-accent-fill) !important;
+  color: var(--color-accent-contrast) !important;
+  border: 1px solid rgba(var(--color-accent-rgb), 0.18);
+  box-shadow: inset 0 0 0 1px rgba(var(--color-accent-rgb), 0.08);
 }
 
 @media (max-width: 768px) {

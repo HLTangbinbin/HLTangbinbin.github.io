@@ -116,22 +116,22 @@ function normalizePath(value) {
   max-width: 960px;
   margin: 40px auto;
   padding: 28px 32px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
   border-radius: 18px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  box-shadow: var(--shadow-medium);
 }
 
 .page-state-title {
   font-size: 20px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-primary);
   margin-bottom: 10px;
 }
 
 .page-state-text {
   font-size: 14px;
   line-height: 1.8;
-  color: #475569;
+  color: var(--text-secondary);
 }
 </style>

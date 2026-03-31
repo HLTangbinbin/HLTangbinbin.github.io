@@ -212,16 +212,12 @@ function getDbCodeLabel(dbCode, viewMode) {
   width: 98%;
   max-width: 1500px;
   margin: 0 auto;
-  background-color: #ffffff;
-  /* 毛玻璃效果，透出底层全局背景色 */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); 
+  background-color: var(--bg-card);
   border-radius: 20px;
   padding: 20px; 
   box-sizing: border-box;
-  /* 纯白高光边框 + 内发光，质感拉满 */
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4), 0 4px 20px rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-soft);
 }
 
 .page-header {
@@ -233,7 +229,7 @@ function getDbCodeLabel(dbCode, viewMode) {
   gap: 12px;
   flex-wrap: nowrap;
   padding-bottom: 14px;
-  border-bottom: 1px solid #eef2f7;
+  border-bottom: 1px solid var(--border-default);
 }
 
 .header-left {
@@ -251,7 +247,7 @@ function getDbCodeLabel(dbCode, viewMode) {
   font-size: 17px;
   font-weight: 700;
   line-height: 34px;
-  color: #1e293b;
+  color: var(--text-primary);
   letter-spacing: 0.01em;
   white-space: nowrap;
   overflow: hidden;
@@ -281,8 +277,8 @@ function getDbCodeLabel(dbCode, viewMode) {
   min-height: 34px;
   padding: 0 12px;
   border-radius: 999px;
-  background: #f0fcfd;
-  border: 1px solid rgba(11, 194, 214, 0.2);
+  background: var(--color-accent-soft);
+  border: 1px solid rgba(11, 194, 214, 0.24);
   white-space: nowrap;
   max-width: 100%;
   flex: 0 1 auto;
@@ -292,13 +288,13 @@ function getDbCodeLabel(dbCode, viewMode) {
 .linkage-label {
   font-size: 12px;
   font-weight: 600;
-  color: #0891b2;
+  color: var(--color-accent-strong);
 }
 
 .linkage-value {
   font-size: 13px;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -307,7 +303,7 @@ function getDbCodeLabel(dbCode, viewMode) {
 .linkage-clear {
   border: 0;
   background: transparent;
-  color: #0ea5e9;
+  color: var(--color-accent-strong);
   font-size: 12px;
   font-weight: 600;
   padding: 0;
@@ -315,7 +311,7 @@ function getDbCodeLabel(dbCode, viewMode) {
 }
 
 .linkage-clear:hover {
-  color: #0284c7;
+  color: var(--color-accent);
 }
 
 .header-stat {
@@ -325,20 +321,20 @@ function getDbCodeLabel(dbCode, viewMode) {
   min-height: 34px;
   padding: 0 12px;
   border-radius: 999px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
   white-space: nowrap;
 }
 
 .header-stat-label {
   font-size: 12px;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .header-stat-value {
   font-size: 16px;
   font-weight: 700;
-  color: #334155;
+  color: var(--text-primary);
 }
 
 .charts-flow {
@@ -357,9 +353,9 @@ function getDbCodeLabel(dbCode, viewMode) {
 }
 
 .custom-segment {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* 阴影也稍微调柔和 */
+  box-shadow: var(--shadow-soft);
   border-radius: 14px; 
-  background: #fff;
+  background: var(--bg-card);
 }
 
 .custom-segment :deep(.el-radio-button__inner) {
@@ -372,8 +368,8 @@ function getDbCodeLabel(dbCode, viewMode) {
   justify-content: center !important;
   box-sizing: border-box !important;
   transition: all 0.2s ease;
-  background-color: #ffffff !important;
-  color: #64748b !important;
+  background-color: var(--bg-card) !important;
+  color: var(--text-muted) !important;
   border: 1px solid transparent !important; 
 }
 
@@ -385,10 +381,10 @@ function getDbCodeLabel(dbCode, viewMode) {
 }
 
 .custom-segment :deep(.el-radio-button__original-radio:checked + .el-radio-button__inner) {
-  background-color: #0bc2d6 !important;
-  color: #ffffff !important;
-  border-color: #0bc2d6 !important;
-  box-shadow: 0 2px 6px rgba(11, 194, 214, 0.35) !important;
+  background-color: var(--color-accent-fill) !important;
+  color: var(--color-accent-contrast) !important;
+  border-color: var(--color-accent) !important;
+  box-shadow: inset 0 0 0 1px rgba(var(--color-accent-rgb), 0.08) !important;
 }
 
 @media (max-width: 768px) {
@@ -396,7 +392,7 @@ function getDbCodeLabel(dbCode, viewMode) {
     width: 98%;
     padding: 10px;
     border-radius: 14px;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: var(--bg-card);
   }
 
   .page-header {

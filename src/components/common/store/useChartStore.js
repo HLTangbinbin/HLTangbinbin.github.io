@@ -3,11 +3,17 @@ import { buildChartOption } from '@/utils/chartBuilder.js';
 import { generateSmartNarrative } from '@/utils/narrativeEngine.js';
 import { useTableEngine } from './useTableEngine.js';
 import { resolveMapType } from '@/utils/mapProvider.js';
+import { getThemeMode } from '@/utils/theme.js';
 
 export function createChartStore(props) {
   const windowWidth = ref(window.innerWidth);
+  const themeMode = ref(getThemeMode());
   const onResize = () => { windowWidth.value = window.innerWidth; };
+  const onThemeChange = (event) => {
+    themeMode.value = event?.detail || getThemeMode();
+  };
   window.addEventListener('resize', onResize);
+  window.addEventListener('themechange', onThemeChange);
   const isMobile = computed(() => windowWidth.value <= 768);
   const controlSize = computed(() => windowWidth.value > 768 ? 'large' : 'small');
 
@@ -156,6 +162,7 @@ export function createChartStore(props) {
       enableBirthPrediction: props.chart?.enableBirthPrediction || false,
       enableSmartAnalysis: enableSmartAnalysis.value,
       mapType: mapType.value,
+      themeMode: themeMode.value,
     });
     if (finalOption.legend && finalOption.series) {
       const legendData = finalOption.legend.data || [];
@@ -199,6 +206,7 @@ export function createChartStore(props) {
 
   return {
     props,
+    themeMode,
     isMobile, controlSize, chartHeight,
     viewModeDisplay, chartTypeModel, currentChartType, isHorizontal,
     yearLimit, legendAllSelected, isYearlyCompare, selectedLegend, offsetValue,

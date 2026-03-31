@@ -12,6 +12,7 @@
         ref="echartsInstanceRef"
         :option="chartStore.chartOption.value"
         :chartId="chart.id"
+        :themeMode="chartStore.themeMode.value"
         :initSelectAll="chartStore.legendAllSelected.value"
         :pieConfig="chartStore.isYearlyCompare.value ? null : chart.pieConfig"
         @legendStateChange="chartStore.legendAllSelected.value = $event"
@@ -72,12 +73,10 @@ const handleDataPointClick = (payload) => {
     max-width: 1500px;
     margin: 10px auto 20px;
     padding: 10px;
-    background-color: #fff;
+    background-color: var(--bg-card);
     border-radius: 16px;
-    /* 核心修复：增加细微描边，强制勾勒出物理边界，拒绝与背景融合 */
-    border: 1px solid #e2e8f0;
-    /* 稍微收敛阴影的扩散范围并略微增加力度，让卡片悬浮得更扎实 */
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border-default);
+    box-shadow: var(--shadow-soft);
     box-sizing: border-box;
 }
 

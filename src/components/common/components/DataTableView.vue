@@ -11,8 +11,9 @@
       border 
       stripe 
       style="width: 100%"
-      :header-cell-style="{ background: '#f8fafc', color: '#475569', fontWeight: 'bold' }"
+      :header-cell-style="headerCellStyle"
       :cell-style="store.getTableCellStyle"
+      class="themed-data-table"
     >
       <el-table-column 
         v-for="col in store.tableColumns.value" 
@@ -29,9 +30,16 @@
 
 <script setup>
 import { inject } from 'vue';
+import { getCssVar } from '@/utils/theme.js';
 
 // 注入上帝状态机，所有数据直接拿来用
 const store = inject('chartStore');
+
+const headerCellStyle = () => ({
+  background: getCssVar('--bg-card-soft', '#f8fafc'),
+  color: getCssVar('--text-primary', '#1e293b'),
+  fontWeight: 'bold'
+});
 </script>
 
 <style scoped>
@@ -56,7 +64,44 @@ const store = inject('chartStore');
   margin: 0;
   font-size: 18px;
   font-weight: bold;
-  color: #1e293b; 
+  color: var(--text-primary); 
   letter-spacing: 1px;
+}
+
+.data-table-wrapper :deep(.el-table) {
+  --el-table-border-color: var(--border-default);
+  --el-table-header-bg-color: var(--bg-card-soft);
+  --el-table-tr-bg-color: var(--bg-card);
+  --el-table-row-hover-bg-color: var(--bg-elevated);
+  --el-table-current-row-bg-color: var(--bg-elevated);
+  --el-table-text-color: var(--text-primary);
+  --el-table-header-text-color: var(--text-primary);
+  --el-fill-color-lighter: var(--bg-card-soft);
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.data-table-wrapper :deep(.el-table th.el-table__cell) {
+  background: var(--bg-card-soft) !important;
+  color: var(--text-primary) !important;
+}
+
+.data-table-wrapper :deep(.el-table tr) {
+  background: var(--bg-card);
+}
+
+.data-table-wrapper :deep(.el-table td.el-table__cell) {
+  color: var(--text-primary);
+}
+
+.data-table-wrapper :deep(.el-table td.el-table__cell),
+.data-table-wrapper :deep(.el-table th.el-table__cell.is-leaf) {
+  border-bottom-color: var(--border-default);
+}
+
+.data-table-wrapper :deep(.el-table--border::before),
+.data-table-wrapper :deep(.el-table--group::after),
+.data-table-wrapper :deep(.el-table::before) {
+  background-color: var(--border-default);
 }
 </style>
