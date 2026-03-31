@@ -109,7 +109,8 @@ class ChartBuilder {
         subtextStyle: { color: theme.textSecondary, fontWeight: 'bold', fontSize: isMobile ? 12 : 13, width: window.innerWidth * 0.8, overflow: 'breakAll' }
       },
       tooltip: {
-        trigger: 'axis', confine: true, enterable: true,
+        trigger: 'axis', confine: true, enterable: !isMobile, alwaysShowContent: false,
+        triggerOn: 'mousemove|click',
         backgroundColor: theme.bgCard,
         borderColor: theme.borderDefault,
         borderWidth: 1,

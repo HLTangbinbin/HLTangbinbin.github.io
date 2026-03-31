@@ -40,6 +40,24 @@ export default {
     };
     expose({ toggleAllLegends });
 
+    const hideTooltip = () => {
+      if (!chartInstance || chartInstance.isDisposed()) return;
+      chartInstance.dispatchAction({ type: 'hideTip' });
+    };
+
+    const getNearestSeriesValue = (seriesData, targetIndex) => {
+      if (!Array.isArray(seriesData) || seriesData.length === 0) return null;
+      const safeIndex = Math.min(targetIndex, seriesData.length - 1);
+      for (let index = safeIndex; index >= 0; index -= 1) {
+        const current = seriesData[index];
+        const value = typeof current === 'object' && current !== null ? current.value : current;
+        if (value !== null && value !== undefined && value !== '' && value !== '-') {
+          return current;
+        }
+      }
+      return null;
+    };
+
     const initChart = () => {
       if (!chartContainer.value || !props.option?.series?.length) return;
 
@@ -89,6 +107,19 @@ export default {
         });
       });
 
+      chartInstance.getZr().on('click', (event) => {
+        if (!event?.target) {
+          hideTooltip();
+        }
+      });
+
+      chartInstance.on('globalout', () => {
+        hideTooltip();
+      });
+
+      chartContainer.value?.addEventListener('touchend', hideTooltip, { passive: true });
+      chartContainer.value?.addEventListener('touchcancel', hideTooltip, { passive: true });
+
       // 🌟 性能优化核心：缓存上一次悬停的索引
       let lastYearIndex = -1;
 
@@ -108,10 +139,19 @@ export default {
 
         pieConfig.pies.forEach((pie, idx) => {
           const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
-          const pieData = targetSeries.map(series => ({
-            name: series.name,
-            value: Array.isArray(series.data) ? series.data[yearIndex] : 0
-          }));
+          const pieData = targetSeries
+            .map(series => {
+              const rawVal = Array.isArray(series.data) ? getNearestSeriesValue(series.data, yearIndex) : null;
+              const value = typeof rawVal === 'object' && rawVal !== null ? rawVal.value : rawVal;
+              if (value === null || value === undefined || value === '' || value === '-' || Number.isNaN(Number(value))) {
+                return null;
+              }
+              return {
+                name: series.name,
+                value: Number(value)
+              };
+            })
+            .filter(Boolean);
           chartInstance.setOption({
             series: [{
               id: `pie_${idx}`,
@@ -194,6 +234,8 @@ export default {
     });
 
     onBeforeUnmount(() => {
+      chartContainer.value?.removeEventListener('touchend', hideTooltip);
+      chartContainer.value?.removeEventListener('touchcancel', hideTooltip);
       if (resizeHandler) {
         window.removeEventListener('resize', resizeHandler);
         resizeHandler.cancel();

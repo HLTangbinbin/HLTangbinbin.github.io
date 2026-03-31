@@ -1,8 +1,5 @@
-import { getChartThemeTokens } from './theme.js';
-
-export const generateSmartNarrative = (chartOption, selectedLegend = null) => {
-    const theme = getChartThemeTokens();
-    if (!chartOption || !chartOption.series) return '';
+export const generateSmartInsights = (chartOption, selectedLegend = null) => {
+    if (!chartOption || !chartOption.series) return null;
 
     let mainSeries = null;
     if (selectedLegend) {
@@ -12,63 +9,91 @@ export const generateSmartNarrative = (chartOption, selectedLegend = null) => {
         mainSeries = chartOption.series.find(s => !s.isTrendline);
     }
 
-    if (!mainSeries || !Array.isArray(mainSeries.data)) return '';
+    if (!mainSeries || !Array.isArray(mainSeries.data)) return null;
 
     const categories = chartOption.xAxis?.data || chartOption.xAxis?.[0]?.data || [];
     const data = mainSeries.data.map(d => typeof d === 'object' && d !== null ? d.value : d);
-    const numericData = data.filter(d => typeof d === 'number' && !isNaN(d));
+    const validData = data
+        .map((value, index) => ({ value, index }))
+        .filter(item => typeof item.value === 'number' && !isNaN(item.value));
 
-    if (numericData.length < 2) return '数据积累不足，暂无法生成有效洞察。';
+    if (validData.length < 2) return null;
 
-    const max = Math.max(...numericData);
-    const min = Math.min(...numericData);
-    const maxDate = categories[data.indexOf(max)] || '';
+    const latestItem = validData[validData.length - 1];
+    const prevItem = validData[validData.length - 2];
+    const maxItem = validData.reduce((best, current) => current.value > best.value ? current : best, validData[0]);
+    const minItem = validData.reduce((best, current) => current.value < best.value ? current : best, validData[0]);
+    const growth = prevItem.value === 0 ? 0 : ((latestItem.value - prevItem.value) / prevItem.value) * 100;
+    const anomalies = Array.isArray(mainSeries.markPoint?.data) ? mainSeries.markPoint.data : [];
+    const trendSeries = chartOption.series.find(s => s.isTrendline && s.name.includes('(趋势)') && s.name.includes(mainSeries.name));
 
-    const latest = numericData[numericData.length - 1];
-    const prev = numericData[numericData.length - 2];
-    const growth = prev === 0 ? 0 : ((latest - prev) / prev * 100).toFixed(1);
+    let trendSummary = '较上期持平';
+    if (growth > 0) trendSummary = `较上期增长 ${growth.toFixed(1)}%`;
+    else if (growth < 0) trendSummary = `较上期下降 ${Math.abs(growth).toFixed(1)}%`;
 
-    let growthText = '';
-    if (growth > 0) growthText = `较上期 <span style="color: #ef4444; font-weight: bold;">增长 ${growth}%</span>`;
-    else if (growth < 0) growthText = `较上期 <span style="color: #22c55e; font-weight: bold;">衰退 ${Math.abs(growth)}%</span>`;
-    else growthText = `与上期持平`;
-
-    let anomaliesText = '';
-    if (mainSeries.markPoint?.data?.length > 0) {
-        const anomalies = mainSeries.markPoint.data;
-        const lastAnomalyIndex = anomalies[anomalies.length - 1].coord[0];
-        const lastAnomalyDate = categories[lastAnomalyIndex] || '近期';
-        anomaliesText = `<strong>异常检测：</strong>系统基于 2σ 模型捕获到 <strong style="color: #ef4444;">${anomalies.length}</strong> 处异常，最近一次突变发生在 <strong style="color: #ef4444;">${lastAnomalyDate}</strong>，建议重点复盘。`;
-    } else {
-        anomaliesText = `<strong>异常检测：</strong>数据完全在置信区间内平稳波动，未检测到异常突发点。`;
+    let riskSummary = '近期未见明显异常';
+    if (anomalies.length > 0) {
+        const lastAnomaly = anomalies[anomalies.length - 1];
+        const anomalyDate = categories[lastAnomaly.coord?.[0]] || '近期';
+        riskSummary = `${anomalies.length} 个异常点，最近在 ${anomalyDate}`;
     }
 
-    let forecastText = '';
-    const trendSeries = chartOption.series.find(s => s.isTrendline && s.name.includes('(趋势)') && s.name.includes(mainSeries.name));
-    if (trendSeries && trendSeries.data) {
+    let forecastCard = {
+        label: '未来预测',
+        value: '暂无',
+        detailHtml: '当前图表未生成趋势预测',
+        tone: 'neutral'
+    };
+
+    if (trendSeries && Array.isArray(trendSeries.data) && trendSeries.data.length > 0) {
         const lastPredObj = trendSeries.data[trendSeries.data.length - 1];
         const lastPred = typeof lastPredObj === 'object' ? lastPredObj.value : lastPredObj;
-
-        const meta = trendSeries.data._metadata;
-        let momentumAlert = '';
-        if (meta && meta.recentM < -0.01) momentumAlert = ' (受近期下行动量拖累)';
-        else if (meta && meta.recentM > 0.01) momentumAlert = ' (受近期上行动量拉升)';
-
-        const direction = lastPred > latest ? '上行空间' : '下行压力';
-        forecastText = `<br/>🔮 <strong>未来推演：</strong>结合近期数据动量修正模型，预测未来 3 个周期内指标存在<strong style="color: #ef4444;">${direction}</strong>${momentumAlert}，预期中枢在 <strong style="color: #ef4444;">${lastPred}</strong> 左右，已生成扇形置信区间。`;
-    }
-
-    let crossMetricText = '';
-    const crossPredSeries = chartOption.series.find(s => s.name && s.name.includes('预测') && !s.isTrendline);
-    if (crossPredSeries && Array.isArray(crossPredSeries.data)) {
-        const validPreds = crossPredSeries.data.filter(d => d !== null && d !== undefined);
-        if (validPreds.length > 0) {
-            const nextVal = typeof validPreds[validPreds.length - 1] === 'object' ? validPreds[validPreds.length - 1].value : validPreds[validPreds.length - 1];
-            const baseName = crossPredSeries.name.replace('预测', '').trim();
-            crossMetricText = `<br/>🔗 <strong>指标推演：</strong>基于关联数据（婚姻登记）的历史转化率模型，系统独立推算下一周期 <strong>[${baseName}]</strong> 的规模预期约为 <strong style="color: ${theme.accentStrong};">${nextVal}</strong>。`;
+        if (lastPred !== null && lastPred !== undefined && !Number.isNaN(Number(lastPred))) {
+            const forecastTone = Number(lastPred) > latestItem.value ? 'up' : Number(lastPred) < latestItem.value ? 'down' : 'neutral';
+            const direction = forecastTone === 'up' ? '偏上行' : forecastTone === 'down' ? '偏下行' : '保持平稳';
+            forecastCard = {
+                label: '未来预测',
+                value: formatInsightValue(lastPred),
+                detailHtml: `未来 3 个周期中枢<span class="detail-separator">·</span><span class="tone-${forecastTone}">${direction}</span>`,
+                tone: forecastTone
+            };
         }
     }
 
-    return `<strong>🧐 数据分析：</strong>基于当前 <strong style="color: #ef4444;">${mainSeries.name}</strong> 数据测算：整体分布在 ${min} 至 ${max} 之间，并于 <strong style="color: #ef4444;">${maxDate}</strong> 触及峰值 <strong style="color: #ef4444;">${max}</strong>。
-  最新一期录得 <strong style="color: #ef4444;">${latest}</strong>，${growthText}。<br/>💡 ${anomaliesText} ${forecastText} ${crossMetricText}`;
+    return {
+        subject: mainSeries.name,
+        cards: [
+            {
+                label: '最新值',
+                value: formatInsightValue(latestItem.value),
+                valueHtml: formatInsightValue(latestItem.value),
+                detailHtml: `<span class="detail-emphasis">${categories[latestItem.index] || '最新期'}</span><span class="detail-separator">·</span><span class="tone-${growth > 0 ? 'up' : growth < 0 ? 'down' : 'neutral'}">${trendSummary}</span>`,
+                tone: growth > 0 ? 'up' : growth < 0 ? 'down' : 'neutral'
+            },
+            {
+                label: '区间',
+                value: `${formatInsightValue(minItem.value)} - ${formatInsightValue(maxItem.value)}`,
+                valueHtml: `${formatInsightValue(minItem.value)} - ${formatInsightValue(maxItem.value)}`,
+                detailHtml: `高点 <span class="detail-emphasis">${categories[maxItem.index] || '峰值期'}</span><span class="detail-separator">·</span>低点 <span class="detail-emphasis">${categories[minItem.index] || '低点期'}</span>`,
+                tone: 'neutral'
+            },
+            {
+                label: '风险提示',
+                value: anomalies.length > 0 ? '波动偏强' : '运行平稳',
+                valueHtml: anomalies.length > 0 ? '<span class="tone-up">波动偏强</span>' : '<span class="tone-down">运行平稳</span>',
+                detailHtml: anomalies.length > 0
+                    ? `${anomalies.length} 个异常点<span class="detail-separator">·</span>最近在 <span class="detail-alert">${categories[anomalies[anomalies.length - 1]?.coord?.[0]] || '近期'}</span>`
+                    : `<span class="tone-down">${riskSummary}</span>`,
+                tone: anomalies.length > 0 ? 'up' : 'down'
+            },
+            forecastCard
+        ]
+    };
 };
+
+function formatInsightValue(value) {
+    const number = Number(value);
+    if (Number.isNaN(number)) return String(value ?? '-');
+    if (Math.abs(number) >= 1000) return number.toLocaleString(undefined, { maximumFractionDigits: 2 });
+    return number.toFixed(Math.abs(number) >= 10 ? 1 : 2);
+}

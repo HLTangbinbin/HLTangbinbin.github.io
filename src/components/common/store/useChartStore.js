@@ -1,6 +1,6 @@
 import { ref, computed, watch } from 'vue';
 import { buildChartOption } from '@/utils/chartBuilder.js';
-import { generateSmartNarrative } from '@/utils/narrativeEngine.js';
+import { generateSmartInsights } from '@/utils/narrativeEngine.js';
 import { useTableEngine } from './useTableEngine.js';
 import { resolveMapType } from '@/utils/mapProvider.js';
 import { getThemeMode } from '@/utils/theme.js';
@@ -186,9 +186,9 @@ export function createChartStore(props) {
 
   const legendList = computed(() => legendNames.value);
 
-  const smartNarrative = computed(() => {
-    if (!enableSmartAnalysis.value || viewModeDisplay.value !== 'chart') return '';
-    return generateSmartNarrative(chartOption.value, linkedLegend.value || selectedLegend.value);
+  const smartInsights = computed(() => {
+    if (!enableSmartAnalysis.value || viewModeDisplay.value !== 'chart') return null;
+    return generateSmartInsights(chartOption.value, linkedLegend.value || selectedLegend.value);
   });
 
   const tableEngine = useTableEngine(chartOption, isMobile, props.chart?.title, chartIdentityStr);
@@ -213,7 +213,7 @@ export function createChartStore(props) {
     enableSmartAnalysis, isDrawerVisible, searchKeyword, selectedExtraCities,
     isProvince, finalCityCodeArr, showCityAddToggle, filteredCities, getCityName, toggleCity,
     showSmartAnalysisToggle, showCompareToggle, showLegendSelector, showOffsetControls, legendList,
-    chartOption, smartNarrative, mapType, isMapSupported, linkedLegend,
+    chartOption, smartInsights, mapType, isMapSupported, linkedLegend,
     ...tableEngine
   };
 }

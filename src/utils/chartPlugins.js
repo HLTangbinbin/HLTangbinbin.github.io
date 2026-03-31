@@ -164,9 +164,9 @@ export const PiePlugin = (option, ctx) => {
 
     targetSeries.forEach(series => {
       if (Array.isArray(series.data)) {
-        const rawVal = series.data[targetIndex];
+        const rawVal = getNearestSeriesValue(series.data, targetIndex);
         const val = typeof rawVal === 'object' && rawVal !== null ? rawVal.value : rawVal;
-        if (val !== null && val !== undefined && val !== '-' && val !== '') {
+        if (val !== null && val !== undefined && val !== '-' && val !== '' && !Number.isNaN(Number(val))) {
           pieData.push({ name: series.name, value: Number(val) });
         }
       }
@@ -206,6 +206,19 @@ export const PiePlugin = (option, ctx) => {
   });
 
   return option;
+};
+
+const getNearestSeriesValue = (seriesData, targetIndex) => {
+  if (!Array.isArray(seriesData) || seriesData.length === 0) return null;
+  const safeIndex = Math.min(targetIndex, seriesData.length - 1);
+  for (let index = safeIndex; index >= 0; index -= 1) {
+    const current = seriesData[index];
+    const value = typeof current === 'object' && current !== null ? current.value : current;
+    if (value !== null && value !== undefined && value !== '' && value !== '-') {
+      return current;
+    }
+  }
+  return null;
 };
 
 export const BirthPredictionPlugin = (option, ctx) => {
