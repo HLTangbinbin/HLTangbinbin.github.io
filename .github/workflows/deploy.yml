@@ -1,3 +1,37 @@
+name: Deploy Datang To Tencent Server
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  # 1️⃣ 验证构建
+  verify:
+    name: Verify Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint project
+        run: npm run lint
+
+      - name: Build project
+        run: npm run build
+
+  # 2️⃣ 部署到服务器
   deploy:
     name: Deploy To Server
     runs-on: ubuntu-latest
@@ -20,6 +54,7 @@
       - name: Build project
         run: npm run build
 
+      # ✅ 配置 SSH Key
       - name: Prepare SSH key
         run: |
           mkdir -p ~/.ssh
@@ -27,21 +62,21 @@
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p "${{ secrets.SERVER_PORT }}" "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
 
-      # ✅ ✅ ✅ 新增：备份 frontend
+      # ✅ 备份现有 frontend
       - name: Backup current frontend
         run: |
           TIMESTAMP=$(date +%Y%m%d_%H%M%S)
           ssh -p ${{ secrets.SERVER_PORT }} \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
             if [ -d "${{ secrets.SERVER_PATH }}" ]; then
-              cp -r ${{ secrets.SERVER_PATH }} ${{ secrets.SERVER_PATH }}_$TIMESTAMP
+              cp -r "${{ secrets.SERVER_PATH }}" "${{ secrets.SERVER_PATH }}_$TIMESTAMP"
               echo "✅ 备份完成: ${{ secrets.SERVER_PATH }}_$TIMESTAMP"
             else
               echo "⚠️ 目录不存在，跳过备份"
             fi
           EOF
 
-      # 原有部署（完全不动）
+      # ✅ 部署 dist 到服务器
       - name: Sync dist to server
         run: |
           rsync -az --delete \
