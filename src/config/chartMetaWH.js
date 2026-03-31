@@ -8,7 +8,7 @@ const AREA_YD_CODES = ['A0102','A0103','A0104','A0105','A0106','A0107','A0108','
 export const WHEducationCharts = {
 
   source: {
-    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
+    localJson: `./wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -30,7 +30,7 @@ export const WHEducationCharts = {
 export const WHFinanceCharts = {
 
   source: {
-    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
+    localJson: `./wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -60,7 +60,7 @@ export const WHFinanceCharts = {
 export const WHGDPCharts = {
 
   source: {
-   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
+   localJson: `./wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -90,7 +90,7 @@ export const WHGDPCharts = {
 export const WHMedicalCharts = {
 
   source: {
-   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
+   localJson: `./wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -112,7 +112,7 @@ export const WHMedicalCharts = {
 export const WHPopulationCharts = {
 
   source: {
-   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
+   localJson: `./wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -134,7 +134,7 @@ export const WHPopulationCharts = {
 export const WHRealEstateInvestCharts = {
 
   source: {
-    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
+    localJson: `./wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -156,7 +156,7 @@ export const WHRealEstateInvestCharts = {
 export const WHRealEstateSellCharts = {
 
   source: {
-   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
+   localJson: `./wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -189,7 +189,7 @@ export const WHRealEstateSellCharts = {
 export const WHNewHouseCharts = {
 
   source: {
-   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
+   localJson: `./wh.json`,
     apiParams: params_wh
   },
   charts: [
@@ -265,7 +265,7 @@ export const WHNewHouseCharts = {
 export const WHSecondHouseCharts = {
 
   source: {
-   localJson: `${process.env.VUE_APP_DATA_BASE_URL}/wh.json`,
+   localJson: `./wh.json`,
     apiParams: params_wh
   },
   charts: [

@@ -12,7 +12,7 @@ import {
 
 export const ForeignTradeCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: './nation.json',
     apiParams: params_foreignTrade
   },
   charts: [
@@ -91,7 +91,7 @@ export const ForeignTradeCharts = {
 
 export const GDPCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: './nation.json',
     apiParams: params_gdp
   },
   charts: [
@@ -114,7 +114,7 @@ export const GDPCharts = {
 
 export const IndicesCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: './nation.json',
     apiParams: params_indices
   },
   charts: [
@@ -147,7 +147,7 @@ export const IndicesCharts = {
 
 export const RealEstateInvestCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: './nation.json',
     apiParams: params_realEstate_invest
   },
   charts: [
@@ -194,7 +194,7 @@ export const RealEstateInvestCharts = {
 
 export const RealEstateSaleCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: './nation.json',
     apiParams: params_realEstate_sell
   },
   charts: [
@@ -279,7 +279,7 @@ export const RealEstateSaleCharts = {
 
 export const SocialRetailgoodsCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: './nation.json',
     apiParams: params_socialretailgoods
   },
   charts: [
@@ -340,7 +340,7 @@ export const SocialRetailgoodsCharts = {
 
 export const AccommodationAndCateringIndustryCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: './nation.json',
     apiParams: params_accommodationAndCatering
   },
   charts: [
@@ -379,7 +379,7 @@ export const AccommodationAndCateringIndustryCharts = {
 
 export const TouristIndustryCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: './nation.json',
     apiParams: params_touristIndustry
   },
   charts: [
@@ -408,7 +408,7 @@ export const TouristIndustryCharts = {
 
 export const TransportationAndTelecommunicationsCharts = {
   source: {
-    localJson: './json/nation.json',
+    localJson: './nation.json',
     apiParams: params_transportationAndTelecommunications
   },
   charts: [

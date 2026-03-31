@@ -9,7 +9,6 @@ import { BarChart, LineChart, PieChart, MapChart } from 'echarts/charts';
 import { TitleComponent, GridComponent, TooltipComponent, LegendComponent, TimelineComponent, VisualMapComponent, GeoComponent } from 'echarts/components';
 import { CanvasRenderer, SVGRenderer } from 'echarts/renderers';
 import debounce from 'lodash-es/debounce';
-import { logger } from '@/utils/Logger';
 
 echarts.use([TitleComponent, GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, PieChart, CanvasRenderer, SVGRenderer, TimelineComponent, VisualMapComponent, GeoComponent, MapChart]);
 
@@ -112,7 +111,6 @@ export default {
             name: series.name,
             value: Array.isArray(series.data) ? series.data[yearIndex] : 0
           }));
-          logger.debug("updateAxisPointer调用");
           chartInstance.setOption({
             series: [{
               id: `pie_${idx}`,
@@ -173,7 +171,6 @@ export default {
         return;
       }
       if (!newOption?.series?.length) return;
-      logger.debug('updateChart方法调用')
       // 使用增量更新，提高性能
       chartInstance.setOption(newOption, true, true);
     };

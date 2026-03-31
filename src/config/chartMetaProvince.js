@@ -17,7 +17,7 @@ const PROVINCE_CODES = [
 
 export const ProvincialEducationCharts = {
   source: {
-    localJson: `${process.env.VUE_APP_DATA_BASE_URL}/province.json`,
+    localJson: `./province.json`,
     apiParams: params_province,         // ✅ 替换为你的请求参数
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
@@ -85,7 +85,7 @@ export const ProvincialEducationCharts = {
 
 export const ProvincialFinanceCharts = {
   source: {
-     localJson: `${process.env.VUE_APP_DATA_BASE_URL}/province.json`,
+     localJson: `./province.json`,
     apiParams: params_province,
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
@@ -146,7 +146,7 @@ export const ProvincialFinanceCharts = {
 export const ProvincialGDPCharts = {
 
   source: {
-     localJson: `${process.env.VUE_APP_DATA_BASE_URL}/province.json`,
+     localJson: `./province.json`,
     apiParams: params_province,
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
@@ -177,7 +177,7 @@ export const ProvincialGDPCharts = {
 export const ProvincialMedicalCharts = {
 
   source: {
-     localJson: `${process.env.VUE_APP_DATA_BASE_URL}/province.json`,
+     localJson: `./province.json`,
     apiParams: params_province,
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
@@ -210,7 +210,7 @@ export const ProvincialMedicalCharts = {
 
 export const ProvincialPopulationCharts = {
   source: {
-     localJson: `${process.env.VUE_APP_DATA_BASE_URL}/province.json`, // ✅ 替换为实际路径
+     localJson: `./province.json`, // ✅ 替换为实际路径
     apiParams: params_province,         // ✅ 替换为你在 CommonUtil.js 中定义的请求参数
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
@@ -273,7 +273,7 @@ export const ProvincialPopulationCharts = {
 export const ProvincialRealEstateInvestCharts = {
 
   source: {
-     localJson: `${process.env.VUE_APP_DATA_BASE_URL}/province.json`,
+     localJson: `./province.json`,
     apiParams: params_province,
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
@@ -305,7 +305,7 @@ export const ProvincialRealEstateInvestCharts = {
 export const ProvincialRealEstateSellCharts = {
 
   source: {
-     localJson: `${process.env.VUE_APP_DATA_BASE_URL}/province.json`,
+     localJson: `./province.json`,
     apiParams: params_province,
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
@@ -349,7 +349,7 @@ export const ProvincialRealEstateSellCharts = {
 export const ProvincialLivingCharts = {
 
   source: {
-     localJson: `${process.env.VUE_APP_DATA_BASE_URL}/province.json`,
+     localJson: `./province.json`,
     apiParams: params_province,
     cityCodeArr: PROVINCE_CODES
   },

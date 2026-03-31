@@ -31,7 +31,7 @@ export const ADD_CITY_CODES_ND = ALL_70_CITIES_CODES.filter(
 export const CityEducationCharts = {
 
     source: {
-        localJson: `${process.env.VUE_APP_DATA_BASE_URL}/city.json`,
+        localJson: `./city.json`,
         apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
@@ -55,7 +55,7 @@ export const CityEducationCharts = {
 
 export const CityFinanceCityCharts = {
     source: {
-        localJson: `${process.env.VUE_APP_DATA_BASE_URL}/city.json`,
+        localJson: `./city.json`,
         apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
@@ -112,7 +112,7 @@ export const CityFinanceCityCharts = {
 export const CityGDPCharts = {
 
     source: {
-        localJson: `${process.env.VUE_APP_DATA_BASE_URL}/city.json`,
+        localJson: `./city.json`,
         apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
@@ -137,7 +137,7 @@ export const CityGDPCharts = {
 export const CityMedicalCharts = {
 
     source: {
-        localJson: `${process.env.VUE_APP_DATA_BASE_URL}/city.json`,
+        localJson: `./city.json`,
         apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
@@ -162,7 +162,7 @@ export const CityMedicalCharts = {
 export const CityPopulationCharts = {
 
     source: {
-        localJson: `${process.env.VUE_APP_DATA_BASE_URL}/city.json`,
+        localJson: `./city.json`,
         apiParams: params_city,
         // 人口是手动维护的，一些核心城市就可以了
         cityCodeArr: [
@@ -201,7 +201,7 @@ export const CityPopulationCharts = {
 export const CityRealEstateInvestCharts = {
 
     source: {
-        localJson: `${process.env.VUE_APP_DATA_BASE_URL}/city.json`,
+        localJson: `./city.json`,
         apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
@@ -226,7 +226,7 @@ export const CityRealEstateInvestCharts = {
 export const CityRealEstateSellCharts = {
 
     source: {
-        localJson: `${process.env.VUE_APP_DATA_BASE_URL}/city.json`,
+        localJson: `./city.json`,
         apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
@@ -262,7 +262,7 @@ export const CityRealEstateSellCharts = {
 export const CityRealEstatePriceIndicesCharts = {
 
     source: {
-        localJson: `${process.env.VUE_APP_DATA_BASE_URL}/city.json`,
+        localJson: `./city.json`,
         apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)

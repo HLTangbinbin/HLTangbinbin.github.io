@@ -132,17 +132,19 @@ export default {
       return formatPeriod(latest);
     });
 
+    const normalizedHeaderPath = computed(() => props.headerPath.filter(Boolean));
+
     const headerPathText = computed(() => {
-      const pathText = props.headerPath.filter(Boolean).join(' - ');
+      const separator = '/';
+      const pathText = normalizedHeaderPath.value.join(separator);
       const modeText = getDbCodeLabel(activeDbCode.value, viewMode.value);
 
-      if (pathText && modeText) return `${pathText} - ${modeText}`;
+      if (pathText && modeText) return `${pathText}${separator}${modeText}`;
       return pathText || modeText;
     });
 
     const headerStats = computed(() => ([
-      { label: '最新', value: latestPeriod.value },
-      { label: '图表', value: String(chartsToRender.value.length) }
+      { label: '最新', value: latestPeriod.value }
     ]));
 
     const linkSummary = computed(() => {
@@ -226,10 +228,10 @@ function getDbCodeLabel(dbCode, viewMode) {
   width: 98%;
   margin: 0 auto 16px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 12px;
+  flex-wrap: nowrap;
   padding-bottom: 14px;
   border-bottom: 1px solid #eef2f7;
 }
@@ -237,32 +239,38 @@ function getDbCodeLabel(dbCode, viewMode) {
 .header-left {
   min-width: 0;
   display: flex;
-  align-items: flex-start;
-  flex-direction: column;
+  align-items: center;
+  flex-direction: row;
   gap: 10px;
   flex: 1 1 auto;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
 
 .header-path {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 34px;
   color: #1e293b;
   letter-spacing: 0.01em;
-  white-space: normal;
-  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 0 1 auto;
 }
 
 .header-meta {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
+  min-width: 0;
+  flex: 0 0 auto;
 }
 
 .header-stats {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
 }
 
@@ -277,6 +285,8 @@ function getDbCodeLabel(dbCode, viewMode) {
   border: 1px solid rgba(11, 194, 214, 0.2);
   white-space: nowrap;
   max-width: 100%;
+  flex: 0 1 auto;
+  overflow: hidden;
 }
 
 .linkage-label {
@@ -289,6 +299,9 @@ function getDbCodeLabel(dbCode, viewMode) {
   font-size: 13px;
   font-weight: 600;
   color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .linkage-clear {
@@ -340,6 +353,7 @@ function getDbCodeLabel(dbCode, viewMode) {
   justify-content: flex-end;
   margin-left: auto;
   align-self: center;
+  flex: 0 0 auto;
 }
 
 .custom-segment {
@@ -380,94 +394,89 @@ function getDbCodeLabel(dbCode, viewMode) {
 @media (max-width: 768px) {
   .dashboard-global-wrapper {
     width: 98%;
-    padding: 12px;
-    border-radius: 16px;
-    background-color: rgba(255, 255, 255, 0.6); /* 移动端可以稍微白一点点 */
+    padding: 10px;
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.6);
   }
 
   .page-header {
     width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    margin: 0 0 12px;
-    padding-bottom: 12px;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 10px;
+    padding-bottom: 10px;
+    flex-wrap: nowrap;
   }
 
   .header-left {
-    align-items: stretch;
-    gap: 8px;
+    align-items: center;
+    gap: 6px;
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   .header-path {
-    font-size: 15px;
-    line-height: 1.35;
+    font-size: 12px;
+    line-height: 28px;
+    max-width: 42%;
   }
 
   .header-meta {
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
   }
 
   .header-stats {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
   }
 
   .header-linkage {
-    width: 100%;
-    min-height: 0;
-    padding: 10px 12px;
-    border-radius: 12px;
-    align-items: flex-start;
-    justify-content: space-between;
-    white-space: normal;
-  }
-
-  .linkage-value {
-    font-size: 12px;
-    flex: 1 1 auto;
+    display: none;
   }
 
   .header-stat {
-    min-height: 34px;
-    padding: 0 10px;
-    border-radius: 10px;
+    min-height: 28px;
+    padding: 0 8px;
+    border-radius: 999px;
     justify-content: center;
   }
 
   .header-stat-label {
-    font-size: 12px;
+    font-size: 10px;
   }
 
   .header-stat-value {
-    font-size: 15px;
+    font-size: 12px;
   }
 
   .view-mode-container {
-    width: 100%;
-    justify-content: stretch;
+    width: auto;
+    justify-content: flex-end;
     margin-left: 0;
-    align-self: stretch;
+    align-self: center;
+    flex: 0 0 auto;
   }
 
   .custom-segment {
-    width: 100%;
+    width: auto;
   }
 
   .custom-segment :deep(.el-radio-group),
   .custom-segment :deep(.el-radio-button) {
-    width: 100%;
+    width: auto;
   }
 
   .custom-segment :deep(.el-radio-button__inner) {
     height: 28px !important;
-    width: 100%;
-    padding: 0 20px !important;
-    font-size: 12px !important;
+    width: auto;
+    min-width: 52px;
+    padding: 0 12px !important;
+    font-size: 11px !important;
   }
   .custom-segment :deep(.el-radio-button:first-child .el-radio-button__inner) {
     border-radius: 12px 0 0 12px !important;

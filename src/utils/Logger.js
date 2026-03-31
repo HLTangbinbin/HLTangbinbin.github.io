@@ -14,7 +14,7 @@ function shouldLog(level) {
 export const logger = {
   debug: (...args) => {
     if (shouldLog('debug')) {
-      console.log('[DEBUG]', ...args);
+      console.debug('[DEBUG]', ...args);
     }
   },
   info: (...args) => {
@@ -43,4 +43,3 @@ export const logger = {
     }
   },
 };
-

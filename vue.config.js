@@ -73,6 +73,10 @@ module.exports = defineConfig({
         target: 'https://data.stats.gov.cn',
         changeOrigin: true,
         pathRewrite: { '^/api': '' }
+      },
+      '/resource': {
+        target: 'https://data.tangdynastyhub.cn',
+        changeOrigin: true
       }
     }
   }
