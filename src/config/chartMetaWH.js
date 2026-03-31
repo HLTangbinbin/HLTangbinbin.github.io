@@ -1,5 +1,3 @@
-import { params_wh } from '@/config/apiParams.js';
-
 
 const AREA_ND_CODES = ['A0502','A0503','A0504','A0505','A0506','A0507','A0508','A0509','A050A','A050B','A050C','A050D','A050E','A050F','A050G','A050H'];
 const AREA_YD_CODES = ['A0102','A0103','A0104','A0105','A0106','A0107','A0108','A0109','A010A','A010B','A010C','A010D','A010E','A010F','A010G','A010H'];
@@ -9,7 +7,6 @@ export const WHEducationCharts = {
 
   source: {
     localJson: `./wh.json`,
-    apiParams: params_wh
   },
   charts: [
     {
@@ -31,7 +28,6 @@ export const WHFinanceCharts = {
 
   source: {
     localJson: `./wh.json`,
-    apiParams: params_wh
   },
   charts: [
     {
@@ -61,7 +57,6 @@ export const WHGDPCharts = {
 
   source: {
    localJson: `./wh.json`,
-    apiParams: params_wh
   },
   charts: [
     {
@@ -91,7 +86,6 @@ export const WHMedicalCharts = {
 
   source: {
    localJson: `./wh.json`,
-    apiParams: params_wh
   },
   charts: [
     {
@@ -113,7 +107,6 @@ export const WHPopulationCharts = {
 
   source: {
    localJson: `./wh.json`,
-    apiParams: params_wh
   },
   charts: [
     {
@@ -135,7 +128,6 @@ export const WHRealEstateInvestCharts = {
 
   source: {
     localJson: `./wh.json`,
-    apiParams: params_wh
   },
   charts: [
     {
@@ -157,7 +149,6 @@ export const WHRealEstateSellCharts = {
 
   source: {
    localJson: `./wh.json`,
-    apiParams: params_wh
   },
   charts: [
     {
@@ -190,7 +181,6 @@ export const WHNewHouseCharts = {
 
   source: {
    localJson: `./wh.json`,
-    apiParams: params_wh
   },
   charts: [
     {
@@ -266,7 +256,6 @@ export const WHSecondHouseCharts = {
 
   source: {
    localJson: `./wh.json`,
-    apiParams: params_wh
   },
   charts: [
     {

@@ -1,7 +1,5 @@
-// utils/dataLoader.js
 import { resolveDataJsonUrl } from '@/config/dataSource.js';
 import { logger } from '@/utils/Logger.js';
-// 🌟 核心修复：引入了你写好的完美单例加载器
 import { loadJsonOnce } from '@/utils/loadJsonOnce.js'; 
 
 const dataCache = {};
@@ -20,10 +18,10 @@ const performanceMetrics = {
   cacheMisses: 0,
 };
 
-export async function loadChartData({ localJson, apiParams }, options = {}) {
+export async function loadChartData({ localJson }, options = {}) {
   const { forceRefresh = false } = options;
   const jsonUrl = resolveDataJsonUrl(localJson);
-  const cacheKey = jsonUrl || JSON.stringify(apiParams);
+  const cacheKey = jsonUrl;
 
   if (!forceRefresh && dataCache[cacheKey]) {
     const { data, time } = dataCache[cacheKey];
@@ -53,8 +51,6 @@ export async function loadChartData({ localJson, apiParams }, options = {}) {
       throw new Error('缺少 JSON 数据源路径配置');
     }
 
-    // 🌟 核心修复：使用 loadJsonOnce 彻底阻断并发网络请求！
-    // 无论多少个图表同时索要数据，浏览器网络面板里永远只有一个 fetch！
     const result = await loadJsonOnce(jsonUrl);
 
     updateCache(cacheKey, result);
@@ -86,14 +82,14 @@ export async function smartPreload(configs, options = {}) {
 
   setTimeout(async () => {
     const remainingConfigs = configs.filter(config => 
-      !preloadQueue.has(config.source.localJson || JSON.stringify(config.source.apiParams))
+      !preloadQueue.has(resolveDataJsonUrl(config.source.localJson))
     );
 
     for (let i = 0; i < remainingConfigs.length; i += maxConcurrent) {
       const batch = remainingConfigs.slice(i, i + maxConcurrent);
       await Promise.allSettled(
         batch.map(config => {
-          const cacheKey = resolveDataJsonUrl(config.source.localJson) || JSON.stringify(config.source.apiParams);
+          const cacheKey = resolveDataJsonUrl(config.source.localJson);
           preloadQueue.add(cacheKey);
           preloadStatus.set(cacheKey, 'loading');
           

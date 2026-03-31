@@ -1,4 +1,3 @@
-import { params_city } from '@/config/apiParams.js';
 import { cityRegionList } from '@/config/regionLists.js';
 
 
@@ -32,7 +31,6 @@ export const CityEducationCharts = {
 
     source: {
         localJson: `./city.json`,
-        apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
         needAddCityCodeArr_nd: ADD_CITY_CODES_ND  // 组件在看年度图表时会自动用这个 (22城)
@@ -56,7 +54,6 @@ export const CityEducationCharts = {
 export const CityFinanceCityCharts = {
     source: {
         localJson: `./city.json`,
-        apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
         needAddCityCodeArr_nd: ADD_CITY_CODES_ND  // 组件在看年度图表时会自动用这个 (22城)
@@ -113,7 +110,6 @@ export const CityGDPCharts = {
 
     source: {
         localJson: `./city.json`,
-        apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
         needAddCityCodeArr_nd: ADD_CITY_CODES_ND  // 组件在看年度图表时会自动用这个 (22城)
@@ -138,7 +134,6 @@ export const CityMedicalCharts = {
 
     source: {
         localJson: `./city.json`,
-        apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
         needAddCityCodeArr_nd: ADD_CITY_CODES_ND  // 组件在看年度图表时会自动用这个 (22城)
@@ -163,7 +158,6 @@ export const CityPopulationCharts = {
 
     source: {
         localJson: `./city.json`,
-        apiParams: params_city,
         // 人口是手动维护的，一些核心城市就可以了
         cityCodeArr: [
             '110000', '310000', '440100', '440300', '330100',
@@ -202,7 +196,6 @@ export const CityRealEstateInvestCharts = {
 
     source: {
         localJson: `./city.json`,
-        apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
         needAddCityCodeArr_nd: ADD_CITY_CODES_ND  // 组件在看年度图表时会自动用这个 (22城)
@@ -227,7 +220,6 @@ export const CityRealEstateSellCharts = {
 
     source: {
         localJson: `./city.json`,
-        apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
         needAddCityCodeArr_nd: ADD_CITY_CODES_ND  // 组件在看年度图表时会自动用这个 (22城)
@@ -263,7 +255,6 @@ export const CityRealEstatePriceIndicesCharts = {
 
     source: {
         localJson: `./city.json`,
-        apiParams: params_city,
         cityCodeArr: CITY_CODES,
         needAddCityCodeArr_yd: ADD_CITY_CODES_YD, // 组件在看月度图表时会自动用这个 (56城)
         needAddCityCodeArr_nd: ADD_CITY_CODES_ND  // 组件在看年度图表时会自动用这个 (22城)

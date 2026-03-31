@@ -1,4 +1,3 @@
-import { params_province } from '@/config/apiParams.js';
 import { provinceRegionList } from '@/config/regionLists.js';
 
 const PROVINCE_CODES = [
@@ -18,7 +17,6 @@ const PROVINCE_CODES = [
 export const ProvincialEducationCharts = {
   source: {
     localJson: `./province.json`,
-    apiParams: params_province,         // ✅ 替换为你的请求参数
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
   },
@@ -86,7 +84,6 @@ export const ProvincialEducationCharts = {
 export const ProvincialFinanceCharts = {
   source: {
      localJson: `./province.json`,
-    apiParams: params_province,
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
   },
@@ -147,7 +144,6 @@ export const ProvincialGDPCharts = {
 
   source: {
      localJson: `./province.json`,
-    apiParams: params_province,
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
   },
@@ -178,7 +174,6 @@ export const ProvincialMedicalCharts = {
 
   source: {
      localJson: `./province.json`,
-    apiParams: params_province,
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
   },
@@ -211,7 +206,6 @@ export const ProvincialMedicalCharts = {
 export const ProvincialPopulationCharts = {
   source: {
      localJson: `./province.json`, // ✅ 替换为实际路径
-    apiParams: params_province,         // ✅ 替换为你在 CommonUtil.js 中定义的请求参数
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
   },
@@ -274,7 +268,6 @@ export const ProvincialRealEstateInvestCharts = {
 
   source: {
      localJson: `./province.json`,
-    apiParams: params_province,
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
   },
@@ -306,7 +299,6 @@ export const ProvincialRealEstateSellCharts = {
 
   source: {
      localJson: `./province.json`,
-    apiParams: params_province,
     cityCodeArr: PROVINCE_CODES,
     needAddCityCodeArr: ADD_PROVINCE_CODES
   },
@@ -350,7 +342,6 @@ export const ProvincialLivingCharts = {
 
   source: {
      localJson: `./province.json`,
-    apiParams: params_province,
     cityCodeArr: PROVINCE_CODES
   },
   charts: [

@@ -1,9 +1,7 @@
-import { params_financialIndustry, params_nationalFinance } from '@/config/apiParams.js';
 
 export const FinancialCurrencyCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_financialIndustry
   },
   charts: [
     {
@@ -54,7 +52,6 @@ export const FinancialCurrencyCharts = {
 export const FinancialSocialFinancingCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_financialIndustry
   },
   charts: [
     {
@@ -73,7 +70,6 @@ export const FinancialSocialFinancingCharts = {
 export const FinancialSecurityCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_financialIndustry
   },
   charts: [
     {
@@ -102,7 +98,6 @@ export const FinancialSecurityCharts = {
 export const FinancialInsuranceCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_financialIndustry
   },
   charts: [
     {
@@ -131,7 +126,6 @@ export const FinancialInsuranceCharts = {
 export const NationalFinanceCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_nationalFinance
   },
   charts: [
     {

@@ -1,8 +1,3 @@
-import axios from 'axios';
-import { logger } from '@/utils/Logger.js';
-
-export * from '@/config/apiParams.js';
-
 export const sortYearMonths = (date1, date2) => {
   const compareYearMonth = (a, b) => {
     a = a.replace('-', '');
@@ -141,55 +136,4 @@ export const selectMapTimelineData = (returndata, zbCode, dbCode = 'nd', yearLim
   const finalYears = validTimeline.map(t => t.year);
   
   return { years: finalYears, timelineData: validTimeline };
-};
-
-const totalUrl = `${process.env.VUE_APP_API_BASE_URL}/easyquery.htm`;
-const common_params = { m: 'QueryData', colcode: 'sj', k1: String(Date.now()), h: '1' };
-
-export const sendRequest = async (specificParams) => {
-  let datanodesArr = [], newDataArr = [], nodesArr_zb = [], nodesArr_reg = [], nodesArr_sj_code_nd = [], nodesArr_sj_code_yd = [];
-
-  for (let params of specificParams) {
-    let mergedParams = { ...common_params, ...params };
-    try {
-      let response = await axios.get(totalUrl, { params: mergedParams, timeout: 30000 });
-      let data = response.data;
-      if (data && data.returndata) {
-        if (data.returndata.datanodes) datanodesArr = datanodesArr.concat(data.returndata.datanodes);
-        if (data.returndata.wdnodes?.[0]?.nodes) nodesArr_zb = nodesArr_zb.concat(data.returndata.wdnodes[0].nodes);
-        if (data.returndata.wdnodes?.[1]?.wdcode === 'reg') nodesArr_reg = data.returndata.wdnodes[1].nodes;
-
-        let dbCode = mergedParams.dbcode;
-        if (dbCode.includes('nd')) nodesArr_sj_code_nd = (data.returndata.wdnodes.slice(-1)[0]?.nodes || []).map(i => i.code);
-        if (dbCode.includes('yd')) nodesArr_sj_code_yd = (data.returndata.wdnodes.slice(-1)[0]?.nodes || []).map(i => i.code);
-      }
-    } catch (error) {
-      logger.error('请求错误:', error.response?.data || error.message);
-      return;
-    }
-  }
-
-  datanodesArr.forEach(dataElement => {
-    let newJson = { value: dataElement.data.data, code: dataElement.wds[0].valuecode, date: dataElement.wds[dataElement.wds.length - 1].valuecode };
-    const matchedZb = nodesArr_zb.find(n => n.code === newJson.code);
-    if (matchedZb) newJson.cname = matchedZb.cname;
-
-    if (dataElement.wds[1].wdcode === "reg") {
-      newJson.cityCode = dataElement.wds[1].valuecode;
-      const matchedReg = nodesArr_reg.find(n => n.code === newJson.cityCode);
-      if (matchedReg) newJson.cityName = matchedReg.cname;
-    }
-    newDataArr.push(newJson);
-  });
-
-  const newDataArr_sj = [];
-  if (nodesArr_sj_code_nd.length > 0) newDataArr_sj.push(nodesArr_sj_code_nd);
-  if (nodesArr_sj_code_yd.length > 0) newDataArr_sj.push(nodesArr_sj_code_yd);
-
-  return {
-    data: newDataArr,
-    zb: nodesArr_zb.map(i => ({ cname: i.cname, code: i.code })),
-    reg: nodesArr_reg.map(i => ({ cname: i.cname, code: i.code })),
-    sj: newDataArr_sj
-  };
 };

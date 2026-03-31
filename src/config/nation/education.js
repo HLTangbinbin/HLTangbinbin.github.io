@@ -1,9 +1,7 @@
-import { params_education } from '@/config/apiParams.js';
 
 export const EducationSchoolCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_education
   },
   charts: [
     {
@@ -32,7 +30,6 @@ export const EducationSchoolCharts = {
 export const EducationTeacherCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_education
   },
   charts: [
     {
@@ -51,7 +48,6 @@ export const EducationTeacherCharts = {
 export const EducationStudentCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_education
   },
   charts: [
     {

@@ -1,4 +1,3 @@
-import { params_livingStandards, params_marriage, params_medical, params_population } from '@/config/apiParams.js';
 
 const AGE_CODES = [
   'A03060102', 'A03060103', 'A03060104', 'A03060105',
@@ -23,7 +22,6 @@ const EDUCTOR_CODES = [
 export const LivingStandardsCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_livingStandards
   },
   charts: [
     {
@@ -66,7 +64,6 @@ export const LivingStandardsCharts = {
 export const MarriageCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_marriage
   },
   charts: [
     {
@@ -96,7 +93,6 @@ export const MarriageCharts = {
 export const MedicalCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_medical
   },
   charts: [
     {
@@ -135,7 +131,6 @@ export const MedicalCharts = {
 export const PopulationBasicCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_population
   },
   charts: [
     {
@@ -196,7 +191,6 @@ export const PopulationBasicCharts = {
 export const PopulationSpotCharts = {
   source: {
     localJson: './nation.json',
-    apiParams: params_population
   },
   charts: [
     {
