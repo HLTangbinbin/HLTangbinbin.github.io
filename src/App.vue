@@ -4,6 +4,7 @@
       <div class="title-cluster">
         <h1 class="main-title">大唐统计局</h1>
         <button class="theme-toggle" type="button" @click="toggleTheme" :aria-label="themeLabel" :title="themeLabel">
+          <span class="theme-label">{{ theme === 'dark' ? '白天' : '暗黑' }}</span>
           <svg v-if="theme === 'dark'" viewBox="0 0 24 24" class="theme-icon" aria-hidden="true">
             <path
               d="M6.76 4.84 5.35 3.43 3.93 4.84l1.42 1.41 1.41-1.41ZM1 13h3v-2H1v2Zm10 10h2v-3h-2v3Zm9.07-18.16-1.41-1.41-1.42 1.41 1.42 1.41 1.41-1.41ZM17.24 19.16l1.41 1.41 1.42-1.41-1.42-1.41-1.41 1.41ZM20 13h3v-2h-3v2ZM12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm0-5h-2v3h2V1Z"
@@ -14,7 +15,6 @@
               d="M21.75 15.5A9 9 0 0 1 10.5 2.25a.75.75 0 0 0-.82 1.18A7.5 7.5 0 1 0 20.57 14.3a.75.75 0 0 0 1.18-.8Z"
             />
           </svg>
-          <span class="theme-label">{{ theme === 'dark' ? '白天' : '暗黑' }}</span>
         </button>
       </div>
     </header>

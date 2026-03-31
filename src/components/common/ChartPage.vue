@@ -64,32 +64,42 @@ export default {
     chartMetaList: { type: Array, required: true },
     returnData: { type: Object, required: true },
     config: { type: Object, default: () => ({}) },
-    headerPath: { type: Array, default: () => [] },
+    pageMeta: { type: Object, default: () => ({}) },
     showToggles: { type: Boolean, default: true }
   },
   setup(props) {
     const viewMode = ref('monthly');
     const linkedSelection = ref(null);
+    const availableDbCodes = computed(() => {
+      const pageCodes = Array.isArray(props.pageMeta?.availableDbCodes) ? props.pageMeta.availableDbCodes.filter(Boolean) : [];
+      if (pageCodes.length) return pageCodes;
+      return Array.from(new Set(props.chartMetaList.map(chart => chart.dbCode).filter(Boolean)));
+    });
 
     const internalShowToggles = computed(() => {
       if (!props.showToggles) return false;
-      const dbCodes = new Set(props.chartMetaList.map(c => c.dbCode));
+      const dbCodes = new Set(availableDbCodes.value);
       return dbCodes.has('yd') && dbCodes.has('nd');
     });
 
-    const defaultViewMode = () => {
-      const dbCodes = new Set(props.chartMetaList.map(c => c.dbCode));
+    const resolveDefaultViewMode = () => {
+      const pageDefault = props.pageMeta?.defaultViewMode;
+      if (pageDefault === 'monthly' || pageDefault === 'yearly') {
+        return pageDefault;
+      }
+
+      const dbCodes = new Set(availableDbCodes.value);
       if (dbCodes.has('yd')) return 'monthly';
       if (dbCodes.has('nd')) return 'yearly';
       return 'monthly';
     };
     
-    viewMode.value = defaultViewMode();
+    viewMode.value = resolveDefaultViewMode();
 
-    watch(() => props.chartMetaList, () => {
-      viewMode.value = defaultViewMode();
+    watch(() => [props.chartMetaList, props.pageMeta?.defaultViewMode, props.pageMeta?.availableDbCodes], () => {
+      viewMode.value = resolveDefaultViewMode();
       linkedSelection.value = null;
-    });
+    }, { deep: true });
 
     const filteredCharts = computed(() => {
       if (!internalShowToggles.value) return props.chartMetaList;
@@ -114,7 +124,7 @@ export default {
         return chartsToRender.value[0].dbCode;
       }
 
-      const dbCodes = Array.from(new Set(props.chartMetaList.map(chart => chart.dbCode).filter(Boolean)));
+      const dbCodes = availableDbCodes.value;
       if (dbCodes.includes('yd')) return 'yd';
       if (dbCodes.includes('nd')) return 'nd';
       return '';
@@ -138,7 +148,17 @@ export default {
       return formatPeriod(latest);
     });
 
-    const normalizedHeaderPath = computed(() => props.headerPath.filter(Boolean));
+    const normalizedHeaderPath = computed(() => {
+      const breadcrumb = Array.isArray(props.pageMeta?.breadcrumb) ? props.pageMeta.breadcrumb : [];
+      const title = props.pageMeta?.title;
+      const items = breadcrumb.filter(Boolean);
+
+      if (!items.length && title) {
+        items.push(title);
+      }
+
+      return items;
+    });
 
     const headerPathText = computed(() => {
       const separator = '/';
@@ -188,6 +208,7 @@ export default {
 
     return {
       viewMode,
+      availableDbCodes,
       internalShowToggles,
       headerPathText,
       headerStats,
@@ -251,10 +272,8 @@ function getDbCodeLabel(dbCode, viewMode) {
   min-width: 0;
   display: flex;
   align-items: center;
-  flex-direction: row;
-  gap: 10px;
+  gap: 12px;
   flex: 1 1 auto;
-  flex-wrap: nowrap;
   overflow: hidden;
 }
 
@@ -267,7 +286,8 @@ function getDbCodeLabel(dbCode, viewMode) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .header-meta {
@@ -478,7 +498,7 @@ function getDbCodeLabel(dbCode, viewMode) {
   .header-path {
     font-size: 12px;
     line-height: 28px;
-    max-width: 42%;
+    flex: 1 1 0;
   }
 
   .header-meta {

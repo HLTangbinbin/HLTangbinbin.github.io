@@ -8,7 +8,7 @@
       :chartMetaList="currentConfig.charts"
       :returnData="returnData"
       :config="currentConfig.source"
-      :headerPath="headerPath"
+      :pageMeta="currentConfig.page"
       :showToggles="true"
     />
   </template>
@@ -17,8 +17,10 @@
     <div class="loading-text">数据加载中，请稍候...</div>
   </div>
   <div v-else class="page-state">
+    <div v-if="stateMeta.title" class="page-state-eyebrow">{{ stateMeta.title }}</div>
     <div class="page-state-title">{{ errorMessage ? '页面加载失败' : '页面配置缺失' }}</div>
-    <div class="page-state-text">{{ errorMessage || '当前路由未匹配到图表配置，请检查注册表或导航配置。' }}</div>
+    <div class="page-state-text">{{ stateMeta.message }}</div>
+    <div v-if="stateMeta.description" class="page-state-description">{{ stateMeta.description }}</div>
     <button v-if="errorMessage" class="page-state-action" type="button" @click="reloadPage">重新加载</button>
   </div>
 </template>
@@ -30,7 +32,7 @@ import ChartPage from '@/components/common/ChartPage.vue';
 import DataStatusPanel from '@/components/common/components/DataStatusPanel.vue';
 import { loadChartData } from '@/config/dataLoader.js';
 import { getRouteChartKey, resolveChartConfig } from '@/config/chartRegistry.js';
-import { navConfig } from '@/config/navConfig.js';
+import { normalizePageConfig } from '@/config/pageConfig.js';
 import { logger } from '@/utils/Logger.js';
 
 const route = useRoute();
@@ -39,7 +41,18 @@ const returnData = shallowRef(null);
 const loading = shallowRef(false);
 const errorMessage = shallowRef('');
 let requestId = 0;
-const headerPath = computed(() => resolveRouteLabels(route.path));
+const fallbackPageMeta = computed(() => normalizePageConfig({}, {
+  routeKey: getRouteChartKey(route.path),
+  routePath: route.path
+}).page);
+const stateMeta = computed(() => {
+  const page = currentConfig.value?.page || fallbackPageMeta.value;
+  return {
+    title: page?.breadcrumb?.length ? page.breadcrumb.join('/') : page?.title || '',
+    description: page?.description || '',
+    message: errorMessage.value || '当前路由未匹配到图表配置，请检查注册表或导航配置。'
+  };
+});
 
 watch(() => route.path, async () => {
   await initializePage();
@@ -55,7 +68,7 @@ async function initializePage() {
   returnData.value = null;
 
   try {
-    const resolvedConfig = await resolveChartConfig(pathKey);
+    const resolvedConfig = await resolveChartConfig(pathKey, route.path);
 
     if (currentRequestId !== requestId) return;
 
@@ -82,41 +95,6 @@ async function initializePage() {
 function reloadPage() {
   initializePage();
 }
-
-function resolveRouteLabels(path) {
-  for (const level1 of navConfig) {
-    const level1Path = normalizePath(level1.path);
-    if (!path.startsWith(level1Path)) continue;
-
-    const level1Labels = [level1.label];
-    const level2Children = Array.isArray(level1.children) ? level1.children : [];
-
-    for (const level2 of level2Children) {
-      const level2Path = normalizePath(`${level1Path}/${level2.path}`);
-      if (!path.startsWith(level2Path)) continue;
-
-      const level2Labels = [...level1Labels, level2.label];
-      const level3Children = Array.isArray(level2.children) ? level2.children : [];
-
-      for (const level3 of level3Children) {
-        const level3Path = normalizePath(`${level2Path}/${level3.path}`);
-        if (path.startsWith(level3Path)) {
-          return [...level2Labels, level3.label];
-        }
-      }
-
-      return level2Labels;
-    }
-
-    return level1Labels;
-  }
-
-  return [];
-}
-
-function normalizePath(value) {
-  return String(value || '').replace(/\/+/g, '/').replace(/\/$/, '') || '/';
-}
 </script>
 
 <style scoped>
@@ -138,6 +116,13 @@ function normalizePath(value) {
   box-sizing: border-box;
 }
 
+.page-state-eyebrow {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
 .page-state-title {
   font-size: 22px;
   font-weight: 700;
@@ -150,6 +135,14 @@ function normalizePath(value) {
   font-size: 15px;
   line-height: 1.9;
   color: var(--text-secondary);
+}
+
+.page-state-description {
+  max-width: 720px;
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-muted);
 }
 
 .page-state-action {
@@ -186,14 +179,11 @@ function normalizePath(value) {
     font-size: 13px;
     max-width: none;
   }
-}
 
-@media (max-width: 768px) {
-  .mock-panel {
-    width: 96%;
-    top: 8px;
-    padding: 10px 12px;
-    border-radius: 12px;
+  .page-state-description {
+    font-size: 12px;
+    max-width: none;
   }
 }
+
 </style>
