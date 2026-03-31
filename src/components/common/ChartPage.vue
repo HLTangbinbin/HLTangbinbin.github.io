@@ -31,6 +31,12 @@
     </div>
 
     <div class="charts-flow">
+      <div v-if="!chartsToRender.length" class="empty-state-card">
+        <div class="empty-state-title">当前视图暂无可展示图表</div>
+        <div class="empty-state-text">
+          {{ emptyStateText }}
+        </div>
+      </div>
       <ChartContainer 
         v-for="chart in chartsToRender" 
         :key="chart.id" 
@@ -153,6 +159,14 @@ export default {
       return `${linkedSelection.value.value} · ${sourceTitle}`;
     });
 
+    const emptyStateText = computed(() => {
+      const modeLabel = getDbCodeLabel(activeDbCode.value, viewMode.value) || '当前';
+      if (!filteredCharts.value.length) {
+        return `${modeLabel}视图下还没有可用图表配置，请检查当前栏目配置。`;
+      }
+      return `${modeLabel}数据暂不可用，可能是当前频率没有返回时间序列，或该页面尚未生成对应快照。`;
+    });
+
     const handleViewModeUpdate = (newMode) => {
       viewMode.value = newMode;
     };
@@ -180,6 +194,7 @@ export default {
       linkedSelection,
       linkSummary,
       chartsToRender,
+      emptyStateText,
       handleViewModeUpdate,
       handleLinkSelect,
       clearLinkedSelection
@@ -344,6 +359,37 @@ function getDbCodeLabel(dbCode, viewMode) {
   align-items: center;
 }
 
+.empty-state-card {
+  width: 98%;
+  max-width: 1500px;
+  min-height: 520px;
+  margin: 10px auto 20px;
+  padding: 36px 28px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 16px;
+  background: var(--bg-card-soft);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.empty-state-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.empty-state-text {
+  max-width: 760px;
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+
 .view-mode-container {
   display: flex;
   justify-content: flex-end;
@@ -393,6 +439,23 @@ function getDbCodeLabel(dbCode, viewMode) {
     padding: 10px;
     border-radius: 14px;
     background-color: var(--bg-card);
+  }
+
+  .empty-state-card {
+    width: 98%;
+    min-height: 360px;
+    padding: 26px 16px;
+    border-radius: 12px;
+    margin: 10px auto 16px;
+  }
+
+  .empty-state-title {
+    font-size: 18px;
+  }
+
+  .empty-state-text {
+    font-size: 13px;
+    max-width: none;
   }
 
   .page-header {

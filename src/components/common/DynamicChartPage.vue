@@ -19,6 +19,7 @@
   <div v-else class="page-state">
     <div class="page-state-title">{{ errorMessage ? '页面加载失败' : '页面配置缺失' }}</div>
     <div class="page-state-text">{{ errorMessage || '当前路由未匹配到图表配置，请检查注册表或导航配置。' }}</div>
+    <button v-if="errorMessage" class="page-state-action" type="button" @click="reloadPage">重新加载</button>
   </div>
 </template>
 
@@ -41,6 +42,10 @@ let requestId = 0;
 const headerPath = computed(() => resolveRouteLabels(route.path));
 
 watch(() => route.path, async () => {
+  await initializePage();
+}, { immediate: true });
+
+async function initializePage() {
   const currentRequestId = ++requestId;
   const pathKey = getRouteChartKey(route.path);
 
@@ -72,7 +77,11 @@ watch(() => route.path, async () => {
       loading.value = false;
     }
   }
-}, { immediate: true });
+}
+
+function reloadPage() {
+  initializePage();
+}
 
 function resolveRouteLabels(path) {
   for (const level1 of navConfig) {
@@ -112,26 +121,79 @@ function normalizePath(value) {
 
 <style scoped>
 .page-state {
-  width: 96%;
-  max-width: 960px;
-  margin: 40px auto;
-  padding: 28px 32px;
+  width: 98%;
+  max-width: 1500px;
+  min-height: 520px;
+  margin: 10px auto 20px;
+  padding: 36px 32px;
   background: var(--bg-card);
   border: 1px solid var(--border-default);
-  border-radius: 18px;
-  box-shadow: var(--shadow-medium);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .page-state-title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .page-state-text {
-  font-size: 14px;
-  line-height: 1.8;
+  max-width: 720px;
+  font-size: 15px;
+  line-height: 1.9;
   color: var(--text-secondary);
+}
+
+.page-state-action {
+  margin-top: 18px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent-fill);
+  color: var(--color-accent-contrast);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.page-state-action:hover {
+  background: var(--color-accent-soft);
+}
+
+@media (max-width: 768px) {
+  .page-state {
+    width: 98%;
+    min-height: 360px;
+    margin: 10px auto 16px;
+    padding: 28px 18px;
+    border-radius: 12px;
+  }
+
+  .page-state-title {
+    font-size: 18px;
+  }
+
+  .page-state-text {
+    font-size: 13px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .mock-panel {
+    width: 96%;
+    top: 8px;
+    padding: 10px 12px;
+    border-radius: 12px;
+  }
 }
 </style>
