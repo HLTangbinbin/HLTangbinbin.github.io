@@ -1,6 +1,5 @@
 // utils/dataLoader.js
-import { sendRequest } from '@/utils/dataEngine.js';
-import { getDataSourceMode, resolveDataJsonUrl } from '@/config/dataSource.js';
+import { resolveDataJsonUrl } from '@/config/dataSource.js';
 import { logger } from '@/utils/Logger.js';
 // 🌟 核心修复：引入了你写好的完美单例加载器
 import { loadJsonOnce } from '@/utils/loadJsonOnce.js'; 
@@ -23,10 +22,8 @@ const performanceMetrics = {
 
 export async function loadChartData({ localJson, apiParams }, options = {}) {
   const { forceRefresh = false } = options;
-  const sourceMode = getDataSourceMode();
   const jsonUrl = resolveDataJsonUrl(localJson);
-  const shouldUseJson = Boolean(jsonUrl) && (sourceMode === 'local' || sourceMode === 'remote');
-  const cacheKey = shouldUseJson ? jsonUrl : JSON.stringify(apiParams);
+  const cacheKey = jsonUrl || JSON.stringify(apiParams);
 
   if (!forceRefresh && dataCache[cacheKey]) {
     const { data, time } = dataCache[cacheKey];
@@ -52,15 +49,13 @@ export async function loadChartData({ localJson, apiParams }, options = {}) {
   const startTime = performance.now();
   
   try {
-    let result;
-    
-    if (shouldUseJson) {
-      // 🌟 核心修复：使用 loadJsonOnce 彻底阻断并发网络请求！
-      // 无论多少个图表同时索要数据，浏览器网络面板里永远只有一个 fetch！
-      result = await loadJsonOnce(jsonUrl);
-    } else {
-      result = await sendRequest(apiParams);
+    if (!jsonUrl) {
+      throw new Error('缺少 JSON 数据源路径配置');
     }
+
+    // 🌟 核心修复：使用 loadJsonOnce 彻底阻断并发网络请求！
+    // 无论多少个图表同时索要数据，浏览器网络面板里永远只有一个 fetch！
+    const result = await loadJsonOnce(jsonUrl);
 
     updateCache(cacheKey, result);
     
