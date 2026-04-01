@@ -120,9 +120,15 @@ defineEmits(['toggleAllLegends']);
   padding: 5px 5px;
   border-radius: 12px;
   margin-bottom: 5px;
-  overflow: visible !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
   width: 100%;
   box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bi-toolbar::-webkit-scrollbar {
+  display: none;
 }
 
 .toolbar-group {
@@ -137,7 +143,7 @@ defineEmits(['toggleAllLegends']);
   flex: 0 1 auto;
   min-width: 0;
   white-space: nowrap;
-  height: 50px;
+  min-height: 50px;
   box-sizing: border-box;
   overflow-y: hidden !important;
 }

@@ -1,4 +1,4 @@
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import { buildChartOption } from '@/utils/chartBuilder.js';
 import { generateSmartInsights } from '@/utils/narrativeEngine.js';
 import { useTableEngine } from './useTableEngine.js';
@@ -14,6 +14,10 @@ export function createChartStore(props) {
   };
   window.addEventListener('resize', onResize);
   window.addEventListener('themechange', onThemeChange);
+  onBeforeUnmount(() => {
+    window.removeEventListener('resize', onResize);
+    window.removeEventListener('themechange', onThemeChange);
+  });
   const isMobile = computed(() => windowWidth.value <= 768);
   const controlSize = computed(() => windowWidth.value > 768 ? 'large' : 'small');
 
@@ -179,6 +183,9 @@ export function createChartStore(props) {
 
   watch(chartOption, (newOption) => {
     legendNames.value = newOption?.originalLegendData || newOption?.legend?.data || [];
+    if (isYearlyCompare.value && !selectedLegend.value && legendNames.value.length > 0) {
+      selectedLegend.value = legendNames.value[0];
+    }
     if (selectedLegend.value && !legendNames.value.includes(selectedLegend.value) && legendNames.value.length > 0) {
       selectedLegend.value = legendNames.value[0];
     }

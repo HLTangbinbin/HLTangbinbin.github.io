@@ -64,9 +64,9 @@ class ChartBuilder {
         seriesData.push({ name, zbCode, type: chartType, data: valueArr, date: dateArr, emphasis: { focus: 'series' } });
       });
     } else {
+      const cityNameMap = new Map((data.reg || []).map((item) => [item.code, item.cname]));
       cityCodeArr.forEach(cityCode => {
-        const city = data.reg?.find(r => r.code === cityCode);
-        const name = city?.cname || '';
+        const name = cityNameMap.get(cityCode) || '';
         let result = selectDataFromArr(data, zbcodeArr[0], dbCode, cityCode, yearLimit) || [];
         seriesData.push({ name, zbCode: zbcodeArr[0], type: chartType, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' } });
       });
@@ -76,7 +76,7 @@ class ChartBuilder {
   }
 
   buildBaseOption() {
-    const { title, subtitle, isHorizontal, legendAllSelected, linkedLegend, gridTop = '140px', legendTop = '70px', unit = '', isMobile, titleTop = '15px' } = this.params;
+    const { title, subtitle, isHorizontal, legendAllSelected, linkedLegend, gridTop = '140px', legendTop = '70px', unit = '', isMobile, titleTop = '15px', isYearlyCompare = false } = this.params;
     const theme = getChartThemeTokens();
     
     const valueAxisConfig = {
@@ -99,6 +99,12 @@ class ChartBuilder {
     const linkedSelectedMap = linkedLegend && baseLegendData.includes(linkedLegend)
       ? baseLegendData.reduce((acc, name) => ({ ...acc, [name]: name === linkedLegend }), {})
       : baseLegendData.reduce((acc, name) => ({ ...acc, [name]: !!legendAllSelected }), {});
+
+    const clonedSeries = this.ctx.seriesData.map((seriesItem) => ({
+      ...seriesItem,
+      data: Array.isArray(seriesItem.data) ? [...seriesItem.data] : seriesItem.data,
+      date: Array.isArray(seriesItem.date) ? [...seriesItem.date] : seriesItem.date
+    }));
 
     return {
       backgroundColor: 'transparent',
@@ -124,10 +130,10 @@ class ChartBuilder {
         textStyle: { color: theme.textSecondary },
         selected: linkedSelectedMap
       },
-      grid: { left: '1%', right: '1%', top: gridTop, bottom: '1%', containLabel: true },
+      grid: { left: '1%', right: '1%', top: gridTop, bottom: isYearlyCompare ? '10%' : '4%', containLabel: true },
       xAxis: isHorizontal ? valueAxisConfig : categoryAxisConfig,
       yAxis: isHorizontal ? categoryAxisConfig : valueAxisConfig,
-      series: JSON.parse(JSON.stringify(this.ctx.seriesData)) 
+      series: clonedSeries
     };
   }
 

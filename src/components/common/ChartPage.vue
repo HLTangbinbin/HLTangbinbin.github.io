@@ -68,6 +68,7 @@ export default {
     showToggles: { type: Boolean, default: true }
   },
   setup(props) {
+    const latestPeriodCache = new Map();
     const viewMode = ref('monthly');
     const linkedSelection = ref(null);
     const availableDbCodes = computed(() => {
@@ -99,6 +100,9 @@ export default {
     watch(() => [props.chartMetaList, props.pageMeta?.defaultViewMode, props.pageMeta?.availableDbCodes], () => {
       viewMode.value = resolveDefaultViewMode();
       linkedSelection.value = null;
+    }, { deep: true });
+    watch(() => props.returnData, () => {
+      latestPeriodCache.clear();
     }, { deep: true });
 
     const filteredCharts = computed(() => {
@@ -134,9 +138,15 @@ export default {
       const dbCode = activeDbCode.value;
       const relevantCharts = chartsToRender.value.length ? chartsToRender.value : filteredCharts.value;
       const latestDates = relevantCharts.flatMap(chart =>
-        (chart.zbcodeArr || []).flatMap(zbCode =>
-          selectDataFromArr(props.returnData, zbCode, dbCode, '', 0).map(item => String(item.date))
-        )
+        (chart.zbcodeArr || []).flatMap((zbCode) => {
+          const cacheKey = `${dbCode}|${zbCode}|root|0`;
+          let seriesData = latestPeriodCache.get(cacheKey);
+          if (!seriesData) {
+            seriesData = selectDataFromArr(props.returnData, zbCode, dbCode, '', 0);
+            latestPeriodCache.set(cacheKey, seriesData);
+          }
+          return seriesData.map(item => String(item.date));
+        })
       );
 
       if (!latestDates.length) return '暂无数据';

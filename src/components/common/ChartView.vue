@@ -9,6 +9,7 @@ import { BarChart, LineChart, PieChart, MapChart } from 'echarts/charts';
 import { TitleComponent, GridComponent, TooltipComponent, LegendComponent, TimelineComponent, VisualMapComponent, GeoComponent } from 'echarts/components';
 import { CanvasRenderer, SVGRenderer } from 'echarts/renderers';
 import debounce from 'lodash-es/debounce';
+import { ensureMapRegistered } from '@/utils/mapProvider.js';
 
 echarts.use([TitleComponent, GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, PieChart, CanvasRenderer, SVGRenderer, TimelineComponent, VisualMapComponent, GeoComponent, MapChart]);
 
@@ -66,8 +67,8 @@ export default {
         return;
       }
 
-      // 修改后：强制开启 SVG 矢量渲染 🚀
-      chartInstance = echarts.init(chartContainer.value, props.themeMode === 'dark' ? 'dark' : null, { renderer: 'svg' });
+      const renderer = window.innerWidth <= 768 ? 'svg' : 'canvas';
+      chartInstance = echarts.init(chartContainer.value, props.themeMode === 'dark' ? 'dark' : null, { renderer });
       chartInstance.setOption(props.option, true);
 
       // 初始化图例状态
@@ -123,6 +124,7 @@ export default {
       // 🌟 性能优化核心：缓存上一次悬停的索引
       let lastYearIndex = -1;
 
+      const pieDataCache = new Map();
       chartInstance.on('updateAxisPointer', function (event) {
         const xAxisInfo = event.axesInfo?.[0];
         if (!xAxisInfo) return;
@@ -136,42 +138,51 @@ export default {
         if (!pieConfig?.enabled || !Array.isArray(pieConfig.pies)) return;
 
         const seriesData = props.option?.series?.filter(s => s.type !== 'pie') || [];
+        const pieSeriesUpdates = [];
 
         pieConfig.pies.forEach((pie, idx) => {
-          const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
-          const pieData = targetSeries
-            .map(series => {
-              const rawVal = Array.isArray(series.data) ? getNearestSeriesValue(series.data, yearIndex) : null;
-              const value = typeof rawVal === 'object' && rawVal !== null ? rawVal.value : rawVal;
-              if (value === null || value === undefined || value === '' || value === '-' || Number.isNaN(Number(value))) {
-                return null;
-              }
-              return {
-                name: series.name,
-                value: Number(value)
-              };
-            })
-            .filter(Boolean);
-          chartInstance.setOption({
-            series: [{
-              id: `pie_${idx}`,
-              data: pieData,
-              label: {
-                formatter: params => {
-                  // 动态获取当前屏幕宽度，<= 768px 认为是移动端
-                  const isMobile = window.innerWidth <= 768;
-                  if (isMobile) {
-                    // 移动端：在名称和百分比之间加入 \n 实现换行
-                    return `${params.name}\n(${params.percent}%)`;
-                  } else {
-                    // PC 端：保持原样单行显示
-                    return `${params.name}(${params.percent}%)`;
-                  }
-                },
+          const cacheKey = `${idx}|${yearIndex}`;
+          let pieData = pieDataCache.get(cacheKey);
+          if (!pieData) {
+            const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
+            pieData = targetSeries
+              .map(series => {
+                const rawVal = Array.isArray(series.data) ? getNearestSeriesValue(series.data, yearIndex) : null;
+                const value = typeof rawVal === 'object' && rawVal !== null ? rawVal.value : rawVal;
+                if (value === null || value === undefined || value === '' || value === '-' || Number.isNaN(Number(value))) {
+                  return null;
+                }
+                return {
+                  name: series.name,
+                  value: Number(value)
+                };
+              })
+              .filter(Boolean);
+            pieDataCache.set(cacheKey, pieData);
+          }
+
+          pieSeriesUpdates.push({
+            id: `pie_${idx}`,
+            data: pieData,
+            label: {
+              formatter: params => {
+                // 动态获取当前屏幕宽度，<= 768px 认为是移动端
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile) {
+                  // 移动端：在名称和百分比之间加入 \n 实现换行
+                  return `${params.name}\n(${params.percent}%)`;
+                } else {
+                  // PC 端：保持原样单行显示
+                  return `${params.name}(${params.percent}%)`;
+                }
               },
-            }]
+            },
           });
         });
+
+        if (pieSeriesUpdates.length > 0) {
+          chartInstance.setOption({ series: pieSeriesUpdates });
+        }
       });
 
       // 🌟 绝杀拦截器：直接挂载原生事件！
@@ -206,7 +217,19 @@ export default {
       }
     };
 
-    const updateChart = (newOption) => {
+    const ensureOptionMapsReady = async (option) => {
+      if (!option?.series?.length) return;
+      const mapTypes = [...new Set(
+        option.series
+          .filter((series) => series?.type === 'map' && series?.map)
+          .map((series) => series.map)
+      )];
+      if (!mapTypes.length) return;
+      await Promise.all(mapTypes.map((mapType) => ensureMapRegistered(mapType)));
+    };
+
+    const updateChart = async (newOption) => {
+      await ensureOptionMapsReady(newOption);
       if (!chartInstance || chartInstance.isDisposed()) {
         initChart();
         return;
@@ -219,6 +242,7 @@ export default {
     // 🌟 修复点：使用 async/await 处理 nextTick 🌟
     onMounted(async () => {
       await nextTick();
+      await ensureOptionMapsReady(props.option);
       initChart();
     });
 

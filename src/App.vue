@@ -33,7 +33,6 @@
 <script>
 import NavBar from "@/components/common/NavBar.vue";
 import { navConfig } from "@/config/navConfig";
-import { registerAllMaps } from '@/utils/mapProvider.js';
 
 export default {
   name: "App",
@@ -47,9 +46,6 @@ export default {
   },
   async mounted() {
     this.initTheme();
-
-    // 等待地图物料从网络下载并注册完毕
-    await registerAllMaps();
 
     // 地图准备就绪后，关闭全屏Loading并放行渲染
     setTimeout(() => {

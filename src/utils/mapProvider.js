@@ -10,19 +10,37 @@ export const resolveMapType = (localJsonPath) => {
   return null;
 };
 
+const mapLoaders = {
+  province: () => axios.get(resolveMapAssetUrl('/geo_province.json')).then((res) => res.data)
+};
+const mapRegisterPromiseMap = new Map();
+
+export const ensureMapRegistered = async (mapType) => {
+  if (!mapType || !mapLoaders[mapType]) return false;
+  if (echarts.getMap(mapType)) return true;
+
+  if (!mapRegisterPromiseMap.has(mapType)) {
+    const registerPromise = mapLoaders[mapType]()
+      .then((mapJson) => {
+        if (!echarts.getMap(mapType)) {
+          echarts.registerMap(mapType, mapJson);
+        }
+        return true;
+      })
+      .catch((error) => {
+        logger.error(`❌ 底图加载失败(${mapType})，请检查地图资源地址或服务器文件是否可访问:`, error);
+        return false;
+      })
+      .finally(() => {
+        mapRegisterPromiseMap.delete(mapType);
+      });
+    mapRegisterPromiseMap.set(mapType, registerPromise);
+  }
+
+  return mapRegisterPromiseMap.get(mapType);
+};
+
 // 🌟 架构升级：异步并发加载底图
 export const registerAllMaps = async () => {
-  try {
-    
-    // 使用 Promise.all 并发发起 1 个请求，极致压缩加载时间
-    // 注意：这里的路径以 / 开头，代表直接访问 public 目录下的文件
-    const [provinceRes] = await Promise.all([
-      axios.get(resolveMapAssetUrl('/geo_province.json')),
-    ]);
-
-    // 拿到数据后，注册到 ECharts
-    echarts.registerMap('province', provinceRes.data);
-  } catch (error) {
-    logger.error('❌ 底图加载失败，请检查地图资源地址或服务器文件是否可访问:', error);
-  }
+  await Promise.all(Object.keys(mapLoaders).map((mapType) => ensureMapRegistered(mapType)));
 };

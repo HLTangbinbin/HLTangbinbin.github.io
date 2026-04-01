@@ -12,11 +12,41 @@ export const sortYearMonths = (date1, date2) => {
   return compareYearMonth(date1, date2);
 };
 
+const selectDataCache = new WeakMap();
+const MAX_SELECT_CACHE_SIZE = 300;
+
+const setSelectCache = (cacheMap, cacheKey, value) => {
+  if (cacheMap.has(cacheKey)) {
+    cacheMap.delete(cacheKey);
+  }
+  cacheMap.set(cacheKey, value);
+  if (cacheMap.size > MAX_SELECT_CACHE_SIZE) {
+    const oldestKey = cacheMap.keys().next().value;
+    if (oldestKey !== undefined) {
+      cacheMap.delete(oldestKey);
+    }
+  }
+};
+
 export const selectDataFromArr = (returndata, zbCode, dbCode = 'nd', cityCode = '', yearLimit = 10) => {
+  if (!returndata || typeof returndata !== 'object') return [];
+  const cacheKey = `${dbCode}|${zbCode}|${cityCode || 'root'}|${yearLimit || 0}`;
+  let scopedCache = selectDataCache.get(returndata);
+  if (!scopedCache) {
+    scopedCache = new Map();
+    selectDataCache.set(returndata, scopedCache);
+  }
+  if (scopedCache.has(cacheKey)) {
+    return scopedCache.get(cacheKey);
+  }
+
   const codeItem = returndata.data[dbCode]?.[zbCode];
   
   // 核心改动：严格校验是否存在新版的 cityNodes
-  if (!codeItem || !Array.isArray(codeItem.cityNodes)) return [];
+  if (!codeItem || !Array.isArray(codeItem.cityNodes)) {
+    setSelectCache(scopedCache, cacheKey, []);
+    return [];
+  }
 
   let dataArr = [];
 
@@ -53,11 +83,13 @@ export const selectDataFromArr = (returndata, zbCode, dbCode = 'nd', cityCode = 
   }
   dataArr = dataArr.slice(0, lastNonZeroIndex + 1);
 
-  return dataArr.map(d => {
+  const result = dataArr.map(d => {
     const val = Number(d.value);
     const formattedValue = Number.isInteger(val) ? val : Number(val.toFixed(Math.abs(val) >= 1 ? 2 : 3));
     return { value: formattedValue, date: d.date };
   });
+  setSelectCache(scopedCache, cacheKey, result);
+  return result;
 };
 
 export const offsetArray = (arr, yearLimit, offset) => {

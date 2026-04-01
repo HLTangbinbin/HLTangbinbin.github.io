@@ -1,8 +1,9 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { navConfig } from '../config/navConfig';
-import GenericLayout from '@/components/common/GenericLayout.vue';
-import DynamicChartPage from '@/components/common/DynamicChartPage.vue';
 import { logger } from '@/utils/Logger';
+
+const GenericLayout = () => import('@/components/common/GenericLayout.vue');
+const DynamicChartPage = () => import('@/components/common/DynamicChartPage.vue');
 
 // 递归生成路由
 function generateRoutes(items, parentPath = '') {

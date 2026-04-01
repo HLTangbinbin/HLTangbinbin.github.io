@@ -28,9 +28,14 @@ export const ComparePlugin = (option, ctx) => {
 
   const focusLegend = ctx.params.linkedLegend || ctx.params.selectedLegend;
   let targetSeriesData = ctx.seriesData;
-  if (focusLegend && ctx.seriesData.length > 1) {
-    targetSeriesData = ctx.seriesData.filter(s => s.name === focusLegend);
-    if (targetSeriesData.length === 0) targetSeriesData = [ctx.seriesData[0]];
+  if (ctx.seriesData.length > 1) {
+    if (focusLegend) {
+      targetSeriesData = ctx.seriesData.filter(s => s.name === focusLegend);
+      if (targetSeriesData.length === 0) targetSeriesData = [ctx.seriesData[0]];
+    } else {
+      // 同比模式下默认聚焦首个指标，避免“指标 x 年份”同时铺开造成图例混乱
+      targetSeriesData = [ctx.seriesData[0]];
+    }
   }
 
   const isSingleSeries = targetSeriesData.length === 1;
@@ -320,6 +325,8 @@ export const MapTimelinePlugin = (option, ctx) => {
       .sort((a, b) => b.value - a.value);
 
     const currentYearMax = validData.length > 0 ? validData[0].value : 1;
+    const rankMap = new Map(validData.map((item, idx) => [item.name, idx + 1]));
+    const prevDataMap = new Map(prevData.map((item) => [item.name, item]));
 
     const enrichedData = td.data.map(item => {
       // 拦截空数据
@@ -328,12 +335,12 @@ export const MapTimelinePlugin = (option, ctx) => {
       }
 
       const val = Number(item.value);
-      const rank = validData.findIndex(v => v.name === item.name) + 1;
+      const rank = rankMap.get(item.name) || 0;
       const ratio = currentYearMax === 0 ? 0 : ((val / currentYearMax) * 100).toFixed(1);
 
       let growth = null;
       if (prevData.length > 0) {
-        const prevItem = prevData.find(p => p.name === item.name);
+        const prevItem = prevDataMap.get(item.name);
         if (prevItem && prevItem.value !== null && prevItem.value !== '' && !isNaN(prevItem.value) && Number(prevItem.value) !== 0) {
           growth = (((val - Number(prevItem.value)) / Math.abs(Number(prevItem.value))) * 100).toFixed(1);
         }

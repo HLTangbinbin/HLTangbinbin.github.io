@@ -85,6 +85,8 @@ const handleDataPointClick = (payload) => {
     width: 100%;
     position: relative;
     z-index: 0 !important;
+    overflow: hidden;
+    margin-top: 6px;
 }
 
 /* 移动端适配 */
