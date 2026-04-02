@@ -1,5 +1,4 @@
-name: Deploy Datang To Tencent Server
-
+name: Deploy Datang
 on:
   workflow_dispatch:
 
