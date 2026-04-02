@@ -36,19 +36,6 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p "${{ secrets.SERVER_PORT }}" "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
 
-      # ✅ 备份现有 frontend
-      - name: Backup current frontend
-        run: |
-          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-          ssh -p ${{ secrets.SERVER_PORT }} \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
-            if [ -d "${{ secrets.SERVER_PATH }}" ]; then
-              cp -r "${{ secrets.SERVER_PATH }}" "${{ secrets.SERVER_PATH }}_$TIMESTAMP"
-              echo "✅ 备份完成: ${{ secrets.SERVER_PATH }}_$TIMESTAMP"
-            else
-              echo "⚠️ 目录不存在，跳过备份"
-            fi
-          EOF
 
       # ✅ 部署 dist 到服务器
       - name: Sync dist to server
