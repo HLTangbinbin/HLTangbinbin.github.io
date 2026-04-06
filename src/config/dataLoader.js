@@ -1,6 +1,7 @@
 import { resolveDataJsonUrl } from '@/config/dataSource.js';
 import { logger } from '@/utils/Logger.js';
 import { loadJsonOnce } from '@/utils/loadJsonOnce.js'; 
+import { normalizeStatData } from '@/utils/statDataAdapter.js';
 
 const dataCache = {};
 const preloadQueue = new Set();
@@ -51,7 +52,7 @@ export async function loadChartData({ localJson }, options = {}) {
       throw new Error('缺少 JSON 数据源路径配置');
     }
 
-    const result = await loadJsonOnce(jsonUrl);
+    const result = normalizeStatData(await loadJsonOnce(jsonUrl));
 
     updateCache(cacheKey, result);
     

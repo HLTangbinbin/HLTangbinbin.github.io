@@ -1,5 +1,11 @@
 <template>
   <template v-if="returnData && currentConfig">
+    <DataIntegrityPanel
+      v-if="showIntegrityPanel"
+      :chartMetaList="currentConfig.charts"
+      :returnData="returnData"
+      :config="currentConfig.source"
+    />
     <DataStatusPanel
       :chartMetaList="currentConfig.charts"
       :returnData="returnData"
@@ -29,11 +35,13 @@
 import { computed, shallowRef, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import ChartPage from '@/components/common/ChartPage.vue';
+import DataIntegrityPanel from '@/components/common/components/DataIntegrityPanel.vue';
 import DataStatusPanel from '@/components/common/components/DataStatusPanel.vue';
 import { loadChartData } from '@/config/dataLoader.js';
 import { getRouteChartKey, resolveChartConfig } from '@/config/chartRegistry.js';
 import { normalizePageConfig } from '@/config/pageConfig.js';
 import { logger } from '@/utils/Logger.js';
+import { getCurrentDataSourceMode } from '@/config/dataSource.js';
 
 const route = useRoute();
 const currentConfig = shallowRef(null);
@@ -41,6 +49,7 @@ const returnData = shallowRef(null);
 const loading = shallowRef(false);
 const errorMessage = shallowRef('');
 let requestId = 0;
+const showIntegrityPanel = computed(() => process.env.NODE_ENV !== 'production' || getCurrentDataSourceMode() === 'local');
 const fallbackPageMeta = computed(() => normalizePageConfig({}, {
   routeKey: getRouteChartKey(route.path),
   routePath: route.path

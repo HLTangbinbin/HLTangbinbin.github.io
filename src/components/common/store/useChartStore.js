@@ -4,8 +4,11 @@ import { generateSmartInsights } from '@/utils/narrativeEngine.js';
 import { useTableEngine } from './useTableEngine.js';
 import { resolveMapType } from '@/utils/mapProvider.js';
 import { getThemeMode } from '@/utils/theme.js';
+import { cityRegionList, provinceRegionList } from '@/config/regionLists.js';
 
 export function createChartStore(props) {
+  const resolveIndicatorKeys = (chart) => Array.isArray(chart?.indicatorKeys) ? chart.indicatorKeys : [];
+
   const windowWidth = ref(window.innerWidth);
   const themeMode = ref(getThemeMode());
   const onResize = () => { windowWidth.value = window.innerWidth; };
@@ -99,6 +102,24 @@ export function createChartStore(props) {
     return props.config?.needAddCityCodeArr || [];
   });
 
+  const regionLabelMap = computed(() => {
+    const baseList = isProvince.value ? provinceRegionList : cityRegionList;
+    const map = new Map(baseList.map((item) => [item.code, item.cname]));
+
+    (props.config?.cityCodeArr || []).forEach((code) => {
+      if (typeof code === 'object' && code?.code) {
+        map.set(code.code, code.cname || code.name || code.code);
+      }
+    });
+    currentExtraCityPool.value.forEach((item) => {
+      if (item?.code) {
+        map.set(item.code, item.cname || item.name || item.code);
+      }
+    });
+
+    return map;
+  });
+
   const finalCityCodeArr = computed(() => Array.from(new Set([...(props.config?.cityCodeArr || []), ...selectedExtraCities.value])));
   const showCityAddToggle = computed(() => Array.isArray(currentExtraCityPool.value) && currentExtraCityPool.value.length > 0);
   const filteredCities = computed(() => {
@@ -144,8 +165,8 @@ export function createChartStore(props) {
       data: props.returnData,
       title: props.chart?.title || '默认标题',
       subtitle: props.chart?.subtitle || '',
-      zbcodeArr: props.chart?.zbcodeArr || [],
-      cityCodeArr: finalCityCodeArr.value,
+      indicatorKeys: resolveIndicatorKeys(props.chart),
+      regionCodes: finalCityCodeArr.value,
       dbCode: props.chart?.dbCode || (props.viewMode === 'monthly' ? 'yd' : 'nd'),
       unit: props.chart?.unit || '',
       exceptName: props.chart?.exceptName || '',
@@ -167,6 +188,8 @@ export function createChartStore(props) {
       enableSmartAnalysis: enableSmartAnalysis.value,
       mapType: mapType.value,
       themeMode: themeMode.value,
+      seriesLayout: props.chart?.seriesLayout || 'indicator',
+      regionLabelMap: regionLabelMap.value,
     });
     if (finalOption.legend && finalOption.series) {
       const legendData = finalOption.legend.data || [];
@@ -207,8 +230,7 @@ export function createChartStore(props) {
   };
 
   const getCityName = (code) => {
-    const city = currentExtraCityPool.value.find(c => c.code === code);
-    return city ? city.cname : code;
+    return regionLabelMap.value.get(code) || code;
   };
 
   return {

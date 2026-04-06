@@ -8,6 +8,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "check:v3": "node scripts/check-v3-coverage.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },

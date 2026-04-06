@@ -14,6 +14,7 @@
 
 <script setup>
 import { computed, defineProps } from 'vue';
+import { getTimeItems } from '@/utils/statDataAdapter.js';
 
 const props = defineProps({
   chartMetaList: { type: Array, default: () => [] },
@@ -24,13 +25,20 @@ const requiredDbCodes = computed(() => Array.from(new Set(
   props.chartMetaList.map(chart => chart.dbCode).filter(Boolean)
 )));
 
-const availableDbCodes = computed(() => Object.keys(props.returnData?.sj || {}));
+const availableDbCodes = computed(() => {
+  const timeItems = Object.values(getTimeItems(props.returnData));
+  return requiredDbCodes.value.filter((dbCode) => timeItems.some((item) => item?.period === dbCode));
+});
 
 const latestPeriodMap = computed(() => {
   const result = {};
-  Object.entries(props.returnData?.sj || {}).forEach(([dbCode, periods]) => {
-    if (!Array.isArray(periods) || !periods.length) return;
-    const normalized = periods.map(item => String(item)).sort((a, b) => Number(a) - Number(b));
+  requiredDbCodes.value.forEach((dbCode) => {
+    const periods = Object.values(getTimeItems(props.returnData))
+      .filter((item) => item?.period === dbCode)
+      .map((item) => item?.key)
+      .filter(Boolean);
+    if (!periods.length) return;
+    const normalized = periods.map((item) => String(item)).sort((a, b) => Number(a) - Number(b));
     result[dbCode] = normalized[normalized.length - 1];
   });
   return result;
@@ -49,7 +57,10 @@ const alerts = computed(() => {
   }
 
   requiredDbCodes.value.forEach(dbCode => {
-    const periods = props.returnData?.sj?.[dbCode];
+    const periods = Object.values(getTimeItems(props.returnData))
+      .filter((item) => item?.period === dbCode)
+      .map((item) => item?.key)
+      .filter(Boolean);
     const freshnessState = evaluateFreshness(dbCode, latestPeriodMap.value[dbCode]);
     if (freshnessState && freshnessState.tone !== 'healthy') {
       items.push({

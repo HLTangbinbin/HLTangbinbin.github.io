@@ -54,7 +54,7 @@ function inferDefaultViewMode(charts = []) {
 
 function countMetricCodes(charts = []) {
   return new Set(
-    charts.flatMap(chart => Array.isArray(chart.zbcodeArr) ? chart.zbcodeArr : [])
+    charts.flatMap((chart) => Array.isArray(chart.indicatorKeys) ? chart.indicatorKeys : [])
   ).size;
 }
 

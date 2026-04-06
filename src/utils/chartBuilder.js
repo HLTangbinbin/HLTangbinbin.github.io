@@ -1,6 +1,7 @@
 import { selectDataFromArr, offsetArray, selectMapTimelineData } from './dataEngine.js';
 import { ComparePlugin, SmartAnalysisPlugin, PiePlugin, BirthPredictionPlugin, LegendFilterPlugin, MapTimelinePlugin } from './chartPlugins.js';
 import { getChartThemeTokens } from './theme.js';
+import { getDefaultRegionCode, getIndicator, getRegionItems, getRegionName } from './statDataAdapter.js';
 
 class ChartBuilder {
   constructor(params) {
@@ -11,20 +12,35 @@ class ChartBuilder {
   }
 
   initContext() {
-    const { data, zbcodeArr, cityCodeArr = [], dbCode = 'nd', unit = '', exceptName = '', chartType = 'bar', yearLimit, enableBirthOffset = false, selectedLegend, offsetValue = 0 } = this.params;
+    const {
+      data,
+      indicatorKeys = [],
+      regionCodes = [],
+      dbCode = 'nd',
+      unit = '',
+      exceptName = '',
+      chartType = 'bar',
+      yearLimit,
+      enableBirthOffset = false,
+      selectedLegend,
+      offsetValue = 0,
+      seriesLayout = 'indicator',
+      regionLabelMap = new Map()
+    } = this.params;
+
     if (chartType === 'map') {
-        const mainZbCode = zbcodeArr[0]; 
-        const mapTimelineData = selectMapTimelineData(data, mainZbCode, dbCode, yearLimit);
+        const mainIndicatorKey = indicatorKeys[0];
+        const mapTimelineData = selectMapTimelineData(data, mainIndicatorKey, dbCode, yearLimit);
         this.params.mapTimelineData = mapTimelineData;
-        this.params.metricName = exceptName || data.data[dbCode]?.[mainZbCode]?.cname || '指标';
-        this.params.unit = data.data[dbCode]?.[mainZbCode]?.unit || '';
-  
-        // 💥 修复点：在这里补上 filteredYears: []，以及其他插件可能依赖的空数组，防止下游解构崩溃
+        const indicator = getIndicator(data, mainIndicatorKey);
+        this.params.metricName = exceptName || indicator?.name || '指标';
+        this.params.unit = indicator?.unit || '';
+
         return { 
           isMapContext: true, 
           seriesData: [], 
-          filteredYears: [], // <--- 关键防弹衣！让 [...this.ctx.filteredYears] 变成展开空数组而不报错
-          marriageArr: [], 
+          filteredYears: [],
+          marriageArr: [],
           birthArr: [],
           params: this.params 
         };
@@ -33,12 +49,12 @@ class ChartBuilder {
 
     let marriageArr = [], birthArr = [], seriesData = [];
 
-    if (cityCodeArr.length === 0) {
-      zbcodeArr.forEach(zbCode => {
-        const codeItem = data.data[dbCode]?.[zbCode];
-        if (!codeItem) return;
+    if (seriesLayout !== 'region') {
+      indicatorKeys.forEach((indicatorKey) => {
+        const indicator = getIndicator(data, indicatorKey);
+        if (!indicator) return;
 
-        let cname = codeItem.cname || '总的';
+        let cname = indicator.name || '总的';
         if (typeof cname === 'string' && typeof exceptName === 'string') {
           let resultArr = cname.split('');
           exceptName.split('').forEach(ch => {
@@ -49,27 +65,45 @@ class ChartBuilder {
         }
 
         const name = cname + unit;
-        let result = selectDataFromArr(data, zbCode, dbCode, '', yearLimit);
+        let result = selectDataFromArr(data, indicatorKey, dbCode, '', yearLimit);
         let valueArr = result.map(item => item.value);
         let dateArr = result.map(item => item.date);
 
-        if (enableBirthOffset && zbCode === 'A0P0C01') marriageArr = valueArr;
-        else if (enableBirthOffset && zbCode === 'A030109') {
+        if (enableBirthOffset && indicatorKey.includes('marriage')) marriageArr = valueArr;
+        else if (enableBirthOffset && indicatorKey.includes('birth')) {
           birthArr = valueArr;
           valueArr = offsetArray(valueArr, yearLimit, -1);
         } else if (chartType === 'line' && name === selectedLegend) {
           valueArr = offsetArray(valueArr, Math.min(yearLimit, valueArr.length), offsetValue);
         }
 
-        seriesData.push({ name, zbCode, type: chartType, data: valueArr, date: dateArr, emphasis: { focus: 'series' } });
+        seriesData.push({ name, zbCode: indicatorKey, type: chartType, data: valueArr, date: dateArr, emphasis: { focus: 'series' } });
       });
     } else {
-      const cityNameMap = new Map((data.reg || []).map((item) => [item.code, item.cname]));
-      cityCodeArr.forEach(cityCode => {
-        const name = cityNameMap.get(cityCode) || '';
-        let result = selectDataFromArr(data, zbcodeArr[0], dbCode, cityCode, yearLimit) || [];
-        seriesData.push({ name, zbCode: zbcodeArr[0], type: chartType, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' } });
+      const mainIndicatorKey = indicatorKeys[0];
+      const allRegions = getRegionItems(data);
+      const targetRegionCodes = regionCodes.length ? regionCodes : Object.keys(allRegions).filter((code) => code !== '100000');
+      targetRegionCodes.forEach((regionCode) => {
+        const name = regionLabelMap.get(regionCode) || getRegionName(data, regionCode) || '';
+        let result = selectDataFromArr(data, mainIndicatorKey, dbCode, regionCode, yearLimit) || [];
+        if (!result.length) return;
+        seriesData.push({ name, zbCode: mainIndicatorKey, type: chartType, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' } });
       });
+    }
+
+    if (!seriesData.length && indicatorKeys.length) {
+      const fallbackRegionCode = getDefaultRegionCode(data, indicatorKeys[0]);
+      const fallback = selectDataFromArr(data, indicatorKeys[0], dbCode, fallbackRegionCode, yearLimit);
+      if (fallback.length) {
+        seriesData.push({
+          name: regionLabelMap.get(fallbackRegionCode) || getRegionName(data, fallbackRegionCode),
+          zbCode: indicatorKeys[0],
+          type: chartType,
+          data: fallback.map((item) => item.value),
+          date: fallback.map((item) => item.date),
+          emphasis: { focus: 'series' }
+        });
+      }
     }
 
     return { params: this.params, seriesData, filteredYears: seriesData[0]?.date || [], marriageArr, birthArr };
