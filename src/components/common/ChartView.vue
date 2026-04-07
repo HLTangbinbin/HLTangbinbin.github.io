@@ -59,6 +59,39 @@ export default {
       return null;
     };
 
+    const resolvePieTriggerKeys = (pieConfig = {}) => {
+      if (Array.isArray(pieConfig.triggerIndicatorKeys) && pieConfig.triggerIndicatorKeys.length > 0) {
+        return pieConfig.triggerIndicatorKeys;
+      }
+      return Array.isArray(pieConfig.triggerZbCodes) ? pieConfig.triggerZbCodes : [];
+    };
+
+    const normalizePieData = (pieData = [], pieConfig = {}) => {
+      if (!Array.isArray(pieData) || pieData.length === 0) return [];
+
+      const topN = Number(pieConfig.topN || 0);
+      if (!topN || pieData.length <= topN) {
+        return pieData;
+      }
+
+      const sorted = [...pieData].sort((a, b) => Number(b.value || 0) - Number(a.value || 0));
+      const topItems = sorted.slice(0, topN);
+      const otherItems = sorted.slice(topN);
+      const otherTotal = otherItems.reduce((sum, item) => sum + Number(item.value || 0), 0);
+
+      if (otherTotal <= 0) {
+        return topItems;
+      }
+
+      return [
+        ...topItems,
+        {
+          name: pieConfig.mergeOthersLabel || '其他',
+          value: Number(otherTotal.toFixed(2))
+        }
+      ];
+    };
+
     const initChart = () => {
       if (!chartContainer.value || !props.option?.series?.length) return;
 
@@ -144,7 +177,8 @@ export default {
           const cacheKey = `${idx}|${yearIndex}`;
           let pieData = pieDataCache.get(cacheKey);
           if (!pieData) {
-            const targetSeries = seriesData.filter(s => pie.triggerZbCodes.includes(s.zbCode));
+            const triggerKeys = resolvePieTriggerKeys(pie);
+            const targetSeries = seriesData.filter(s => triggerKeys.includes(s.zbCode));
             pieData = targetSeries
               .map(series => {
                 const rawVal = Array.isArray(series.data) ? getNearestSeriesValue(series.data, yearIndex) : null;
@@ -158,6 +192,7 @@ export default {
                 };
               })
               .filter(Boolean);
+            pieData = normalizePieData(pieData, pie);
             pieDataCache.set(cacheKey, pieData);
           }
 

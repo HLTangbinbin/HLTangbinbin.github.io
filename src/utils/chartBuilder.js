@@ -3,6 +3,82 @@ import { ComparePlugin, SmartAnalysisPlugin, PiePlugin, BirthPredictionPlugin, L
 import { getChartThemeTokens } from './theme.js';
 import { getDefaultRegionCode, getIndicator, getRegionItems, getRegionName } from './statDataAdapter.js';
 
+function escapeRegExp(text) {
+  return String(text || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function normalizeIndicatorLabel(indicator, indicatorKey, exceptName = '') {
+  const displayName = String(indicator?.displayName || '').trim();
+  const fallbackName = String(indicator?.name || '').trim();
+  let label = displayName || fallbackName || indicatorKey || '指标';
+
+  // Keep the legend concise by dropping trailing "(unit)" in displayName.
+  label = label.replace(/\s*\([^)]*\)\s*$/u, '').trim();
+
+  if (exceptName && typeof exceptName === 'string') {
+    const safePattern = new RegExp(escapeRegExp(exceptName), 'gu');
+    label = label.replace(safePattern, '').trim() || label;
+  }
+
+  return label;
+}
+
+function ensureUniqueSeriesName(baseName, indicatorKey, usedNames) {
+  const normalizedBase = String(baseName || '指标').trim() || '指标';
+  const currentCount = usedNames.get(normalizedBase) || 0;
+  usedNames.set(normalizedBase, currentCount + 1);
+  if (currentCount === 0) return normalizedBase;
+
+  const suffix = String(indicatorKey || '')
+    .split('_')
+    .slice(-2)
+    .join('_') || indicatorKey || currentCount + 1;
+  return `${normalizedBase} [${suffix}]`;
+}
+
+function longestCommonPrefix(values = []) {
+  if (!values.length) return '';
+  let prefix = values[0] || '';
+  for (let index = 1; index < values.length; index += 1) {
+    const current = values[index] || '';
+    let cursor = 0;
+    while (cursor < prefix.length && cursor < current.length && prefix[cursor] === current[cursor]) {
+      cursor += 1;
+    }
+    prefix = prefix.slice(0, cursor);
+    if (!prefix) break;
+  }
+  return prefix;
+}
+
+function longestCommonSuffix(values = []) {
+  if (!values.length) return '';
+  const reversed = values.map((item) => String(item || '').split('').reverse().join(''));
+  const reversedPrefix = longestCommonPrefix(reversed);
+  return reversedPrefix.split('').reverse().join('');
+}
+
+function trimSharedParts(values = []) {
+  if (values.length < 2) return values;
+  const normalized = values.map((item) => String(item || '').trim());
+  const prefix = longestCommonPrefix(normalized);
+  const suffix = longestCommonSuffix(normalized);
+  const safePrefix = prefix.length >= 2 ? prefix : '';
+  const safeSuffix = suffix.length >= 2 ? suffix : '';
+
+  return normalized.map((label) => {
+    let compact = label;
+    if (safePrefix && compact.startsWith(safePrefix)) {
+      compact = compact.slice(safePrefix.length);
+    }
+    if (safeSuffix && compact.endsWith(safeSuffix)) {
+      compact = compact.slice(0, compact.length - safeSuffix.length);
+    }
+    compact = compact.replace(/^[\s:：、，,;；\-_/()（）]+|[\s:：、，,;；\-_/()（）]+$/gu, '').trim();
+    return compact.length >= 2 ? compact : label;
+  });
+}
+
 class ChartBuilder {
   constructor(params) {
     this.params = params;
@@ -48,24 +124,18 @@ class ChartBuilder {
 
 
     let marriageArr = [], birthArr = [], seriesData = [];
+    let filteredYears = [];
 
     if (seriesLayout !== 'region') {
+      const singleRegionCode = regionCodes.length === 1 ? regionCodes[0] : '';
+      const pendingSeries = [];
       indicatorKeys.forEach((indicatorKey) => {
         const indicator = getIndicator(data, indicatorKey);
         if (!indicator) return;
 
-        let cname = indicator.name || '总的';
-        if (typeof cname === 'string' && typeof exceptName === 'string') {
-          let resultArr = cname.split('');
-          exceptName.split('').forEach(ch => {
-            const idx = resultArr.indexOf(ch);
-            if (idx !== -1) resultArr.splice(idx, 1);
-          });
-          cname = resultArr.join('').trim() || '总的';
-        }
-
-        const name = cname + unit;
-        let result = selectDataFromArr(data, indicatorKey, dbCode, '', yearLimit);
+        const cname = normalizeIndicatorLabel(indicator, indicatorKey, exceptName);
+        const baseName = `${cname}${unit}`;
+        let result = selectDataFromArr(data, indicatorKey, dbCode, singleRegionCode, yearLimit);
         let valueArr = result.map(item => item.value);
         let dateArr = result.map(item => item.date);
 
@@ -73,12 +143,29 @@ class ChartBuilder {
         else if (enableBirthOffset && indicatorKey.includes('birth')) {
           birthArr = valueArr;
           valueArr = offsetArray(valueArr, yearLimit, -1);
-        } else if (chartType === 'line' && name === selectedLegend) {
+        } else if (chartType === 'line' && baseName === selectedLegend) {
           valueArr = offsetArray(valueArr, Math.min(yearLimit, valueArr.length), offsetValue);
         }
 
-        seriesData.push({ name, zbCode: indicatorKey, type: chartType, data: valueArr, date: dateArr, emphasis: { focus: 'series' } });
+        pendingSeries.push({
+          baseName,
+          zbCode: indicatorKey,
+          type: chartType,
+          data: valueArr,
+          date: dateArr,
+          emphasis: { focus: 'series' }
+        });
+        if (!filteredYears.length) {
+          filteredYears = dateArr;
+        }
       });
+
+      const compactNames = trimSharedParts(pendingSeries.map((item) => item.baseName));
+      const usedSeriesNames = new Map();
+      seriesData = pendingSeries.map((item, index) => ({
+        ...item,
+        name: ensureUniqueSeriesName(compactNames[index] || item.baseName, item.zbCode, usedSeriesNames)
+      }));
     } else {
       const mainIndicatorKey = indicatorKeys[0];
       const allRegions = getRegionItems(data);
@@ -89,6 +176,22 @@ class ChartBuilder {
         if (!result.length) return;
         seriesData.push({ name, zbCode: mainIndicatorKey, type: chartType, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' } });
       });
+
+      if (seriesData.length) {
+        const mergedTimeline = Array.from(new Set(
+          seriesData.flatMap((series) => Array.isArray(series.date) ? series.date : [])
+        )).sort(comparePeriods);
+
+        filteredYears = mergedTimeline;
+        seriesData = seriesData.map((series) => {
+          const pointMap = new Map((series.date || []).map((date, index) => [date, series.data[index] ?? null]));
+          return {
+            ...series,
+            date: mergedTimeline,
+            data: mergedTimeline.map((date) => pointMap.has(date) ? pointMap.get(date) : null)
+          };
+        });
+      }
     }
 
     if (!seriesData.length && indicatorKeys.length) {
@@ -103,10 +206,13 @@ class ChartBuilder {
           date: fallback.map((item) => item.date),
           emphasis: { focus: 'series' }
         });
+        if (!filteredYears.length) {
+          filteredYears = fallback.map((item) => item.date);
+        }
       }
     }
 
-    return { params: this.params, seriesData, filteredYears: seriesData[0]?.date || [], marriageArr, birthArr };
+    return { params: this.params, seriesData, filteredYears: filteredYears.length ? filteredYears : (seriesData[0]?.date || []), marriageArr, birthArr };
   }
 
   buildBaseOption() {
@@ -245,6 +351,11 @@ class ChartBuilder {
     finalOption.originalLegendData = this.ctx.seriesData.map(s => s.name);
     return finalOption;
   }
+}
+
+function comparePeriods(a, b) {
+  const normalize = (value) => Number(String(value || '').replace('-', ''));
+  return normalize(a) - normalize(b);
 }
 
 export const buildChartOption = (params) => {

@@ -164,7 +164,8 @@ export const PiePlugin = (option, ctx) => {
   const legendData = option.legend?.data || [];
 
   ctx.params.pieConfig.pies.forEach((pie, idx) => {
-    const targetSeries = option.series.filter(s => pie.triggerZbCodes.includes(s.zbCode) && !s.isTrendline);
+    const triggerKeys = resolvePieTriggerKeys(pie);
+    const targetSeries = option.series.filter(s => triggerKeys.includes(s.zbCode) && !s.isTrendline);
     const pieData = [];
 
     targetSeries.forEach(series => {
@@ -177,7 +178,8 @@ export const PiePlugin = (option, ctx) => {
       }
     });
 
-    if (pieData.length === 0) return;
+    const finalPieData = normalizePieData(pieData, pie);
+    if (finalPieData.length === 0) return;
 
     let r = pie.radius || '20%';
     if (ctx.params.isMobile && typeof r === 'string' && r.endsWith('px')) {
@@ -198,7 +200,7 @@ export const PiePlugin = (option, ctx) => {
       type: 'pie',
       radius: r,
       center: [cx, cy],
-      data: pieData,
+      data: finalPieData,
       label: { formatter: p => `${p.name}(${p.percent}%)` },
       emphasis: { focus: 'self' },
       itemStyle: {
@@ -213,6 +215,13 @@ export const PiePlugin = (option, ctx) => {
   return option;
 };
 
+const resolvePieTriggerKeys = (pieConfig = {}) => {
+  if (Array.isArray(pieConfig.triggerIndicatorKeys) && pieConfig.triggerIndicatorKeys.length > 0) {
+    return pieConfig.triggerIndicatorKeys;
+  }
+  return Array.isArray(pieConfig.triggerZbCodes) ? pieConfig.triggerZbCodes : [];
+};
+
 const getNearestSeriesValue = (seriesData, targetIndex) => {
   if (!Array.isArray(seriesData) || seriesData.length === 0) return null;
   const safeIndex = Math.min(targetIndex, seriesData.length - 1);
@@ -224,6 +233,32 @@ const getNearestSeriesValue = (seriesData, targetIndex) => {
     }
   }
   return null;
+};
+
+const normalizePieData = (pieData = [], pieConfig = {}) => {
+  if (!Array.isArray(pieData) || pieData.length === 0) return [];
+
+  const topN = Number(pieConfig.topN || 0);
+  if (!topN || pieData.length <= topN) {
+    return pieData;
+  }
+
+  const sorted = [...pieData].sort((a, b) => Number(b.value || 0) - Number(a.value || 0));
+  const topItems = sorted.slice(0, topN);
+  const otherItems = sorted.slice(topN);
+  const otherTotal = otherItems.reduce((sum, item) => sum + Number(item.value || 0), 0);
+
+  if (otherTotal <= 0) {
+    return topItems;
+  }
+
+  return [
+    ...topItems,
+    {
+      name: pieConfig.mergeOthersLabel || '其他',
+      value: Number(otherTotal.toFixed(2))
+    }
+  ];
 };
 
 export const BirthPredictionPlugin = (option, ctx) => {
