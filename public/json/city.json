@@ -145106,8 +145106,8 @@
         }
       ]
     },
-    "city_yd_二手住宅销售价格指数": {
-      "key": "city_yd_二手住宅销售价格指数",
+    "city_yd_secondhand_housing_price_index": {
+      "key": "city_yd_secondhand_housing_price_index",
       "name": "二手住宅销售价格指数",
       "displayName": "二手住宅销售价格指数 (上月=100)",
       "unit": "无",

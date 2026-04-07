@@ -89,7 +89,7 @@ export const v3PageRegistry = {
         'wh_new_house_monthly_han_nan'
       ], 'yd', {
         legendTop: '90px',
-        gridTop: '140px',
+        gridTop: '320px',
         ...indicatorPieConfig([
           'wh_new_house_monthly_jiang_an',
           'wh_new_house_monthly_jiang_han',
@@ -109,7 +109,9 @@ export const v3PageRegistry = {
           'wh_new_house_monthly_han_nan'
         ], {
           topN: 8,
-          mergeOthersLabel: '其他区域'
+          mergeOthersLabel: '其他区域',
+          center: ['50%', '190px'],
+          radius: '16%'
         })
       }),
       chart('wh-new-house-district-year', '武汉新房分区域年度走势', [
@@ -131,7 +133,7 @@ export const v3PageRegistry = {
         'wh_new_house_yearly_han_nan'
       ], 'nd', {
         legendTop: '90px',
-        gridTop: '140px',
+        gridTop: '320px',
         ...indicatorPieConfig([
           'wh_new_house_yearly_jiang_an',
           'wh_new_house_yearly_jiang_han',
@@ -151,7 +153,9 @@ export const v3PageRegistry = {
           'wh_new_house_yearly_han_nan'
         ], {
           topN: 8,
-          mergeOthersLabel: '其他区域'
+          mergeOthersLabel: '其他区域',
+          center: ['50%', '190px'],
+          radius: '16%'
         })
       })
     ]
@@ -243,9 +247,10 @@ export const v3PageRegistry = {
     source: { localJson: './city.json', cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND },
     charts: [
       regionChart('city-new-house-mom', '新建商品住宅价格指数(上月=100)', ['city_new_house_price_mom'], 'yd'),
+      regionChart('city-second-hand-mom', '二手房住宅价格指数(上月=100)', ['city_yd_secondhand_housing_price_index'], 'yd'),
       regionChart('city-new-house-yoy', '新建商品住宅价格指数(上年同月=100)', ['city_new_house_price_yoy'], 'yd'),
       regionChart('city-second-hand-yoy', '二手住宅价格指数(上年同月=100)', ['city_second_hand_house_price_yoy'], 'yd'),
-      regionChart('city-second-hand-mom', '二手住宅价格指数(待复核项)', ['city_second_hand_house_price_mom_unverified'], 'yd')
+      regionChart('city-second-hand-mom-unverified', '二手住宅价格指数(待复核项)', ['city_second_hand_house_price_mom_unverified'], 'yd')
     ]
   },
   CityEducation: {
@@ -326,9 +331,27 @@ export const v3PageRegistry = {
   PopulationBasic: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-total-population', '总人口 / 男女人口 / 城乡人口', ['nation_total_population', 'nation_population_male', 'nation_population_female', 'nation_population_urban', 'nation_population_rural'], 'nd', indicatorPieConfig(['nation_population_male', 'nation_population_female', 'nation_population_urban', 'nation_population_rural'])),
+      chart('nation-total-population', '总人口 / 男女人口 / 城乡人口', ['nation_total_population', 'nation_population_male', 'nation_population_female', 'nation_population_urban', 'nation_population_rural'], 'nd', {
+        legendTop: '90px',
+        gridTop: '340px',
+        pieConfig: {
+          enabled: true,
+          pies: [
+            {
+              triggerIndicatorKeys: ['nation_population_male', 'nation_population_female'],
+              center: ['28%', '200px'],
+              radius: '16%'
+            },
+            {
+              triggerIndicatorKeys: ['nation_population_urban', 'nation_population_rural'],
+              center: ['72%', '200px'],
+              radius: '16%'
+            }
+          ]
+        }
+      }),
       chart('nation-birth-death-growth', '出生率/死亡率/自然增长率', ['nation_birth_rate', 'nation_death_rate', 'nation_natural_growth_rate'], 'nd'),
-      chart('nation-birth-death-count', '出生人口与死亡人口', ['nation_birth_population', 'nation_death_population'], 'nd')
+      chart('nation-birth-death-count', '出生人口 / 死亡人口 / 自然增长人口', ['nation_birth_population', 'nation_death_population', 'nation_natural_growth_population'], 'nd')
     ]
   },
   PopulationSpot: {
@@ -342,16 +365,19 @@ export const v3PageRegistry = {
   NationalFinance: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-budget-overview-yearly', '全国一般公共预算收入与支出', ['nation_nd_全国一般公共预算收入', 'nation_nd_全国一般公共预算支出'], 'nd'),
-      chart('nation-budget-income-cumulative', '全国财政收入(累计值/累计增长)', ['nation_budget_income_monthly_01', 'nation_budget_income_monthly_02'], 'yd'),
-      chart('nation-budget-expenditure-cumulative', '全国财政支出(累计值/累计增长)', ['nation_budget_expenditure_monthly_01', 'nation_budget_expenditure_monthly_02'], 'yd')
+      chart('nation-budget-income-yearly', '全国 / 中央 / 地方财政收入对比', ['nation_budget_income_total', 'nation_budget_income_central', 'nation_budget_income_local'], 'nd'),
+      chart('nation-budget-expenditure-yearly', '全国 / 中央 / 地方财政支出对比', ['nation_budget_expenditure_total', 'nation_budget_expenditure_central', 'nation_budget_expenditure_local'], 'nd'),
+      chart('nation-budget-deficit-yearly', '全国 / 中央 / 地方财政赤字对比', ['nation_finance_deficit_total', 'nation_finance_deficit_central', 'nation_finance_deficit_local'], 'nd'),
+      chart('nation-budget-cumulative', '全国财政收入与支出累计值', ['nation_budget_income_monthly_01', 'nation_budget_expenditure_monthly_01'], 'yd'),
+      chart('nation-budget-growth', '全国财政收入与支出累计增长', ['nation_budget_income_monthly_02', 'nation_budget_expenditure_monthly_02'], 'yd')
     ]
   },
   RealEstateInvest: {
     source: { localJson: './nation.json' },
     charts: [
       chart('nation-investment', '房地产开发本年完成投资额', ['nation_real_estate_investment_total'], 'nd'),
-      chart('nation-investment-monthly', '房地产开发投资累计值/累计增长', ['nation_real_estate_investment_monthly_01', 'nation_real_estate_investment_monthly_02'], 'yd')
+      chart('nation-investment-monthly-value', '房地产开发投资累计值', ['nation_real_estate_investment_monthly_01', 'nation_real_estate_investment_monthly_03', 'nation_real_estate_investment_monthly_05', 'nation_real_estate_investment_monthly_07'], 'yd'),
+      chart('nation-investment-monthly-growth', '房地产开发投资累计增长', ['nation_real_estate_investment_monthly_02', 'nation_real_estate_investment_monthly_04', 'nation_real_estate_investment_monthly_06', 'nation_real_estate_investment_monthly_08'], 'yd')
     ]
   },
   RealEstateSell: {
@@ -360,29 +386,30 @@ export const v3PageRegistry = {
       chart('nation-sales-area', '房屋销售面积', ['nation_new_home_sales_area_total'], 'nd'),
       chart('nation-sales-amount', '房地产企业商品房销售额', ['nation_new_home_sales_amount_total'], 'nd'),
       chart('nation-sales-price', '商品房平均销售价格', ['nation_new_home_avg_price_total'], 'nd'),
-      chart('nation-sales-area-monthly', '商品住宅销售面积累计值/累计增长', ['nation_residential_sales_area_monthly_01', 'nation_residential_sales_area_monthly_02'], 'yd'),
-      chart('nation-sales-amount-monthly', '商品住宅销售额累计值/累计增长', ['nation_residential_sales_amount_monthly_01', 'nation_residential_sales_amount_monthly_02'], 'yd')
+      chart('nation-sales-area-monthly-value', '商品住宅销售面积累计值', ['nation_residential_sales_area_monthly_01'], 'yd'),
+      chart('nation-sales-area-monthly-growth', '商品住宅销售面积累计增长', ['nation_residential_sales_area_monthly_02'], 'yd'),
+      chart('nation-sales-amount-monthly-value', '商品住宅销售额累计值', ['nation_residential_sales_amount_monthly_01'], 'yd'),
+      chart('nation-sales-amount-monthly-growth', '商品住宅销售额累计增长', ['nation_residential_sales_amount_monthly_02'], 'yd')
     ]
   },
   EducationSchool: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-school-count', '学校数量', ['nation_college_count', 'nation_primary_school_count', 'nation_junior_high_school_count', 'nation_regular_high_school_count', 'nation_secondary_vocational_school_count', 'nation_special_education_school_count'], 'nd')
+      chart('nation-school-count', '学校数量', ['nation_kindergarten_count', 'nation_primary_school_count', 'nation_college_count', 'nation_secondary_vocational_school_count', 'nation_postgraduate_institution_count'], 'nd')
     ]
   },
   EducationTeacher: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-teacher-count', '教师数量', ['nation_college_teacher_count', 'nation_primary_school_teacher_count', 'nation_junior_high_school_teacher_count', 'nation_regular_high_school_teacher_count', 'nation_secondary_vocational_teacher_count', 'nation_special_education_teacher_count', 'nation_kindergarten_teacher_count'], 'nd'),
-      chart('nation-student-teacher-ratio', '各学段生师比', ['nation_primary_student_teacher_ratio', 'nation_middle_student_teacher_ratio', 'nation_high_student_teacher_ratio', 'nation_vocational_high_student_teacher_ratio', 'nation_secondary_specialized_student_teacher_ratio', 'nation_undergraduate_student_teacher_ratio', 'nation_college_student_teacher_ratio', 'nation_junior_college_student_teacher_ratio'], 'nd')
+      chart('nation-teacher-count', '教师数量', ['nation_kindergarten_teacher_count', 'nation_primary_school_teacher_count', 'nation_college_teacher_count', 'nation_secondary_vocational_teacher_count', 'nation_postgraduate_teacher_count'], 'nd')
     ]
   },
   EducationStudent: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-enrollment', '招生数', ['nation_higher_education_enrollment', 'nation_undergraduate_enrollment', 'nation_college_enrollment', 'nation_junior_college_enrollment', 'nation_graduate_enrollment', 'nation_master_enrollment', 'nation_doctoral_enrollment'], 'nd'),
-      chart('nation-college-students', '在校学生数', ['nation_higher_education_students', 'nation_undergraduate_students', 'nation_college_students', 'nation_junior_college_students', 'nation_graduate_students', 'nation_master_students', 'nation_doctoral_students'], 'nd'),
-      chart('nation-college-graduates', '毕业生数', ['nation_higher_education_graduates', 'nation_undergraduate_graduates', 'nation_college_graduates', 'nation_junior_college_graduates', 'nation_graduate_graduates', 'nation_master_graduates', 'nation_doctoral_graduates'], 'nd')
+      chart('nation-enrollment', '招生数', ['nation_junior_college_enrollment', 'nation_undergraduate_enrollment', 'nation_graduate_enrollment', 'nation_doctoral_enrollment', 'nation_higher_education_enrollment'], 'nd'),
+      chart('nation-college-students', '在校学生数', ['nation_preschool_students', 'nation_undergraduate_students', 'nation_graduate_students', 'nation_doctoral_students', 'nation_higher_education_students'], 'nd'),
+      chart('nation-college-graduates', '毕业生数', ['nation_undergraduate_graduates', 'nation_graduate_graduates', 'nation_doctoral_graduates', 'nation_higher_education_graduates'], 'nd')
     ]
   },
   MedicalTreatment: {
@@ -399,8 +426,7 @@ export const v3PageRegistry = {
   MarriageStatus: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-marriage', '婚姻登记', ['nation_marriage_count', 'nation_divorce_count'], 'nd'),
-      chart('nation-marriage-birth', '结婚与出生人口(含次年预测)', ['nation_marriage_count', 'nation_birth_population'], 'nd', { enableBirthPrediction: true }),
+      chart('nation-marriage', '婚姻登记与出生人口', ['nation_marriage_count', 'nation_divorce_count', 'nation_birth_population'], 'nd'),
       chart('nation-marriage-structure', '初婚与再婚人数', ['nation_first_marriage_inland', 'nation_remarriage_inland'], 'nd', indicatorPieConfig(['nation_first_marriage_inland', 'nation_remarriage_inland'])),
       chart('nation-divorce-rate', '粗离婚率', ['nation_crude_divorce_rate'], 'nd')
     ]
@@ -454,9 +480,7 @@ export const v3PageRegistry = {
     charts: [
       chart('nation-cpi-mom', '居民消费价格指数(上月=100)', ['nation_cpi_mom'], 'yd'),
       chart('nation-ppi-mom', '工业生产者出厂价格指数(上月=100)', ['nation_ppi_mom_01'], 'yd'),
-      chart('nation-pmi', 'PMI 指数', ['nation_pmi_composite'], 'yd'),
-      chart('nation-sh-index', '上证综合指数', ['nation_shanghai_composite_index'], 'nd'),
-      chart('nation-sz-index', '深证综合指数', ['nation_shenzhen_composite_index'], 'nd')
+      chart('nation-pmi', 'PMI 指数', ['nation_pmi_composite'], 'yd')
     ]
   },
   TouristIndustry: {
@@ -470,10 +494,9 @@ export const v3PageRegistry = {
   AccommodationAndCateringIndustry: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-hospitality-employment', '住宿和餐饮业年末从业人数', ['nation_hotel_catering_employees_combined'], 'nd'),
-      chart('nation-hospitality-enterprises', '住宿和餐饮业法人企业数', ['nation_hotel_catering_legal_entities_combined'], 'nd'),
-      chart('nation-hotel-turnover', '营业额', ['nation_hotel_catering_turnover_combined', 'nation_hotel_catering_catering_turnover'], 'nd'),
-      chart('nation-hotel-income-structure', '餐费收入与客房收入', ['nation_hotel_catering_meal_revenue', 'nation_hotel_catering_room_revenue'], 'nd', indicatorPieConfig(['nation_hotel_catering_meal_revenue', 'nation_hotel_catering_room_revenue']))
+      chart('nation-hospitality-turnover', '餐饮与住宿收入', ['nation_hotel_catering_catering_turnover', 'nation_hotel_catering_meal_revenue', 'nation_hotel_catering_room_revenue'], 'nd'),
+      chart('nation-hospitality-capacity', '餐饮与住宿承载能力', ['nation_hotel_catering_catering_floor_area', 'nation_hotel_catering_room_count', 'nation_hotel_catering_lodging_beds'], 'nd'),
+      chart('nation-hospitality-entities', '住宿和餐饮业企业与从业人数', ['nation_hotel_catering_legal_entities_combined', 'nation_hotel_catering_employees_combined', 'nation_hotel_catering_star_hotels'], 'nd')
     ]
   },
   LivingStandards: {
@@ -481,7 +504,7 @@ export const v3PageRegistry = {
     charts: [
       chart('nation-income', '居民收入', ['nation_income_total', 'nation_income_total_median'], 'nd'),
       chart('nation-income-urban-rural', '城乡居民人均可支配收入', ['nation_income_urban', 'nation_income_rural'], 'nd', indicatorPieConfig(['nation_income_urban', 'nation_income_rural'])),
-      chart('nation-engel', '总/城镇/农村恩格尔系数', ['nation_engel_total', 'nation_engel_urban', 'nation_engel_rural'], 'nd', indicatorPieConfig(['nation_engel_total', 'nation_engel_urban', 'nation_engel_rural'])),
+      chart('nation-engel', '总/城镇/农村恩格尔系数', ['nation_engel_total', 'nation_engel_urban', 'nation_engel_rural'], 'nd'),
       chart('nation-gini', '基尼系数', ['nation_gini'], 'nd')
     ]
   },
