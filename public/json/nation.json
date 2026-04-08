@@ -65337,6 +65337,9 @@
         "nd"
       ],
       "derived": false,
+      "indicatorIds": [
+        "222b8f1e22804abaaa3b58b227f8103d"
+      ],
       "series": [
         {
           "regionKey": "100000",
@@ -65809,6 +65812,9 @@
         "nd"
       ],
       "derived": false,
+      "indicatorIds": [
+        "30ce201729ea4e9b83074cd45ba5f422"
+      ],
       "series": [
         {
           "regionKey": "100000",
@@ -66281,6 +66287,9 @@
         "nd"
       ],
       "derived": false,
+      "indicatorIds": [
+        "014cbae07ab1440ba5f2b976e2d75b68"
+      ],
       "series": [
         {
           "regionKey": "100000",

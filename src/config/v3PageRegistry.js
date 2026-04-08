@@ -68,9 +68,9 @@ export const v3PageRegistry = {
   WHNewHouse: {
     source: { localJson: './wh.json' },
     charts: [
-      chart('wh-new-house-year', '武汉新房成交年度走势', ['wh_new_house_yearly_total'], 'nd'),
-      chart('wh-new-house-month', '武汉新房成交月度走势', ['wh_new_house_monthly_total'], 'yd'),
-      chart('wh-new-house-district', '武汉新房分区域月度走势', [
+      chart('wh-new-house-year', '新房成交年度走势', ['wh_new_house_yearly_total'], 'nd'),
+      chart('wh-new-house-month', '新房成交月度走势', ['wh_new_house_monthly_total'], 'yd'),
+      chart('wh-new-house-district', '新房分区域月度走势', [
         'wh_new_house_monthly_jiang_an',
         'wh_new_house_monthly_jiang_han',
         'wh_new_house_monthly_qiao_kou',
@@ -114,7 +114,7 @@ export const v3PageRegistry = {
           radius: '16%'
         })
       }),
-      chart('wh-new-house-district-year', '武汉新房分区域年度走势', [
+      chart('wh-new-house-district-year', '新房分区域年度走势', [
         'wh_new_house_yearly_jiang_an',
         'wh_new_house_yearly_jiang_han',
         'wh_new_house_yearly_qiao_kou',
@@ -163,10 +163,10 @@ export const v3PageRegistry = {
   WHSecondHandHouse: {
     source: { localJson: './wh.json' },
     charts: [
-      chart('wh-second-year', '武汉二手房成交年度走势', ['wh_second_house_yearly_total'], 'nd'),
-      chart('wh-second-month', '武汉二手房成交月度走势', ['wh_second_house_monthly_total'], 'yd'),
-      chart('wh-second-price', '武汉二手房挂牌均价', ['wh_second_house_monthly_price'], 'yd'),
-      chart('wh-second-activity', '武汉二手房挂牌活跃度', [
+      chart('wh-second-year', '二手房成交年度走势', ['wh_second_house_yearly_total'], 'nd'),
+      chart('wh-second-month', '二手房成交月度走势', ['wh_second_house_monthly_total'], 'yd'),
+      chart('wh-second-price', '二手房成交均价', ['wh_second_house_monthly_price'], 'yd'),
+      chart('wh-second-activity', '二手房挂牌活跃度', [
         'wh_second_house_monthly_new_listing_count',
         'wh_second_house_monthly_viewer_count',
         'wh_second_house_monthly_price_rise_listing_count',
@@ -176,70 +176,70 @@ export const v3PageRegistry = {
   },
   WHGDP: {
     source: { localJson: './city.json', cityCodeArr: ['420100'] },
-    charts: [regionChart('wh-gdp', '武汉地区生产总值', ['city_gdp'], 'nd', { regionCodes: ['420100'] })]
+    charts: [regionChart('wh-gdp', '地区生产总值', ['city_gdp'], 'nd', { regionCodes: ['420100'] })]
   },
   WHPopulation: {
     source: { localJson: './city.json', cityCodeArr: ['420100'] },
     charts: [
-      chart('wh-population', '武汉常住人口与年末户籍人口', ['city_resident_population', 'city_registered_population'], 'nd')
+      chart('wh-population', '常住人口与年末户籍人口', ['city_resident_population', 'city_registered_population'], 'nd')
     ]
   },
   WHFinance: {
     source: { localJson: './city.json', cityCodeArr: ['420100'] },
     charts: [
-      regionChart('wh-budget-overview', '武汉财政收支与赤字', ['city_budget_income', 'city_budget_expenditure', 'city_budget_deficit'], 'nd', { regionCodes: ['420100'], seriesLayout: 'indicator' }),
-      regionChart('wh-household-deposit', '武汉住户存款余额', ['city_household_deposit_balance'], 'nd', { regionCodes: ['420100'] })
+      regionChart('wh-budget-overview', '财政收支与赤字', ['city_budget_income', 'city_budget_expenditure', 'city_budget_deficit'], 'nd', { regionCodes: ['420100'], seriesLayout: 'indicator' }),
+      regionChart('wh-household-deposit', '住户存款余额', ['city_household_deposit_balance'], 'nd', { regionCodes: ['420100'] })
     ]
   },
   WHRealEstateInvest: {
     source: { localJson: './city.json', cityCodeArr: ['420100'] },
-    charts: [regionChart('wh-invest', '武汉房地产开发住宅投资额', ['city_residential_dev_investment'], 'nd', { regionCodes: ['420100'] })]
+    charts: [regionChart('wh-invest', '房地产开发住宅投资额', ['city_residential_dev_investment'], 'nd', { regionCodes: ['420100'] })]
   },
   WHRealEstateSell: {
     source: { localJson: './city.json', cityCodeArr: ['420100'] },
     charts: [
-      regionChart('wh-sales-area', '武汉商品房销售面积', ['city_residential_sales_area'], 'nd', { regionCodes: ['420100'] }),
-      regionChart('wh-avg-price', '武汉商品房平均销售价格', ['city_residential_avg_price'], 'nd', { regionCodes: ['420100'] })
+      regionChart('wh-sales-area', '商品房销售面积', ['city_residential_sales_area'], 'nd', { regionCodes: ['420100'] }),
+      regionChart('wh-avg-price', '商品房平均销售价格', ['city_residential_avg_price'], 'nd', { regionCodes: ['420100'] })
     ]
   },
   WHEducation: {
     source: { localJson: './city.json', cityCodeArr: ['420100'] },
-    charts: [regionChart('wh-college-students', '武汉普通本专科在校学生数', ['city_college_students'], 'nd', { regionCodes: ['420100'] })]
+    charts: [regionChart('wh-college-students', '普通本专科在校学生数', ['city_college_students'], 'nd', { regionCodes: ['420100'] })]
   },
   WHMedical: {
     source: { localJson: './city.json', cityCodeArr: ['420100'] },
-    charts: [regionChart('wh-hospital-count', '武汉医院数', ['city_hospital_count'], 'nd', { regionCodes: ['420100'] })]
+    charts: [regionChart('wh-hospital-count', '医院数', ['city_hospital_count'], 'nd', { regionCodes: ['420100'] })]
   },
 
   CityGDP: {
     source: { localJson: './city.json', cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND },
-    charts: [regionChart('city-gdp', '重点城市地区生产总值', ['city_gdp'], 'nd', regionPieConfig('city_gdp'))]
+    charts: [regionChart('city-gdp', '地区生产总值', ['city_gdp'], 'nd', regionPieConfig('city_gdp'))]
   },
   CityPopulation: {
     source: { localJson: './city.json', cityCodeArr: CITY_POPULATION_CODES },
     charts: [
-      regionChart('city-resident-population', '重点城市常住人口', ['city_resident_population'], 'nd', regionPieConfig('city_resident_population')),
-      regionChart('city-population', '重点城市年末户籍人口', ['city_registered_population'], 'nd', regionPieConfig('city_registered_population'))
+      regionChart('city-resident-population', '常住人口', ['city_resident_population'], 'nd', regionPieConfig('city_resident_population')),
+      regionChart('city-population', '年末户籍人口', ['city_registered_population'], 'nd', regionPieConfig('city_registered_population'))
     ]
   },
   CityFinance: {
     source: { localJson: './city.json', cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND },
     charts: [
-      regionChart('city-budget-income', '重点城市地方一般公共预算收入', ['city_budget_income'], 'nd', regionPieConfig('city_budget_income')),
-      regionChart('city-budget-expenditure', '重点城市地方一般公共预算支出', ['city_budget_expenditure'], 'nd', regionPieConfig('city_budget_expenditure')),
-      regionChart('city-budget-deficit', '重点城市地方一般公共预算赤字', ['city_budget_deficit'], 'nd'),
-      regionChart('city-deposit', '重点城市住户存款余额', ['city_household_deposit_balance'], 'nd', regionPieConfig('city_household_deposit_balance'))
+      regionChart('city-budget-income', '地方一般公共预算收入', ['city_budget_income'], 'nd', regionPieConfig('city_budget_income')),
+      regionChart('city-budget-expenditure', '地方一般公共预算支出', ['city_budget_expenditure'], 'nd', regionPieConfig('city_budget_expenditure')),
+      regionChart('city-budget-deficit', '地方一般公共预算赤字', ['city_budget_deficit'], 'nd'),
+      regionChart('city-deposit', '住户存款余额', ['city_household_deposit_balance'], 'nd', regionPieConfig('city_household_deposit_balance'))
     ]
   },
   CityRealEstateInvest: {
     source: { localJson: './city.json', cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND },
-    charts: [regionChart('city-invest', '重点城市房地产开发住宅投资额', ['city_residential_dev_investment'], 'nd', regionPieConfig('city_residential_dev_investment'))]
+    charts: [regionChart('city-invest', '房地产开发住宅投资额', ['city_residential_dev_investment'], 'nd', regionPieConfig('city_residential_dev_investment'))]
   },
   CityRealEstateSell: {
     source: { localJson: './city.json', cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND },
     charts: [
-      regionChart('city-sales-area', '重点城市商品房销售面积', ['city_residential_sales_area'], 'nd', regionPieConfig('city_residential_sales_area')),
-      regionChart('city-avg-price', '重点城市商品房平均销售价格', ['city_residential_avg_price'], 'nd')
+      regionChart('city-sales-area', '商品房销售面积', ['city_residential_sales_area'], 'nd', regionPieConfig('city_residential_sales_area')),
+      regionChart('city-avg-price', '商品房平均销售价格', ['city_residential_avg_price'], 'nd')
     ]
   },
   CityRealEstatePriceIndices: {
@@ -254,83 +254,83 @@ export const v3PageRegistry = {
   },
   CityEducation: {
     source: { localJson: './city.json', cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND },
-    charts: [regionChart('city-college-students', '重点城市普通本专科在校学生数', ['city_college_students'], 'nd', regionPieConfig('city_college_students'))]
+    charts: [regionChart('city-college-students', '普通本专科在校学生数', ['city_college_students'], 'nd', regionPieConfig('city_college_students'))]
   },
   CityMedical: {
     source: { localJson: './city.json', cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND },
-    charts: [regionChart('city-hospital-count', '重点城市医院数', ['city_hospital_count'], 'nd', regionPieConfig('city_hospital_count'))]
+    charts: [regionChart('city-hospital-count', '医院数', ['city_hospital_count'], 'nd', regionPieConfig('city_hospital_count'))]
   },
 
   ProvincialGDP: {
     source: { localJson: './province.json', cityCodeArr: PROVINCE_CODES, needAddCityCodeArr: ADD_PROVINCE_CODES },
-    charts: [regionChart('province-gdp', '重点省市地区生产总值', ['province_gdp'], 'nd', regionPieConfig('province_gdp'))]
+    charts: [regionChart('province-gdp', '地区生产总值', ['province_gdp'], 'nd', regionPieConfig('province_gdp'))]
   },
   ProvincialPopulation: {
     source: { localJson: './province.json', cityCodeArr: PROVINCE_CODES, needAddCityCodeArr: ADD_PROVINCE_CODES },
     charts: [
-      regionChart('province-total-population', '重点省市年末常住人口', ['province_total_population'], 'nd', regionPieConfig('province_total_population')),
-      regionChart('province-birth-rate', '重点省市人口出生率', ['province_birth_rate'], 'nd'),
-      regionChart('province-death-rate', '重点省市人口死亡率', ['province_death_rate'], 'nd'),
-      regionChart('province-natural-growth', '重点省市人口自然增长率', ['province_natural_growth_rate'], 'nd')
+      regionChart('province-total-population', '年末常住人口', ['province_total_population'], 'nd', regionPieConfig('province_total_population')),
+      regionChart('province-birth-rate', '人口出生率', ['province_birth_rate'], 'nd'),
+      regionChart('province-death-rate', '人口死亡率', ['province_death_rate'], 'nd'),
+      regionChart('province-natural-growth', '人口自然增长率', ['province_natural_growth_rate'], 'nd')
     ]
   },
   ProvincialFinance: {
     source: { localJson: './province.json', cityCodeArr: PROVINCE_CODES, needAddCityCodeArr: ADD_PROVINCE_CODES },
     charts: [
-      regionChart('province-budget-income', '重点省市地方财政一般预算收入', ['province_budget_income'], 'nd', regionPieConfig('province_budget_income')),
-      regionChart('province-budget-expenditure', '重点省市地方财政一般预算支出', ['province_budget_expenditure'], 'nd', regionPieConfig('province_budget_expenditure')),
-      regionChart('province-budget-deficit', '重点省市地方财政一般预算赤字', ['province_budget_deficit'], 'nd')
+      regionChart('province-budget-income', '地方财政一般预算收入', ['province_budget_income'], 'nd', regionPieConfig('province_budget_income')),
+      regionChart('province-budget-expenditure', '地方财政一般预算支出', ['province_budget_expenditure'], 'nd', regionPieConfig('province_budget_expenditure')),
+      regionChart('province-budget-deficit', '地方财政一般预算赤字', ['province_budget_deficit'], 'nd')
     ]
   },
   ProvincialRealEstateInvest: {
     source: { localJson: './province.json', cityCodeArr: PROVINCE_CODES, needAddCityCodeArr: ADD_PROVINCE_CODES },
     charts: [
-      regionChart('province-invest-year', '重点省市房地产开发住宅投资额', ['province_residential_dev_investment'], 'nd', regionPieConfig('province_residential_dev_investment')),
-      regionChart('province-invest-value', '重点省市住宅投资累计值', ['province_residential_investment_value'], 'yd', regionPieConfig('province_residential_investment_value')),
-      regionChart('province-invest-growth', '重点省市住宅投资累计增长', ['province_residential_investment_growth'], 'yd')
+      regionChart('province-invest-year', '房地产开发住宅投资额', ['province_residential_dev_investment'], 'nd', regionPieConfig('province_residential_dev_investment')),
+      regionChart('province-invest-value', '住宅投资累计值', ['province_residential_investment_value'], 'yd', regionPieConfig('province_residential_investment_value')),
+      regionChart('province-invest-growth', '住宅投资累计增长', ['province_residential_investment_growth'], 'yd')
     ]
   },
   ProvincialRealEstateSell: {
     source: { localJson: './province.json', cityCodeArr: PROVINCE_CODES, needAddCityCodeArr: ADD_PROVINCE_CODES },
     charts: [
-      regionChart('province-sales-area-year', '重点省市房屋销售面积', ['province_residential_sales_area'], 'nd', regionPieConfig('province_residential_sales_area')),
-      regionChart('province-avg-price-year', '重点省市商品房平均销售价格', ['province_residential_avg_price'], 'nd'),
-      regionChart('province-sales-area-value', '重点省市房屋销售面积累计值', ['province_residential_sales_area_value'], 'yd', regionPieConfig('province_residential_sales_area_value')),
-      regionChart('province-sales-area-growth', '重点省市房屋销售面积累计增长', ['province_residential_sales_area_growth'], 'yd'),
-      regionChart('province-sales-amount-value', '重点省市商品房销售额累计值', ['province_residential_sales_amount_value'], 'yd', regionPieConfig('province_residential_sales_amount_value')),
-      regionChart('province-sales-amount-growth', '重点省市商品房销售额累计增长', ['province_residential_sales_amount_growth'], 'yd')
+      regionChart('province-sales-area-year', '房屋销售面积', ['province_residential_sales_area'], 'nd', regionPieConfig('province_residential_sales_area')),
+      regionChart('province-avg-price-year', '商品房平均销售价格', ['province_residential_avg_price'], 'nd'),
+      regionChart('province-sales-area-value', '房屋销售面积累计值', ['province_residential_sales_area_value'], 'yd', regionPieConfig('province_residential_sales_area_value')),
+      regionChart('province-sales-area-growth', '房屋销售面积累计增长', ['province_residential_sales_area_growth'], 'yd'),
+      regionChart('province-sales-amount-value', '商品房销售额累计值', ['province_residential_sales_amount_value'], 'yd', regionPieConfig('province_residential_sales_amount_value')),
+      regionChart('province-sales-amount-growth', '商品房销售额累计增长', ['province_residential_sales_amount_growth'], 'yd')
     ]
   },
   ProvincialEducation: {
     source: { localJson: './province.json', cityCodeArr: PROVINCE_CODES, needAddCityCodeArr: ADD_PROVINCE_CODES },
     charts: [
-      regionChart('province-college-enrollment', '重点省市普通高等学校本科招生数', ['province_college_enrollment'], 'nd', regionPieConfig('province_college_enrollment')),
-      regionChart('province-college-students', '重点省市普通高等学校本科在校学生数', ['province_college_students'], 'nd', regionPieConfig('province_college_students')),
-      regionChart('province-college-graduates', '重点省市普通高等学校本科毕(结)业生数', ['province_college_graduates'], 'nd', regionPieConfig('province_college_graduates'))
+      regionChart('province-college-enrollment', '普通高等学校本科招生数', ['province_college_enrollment'], 'nd', regionPieConfig('province_college_enrollment')),
+      regionChart('province-college-students', '普通高等学校本科在校学生数', ['province_college_students'], 'nd', regionPieConfig('province_college_students')),
+      regionChart('province-college-graduates', '普通高等学校本科毕(结)业生数', ['province_college_graduates'], 'nd', regionPieConfig('province_college_graduates'))
     ]
   },
   ProvincialMedical: {
     source: { localJson: './province.json', cityCodeArr: PROVINCE_CODES, needAddCityCodeArr: ADD_PROVINCE_CODES },
     charts: [
-      regionChart('province-hospital-count', '重点省市医院数', ['province_hospital_count'], 'nd', regionPieConfig('province_hospital_count')),
-      regionChart('province-bed-count', '重点省市每万人医疗机构床位数', ['province_bed_count_per_10k'], 'nd')
+      regionChart('province-hospital-count', '医院数', ['province_hospital_count'], 'nd', regionPieConfig('province_hospital_count')),
+      regionChart('province-bed-count', '每万人医疗机构床位数', ['province_bed_count_per_10k'], 'nd')
     ]
   },
   ProvincialLiving: {
     source: { localJson: './province.json', cityCodeArr: PROVINCE_CODES, needAddCityCodeArr: ADD_PROVINCE_CODES },
-    charts: [regionChart('province-income', '重点省市全体居民人均可支配收入', ['province_disposable_income'], 'nd', regionPieConfig('province_disposable_income'))]
+    charts: [regionChart('province-income', '全体居民人均可支配收入', ['province_disposable_income'], 'nd', regionPieConfig('province_disposable_income'))]
   },
 
   GrossDomesticProduct: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-gdp-overview', '国内生产总值、三次产业与人均国内生产总值', ['nation_gdp', 'nation_gdp_primary', 'nation_gdp_secondary', 'nation_gdp_tertiary', 'nation_gdp_per_capita'], 'nd', indicatorPieConfig(['nation_gdp_primary', 'nation_gdp_secondary', 'nation_gdp_tertiary']))
+      chart('nation-gdp-overview', '国内生产总值', ['nation_gdp', 'nation_gdp_primary', 'nation_gdp_secondary', 'nation_gdp_tertiary', 'nation_gdp_per_capita'], 'nd', indicatorPieConfig(['nation_gdp_primary', 'nation_gdp_secondary', 'nation_gdp_tertiary']))
     ]
   },
   PopulationBasic: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-total-population', '总人口 / 男女人口 / 城乡人口', ['nation_total_population', 'nation_population_male', 'nation_population_female', 'nation_population_urban', 'nation_population_rural'], 'nd', {
+      chart('nation-total-population', '人口', ['nation_total_population', 'nation_population_male', 'nation_population_female', 'nation_population_urban', 'nation_population_rural'], 'nd', {
         legendTop: '90px',
         gridTop: '340px',
         pieConfig: {
@@ -349,8 +349,10 @@ export const v3PageRegistry = {
           ]
         }
       }),
-      chart('nation-birth-death-growth', '出生率/死亡率/自然增长率', ['nation_birth_rate', 'nation_death_rate', 'nation_natural_growth_rate'], 'nd'),
-      chart('nation-birth-death-count', '出生人口 / 死亡人口 / 自然增长人口', ['nation_birth_population', 'nation_death_population', 'nation_natural_growth_population'], 'nd')
+      chart('nation-birth-death-growth', '人口率', ['nation_birth_rate', 'nation_death_rate', 'nation_natural_growth_rate'], 'nd'),
+      chart('nation-birth-death-count', '人口增长', ['nation_birth_population', 'nation_death_population', 'nation_natural_growth_population'], 'nd'),
+      chart('nation-age-structure', '人口年龄结构', ['nation_age_structure_02', 'nation_age_structure_03', 'nation_age_structure_04'], 'nd', indicatorPieConfig(['nation_age_structure_02', 'nation_age_structure_03', 'nation_age_structure_04'])),
+      chart('nation-dependency-ratio', '人口抚养比', ['nation_age_structure_05', 'nation_age_structure_06', 'nation_age_structure_07'], 'nd')
     ]
   },
   PopulationSpot: {
@@ -364,17 +366,138 @@ export const v3PageRegistry = {
   NationalFinance: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-budget-income-yearly', '全国 / 中央 / 地方财政收入对比', ['nation_budget_income_total', 'nation_budget_income_central', 'nation_budget_income_local'], 'nd'),
-      chart('nation-budget-expenditure-yearly', '全国 / 中央 / 地方财政支出对比', ['nation_budget_expenditure_total', 'nation_budget_expenditure_central', 'nation_budget_expenditure_local'], 'nd'),
-      chart('nation-budget-deficit-yearly', '全国 / 中央 / 地方财政赤字对比', ['nation_finance_deficit_total', 'nation_finance_deficit_central', 'nation_finance_deficit_local'], 'nd'),
-      chart('nation-budget-cumulative', '全国财政收入与支出累计值', ['nation_budget_income_monthly_01', 'nation_budget_expenditure_monthly_01'], 'yd'),
-      chart('nation-budget-growth', '全国财政收入与支出累计增长', ['nation_budget_income_monthly_02', 'nation_budget_expenditure_monthly_02'], 'yd')
+      chart('nation-budget-income-yearly', '财政收入', ['nation_budget_income_total', 'nation_budget_income_central', 'nation_budget_income_local'], 'nd', {
+        legendTop: '90px',
+        gridTop: '300px',
+        pieConfig: {
+          enabled: true,
+          pies: [
+            {
+              triggerIndicatorKeys: ['nation_budget_income_central', 'nation_budget_income_local'],
+              center: ['50%', '200px'],
+              radius: '16%'
+            }
+          ]
+        }
+      }),
+      chart('nation-budget-expenditure-yearly', '财政支出', ['nation_budget_expenditure_total', 'nation_budget_expenditure_central', 'nation_budget_expenditure_local'], 'nd', {
+        legendTop: '90px',
+        gridTop: '300px',
+        pieConfig: {
+          enabled: true,
+          pies: [
+            {
+              triggerIndicatorKeys: ['nation_budget_expenditure_central', 'nation_budget_expenditure_local'],
+              center: ['50%', '200px'],
+              radius: '16%'
+            }
+          ]
+        }
+      }),
+      chart('nation-budget-deficit-yearly', '财政赤字', ['nation_finance_deficit_total', 'nation_finance_deficit_central', 'nation_finance_deficit_local'], 'nd'),
+      chart('nation-budget-main-income-items', '国家财政主要收入项目', [
+        'nation_national_administrative_fees',
+        'nation_national_business_tax',
+        'nation_national_confiscation_income',
+        'nation_national_customs_duty',
+        'nation_national_deed_tax',
+        'nation_national_domestic_consumption_tax',
+        'nation_national_domestic_vat',
+        'nation_national_enterprise_income_tax',
+        'nation_national_farmland_occupation_tax',
+        'nation_national',
+        'nation_national_land_appreciation_tax',
+        'nation_national_non_tax_revenue',
+        'nation_national_other_income',
+        'nation_national_other_tax_revenue',
+        'nation_national_personal_income_tax',
+        'nation_national_property_tax',
+        'nation_national_resource_tax',
+        'nation_national_special_revenue',
+        'nation_national_stamp_tax',
+        'nation_national_tax_revenue',
+        'nation_national_tobacco_tax',
+        'nation_national_tonnage_tax',
+        'nation_national_urban_land_use_tax',
+        'nation_national_urban_maintenance_construction_tax',
+        'nation_national_vehicle_purchase_tax',
+        'nation_national_vehicle_vessel_tax'
+      ], 'nd', indicatorPieConfig([
+        'nation_national_administrative_fees',
+        'nation_national_business_tax',
+        'nation_national_confiscation_income',
+        'nation_national_customs_duty',
+        'nation_national_deed_tax',
+        'nation_national_domestic_consumption_tax',
+        'nation_national_domestic_vat',
+        'nation_national_enterprise_income_tax',
+        'nation_national_farmland_occupation_tax',
+        'nation_national',
+        'nation_national_land_appreciation_tax',
+        'nation_national_non_tax_revenue',
+        'nation_national_other_income',
+        'nation_national_other_tax_revenue',
+        'nation_national_personal_income_tax',
+        'nation_national_property_tax',
+        'nation_national_resource_tax',
+        'nation_national_special_revenue',
+        'nation_national_stamp_tax',
+        'nation_national_tax_revenue',
+        'nation_national_tobacco_tax',
+        'nation_national_tonnage_tax',
+        'nation_national_urban_land_use_tax',
+        'nation_national_urban_maintenance_construction_tax',
+        'nation_national_vehicle_purchase_tax',
+        'nation_national_vehicle_vessel_tax'
+      ], { topN: 8, mergeOthersLabel: '其他' })),
+      chart('nation-budget-main-expenditure-items', '国家财政主要支出项目', [
+        'nation_national_budget_agriculture_forestry_water_expenditure',
+        'nation_national_budget_armed_police_expenditure',
+        'nation_national_budget_culture_sports_media_expenditure',
+        'nation_national_budget_defense_expenditure',
+        'nation_national_budget_education_expenditure',
+        'nation_national_budget_environmental_protection_expenditure',
+        'nation_national_budget_foreign_affairs_expenditure',
+        'nation_national_budget_foreign_aid_expenditure',
+        'nation_national_budget_general_public_services_expenditure',
+        'nation_national_budget_healthcare_expenditure',
+        'nation_national_budget_other_expenditure',
+        'nation_national_budget_post_earthquake_reconstruction_expenditure',
+        'nation_national_budget_public_safety_expenditure',
+        'nation_national_budget_science_technology_expenditure',
+        'nation_national_budget_social_security_employment_expenditure',
+        'nation_national_budget_transport_expenditure',
+        'nation_national_budget_urban_rural_community_expenditure',
+        'nation_national_budget_vehicle_purchase_tax_expenditure'
+      ], 'nd', indicatorPieConfig([
+        'nation_national_budget_agriculture_forestry_water_expenditure',
+        'nation_national_budget_armed_police_expenditure',
+        'nation_national_budget_culture_sports_media_expenditure',
+        'nation_national_budget_defense_expenditure',
+        'nation_national_budget_education_expenditure',
+        'nation_national_budget_environmental_protection_expenditure',
+        'nation_national_budget_foreign_affairs_expenditure',
+        'nation_national_budget_foreign_aid_expenditure',
+        'nation_national_budget_general_public_services_expenditure',
+        'nation_national_budget_healthcare_expenditure',
+        'nation_national_budget_other_expenditure',
+        'nation_national_budget_post_earthquake_reconstruction_expenditure',
+        'nation_national_budget_public_safety_expenditure',
+        'nation_national_budget_science_technology_expenditure',
+        'nation_national_budget_social_security_employment_expenditure',
+        'nation_national_budget_transport_expenditure',
+        'nation_national_budget_urban_rural_community_expenditure',
+        'nation_national_budget_vehicle_purchase_tax_expenditure'
+      ], { topN: 8, mergeOthersLabel: '其他' })),
+   
+      chart('nation-budget-cumulative', '财政收入与支出累计值', ['nation_budget_income_monthly_01', 'nation_budget_expenditure_monthly_01'], 'yd'),
+      chart('nation-budget-growth', '财政收入与支出累计增长', ['nation_budget_income_monthly_02', 'nation_budget_expenditure_monthly_02'], 'yd')
     ]
   },
   RealEstateInvest: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-investment', '房地产开发本年完成投资额', ['nation_real_estate_investment_total'], 'nd'),
+      chart('nation-investment', '房地产开发投资额', ['nation_real_estate_investment_total'], 'nd'),
       chart('nation-investment-monthly-value', '房地产开发投资累计值', ['nation_real_estate_investment_monthly_01', 'nation_real_estate_investment_monthly_03', 'nation_real_estate_investment_monthly_05', 'nation_real_estate_investment_monthly_07'], 'yd'),
       chart('nation-investment-monthly-growth', '房地产开发投资累计增长', ['nation_real_estate_investment_monthly_02', 'nation_real_estate_investment_monthly_04', 'nation_real_estate_investment_monthly_06', 'nation_real_estate_investment_monthly_08'], 'yd')
     ]
@@ -382,9 +505,9 @@ export const v3PageRegistry = {
   RealEstateSell: {
     source: { localJson: './nation.json' },
     charts: [
-      chart('nation-sales-area', '房屋销售面积', ['nation_new_home_sales_area_total'], 'nd'),
-      chart('nation-sales-amount', '房地产企业商品房销售额', ['nation_new_home_sales_amount_total'], 'nd'),
-      chart('nation-sales-price', '商品房平均销售价格', ['nation_new_home_avg_price_total'], 'nd'),
+      chart('nation-sales-area', '住宅商品房销售面积', ['nation_new_home_sales_area_residential'], 'nd'),
+      chart('nation-sales-amount', '住宅商品房销售额', ['nation_new_home_sales_amount_residential'], 'nd'),
+      chart('nation-sales-price', '住宅商品房销售价格', ['nation_new_home_avg_price_residential'], 'nd'),
       chart('nation-sales-area-monthly-value', '商品住宅销售面积累计值', ['nation_residential_sales_area_monthly_01'], 'yd'),
       chart('nation-sales-area-monthly-growth', '商品住宅销售面积累计增长', ['nation_residential_sales_area_monthly_02'], 'yd'),
       chart('nation-sales-amount-monthly-value', '商品住宅销售额累计值', ['nation_residential_sales_amount_monthly_01'], 'yd'),
