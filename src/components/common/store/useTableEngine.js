@@ -16,7 +16,13 @@ export function useTableEngine(chartOption, isMobile, chartTitle, chartIdentityS
     const seriesList = Array.isArray(chartOption.value.series) ? chartOption.value.series : [chartOption.value.series];
     return seriesList
       .map((series, originalIdx) => ({ series, originalIdx }))
-      .filter(item => item.series.name && item.series.name.trim() !== '' && !item.series.isTrendline);
+      .filter((item) => {
+        const s = item.series;
+        if (!s?.name || String(s.name).trim() === '') return false;
+        if (s.isTrendline) return false;
+        if (s.type === 'pie' || s.type === 'map') return false;
+        return true;
+      });
   });
 
   const getSafeAxisData = (axis) => (Array.isArray(axis) ? axis[0]?.data : axis?.data) || [];

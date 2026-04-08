@@ -181,8 +181,7 @@ export const v3PageRegistry = {
   WHPopulation: {
     source: { localJson: './city.json', cityCodeArr: ['420100'] },
     charts: [
-      regionChart('wh-resident-population', '武汉常住人口', ['city_resident_population'], 'nd', { regionCodes: ['420100'] }),
-      regionChart('wh-registered-population', '武汉年末户籍人口', ['city_registered_population'], 'nd', { regionCodes: ['420100'] })
+      chart('wh-population', '武汉常住人口与年末户籍人口', ['city_resident_population', 'city_registered_population'], 'nd')
     ]
   },
   WHFinance: {

@@ -199,7 +199,7 @@ export function getSeriesPoints(dataset, indicatorKey, period, regionCode = '', 
   let lastNonEmptyIndex = points.length - 1;
   for (let index = points.length - 1; index >= 0; index -= 1) {
     const value = points[index]?.value;
-    if (value !== null && value !== '' && value !== undefined && value !== 0) {
+    if (value !== null && value !== '' && value !== undefined) {
       lastNonEmptyIndex = index;
       break;
     }

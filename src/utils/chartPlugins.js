@@ -224,8 +224,10 @@ const resolvePieTriggerKeys = (pieConfig = {}) => {
 
 const getNearestSeriesValue = (seriesData, targetIndex) => {
   if (!Array.isArray(seriesData) || seriesData.length === 0) return null;
-  const safeIndex = Math.min(targetIndex, seriesData.length - 1);
-  for (let index = safeIndex; index >= 0; index -= 1) {
+  const idx = Number.isFinite(targetIndex)
+    ? Math.min(Math.max(0, Math.floor(targetIndex)), seriesData.length - 1)
+    : 0;
+  for (let index = idx; index >= 0; index -= 1) {
     const current = seriesData[index];
     const value = typeof current === 'object' && current !== null ? current.value : current;
     if (value !== null && value !== undefined && value !== '' && value !== '-') {

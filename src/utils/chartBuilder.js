@@ -170,9 +170,14 @@ class ChartBuilder {
       const mainIndicatorKey = indicatorKeys[0];
       const allRegions = getRegionItems(data);
       const targetRegionCodes = regionCodes.length ? regionCodes : Object.keys(allRegions).filter((code) => code !== '100000');
+      // 多地区对比（城市 city.json、省市 province.json 等，凡 seriesLayout === 'region' 均走此分支）：
+      // 不能对「每个地区单独 slice(-yearLimit)」再合并时间轴，否则各地「最近 N 条」对应的日历范围不一致，
+      // 会出现某几年只有个别地区有值、改滑动年份后同一日历年又「全员有值」的错位。
+      // 正确做法：各地区先取全量序列，合并为统一时间轴后，再对时间轴整体 slice(-yearLimit)。
+      const perRegionLimit = 0;
       targetRegionCodes.forEach((regionCode) => {
         const name = regionLabelMap.get(regionCode) || getRegionName(data, regionCode) || '';
-        let result = selectDataFromArr(data, mainIndicatorKey, dbCode, regionCode, yearLimit) || [];
+        let result = selectDataFromArr(data, mainIndicatorKey, dbCode, regionCode, perRegionLimit) || [];
         if (!result.length) return;
         seriesData.push({ name, zbCode: mainIndicatorKey, type: chartType, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' } });
       });
@@ -182,13 +187,18 @@ class ChartBuilder {
           seriesData.flatMap((series) => Array.isArray(series.date) ? series.date : [])
         )).sort(comparePeriods);
 
-        filteredYears = mergedTimeline;
+        let timeline = mergedTimeline;
+        if (yearLimit && mergedTimeline.length > yearLimit) {
+          timeline = mergedTimeline.slice(-yearLimit);
+        }
+
+        filteredYears = timeline;
         seriesData = seriesData.map((series) => {
-          const pointMap = new Map((series.date || []).map((date, index) => [date, series.data[index] ?? null]));
+          const pointMap = new Map((series.date || []).map((date, index) => [String(date), series.data[index] ?? null]));
           return {
             ...series,
-            date: mergedTimeline,
-            data: mergedTimeline.map((date) => pointMap.has(date) ? pointMap.get(date) : null)
+            date: timeline,
+            data: timeline.map((date) => (pointMap.has(String(date)) ? pointMap.get(String(date)) : null))
           };
         });
       }

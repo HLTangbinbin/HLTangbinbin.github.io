@@ -46,10 +46,42 @@ export default {
       chartInstance.dispatchAction({ type: 'hideTip' });
     };
 
+    const getPrimaryCategoryAxisData = (option) => {
+      if (!option) return [];
+      const xa = option.xAxis;
+      const ya = option.yAxis;
+      const x0 = Array.isArray(xa) ? xa[0] : xa;
+      const y0 = Array.isArray(ya) ? ya[0] : ya;
+      if (x0?.type === 'category' && Array.isArray(x0.data)) return x0.data;
+      if (y0?.type === 'category' && Array.isArray(y0.data)) return y0.data;
+      return Array.isArray(x0?.data) ? x0.data : [];
+    };
+
+    const resolveCategoryDataIndex = (pointerValue, categories) => {
+      if (!categories?.length) return 0;
+      const raw = pointerValue?.value !== undefined ? pointerValue.value : pointerValue;
+      if (typeof raw === 'number' && Number.isFinite(raw)) {
+        const i = Math.round(raw);
+        if (i >= 0 && i < categories.length) return i;
+      }
+      const str = String(raw ?? '');
+      const asNum = Number(str);
+      if (Number.isFinite(asNum) && asNum === Math.floor(asNum) && asNum >= 0 && asNum < categories.length) {
+        return asNum;
+      }
+      let idx = categories.findIndex((c) => String(c) === str);
+      if (idx >= 0) return idx;
+      if (Number.isFinite(asNum)) {
+        idx = categories.findIndex((c) => Number(String(c)) === asNum);
+        if (idx >= 0) return idx;
+      }
+      return 0;
+    };
+
     const getNearestSeriesValue = (seriesData, targetIndex) => {
       if (!Array.isArray(seriesData) || seriesData.length === 0) return null;
-      const safeIndex = Math.min(targetIndex, seriesData.length - 1);
-      for (let index = safeIndex; index >= 0; index -= 1) {
+      const idx = Number.isFinite(targetIndex) ? Math.min(Math.max(0, Math.floor(targetIndex)), seriesData.length - 1) : 0;
+      for (let index = idx; index >= 0; index -= 1) {
         const current = seriesData[index];
         const value = typeof current === 'object' && current !== null ? current.value : current;
         if (value !== null && value !== undefined && value !== '' && value !== '-') {
@@ -155,33 +187,36 @@ export default {
       chartContainer.value?.addEventListener('touchcancel', hideTooltip, { passive: true });
 
       // 🌟 性能优化核心：缓存上一次悬停的索引
-      let lastYearIndex = -1;
+      let lastDataIndex = -1;
 
       const pieDataCache = new Map();
       chartInstance.on('updateAxisPointer', function (event) {
         const xAxisInfo = event.axesInfo?.[0];
         if (!xAxisInfo) return;
 
-
-        const yearIndex = xAxisInfo.value;
-        if (yearIndex === lastYearIndex) return;
-        lastYearIndex = yearIndex;
-
         const pieConfig = props.pieConfig;
         if (!pieConfig?.enabled || !Array.isArray(pieConfig.pies)) return;
 
-        const seriesData = props.option?.series?.filter(s => s.type !== 'pie') || [];
+        const merged = chartInstance.getOption();
+        const categories = getPrimaryCategoryAxisData(merged);
+        const dataIndex = resolveCategoryDataIndex(xAxisInfo.value, categories);
+        if (dataIndex === lastDataIndex) return;
+        lastDataIndex = dataIndex;
+
+        const seriesData = (merged.series || []).filter(
+          (s) => s && s.type !== 'pie' && !s.isTrendline && s.zbCode
+        );
         const pieSeriesUpdates = [];
 
         pieConfig.pies.forEach((pie, idx) => {
-          const cacheKey = `${idx}|${yearIndex}`;
+          const cacheKey = `${idx}|${dataIndex}`;
           let pieData = pieDataCache.get(cacheKey);
           if (!pieData) {
             const triggerKeys = resolvePieTriggerKeys(pie);
             const targetSeries = seriesData.filter(s => triggerKeys.includes(s.zbCode));
             pieData = targetSeries
               .map(series => {
-                const rawVal = Array.isArray(series.data) ? getNearestSeriesValue(series.data, yearIndex) : null;
+                const rawVal = Array.isArray(series.data) ? getNearestSeriesValue(series.data, dataIndex) : null;
                 const value = typeof rawVal === 'object' && rawVal !== null ? rawVal.value : rawVal;
                 if (value === null || value === undefined || value === '' || value === '-' || Number.isNaN(Number(value))) {
                   return null;
