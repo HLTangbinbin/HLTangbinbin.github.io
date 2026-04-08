@@ -4,7 +4,7 @@ const jsonCache = new Map();
 
 /**
  * 加载本地 JSON 文件，只加载一次，后续返回缓存内容
- * @param {string} path - JSON 文件相对路径（例如 /json/nation/chartMetaNation.json）
+ * @param {string} path - JSON 文件相对路径（例如 /json/nation.json）
  * @returns {Promise<Object>} - 解析后的 JSON 对象
  */
 export async function loadJsonOnce(path) {

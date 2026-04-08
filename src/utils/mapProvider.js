@@ -1,17 +1,18 @@
 import * as echarts from 'echarts/core';
 import axios from 'axios'; // 使用你项目中已有的 axios
 import { resolveMapAssetUrl } from '@/config/dataSource.js';
+import { DATA_FILES } from '@/config/dataFiles.js';
 import { logger } from './Logger';
 
 // 智能判断当前图表该用哪张底图 (保留原有逻辑)
 export const resolveMapType = (localJsonPath) => {
   if (!localJsonPath) return null;
-  if (localJsonPath.includes('province.json')) return 'province';
+  if (localJsonPath.includes(DATA_FILES.province)) return 'province';
   return null;
 };
 
 const mapLoaders = {
-  province: () => axios.get(resolveMapAssetUrl('/geo_province.json')).then((res) => res.data)
+  province: () => axios.get(resolveMapAssetUrl(`/${DATA_FILES.geoProvince}`)).then((res) => res.data)
 };
 const mapRegisterPromiseMap = new Map();
 

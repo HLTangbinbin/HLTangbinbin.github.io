@@ -1,5 +1,5 @@
 <template>
-  <template v-if="returnData && currentConfig">
+  <template v-if="returnData && currentConfig && hasCharts">
     <DataIntegrityPanel
       v-if="showIntegrityPanel"
       :chartMetaList="currentConfig.charts"
@@ -50,6 +50,7 @@ const loading = shallowRef(false);
 const errorMessage = shallowRef('');
 let requestId = 0;
 const showIntegrityPanel = computed(() => process.env.NODE_ENV !== 'production' || getCurrentDataSourceMode() === 'local');
+const hasCharts = computed(() => Array.isArray(currentConfig.value?.charts) && currentConfig.value.charts.length > 0);
 const fallbackPageMeta = computed(() => normalizePageConfig({}, {
   routeKey: getRouteChartKey(route.path),
   routePath: route.path
@@ -59,7 +60,9 @@ const stateMeta = computed(() => {
   return {
     title: page?.breadcrumb?.length ? page.breadcrumb.join('/') : page?.title || '',
     description: page?.description || '',
-    message: errorMessage.value || '当前路由未匹配到图表配置，请检查注册表或导航配置。'
+    message: errorMessage.value || (currentConfig.value && !hasCharts.value
+      ? '当前 JSON 暂未提供这个页面可用的图表数据。'
+      : '当前路由未匹配到图表配置，请检查注册表或导航配置。')
   };
 });
 

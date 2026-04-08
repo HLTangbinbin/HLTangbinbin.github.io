@@ -7,10 +7,51 @@ function escapeRegExp(text) {
   return String(text || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+const INDICATOR_LABEL_OVERRIDES = {
+  nation_shanghai_composite_index: '上证综合指数',
+  nation_shenzhen_composite_index: '深证综合指数',
+  nation_kindergarten_count: '学前',
+  nation_primary_school_count: '普通小学',
+  nation_junior_high_school_count: '普通初中',
+  nation_regular_high_school_count: '普通高中',
+  nation_postgraduate_institution_count: '本专科院校',
+  nation_kindergarten_teacher_count: '学前',
+  nation_primary_school_teacher_count: '普通小学',
+  nation_junior_high_school_teacher_count: '普通初中',
+  nation_regular_high_school_teacher_count: '普通高中',
+  nation_postgraduate_teacher_count: '本专科院校',
+  nation_hotel_catering_metric_hs_06: '住宿业法人企业数',
+  nation_hotel_catering_metric_hs_07: '住宿业年末从业人数',
+  nation_hotel_catering_metric_hs_08: '住宿业营业额',
+  nation_hotel_catering_catering_legal_entities: '餐饮业法人企业数',
+  nation_hotel_catering_catering_employees: '餐饮业年末从业人数',
+  nation_hotel_catering_catering_turnover: '餐饮业营业额',
+  nation_trade_total_rmb: '进出口总额（人民币）',
+  nation_export_total_rmb: '出口总额（人民币）',
+  nation_import_total_rmb: '进口总额（人民币）',
+  nation_trade_balance_rmb: '进出口差额（人民币）',
+  nation_trade_total_usd: '进出口总额（美元）',
+  nation_export_total_usd: '出口总额（美元）',
+  nation_import_total_usd: '进口总额（美元）',
+  nation_trade_balance_usd: '进出口差额（美元）',
+  nation_social_financing_corporate_bonds: '非金融企业境内股票融资规模',
+  nation_social_financing_undiscounted_bankers_acceptance: '企业债券融资规模',
+  nation_income_total: '居民人均可支配收入增速',
+  nation_income_urban: '城镇居民人均可支配收入相关增速',
+  nation_income_rural: '农村居民人均可支配收入相关增速'
+};
+
+function looksLikeMachineLabel(label) {
+  const text = String(label || '').trim();
+  if (!text) return false;
+  return /^[a-z0-9_]+$/u.test(text) || /^nation_[a-z0-9_]+$/u.test(text) || /^city_[a-z0-9_]+$/u.test(text) || /^province_[a-z0-9_]+$/u.test(text);
+}
+
 function normalizeIndicatorLabel(indicator, indicatorKey, exceptName = '') {
+  const overrideLabel = INDICATOR_LABEL_OVERRIDES[indicatorKey];
   const displayName = String(indicator?.displayName || '').trim();
   const fallbackName = String(indicator?.name || '').trim();
-  let label = displayName || fallbackName || indicatorKey || '指标';
+  let label = overrideLabel || (looksLikeMachineLabel(displayName) ? fallbackName : displayName) || fallbackName || indicatorKey || '指标';
 
   // Keep the legend concise by dropping trailing "(unit)" in displayName.
   label = label.replace(/\s*\([^)]*\)\s*$/u, '').trim();

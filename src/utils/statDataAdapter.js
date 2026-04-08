@@ -1,4 +1,68 @@
-const DATA_SCHEMA = 'dt-stats-lite-v1';
+function normalizePointMap(values = []) {
+  return new Map(
+    (Array.isArray(values) ? values : [])
+      .map((item) => [String(item?.date ?? '').trim(), item?.value])
+      .filter(([date]) => date)
+  );
+}
+
+function buildDifferenceSeries(totalSeries = [], partSeries = []) {
+  const partSeriesByRegion = new Map(
+    (Array.isArray(partSeries) ? partSeries : []).map((item) => [String(item?.regionKey || '').trim(), item])
+  );
+
+  return (Array.isArray(totalSeries) ? totalSeries : []).map((totalItem) => {
+    const regionKey = String(totalItem?.regionKey || '').trim();
+    const partItem = partSeriesByRegion.get(regionKey);
+    const totalPoints = normalizePointMap(totalItem?.data);
+    const partPoints = normalizePointMap(partItem?.data);
+    const timeline = Array.from(new Set([...totalPoints.keys(), ...partPoints.keys()]))
+      .sort((a, b) => Number(a.replace('-', '')) - Number(b.replace('-', '')));
+
+    const data = timeline.map((date) => {
+      const totalValue = Number(totalPoints.get(date) ?? 0);
+      const partValue = Number(partPoints.get(date) ?? 0);
+      return {
+        date,
+        value: Number.isFinite(totalValue - partValue) ? totalValue - partValue : null
+      };
+    });
+
+    return {
+      regionKey,
+      regionName: totalItem?.regionName || partItem?.regionName || regionKey,
+      data
+    };
+  });
+}
+
+function ensureDerivedDataset(raw, targetKey, totalKey, partKey, options = {}) {
+  if (!raw?.datasets || raw.datasets[targetKey] || !raw.datasets[totalKey] || !raw.datasets[partKey]) return;
+
+  const totalDataset = raw.datasets[totalKey];
+  raw.datasets[targetKey] = {
+    ...totalDataset,
+    key: targetKey,
+    metricKey: targetKey,
+    derived: true,
+    name: options.name || totalDataset.name,
+    displayName: options.displayName || totalDataset.displayName,
+    chartKeys: Array.from(new Set([...(totalDataset.chartKeys || []), ...(raw.datasets[partKey]?.chartKeys || [])])),
+    pageKeys: Array.from(new Set([...(totalDataset.pageKeys || []), ...(raw.datasets[partKey]?.pageKeys || [])])),
+    series: buildDifferenceSeries(totalDataset.series, raw.datasets[partKey].series)
+  };
+}
+
+function applyDerivedDatasets(raw) {
+  ensureDerivedDataset(raw, 'nation_hotel_catering_catering_employees', 'nation_hotel_catering_employees_combined', 'nation_hotel_catering_metric_hs_07', {
+    name: '餐饮业年末从业人数',
+    displayName: '餐饮业年末从业人数 (人)'
+  });
+  ensureDerivedDataset(raw, 'nation_hotel_catering_catering_legal_entities', 'nation_hotel_catering_legal_entities_combined', 'nation_hotel_catering_metric_hs_06', {
+    name: '餐饮业法人企业数',
+    displayName: '餐饮业法人企业数 (个)'
+  });
+}
 
 function toNumberPeriod(value) {
   return Number(String(value || '').replace('-', ''));
@@ -95,13 +159,11 @@ export function normalizeStatData(raw = {}) {
     throw new Error('统计数据为空，无法解析。');
   }
 
-  if (raw.meta?.schema !== DATA_SCHEMA) {
-    throw new Error(`当前前端仅支持 ${DATA_SCHEMA} 数据契约，收到: ${raw.meta?.schema || 'unknown'}`);
-  }
-
   if (!raw.pages || !raw.datasets) {
     throw new Error('统计数据缺少 pages / datasets 核心字段。');
   }
+
+  applyDerivedDatasets(raw);
 
   if (!raw.__index) {
     Object.defineProperty(raw, '__index', {

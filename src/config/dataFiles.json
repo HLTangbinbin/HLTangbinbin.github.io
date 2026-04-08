@@ -1,0 +1,7 @@
+{
+  "wh": "wh.json",
+  "city": "city.json",
+  "province": "province.json",
+  "nation": "nation.json",
+  "geoProvince": "geo_province.json"
+}
