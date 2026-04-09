@@ -57,7 +57,7 @@ const v3PageRegistry = {
   CityFinance: { source: { localJson: CITY_JSON, cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND }, charts: [regionChart('city-budget-income', '重点城市地方一般公共预算收入', ['city_budget_income'], 'nd'), regionChart('city-budget-expenditure', '重点城市地方一般公共预算支出', ['city_budget_expenditure'], 'nd'), regionChart('city-budget-deficit', '重点城市地方一般公共预算赤字', ['city_budget_deficit'], 'nd'), regionChart('city-deposit', '重点城市住户存款余额', ['city_household_deposit_balance'], 'nd')] },
   CityRealEstateInvest: { source: { localJson: CITY_JSON, cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND }, charts: [regionChart('city-invest', '重点城市房地产开发住宅投资额', ['city_residential_dev_investment'], 'nd')] },
   CityRealEstateSell: { source: { localJson: CITY_JSON, cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND }, charts: [regionChart('city-sales-area', '重点城市住宅商品房销售面积', ['city_residential_sales_area'], 'nd'), regionChart('city-avg-price', '重点城市住宅商品房平均销售价格', ['city_residential_avg_price'], 'nd')] },
-  CityRealEstatePriceIndices: { source: { localJson: CITY_JSON, cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND }, charts: [regionChart('city-new-house-mom', '新建商品住宅价格指数(上月=100)', ['city_new_house_price_mom'], 'yd'), regionChart('city-new-house-yoy', '新建商品住宅价格指数(上年同月=100)', ['city_new_house_price_yoy'], 'yd'), regionChart('city-second-hand-yoy', '二手住宅价格指数(上年同月=100)', ['city_second_hand_house_price_yoy'], 'yd'), regionChart('city-second-hand-mom', '二手住宅价格指数(待复核项)', ['city_second_hand_house_price_mom_unverified'], 'yd')] },
+  CityRealEstatePriceIndices: { source: { localJson: CITY_JSON, cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND }, charts: [regionChart('city-new-house-mom', '新建商品住宅价格指数(上月=100)', ['city_new_house_price_mom'], 'yd'), regionChart('city-second-hand-mom', '二手住宅价格指数(上月=100)', ['city_second_hand_house_price_mom'], 'yd')] },
   CityEducation: { source: { localJson: CITY_JSON, cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND }, charts: [regionChart('city-college-students', '重点城市普通本专科在校学生数', ['city_college_students'], 'nd')] },
   CityMedical: { source: { localJson: CITY_JSON, cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND }, charts: [regionChart('city-hospital-count', '重点城市医院数', ['city_hospital_count'], 'nd')] },
   ProvincialGDP: { source: { localJson: PROVINCE_JSON, cityCodeArr: PROVINCE_CODES, needAddCityCodeArr: ADD_PROVINCE_CODES }, charts: [regionChart('province-gdp', '重点省市地区生产总值', ['province_gdp'], 'nd')] },
@@ -72,7 +72,69 @@ const v3PageRegistry = {
 
 function loadJson(localJson) {
   const filePath = path.join(process.cwd(), 'public', 'json', path.basename(localJson));
-  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  const raw = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  applyDerivedDatasets(raw);
+  return raw;
+}
+
+function normalizePointMap(values = []) {
+  return new Map(
+    (Array.isArray(values) ? values : [])
+      .map((item) => [String(item?.date ?? '').trim(), item?.value])
+      .filter(([date]) => date)
+  );
+}
+
+function buildDifferenceSeries(totalSeries = [], partSeries = []) {
+  const partSeriesByRegion = new Map(
+    (Array.isArray(partSeries) ? partSeries : []).map((item) => [String(item?.regionKey || '').trim(), item])
+  );
+
+  return (Array.isArray(totalSeries) ? totalSeries : []).map((totalItem) => {
+    const regionKey = String(totalItem?.regionKey || '').trim();
+    const partItem = partSeriesByRegion.get(regionKey);
+    const totalPoints = normalizePointMap(totalItem?.data);
+    const partPoints = normalizePointMap(partItem?.data);
+    const timeline = Array.from(new Set([...totalPoints.keys(), ...partPoints.keys()]))
+      .sort((a, b) => Number(a.replace('-', '')) - Number(b.replace('-', '')));
+
+    return {
+      regionKey,
+      regionName: totalItem?.regionName || partItem?.regionName || regionKey,
+      data: timeline.map((date) => ({
+        date,
+        value: Number(totalPoints.get(date) ?? 0) - Number(partPoints.get(date) ?? 0)
+      }))
+    };
+  });
+}
+
+function ensureDerivedDataset(raw, targetKey, totalKey, partKey, options = {}) {
+  if (!raw?.datasets || raw.datasets[targetKey] || !raw.datasets[totalKey] || !raw.datasets[partKey]) return;
+
+  const totalDataset = raw.datasets[totalKey];
+  raw.datasets[targetKey] = {
+    ...totalDataset,
+    key: targetKey,
+    metricKey: targetKey,
+    derived: true,
+    name: options.name || totalDataset.name,
+    displayName: options.displayName || totalDataset.displayName,
+    chartKeys: Array.from(new Set([...(totalDataset.chartKeys || []), ...(raw.datasets[partKey]?.chartKeys || [])])),
+    pageKeys: Array.from(new Set([...(totalDataset.pageKeys || []), ...(raw.datasets[partKey]?.pageKeys || [])])),
+    series: buildDifferenceSeries(totalDataset.series, raw.datasets[partKey].series)
+  };
+}
+
+function applyDerivedDatasets(raw) {
+  ensureDerivedDataset(raw, 'city_budget_deficit', 'city_budget_expenditure', 'city_budget_income', {
+    name: '地方一般公共预算赤字',
+    displayName: '地方一般公共预算赤字 (亿元)'
+  });
+  ensureDerivedDataset(raw, 'province_budget_deficit', 'province_budget_expenditure', 'province_budget_income', {
+    name: '地方财政一般预算赤字',
+    displayName: '地方财政一般预算赤字 (亿元)'
+  });
 }
 
 function getAvailableRegionCodes(dataset, indicatorKey) {

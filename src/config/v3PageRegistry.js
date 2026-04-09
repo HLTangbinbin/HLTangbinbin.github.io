@@ -180,7 +180,7 @@ export const v3PageRegistry = {
     charts: [regionChart('wh-gdp', '地区生产总值', ['city_gdp'], 'nd', { regionCodes: ['420100'] })]
   },
   WHPopulation: {
-    source: createDataSource('city', { cityCodeArr: ['420100'] }),
+    source: createDataSource('wh'),
     charts: [
       chart('wh-population', '常住人口与年末户籍人口', ['city_resident_population', 'city_registered_population'], 'nd')
     ]
@@ -247,7 +247,7 @@ export const v3PageRegistry = {
     source: createDataSource('city', { cityCodeArr: CITY_CODES, needAddCityCodeArr_yd: ADD_CITY_CODES_YD, needAddCityCodeArr_nd: ADD_CITY_CODES_ND }),
     charts: [
       regionChart('city-new-house-mom', '新建商品住宅价格指数(上月=100)', ['city_new_house_price_mom'], 'yd'),
-      regionChart('city-second-hand-mom', '二手房住宅价格指数(上月=100)', ['city_second_hand_house_mom_yd_01'], 'yd')
+      regionChart('city-second-hand-mom', '二手房住宅价格指数(上月=100)', ['city_second_hand_house_price_mom'], 'yd')
     ]
   },
   CityEducation: {
@@ -349,16 +349,16 @@ export const v3PageRegistry = {
       }),
       chart('nation-birth-death-growth', '人口率', ['nation_birth_rate', 'nation_death_rate', 'nation_natural_growth_rate'], 'nd'),
       chart('nation-birth-death-count', '人口增长', ['nation_birth_population', 'nation_death_population', 'nation_natural_growth_population'], 'nd'),
-      chart('nation-age-structure', '人口年龄结构', ['nation_age_structure_02', 'nation_age_structure_03', 'nation_age_structure_04'], 'nd', indicatorPieConfig(['nation_age_structure_02', 'nation_age_structure_03', 'nation_age_structure_04'])),
-      chart('nation-dependency-ratio', '人口抚养比', ['nation_age_structure_05', 'nation_age_structure_06', 'nation_age_structure_07'], 'nd')
+      chart('nation-age-structure', '人口年龄结构', ['nation_age_0_14_population', 'nation_age_15_64_population', 'nation_age_65_plus_population'], 'nd', indicatorPieConfig(['nation_age_0_14_population', 'nation_age_15_64_population', 'nation_age_65_plus_population'])),
+      chart('nation-dependency-ratio', '人口抚养比', ['nation_child_dependency_ratio', 'nation_elderly_dependency_ratio', 'nation_total_dependency_ratio'], 'nd')
     ]
   },
   PopulationSpot: {
     source: createDataSource('nation'),
     charts: [
-      chart('nation-pop-sample-age', '人口抽样调查年龄结构', ['nation_pop_sample_age_02', 'nation_pop_sample_age_03', 'nation_pop_sample_age_04', 'nation_pop_sample_age_05', 'nation_pop_sample_age_06', 'nation_pop_sample_age_07', 'nation_pop_sample_age_08', 'nation_pop_sample_age_09', 'nation_pop_sample_age_10', 'nation_pop_sample_age_11', 'nation_pop_sample_age_12', 'nation_pop_sample_age_13', 'nation_pop_sample_age_14', 'nation_pop_sample_age_15', 'nation_pop_sample_age_17', 'nation_pop_sample_age_18', 'nation_pop_sample_age_19', 'nation_pop_sample_age_20', 'nation_pop_sample_age_21'], 'nd', indicatorPieConfig(['nation_pop_sample_age_02', 'nation_pop_sample_age_03', 'nation_pop_sample_age_04', 'nation_pop_sample_age_05', 'nation_pop_sample_age_06', 'nation_pop_sample_age_07', 'nation_pop_sample_age_08', 'nation_pop_sample_age_09', 'nation_pop_sample_age_10', 'nation_pop_sample_age_11', 'nation_pop_sample_age_12', 'nation_pop_sample_age_13', 'nation_pop_sample_age_14', 'nation_pop_sample_age_15', 'nation_pop_sample_age_17', 'nation_pop_sample_age_18', 'nation_pop_sample_age_19', 'nation_pop_sample_age_20', 'nation_pop_sample_age_21'], { topN: 10, mergeOthersLabel: '其他年龄段' })),
-      chart('nation-pop-sample-sex-ratio', '人口抽样调查性别比(女=100)', ['nation_pop_sample_sex_ratio_01', 'nation_pop_sample_sex_ratio_02', 'nation_pop_sample_sex_ratio_03', 'nation_pop_sample_sex_ratio_04', 'nation_pop_sample_sex_ratio_05', 'nation_pop_sample_sex_ratio_06', 'nation_pop_sample_sex_ratio_07', 'nation_pop_sample_sex_ratio_08', 'nation_pop_sample_sex_ratio_09', 'nation_pop_sample_sex_ratio_10', 'nation_pop_sample_sex_ratio_11', 'nation_pop_sample_sex_ratio_12', 'nation_pop_sample_sex_ratio_13', 'nation_pop_sample_sex_ratio_14', 'nation_pop_sample_sex_ratio_15', 'nation_pop_sample_sex_ratio_16', 'nation_pop_sample_sex_ratio_17', 'nation_pop_sample_sex_ratio_18', 'nation_pop_sample_sex_ratio_19', 'nation_pop_sample_sex_ratio_20', 'nation_pop_sample_sex_ratio_21'], 'nd', indicatorPieConfig(['nation_pop_sample_sex_ratio_02', 'nation_pop_sample_sex_ratio_03', 'nation_pop_sample_sex_ratio_04', 'nation_pop_sample_sex_ratio_05', 'nation_pop_sample_sex_ratio_06', 'nation_pop_sample_sex_ratio_07', 'nation_pop_sample_sex_ratio_08', 'nation_pop_sample_sex_ratio_09', 'nation_pop_sample_sex_ratio_10', 'nation_pop_sample_sex_ratio_11', 'nation_pop_sample_sex_ratio_12', 'nation_pop_sample_sex_ratio_13', 'nation_pop_sample_sex_ratio_14', 'nation_pop_sample_sex_ratio_15', 'nation_pop_sample_sex_ratio_16', 'nation_pop_sample_sex_ratio_17', 'nation_pop_sample_sex_ratio_18', 'nation_pop_sample_sex_ratio_19', 'nation_pop_sample_sex_ratio_20', 'nation_pop_sample_sex_ratio_21'], { topN: 10, mergeOthersLabel: '其他年龄段' })),
-      chart('nation-pop-sample-education', '人口抽样调查受教育程度', ['nation_pop_sample_education_01', 'nation_pop_sample_education_02', 'nation_pop_sample_education_03', 'nation_pop_sample_education_04', 'nation_pop_sample_education_05', 'nation_pop_sample_education_06', 'nation_pop_sample_education_07', 'nation_pop_sample_education_08', 'nation_pop_sample_education_09', 'nation_pop_sample_education_10', 'nation_pop_sample_education_11', 'nation_pop_sample_education_12', 'nation_pop_sample_education_13', 'nation_pop_sample_education_14', 'nation_pop_sample_education_15', 'nation_pop_sample_education_16', 'nation_pop_sample_education_17', 'nation_pop_sample_education_18'], 'nd', indicatorPieConfig(['nation_pop_sample_education_04', 'nation_pop_sample_education_07', 'nation_pop_sample_education_10', 'nation_pop_sample_education_13', 'nation_pop_sample_education_16'], { mergeOthersLabel: '其他分组' }))
+      chart('nation-pop-sample-age', '人口抽样调查年龄结构', ['nation_0_4_population', 'nation_5_9_population', 'nation_10_14_population', 'nation_15_19_population', 'nation_20_24_population', 'nation_25_29_population', 'nation_30_34_population', 'nation_35_39_population', 'nation_40_44_population', 'nation_45_49_population', 'nation_50_54_population', 'nation_55_59_population', 'nation_60_64_population', 'nation_65_69_population', 'nation_75_79_population', 'nation_80_84_population', 'nation_85_89_population', 'nation_90_94_population', 'nation_95_population'], 'nd', indicatorPieConfig(['nation_0_4_population', 'nation_5_9_population', 'nation_10_14_population', 'nation_15_19_population', 'nation_20_24_population', 'nation_25_29_population', 'nation_30_34_population', 'nation_35_39_population', 'nation_40_44_population', 'nation_45_49_population', 'nation_50_54_population', 'nation_55_59_population', 'nation_60_64_population', 'nation_65_69_population', 'nation_75_79_population', 'nation_80_84_population', 'nation_85_89_population', 'nation_90_94_population', 'nation_95_population'], { topN: 10, mergeOthersLabel: '其他年龄段' })),
+      chart('nation-pop-sample-sex-ratio', '人口抽样调查性别比(女=100)', ['nation_0_4_sex_ratio', 'nation_5_9_sex_ratio', 'nation_10_14_sex_ratio', 'nation_15_19_sex_ratio', 'nation_20_24_sex_ratio', 'nation_25_29_sex_ratio', 'nation_30_34_sex_ratio', 'nation_35_39_sex_ratio', 'nation_40_44_sex_ratio', 'nation_45_49_sex_ratio', 'nation_50_54_sex_ratio', 'nation_55_59_sex_ratio', 'nation_60_64_sex_ratio', 'nation_65_69_sex_ratio', 'nation_70_74_sex_ratio', 'nation_75_79_sex_ratio', 'nation_80_84_sex_ratio', 'nation_85_89_sex_ratio', 'nation_90_94_sex_ratio', 'nation_95_sex_ratio'], 'nd', indicatorPieConfig(['nation_0_4_sex_ratio', 'nation_5_9_sex_ratio', 'nation_10_14_sex_ratio', 'nation_15_19_sex_ratio', 'nation_20_24_sex_ratio', 'nation_25_29_sex_ratio', 'nation_30_34_sex_ratio', 'nation_35_39_sex_ratio', 'nation_40_44_sex_ratio', 'nation_45_49_sex_ratio', 'nation_50_54_sex_ratio', 'nation_55_59_sex_ratio', 'nation_60_64_sex_ratio', 'nation_65_69_sex_ratio', 'nation_70_74_sex_ratio', 'nation_75_79_sex_ratio', 'nation_80_84_sex_ratio', 'nation_85_89_sex_ratio', 'nation_90_94_sex_ratio', 'nation_95_sex_ratio'], { topN: 10, mergeOthersLabel: '其他年龄段' })),
+      chart('nation-pop-sample-education', '人口抽样调查受教育程度结构', ['nation_age_6_plusno_schoolingpopulation', 'nation_age_6_plusprimary_schoolpopulation', 'nation_age_6_plusjunior_high_schoolpopulation', 'nation_age_6_plushigh_schoolpopulation', 'nation_age_6_plusjunior_college_and_abovepopulation'], 'nd', indicatorPieConfig(['nation_age_6_plusno_schoolingpopulation', 'nation_age_6_plusprimary_schoolpopulation', 'nation_age_6_plusjunior_high_schoolpopulation', 'nation_age_6_plushigh_schoolpopulation', 'nation_age_6_plusjunior_college_and_abovepopulation'], { mergeOthersLabel: '其他分组' }))
     ]
   },
   NationalFinance: {
@@ -367,101 +367,101 @@ export const v3PageRegistry = {
       chart('nation-budget-income-yearly', '财政收入', ['nation_budget_income_total', 'nation_budget_income_central', 'nation_budget_income_local'], 'nd'),
       chart('nation-budget-expenditure-yearly', '财政支出', ['nation_budget_expenditure_total', 'nation_budget_expenditure_central', 'nation_budget_expenditure_local'], 'nd'),
       chart('nation-budget-deficit-yearly', '财政赤字', ['nation_finance_deficit_total', 'nation_finance_deficit_central', 'nation_finance_deficit_local'], 'nd'),
-      chart('nation-budget-monthly-value', '财政收入与支出累计值', ['nation_budget_income_yd_01', 'nation_budget_expenditure_yd_01'], 'yd'),
-      chart('nation-budget-monthly-growth', '财政收入与支出累计增长', ['nation_budget_income_yd_02', 'nation_budget_expenditure_yd_02'], 'yd'),
+      chart('nation-budget-monthly-value', '国家财政预算支出累计值', ['nation_national_budget_cumulative_value'], 'yd'),
+      chart('nation-budget-monthly-growth', '国家财政预算支出累计增长', ['nation_national_budget_cumulative_growth'], 'yd'),
       chart('nation-budget-main-income-items', '国家财政主要收入项目', [
-        'nation_national_administrative_fees',
-        'nation_national_business_tax',
-        'nation_national_confiscation_income',
-        'nation_national_customs_duty',
-        'nation_national_deed_tax',
-        'nation_national_domestic_consumption_tax',
-        'nation_national_domestic_vat',
-        'nation_national_enterprise_income_tax',
-        'nation_national_farmland_occupation_tax',
-        'nation_national',
-        'nation_national_land_appreciation_tax',
-        'nation_national_non_tax_revenue',
-        'nation_national_other_income',
-        'nation_national_other_tax_revenue',
-        'nation_national_personal_income_tax',
-        'nation_national_property_tax',
-        'nation_national_resource_tax',
-        'nation_national_special_revenue',
-        'nation_national_stamp_tax',
-        'nation_national_tax_revenue',
-        'nation_national_tobacco_tax',
-        'nation_national_tonnage_tax',
-        'nation_national_urban_land_use_tax',
-        'nation_national_urban_maintenance_construction_tax',
-        'nation_national_vehicle_purchase_tax',
-        'nation_national_vehicle_vessel_tax'
+        'nation_budget_administrative_fees',
+        'nation_budget_business_tax',
+        'nation_budget_confiscation_income',
+        'nation_budget_customs_duty',
+        'nation_budget_deed_tax',
+        'nation_budget_domestic_consumption_tax',
+        'nation_budget_domestic_vat',
+        'nation_budget_enterprise_income_tax',
+        'nation_budget_farmland_occupation_tax',
+        'nation_budget_income_total',
+        'nation_budget_land_appreciation_tax',
+        'nation_budget_non_tax_revenue',
+        'nation_budget_other_income',
+        'nation_budget_other_tax_revenue',
+        'nation_budget_personal_income_tax',
+        'nation_budget_property_tax',
+        'nation_budget_resource_tax',
+        'nation_budget_special_revenue',
+        'nation_budget_stamp_tax',
+        'nation_budget_tax_revenue',
+        'nation_budget_tobacco_tax',
+        'nation_budget_tonnage_tax',
+        'nation_budget_urban_land_use_tax',
+        'nation_budget_urban_maintenance_construction_tax',
+        'nation_budget_vehicle_purchase_tax',
+        'nation_budget_vehicle_vessel_tax'
       ], 'nd', indicatorPieConfig([
-        'nation_national_administrative_fees',
-        'nation_national_business_tax',
-        'nation_national_confiscation_income',
-        'nation_national_customs_duty',
-        'nation_national_deed_tax',
-        'nation_national_domestic_consumption_tax',
-        'nation_national_domestic_vat',
-        'nation_national_enterprise_income_tax',
-        'nation_national_farmland_occupation_tax',
-        'nation_national',
-        'nation_national_land_appreciation_tax',
-        'nation_national_non_tax_revenue',
-        'nation_national_other_income',
-        'nation_national_other_tax_revenue',
-        'nation_national_personal_income_tax',
-        'nation_national_property_tax',
-        'nation_national_resource_tax',
-        'nation_national_special_revenue',
-        'nation_national_stamp_tax',
-        'nation_national_tax_revenue',
-        'nation_national_tobacco_tax',
-        'nation_national_tonnage_tax',
-        'nation_national_urban_land_use_tax',
-        'nation_national_urban_maintenance_construction_tax',
-        'nation_national_vehicle_purchase_tax',
-        'nation_national_vehicle_vessel_tax'
+        'nation_budget_administrative_fees',
+        'nation_budget_business_tax',
+        'nation_budget_confiscation_income',
+        'nation_budget_customs_duty',
+        'nation_budget_deed_tax',
+        'nation_budget_domestic_consumption_tax',
+        'nation_budget_domestic_vat',
+        'nation_budget_enterprise_income_tax',
+        'nation_budget_farmland_occupation_tax',
+        'nation_budget_income_total',
+        'nation_budget_land_appreciation_tax',
+        'nation_budget_non_tax_revenue',
+        'nation_budget_other_income',
+        'nation_budget_other_tax_revenue',
+        'nation_budget_personal_income_tax',
+        'nation_budget_property_tax',
+        'nation_budget_resource_tax',
+        'nation_budget_special_revenue',
+        'nation_budget_stamp_tax',
+        'nation_budget_tax_revenue',
+        'nation_budget_tobacco_tax',
+        'nation_budget_tonnage_tax',
+        'nation_budget_urban_land_use_tax',
+        'nation_budget_urban_maintenance_construction_tax',
+        'nation_budget_vehicle_purchase_tax',
+        'nation_budget_vehicle_vessel_tax'
       ], { topN: 8, mergeOthersLabel: '其他' })),
       chart('nation-budget-main-expenditure-items', '国家财政主要支出项目', [
-        'nation_national_budget_agriculture_forestry_water_expenditure',
-        'nation_national_budget_armed_police_expenditure',
-        'nation_national_budget_culture_sports_media_expenditure',
-        'nation_national_budget_defense_expenditure',
-        'nation_national_budget_education_expenditure',
-        'nation_national_budget_environmental_protection_expenditure',
-        'nation_national_budget_foreign_affairs_expenditure',
-        'nation_national_budget_foreign_aid_expenditure',
-        'nation_national_budget_general_public_services_expenditure',
-        'nation_national_budget_healthcare_expenditure',
-        'nation_national_budget_other_expenditure',
-        'nation_national_budget_post_earthquake_reconstruction_expenditure',
-        'nation_national_budget_public_safety_expenditure',
-        'nation_national_budget_science_technology_expenditure',
-        'nation_national_budget_social_security_employment_expenditure',
-        'nation_national_budget_transport_expenditure',
-        'nation_national_budget_urban_rural_community_expenditure',
-        'nation_national_budget_vehicle_purchase_tax_expenditure'
+        'nation_budget_agriculture_forestry_water_expenditure',
+        'nation_budget_armed_police_expenditure',
+        'nation_budget_culture_sports_media_expenditure',
+        'nation_budget_defense_expenditure',
+        'nation_budget_education_expenditure',
+        'nation_budget_environmental_protection_expenditure',
+        'nation_budget_foreign_affairs_expenditure',
+        'nation_budget_foreign_aid_expenditure',
+        'nation_budget_general_public_services_expenditure',
+        'nation_budget_healthcare_expenditure',
+        'nation_budget_other_expenditure',
+        'nation_budget_post_earthquake_reconstruction_expenditure',
+        'nation_budget_public_safety_expenditure',
+        'nation_budget_science_technology_expenditure',
+        'nation_budget_social_security_employment_expenditure',
+        'nation_budget_transport_expenditure',
+        'nation_budget_urban_rural_community_expenditure',
+        'nation_budget_vehicle_purchase_tax_expenditure'
       ], 'nd', indicatorPieConfig([
-        'nation_national_budget_agriculture_forestry_water_expenditure',
-        'nation_national_budget_armed_police_expenditure',
-        'nation_national_budget_culture_sports_media_expenditure',
-        'nation_national_budget_defense_expenditure',
-        'nation_national_budget_education_expenditure',
-        'nation_national_budget_environmental_protection_expenditure',
-        'nation_national_budget_foreign_affairs_expenditure',
-        'nation_national_budget_foreign_aid_expenditure',
-        'nation_national_budget_general_public_services_expenditure',
-        'nation_national_budget_healthcare_expenditure',
-        'nation_national_budget_other_expenditure',
-        'nation_national_budget_post_earthquake_reconstruction_expenditure',
-        'nation_national_budget_public_safety_expenditure',
-        'nation_national_budget_science_technology_expenditure',
-        'nation_national_budget_social_security_employment_expenditure',
-        'nation_national_budget_transport_expenditure',
-        'nation_national_budget_urban_rural_community_expenditure',
-        'nation_national_budget_vehicle_purchase_tax_expenditure'
+        'nation_budget_agriculture_forestry_water_expenditure',
+        'nation_budget_armed_police_expenditure',
+        'nation_budget_culture_sports_media_expenditure',
+        'nation_budget_defense_expenditure',
+        'nation_budget_education_expenditure',
+        'nation_budget_environmental_protection_expenditure',
+        'nation_budget_foreign_affairs_expenditure',
+        'nation_budget_foreign_aid_expenditure',
+        'nation_budget_general_public_services_expenditure',
+        'nation_budget_healthcare_expenditure',
+        'nation_budget_other_expenditure',
+        'nation_budget_post_earthquake_reconstruction_expenditure',
+        'nation_budget_public_safety_expenditure',
+        'nation_budget_science_technology_expenditure',
+        'nation_budget_social_security_employment_expenditure',
+        'nation_budget_transport_expenditure',
+        'nation_budget_urban_rural_community_expenditure',
+        'nation_budget_vehicle_purchase_tax_expenditure'
       ], { topN: 8, mergeOthersLabel: '其他' })),
     ]
   },
@@ -470,16 +470,16 @@ export const v3PageRegistry = {
     charts: [
       chart('nation-investment', '房地产开发投资额', ['nation_real_estate_investment_total'], 'nd'),
       chart('nation-investment-monthly-value', '房地产开发投资累计值', [
-        'nation_real_estate_investment_yd_01',
-        'nation_real_estate_investment_yd_03',
-        'nation_real_estate_investment_yd_05',
-        'nation_real_estate_investment_yd_07'
+        'nation_real_estate_investment_cumulative_value',
+        'nation_residential_real_estate_investment_cumulative_value',
+        'nation_office_real_estate_investmentcumulative_value',
+        'nation_commercial_real_estate_investmentcumulative_value'
       ], 'yd'),
       chart('nation-investment-monthly-growth', '房地产开发投资累计增长', [
-        'nation_real_estate_investment_yd_02',
-        'nation_real_estate_investment_yd_04',
-        'nation_real_estate_investment_yd_06',
-        'nation_real_estate_investment_yd_08'
+        'nation_real_estate_investment_cumulative_growth',
+        'nation_residential_real_estate_investment_cumulative_growth',
+        'nation_office_real_estate_investmentcumulative_growth',
+        'nation_commercial_real_estate_investmentcumulative_growth'
       ], 'yd')
     ]
   },
@@ -489,10 +489,10 @@ export const v3PageRegistry = {
       chart('nation-sales-area', '住宅商品房销售面积', ['nation_new_home_sales_area_residential'], 'nd'),
       chart('nation-sales-amount', '住宅商品房销售额', ['nation_new_home_sales_amount_residential'], 'nd'),
       chart('nation-sales-price', '住宅商品房销售价格', ['nation_new_home_avg_price_residential'], 'nd'),
-      chart('nation-sales-area-monthly-value', '商品住宅销售面积累计值', ['nation_residential_sales_area_yd_01'], 'yd'),
-      chart('nation-sales-area-monthly-growth', '商品住宅销售面积累计增长', ['nation_residential_sales_area_yd_02'], 'yd'),
-      chart('nation-sales-amount-monthly-value', '商品住宅销售额累计值', ['nation_residential_sales_amount_yd_01'], 'yd'),
-      chart('nation-sales-amount-monthly-growth', '商品住宅销售额累计增长', ['nation_residential_sales_amount_yd_02'], 'yd')
+      chart('nation-sales-area-monthly-value', '商品住宅销售面积累计值', ['nation_residential_sales_areacumulative_value'], 'yd'),
+      chart('nation-sales-area-monthly-growth', '商品住宅销售面积累计增长', ['nation_residential_sales_areacumulative_growth'], 'yd'),
+      chart('nation-sales-amount-monthly-value', '商品住宅销售额累计值', ['nation_residential_sales_amountcumulative_value'], 'yd'),
+      chart('nation-sales-amount-monthly-growth', '商品住宅销售额累计增长', ['nation_residential_sales_amountcumulative_growth'], 'yd')
     ]
   },
   EducationSchool: {
@@ -510,9 +510,33 @@ export const v3PageRegistry = {
   EducationStudent: {
     source: createDataSource('nation'),
     charts: [
-      chart('nation-enrollment', '各学段招生数', ['nation_preschool_enrollment', 'nation_primary_enrollment', 'nation_junior_high_enrollment', 'nation_regular_high_enrollment', 'nation_junior_college_enrollment', 'nation_undergraduate_enrollment', 'nation_master_enrollment', 'nation_doctoral_enrollment'], 'nd'),
-      chart('nation-college-students', '各学段在校学生数', ['nation_preschool_students', 'nation_primary_students', 'nation_junior_high_students', 'nation_regular_high_students', 'nation_junior_college_students', 'nation_undergraduate_students', 'nation_master_students', 'nation_doctoral_students'], 'nd'),
-      chart('nation-college-graduates', '各学段毕业生数', ['nation_preschool_graduates', 'nation_primary_graduates', 'nation_junior_high_graduates', 'nation_regular_high_graduates', 'nation_junior_college_graduates', 'nation_undergraduate_graduates', 'nation_master_graduates', 'nation_doctoral_graduates'], 'nd')
+      chart('nation-enrollment', '各学段招生数', [
+        'nation_junior_college_enrollment',
+        'nation_graduate_enrollment',
+        'nation_doctoral_enrollment',
+        'nation_master_enrollment',
+        'nation_college_enrollment',
+        'nation_undergraduate_enrollment',
+        'nation_higher_education_enrollment'
+      ], 'nd'),
+      chart('nation-college-students', '各学段在校学生数', [
+        'nation_graduate_students',
+        'nation_doctoral_students',
+        'nation_master_students',
+        'nation_college_students',
+        'nation_undergraduate_students',
+        'nation_junior_college_students',
+        'nation_higher_education_students'
+      ], 'nd'),
+      chart('nation-college-graduates', '各学段毕业生数', [
+        'nation_graduate_graduates',
+        'nation_doctoral_graduates',
+        'nation_master_graduates',
+        'nation_college_graduates',
+        'nation_undergraduate_graduates',
+        'nation_junior_college_graduates',
+        'nation_higher_education_graduates'
+      ], 'nd')
     ]
   },
   MedicalTreatment: {
@@ -538,22 +562,18 @@ export const v3PageRegistry = {
     charts: [
       chart('nation-retail-total', '社会消费品零售总额', ['nation_retail_sales'], 'nd'),
       chart('nation-retail-total-monthly-value', '社会消费品零售总额当期值', [
-        'nation_retail_sales_yd_01',
-        'nation_retail_sales_yd_03',
-        'nation_retail_sales_yd_05',
-        'nation_retail_sales_yd_07'
+        'nation_retail_sales_totalcurrent_value',
+        'nation_retail_sales_above_designated_sizecurrent_value'
       ], 'yd', indicatorPieConfig([
-        'nation_retail_sales_yd_01',
-        'nation_retail_sales_yd_05'
+        'nation_retail_sales_totalcurrent_value',
+        'nation_retail_sales_above_designated_sizecurrent_value'
       ], {
         center: ['50%', '190px'],
         radius: '16%'
       })),
       chart('nation-retail-total-monthly-growth', '社会消费品零售总额同比增长', [
-        'nation_retail_sales_yd_02',
-        'nation_retail_sales_yd_04',
-        'nation_retail_sales_yd_06',
-        'nation_retail_sales_yd_08'
+        'nation_retail_sales_totalyoy_growth',
+        'nation_retail_sales_above_designated_sizeyoy_growth'
       ], 'yd')
     ]
   },
@@ -563,15 +583,13 @@ export const v3PageRegistry = {
       chart('nation-gold-fx-reserve', '黄金与外汇储备', ['nation_gold_reserve', 'nation_fx_reserve'], 'nd'),
       chart('nation-money-supply', '货币供应量(年末余额)', ['nation_money_supply_m0_balance', 'nation_money_supply_m1_balance', 'nation_money_supply_m2_balance'], 'nd'),
       chart('nation-money-supply-growth', 'M0/M1/M2 同比增长', ['nation_money_supply_m0_growth', 'nation_money_supply_m1_growth', 'nation_money_supply_m2_growth'], 'nd'),
-      chart('nation-money-supply-monthly-balance', 'M0/M1/M2 月末余额', [
-        'nation_money_supply_yd_05',
-        'nation_money_supply_yd_03',
-        'nation_money_supply_yd_01'
+      chart('nation-money-supply-monthly-balance', 'M1/M2 月末余额', [
+        'nation_supply',
+        'nation_quasi_money_supply'
       ], 'yd'),
-      chart('nation-money-supply-monthly-growth', 'M0/M1/M2 月度同比增长', [
-        'nation_money_supply_yd_06',
-        'nation_money_supply_yd_04',
-        'nation_money_supply_yd_02'
+      chart('nation-money-supply-monthly-growth', 'M1/M2 月度同比增长', [
+        'nation_supply_yoy_growth',
+        'nation_quasi_money_supply_yoy_growth'
       ], 'yd')
     ]
   },
@@ -598,42 +616,38 @@ export const v3PageRegistry = {
     charts: [
       chart('nation-trade-total', '货物进出口总额（人民币）', ['nation_trade_total_rmb', 'nation_export_total_rmb', 'nation_import_total_rmb', 'nation_trade_balance_rmb'], 'nd'),
       chart('nation-trade-total-usd', '货物进出口总额（美元）', ['nation_trade_total_usd', 'nation_export_total_usd', 'nation_import_total_usd', 'nation_trade_balance_usd'], 'nd'),
-      chart('nation-trade-total-monthly', '进出口总额(月度)', [
-        'nation_trade_total_yd_01',
-        'nation_trade_total_yd_03',
-        'nation_trade_total_yd_05',
-        'nation_trade_total_yd_07'
+      chart('nation-trade-total-monthly', '进出口总额(月度当期值)', [
+        'nation_trade_totalcurrent_value'
       ], 'yd'),
-      chart('nation-trade-detail-monthly', '出口/进口/顺差(月度)', [
-        'nation_trade_total_yd_09',
-        'nation_trade_total_yd_11',
-        'nation_trade_total_yd_13'
+      chart('nation-trade-detail-monthly', '出口/进口/顺差(月度当期值)', [
+        'nation_export_totalcurrent_value',
+        'nation_import_totalcurrent_value',
+        'nation_trade_balancecurrent_value'
       ], 'yd')
     ]
   },
   IndicesData: {
     source: createDataSource('nation'),
     charts: [
-      chart('nation-cpi-mom', '居民消费价格指数(上月=100)', ['nation_cpi_mom_yd_01'], 'yd'),
-      chart('nation-ppi-mom', '工业生产者出厂价格指数(上月=100)', ['nation_ppi_mom_yd_01', 'nation_ppi_mom_yd_02', 'nation_ppi_mom_yd_03'], 'yd'),
-      chart('nation-pmi', '采购经理指数', ['nation_pmi_manufacturing_yd_01', 'nation_pmi_non_manufacturing_yd_01', 'nation_pmi_composite_yd_01'], 'yd')
+      chart('nation-cpi-mom', '居民消费价格指数(上月=100)', ['nation_cpi'], 'yd'),
+      chart('nation-ppi-mom', '工业生产者出厂价格指数(上月=100)', ['nation_ppi', 'nation_producer_goods_ppi', 'nation_consumer_goods_ppi'], 'yd'),
+      chart('nation-pmi', '采购经理指数', ['nation_manufacturing_pmi', 'nation_non_manufacturing_business_activity_index', 'nation_composite_pmi_output_index'], 'yd')
     ]
   },
   TouristIndustry: {
     source: createDataSource('nation'),
     charts: [
-      chart('nation-tourism-visitors', '旅游人数与入境情况', ['nation_domestic_visitors_total', 'nation_inbound_visitors_total', 'nation_inbound_foreign_visitors', 'nation_inbound_hmt_visitors', 'nation_inbound_taiwan_visitors'], 'nd'),
-      chart('nation-tourism-spending', '旅游花费', ['nation_domestic_tourism_spending_total', 'nation_domestic_tourism_spending_per_capita', 'nation_international_tourism_forex_revenue'], 'nd'),
-      chart('nation-tourism-industry', '旅游相关行业', ['nation_hotel_catering_star_hotels', 'nation_hotel_catering_travel_agencies'], 'nd')
+      chart('nation-tourism-visitors', '旅游人数与入境情况', ['nation_domestic_visitors', 'nation_inbound_visitors_total', 'nation_inbound_foreign_visitors', 'nation_inbound_hmt_visitors', 'nation_inbound_taiwan_visitors'], 'nd'),
+      chart('nation-tourism-spending', '旅游花费', ['nation_domestic_tourism_spending_total', 'nation_domestic_tourism_spending_per_capita', 'nation_international_tourism_forex_revenue'], 'nd')
     ]
   },
   AccommodationAndCateringIndustry: {
     source: createDataSource('nation'),
     charts: [
-      chart('nation-hospitality-turnover', '住宿与餐饮营业额', ['nation_hotel_catering_lodging_turnover', 'nation_hotel_catering_catering_turnover'], 'nd'),
-      chart('nation-hospitality-employees', '住宿与餐饮年末从业人数', ['nation_hotel_catering_lodging_employees', 'nation_hotel_catering_catering_employees'], 'nd'),
-      chart('nation-hospitality-entities', '住宿与餐饮法人企业数', ['nation_hotel_catering_lodging_legal_entities', 'nation_hotel_catering_catering_legal_entities'], 'nd'),
-      chart('nation-hospitality-scale', '住宿与餐饮经营规模', ['nation_hotel_catering_room_count', 'nation_hotel_catering_lodging_beds', 'nation_hotel_catering_lodging_catering_floor_area', 'nation_hotel_catering_catering_business_floor_area'], 'nd')
+      chart('nation-hospitality-turnover', '住宿与餐饮营业额', ['nation_accommodation_turnover', 'nation_hotel_catering_catering_turnover'], 'nd'),
+      chart('nation-hospitality-employees', '住宿与餐饮年末从业人数', ['nation_accommodation_year_end_employees', 'nation_catering_year_end_employees'], 'nd'),
+      chart('nation-hospitality-entities', '住宿与餐饮法人企业数', ['nation_accommodation_enterprise_count', 'nation_catering_enterprise_count'], 'nd'),
+      chart('nation-hospitality-scale', '住宿与餐饮经营规模', ['nation_hotel_catering_room_count', 'nation_hotel_catering_lodging_beds', 'nation_accommodation_dining_business_area', 'nation_catering_dining_business_area'], 'nd')
     ]
   },
   LivingStandards: {
@@ -648,30 +662,26 @@ export const v3PageRegistry = {
   TransportationAndTelecommunications: {
     source: createDataSource('nation'),
     charts: [
-      chart('nation-freight-volume', '货物运输量(当期值)', [
-        'nation_freight_volume_yd_05',
-        'nation_freight_volume_yd_09',
-        'nation_freight_volume_yd_13',
-        'nation_freight_volume_yd_17'
+      chart('nation-freight-volume', '货物运输量(分方式当期值)', [
+        'nation_highway_freight_volume_current_value',
+        'nation_railway_freight_volume_current_value',
+        'nation_waterway_freight_volume_current_value'
       ], 'yd', indicatorPieConfig([
-        'nation_freight_volume_yd_05',
-        'nation_freight_volume_yd_09',
-        'nation_freight_volume_yd_13',
-        'nation_freight_volume_yd_17'
+        'nation_highway_freight_volume_current_value',
+        'nation_railway_freight_volume_current_value',
+        'nation_waterway_freight_volume_current_value'
       ], {
         center: ['50%', '190px'],
         radius: '16%'
       })),
-      chart('nation-passenger-volume', '旅客运输量(当期值)', [
-        'nation_passenger_volume_yd_05',
-        'nation_passenger_volume_yd_09',
-        'nation_passenger_volume_yd_13',
-        'nation_passenger_volume_yd_17'
+      chart('nation-passenger-volume', '旅客运输量(分方式当期值)', [
+        'nation_highway_passenger_volume_current_value',
+        'nation_railway_passenger_volume_current_value',
+        'nation_waterway_passenger_volume_current_value'
       ], 'yd', indicatorPieConfig([
-        'nation_passenger_volume_yd_05',
-        'nation_passenger_volume_yd_09',
-        'nation_passenger_volume_yd_13',
-        'nation_passenger_volume_yd_17'
+        'nation_highway_passenger_volume_current_value',
+        'nation_railway_passenger_volume_current_value',
+        'nation_waterway_passenger_volume_current_value'
       ], {
         center: ['50%', '190px'],
         radius: '16%'

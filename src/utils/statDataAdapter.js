@@ -54,6 +54,14 @@ function ensureDerivedDataset(raw, targetKey, totalKey, partKey, options = {}) {
 }
 
 function applyDerivedDatasets(raw) {
+  ensureDerivedDataset(raw, 'city_budget_deficit', 'city_budget_expenditure', 'city_budget_income', {
+    name: '地方一般公共预算赤字',
+    displayName: '地方一般公共预算赤字 (亿元)'
+  });
+  ensureDerivedDataset(raw, 'province_budget_deficit', 'province_budget_expenditure', 'province_budget_income', {
+    name: '地方财政一般预算赤字',
+    displayName: '地方财政一般预算赤字 (亿元)'
+  });
   ensureDerivedDataset(raw, 'nation_hotel_catering_catering_employees', 'nation_hotel_catering_employees_combined', 'nation_hotel_catering_metric_hs_07', {
     name: '餐饮业年末从业人数',
     displayName: '餐饮业年末从业人数 (人)'
