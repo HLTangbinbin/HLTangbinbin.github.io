@@ -39,7 +39,7 @@ import DataIntegrityPanel from '@/components/common/components/DataIntegrityPane
 import DataStatusPanel from '@/components/common/components/DataStatusPanel.vue';
 import { loadChartData } from '@/config/dataLoader.js';
 import { getRouteChartKey, resolveChartConfig } from '@/config/chartRegistry.js';
-import { normalizePageConfig } from '@/config/pageConfig.js';
+import { hydratePageConfig, normalizePageConfig } from '@/config/pageConfig.js';
 import { logger } from '@/utils/Logger.js';
 import { getCurrentDataSourceMode } from '@/config/dataSource.js';
 
@@ -90,8 +90,15 @@ async function initializePage() {
       return;
     }
 
-    currentConfig.value = resolvedConfig;
-    returnData.value = await loadChartData(resolvedConfig.source);
+    const loadedData = await loadChartData(resolvedConfig.source);
+
+    if (currentRequestId !== requestId) return;
+
+    returnData.value = loadedData;
+    currentConfig.value = hydratePageConfig(resolvedConfig, loadedData, {
+      routeKey: pathKey,
+      routePath: route.path
+    });
   } catch (error) {
     if (currentRequestId !== requestId) return;
 

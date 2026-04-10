@@ -38,7 +38,11 @@ const INDICATOR_LABEL_OVERRIDES = {
   nation_social_financing_undiscounted_bankers_acceptance: '企业债券融资规模',
   nation_income_total: '居民人均可支配收入增速',
   nation_income_urban: '城镇居民人均可支配收入相关增速',
-  nation_income_rural: '农村居民人均可支配收入相关增速'
+  nation_income_rural: '农村居民人均可支配收入相关增速',
+  'nation_residential_sales_area_yd:d324a9c4f1a34dd2b38a85e979a54554': '面积',
+  'nation_residential_sales_amount_yd:375ffa7283dd458c9a3bcb1f4929537e': '销售额',
+  'nation_residential_sales_area_yd:206c52536182472aae8e01b52aaeb201': '面积',
+  'nation_residential_sales_amount_yd:2de1944906984790bc41d58d7c0cb885': '销售额'
 };
 
 function looksLikeMachineLabel(label) {
@@ -116,6 +120,9 @@ function trimSharedParts(values = []) {
       compact = compact.slice(0, compact.length - safeSuffix.length);
     }
     compact = compact.replace(/^[\s:：、，,;；\-_/()（）]+|[\s:：、，,;；\-_/()（）]+$/gu, '').trim();
+    if (!compact && safePrefix && safeSuffix) {
+      return '全部';
+    }
     return compact.length >= 2 ? compact : label;
   });
 }
@@ -131,7 +138,7 @@ class ChartBuilder {
   initContext() {
     const {
       data,
-      indicatorKeys = [],
+      metricIds = [],
       regionCodes = [],
       dbCode = 'nd',
       unit = '',
@@ -146,10 +153,10 @@ class ChartBuilder {
     } = this.params;
 
     if (chartType === 'map') {
-        const mainIndicatorKey = indicatorKeys[0];
-        const mapTimelineData = selectMapTimelineData(data, mainIndicatorKey, dbCode, yearLimit);
+        const mainMetricId = metricIds[0];
+        const mapTimelineData = selectMapTimelineData(data, mainMetricId, dbCode, yearLimit);
         this.params.mapTimelineData = mapTimelineData;
-        const indicator = getIndicator(data, mainIndicatorKey);
+        const indicator = getIndicator(data, mainMetricId);
         this.params.metricName = exceptName || indicator?.name || '指标';
         this.params.unit = indicator?.unit || '';
 
@@ -170,18 +177,18 @@ class ChartBuilder {
     if (seriesLayout !== 'region') {
       const singleRegionCode = regionCodes.length === 1 ? regionCodes[0] : '';
       const pendingSeries = [];
-      indicatorKeys.forEach((indicatorKey) => {
-        const indicator = getIndicator(data, indicatorKey);
+      metricIds.forEach((metricId) => {
+        const indicator = getIndicator(data, metricId);
         if (!indicator) return;
 
-        const cname = normalizeIndicatorLabel(indicator, indicatorKey, exceptName);
+        const cname = normalizeIndicatorLabel(indicator, metricId, exceptName);
         const baseName = `${cname}${unit}`;
-        let result = selectDataFromArr(data, indicatorKey, dbCode, singleRegionCode, yearLimit);
+        let result = selectDataFromArr(data, metricId, dbCode, singleRegionCode, yearLimit);
         let valueArr = result.map(item => item.value);
         let dateArr = result.map(item => item.date);
 
-        if (enableBirthOffset && indicatorKey.includes('marriage')) marriageArr = valueArr;
-        else if (enableBirthOffset && indicatorKey.includes('birth')) {
+        if (enableBirthOffset && metricId.includes('marriage')) marriageArr = valueArr;
+        else if (enableBirthOffset && metricId.includes('birth')) {
           birthArr = valueArr;
           valueArr = offsetArray(valueArr, yearLimit, -1);
         } else if (chartType === 'line' && baseName === selectedLegend) {
@@ -190,7 +197,7 @@ class ChartBuilder {
 
         pendingSeries.push({
           baseName,
-          zbCode: indicatorKey,
+          zbCode: metricId,
           type: chartType,
           data: valueArr,
           date: dateArr,
@@ -201,6 +208,24 @@ class ChartBuilder {
         }
       });
 
+      if (pendingSeries.length) {
+        const mergedTimeline = Array.from(new Set(
+          pendingSeries.flatMap((series) => Array.isArray(series.date) ? series.date : [])
+        )).sort(comparePeriods);
+
+        let timeline = mergedTimeline;
+        if (yearLimit && mergedTimeline.length > yearLimit) {
+          timeline = mergedTimeline.slice(-yearLimit);
+        }
+
+        filteredYears = timeline;
+        pendingSeries.forEach((series) => {
+          const pointMap = new Map((series.date || []).map((date, index) => [String(date), series.data[index] ?? null]));
+          series.date = timeline;
+          series.data = timeline.map((date) => (pointMap.has(String(date)) ? pointMap.get(String(date)) : null));
+        });
+      }
+
       const compactNames = trimSharedParts(pendingSeries.map((item) => item.baseName));
       const usedSeriesNames = new Map();
       seriesData = pendingSeries.map((item, index) => ({
@@ -208,7 +233,7 @@ class ChartBuilder {
         name: ensureUniqueSeriesName(compactNames[index] || item.baseName, item.zbCode, usedSeriesNames)
       }));
     } else {
-      const mainIndicatorKey = indicatorKeys[0];
+      const mainMetricId = metricIds[0];
       const allRegions = getRegionItems(data);
       const targetRegionCodes = regionCodes.length ? regionCodes : Object.keys(allRegions).filter((code) => code !== '100000');
       // 多地区对比（城市 city.json、省市 province.json 等，凡 seriesLayout === 'region' 均走此分支）：
@@ -218,9 +243,9 @@ class ChartBuilder {
       const perRegionLimit = 0;
       targetRegionCodes.forEach((regionCode) => {
         const name = regionLabelMap.get(regionCode) || getRegionName(data, regionCode) || '';
-        let result = selectDataFromArr(data, mainIndicatorKey, dbCode, regionCode, perRegionLimit) || [];
+        let result = selectDataFromArr(data, mainMetricId, dbCode, regionCode, perRegionLimit) || [];
         if (!result.length) return;
-        seriesData.push({ name, zbCode: mainIndicatorKey, type: chartType, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' } });
+        seriesData.push({ name, zbCode: mainMetricId, type: chartType, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' } });
       });
 
       if (seriesData.length) {
@@ -245,13 +270,13 @@ class ChartBuilder {
       }
     }
 
-    if (!seriesData.length && indicatorKeys.length) {
-      const fallbackRegionCode = getDefaultRegionCode(data, indicatorKeys[0]);
-      const fallback = selectDataFromArr(data, indicatorKeys[0], dbCode, fallbackRegionCode, yearLimit);
+    if (!seriesData.length && metricIds.length) {
+      const fallbackRegionCode = getDefaultRegionCode(data, metricIds[0]);
+      const fallback = selectDataFromArr(data, metricIds[0], dbCode, fallbackRegionCode, yearLimit);
       if (fallback.length) {
         seriesData.push({
           name: regionLabelMap.get(fallbackRegionCode) || getRegionName(data, fallbackRegionCode),
-          zbCode: indicatorKeys[0],
+          zbCode: metricIds[0],
           type: chartType,
           data: fallback.map((item) => item.value),
           date: fallback.map((item) => item.date),

@@ -92,6 +92,9 @@ export default {
     };
 
     const resolvePieTriggerKeys = (pieConfig = {}) => {
+      if (Array.isArray(pieConfig.triggerMetricIds) && pieConfig.triggerMetricIds.length > 0) {
+        return pieConfig.triggerMetricIds;
+      }
       if (Array.isArray(pieConfig.triggerIndicatorKeys) && pieConfig.triggerIndicatorKeys.length > 0) {
         return pieConfig.triggerIndicatorKeys;
       }

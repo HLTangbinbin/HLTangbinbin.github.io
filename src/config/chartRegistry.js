@@ -1,4 +1,3 @@
-import { normalizePageConfig } from '@/config/pageConfig.js';
 import { v3PageRegistry } from '@/config/v3PageRegistry.js';
 
 function defineRouteConfig(page = {}) {
@@ -67,6 +66,11 @@ const routeRegistry = {
     description: '查看重点城市财政收支对比。',
     tags: ['城市', '财政']
   }),
+  CityConsumption: defineRouteConfig({
+    title: '社零',
+    description: '查看重点城市社会消费品零售总额。',
+    tags: ['城市', '消费']
+  }),
   CityRealEstateInvest: defineRouteConfig({
     title: '投资',
     description: '查看重点城市房地产开发投资对比。',
@@ -108,6 +112,16 @@ const routeRegistry = {
     description: '查看重点省市财政收支对比。',
     tags: ['省市', '财政']
   }),
+  ProvincialConsumption: defineRouteConfig({
+    title: '社零',
+    description: '查看重点省市社会消费品零售总额。',
+    tags: ['省市', '消费']
+  }),
+  ProvincialTransportation: defineRouteConfig({
+    title: '交通',
+    description: '查看重点省市交通基础设施与客运表现。',
+    tags: ['省市', '交通']
+  }),
   ProvincialRealEstateInvest: defineRouteConfig({
     title: '投资',
     description: '查看重点省市房地产开发投资表现。',
@@ -127,6 +141,21 @@ const routeRegistry = {
     title: '医疗',
     description: '查看重点省市医疗资源指标。',
     tags: ['省市', '医疗']
+  }),
+  ProvincialMarriage: defineRouteConfig({
+    title: '婚姻',
+    description: '查看重点省市婚姻登记情况。',
+    tags: ['省市', '人口']
+  }),
+  ProvincialSocialSecurity: defineRouteConfig({
+    title: '社保',
+    description: '查看重点省市养老与医保累计结余。',
+    tags: ['省市', '民生']
+  }),
+  ProvincialSafety: defineRouteConfig({
+    title: '安全',
+    description: '查看重点省市交通事故发生数。',
+    tags: ['省市', '安全']
   }),
   ProvincialLiving: defineRouteConfig({
     title: '生活',
@@ -254,22 +283,19 @@ export function hasChartRoute(routeKey) {
   return Boolean(routeRegistry[routeKey]);
 }
 
-export async function resolveChartConfig(routeKey, routePath = '') {
+export async function resolveChartConfig(routeKey) {
   const meta = routeRegistry[routeKey];
   if (!meta) return null;
   const rawConfig = v3PageRegistry[routeKey] || null;
   if (!rawConfig) return null;
 
-  return normalizePageConfig({
+  return {
     ...rawConfig,
     page: {
       ...meta.page,
       ...rawConfig.page
     }
-  }, {
-    routeKey,
-    routePath
-  });
+  };
 }
 
 export function getRegisteredChartRoutes() {

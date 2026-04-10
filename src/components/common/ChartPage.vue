@@ -68,7 +68,13 @@ export default {
     showToggles: { type: Boolean, default: true }
   },
   setup(props) {
-    const resolveIndicatorKeys = (chart) => Array.isArray(chart?.indicatorKeys) ? chart.indicatorKeys : [];
+    const resolveMetricIds = (chart) => {
+      if (Array.isArray(chart?.metricIds) && chart.metricIds.length) return chart.metricIds;
+      if (Array.isArray(chart?.seriesRefs) && chart.seriesRefs.length) {
+        return chart.seriesRefs.map((item) => item?.metricId).filter(Boolean);
+      }
+      return [];
+    };
 
     const latestPeriodCache = new Map();
     const viewMode = ref('monthly');
@@ -116,8 +122,8 @@ export default {
 
     const chartsToRender = computed(() => {
       return filteredCharts.value.filter((chart) => {
-        const indicatorKeys = resolveIndicatorKeys(chart);
-        return indicatorKeys.some((indicatorKey) => selectDataFromArr(props.returnData, indicatorKey, chart.dbCode, '', 1).length > 0);
+        const metricIds = resolveMetricIds(chart);
+        return metricIds.some((metricId) => selectDataFromArr(props.returnData, metricId, chart.dbCode, '', 1).length > 0);
       });
     });
 
@@ -140,11 +146,11 @@ export default {
       const dbCode = activeDbCode.value;
       const relevantCharts = chartsToRender.value.length ? chartsToRender.value : filteredCharts.value;
       const latestDates = relevantCharts.flatMap(chart =>
-        resolveIndicatorKeys(chart).flatMap((indicatorKey) => {
-          const cacheKey = `${dbCode}|${indicatorKey}|root|0`;
+        resolveMetricIds(chart).flatMap((metricId) => {
+          const cacheKey = `${dbCode}|${metricId}|root|0`;
           let seriesData = latestPeriodCache.get(cacheKey);
           if (!seriesData) {
-            seriesData = selectDataFromArr(props.returnData, indicatorKey, dbCode, '', 0);
+            seriesData = selectDataFromArr(props.returnData, metricId, dbCode, '', 0);
             latestPeriodCache.set(cacheKey, seriesData);
           }
           return seriesData.map(item => String(item.date));

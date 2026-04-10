@@ -7,7 +7,13 @@ import { getThemeMode } from '@/utils/theme.js';
 import { cityRegionList, provinceRegionList } from '@/config/regionLists.js';
 
 export function createChartStore(props) {
-  const resolveIndicatorKeys = (chart) => Array.isArray(chart?.indicatorKeys) ? chart.indicatorKeys : [];
+  const resolveMetricIds = (chart) => {
+    if (Array.isArray(chart?.metricIds) && chart.metricIds.length) return chart.metricIds;
+    if (Array.isArray(chart?.seriesRefs) && chart.seriesRefs.length) {
+      return chart.seriesRefs.map((item) => item?.metricId).filter(Boolean);
+    }
+    return [];
+  };
 
   const windowWidth = ref(window.innerWidth);
   const themeMode = ref(getThemeMode());
@@ -165,7 +171,7 @@ export function createChartStore(props) {
       data: props.returnData,
       title: props.chart?.title || '默认标题',
       subtitle: props.chart?.subtitle || '',
-      indicatorKeys: resolveIndicatorKeys(props.chart),
+      metricIds: resolveMetricIds(props.chart),
       regionCodes: finalCityCodeArr.value,
       dbCode: props.chart?.dbCode || (props.viewMode === 'monthly' ? 'yd' : 'nd'),
       unit: props.chart?.unit || '',

@@ -29,6 +29,7 @@ export const navConfig = [
       { path: 'CityGDP', label: 'GDP' },
       { path: 'CityPopulation', label: '人口' },
       { path: 'CityFinance', label: '财政' },
+      { path: 'CityConsumption', label: '社零' },
       {
         path: 'CityRealEstate',
         label: '房地产',
@@ -49,6 +50,8 @@ export const navConfig = [
       { path: 'ProvincialGDP', label: 'GDP' },
       { path: 'ProvincialPopulation', label: '人口' },
       { path: 'ProvincialFinance', label: '财政' },
+      { path: 'ProvincialConsumption', label: '社零' },
+      { path: 'ProvincialTransportation', label: '交通' },
       {
         path: 'ProvincialRealEstate',
         label: '房地产',
@@ -59,6 +62,8 @@ export const navConfig = [
       },
       { path: 'ProvincialEducation', label: '教育' },
       { path: 'ProvincialMedical', label: '医疗' },
+      { path: 'ProvincialMarriage', label: '婚姻' },
+      { path: 'ProvincialSocialSecurity', label: '社保' },
       { path: 'ProvincialLiving', label: '生活' }
     ]
   },
@@ -108,7 +113,6 @@ export const navConfig = [
       },
       { path: 'ForeignTrade', label: '外贸' },
       { path: 'IndicesData', label: '指数' },
-      { path: 'TouristIndustry', label: '旅游' },
       { path: 'AccommodationAndCateringIndustry', label: '餐宿' },
       { path: 'LivingStandards', label: '生活' },
       { path: 'TransportationAndTelecommunications', label: '交通' },

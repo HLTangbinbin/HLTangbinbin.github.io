@@ -4,6 +4,17 @@ export function definePageConfig(config = {}) {
   return normalizePageConfig(config);
 }
 
+export function hydratePageConfig(config = {}, dataset, context = {}) {
+  const charts = (Array.isArray(config.charts) ? config.charts : [])
+    .map((chart) => hydrateChartConfig(chart, dataset))
+    .filter(Boolean);
+
+  return normalizePageConfig({
+    ...config,
+    charts
+  }, context);
+}
+
 export function normalizePageConfig(config = {}, context = {}) {
   if (!config || typeof config !== 'object') {
     throw new Error('页面配置必须为对象');
@@ -54,8 +65,154 @@ function inferDefaultViewMode(charts = []) {
 
 function countMetricCodes(charts = []) {
   return new Set(
-    charts.flatMap((chart) => Array.isArray(chart.indicatorKeys) ? chart.indicatorKeys : [])
+    charts.flatMap((chart) => {
+      if (Array.isArray(chart.metricIds) && chart.metricIds.length) return chart.metricIds;
+      if (Array.isArray(chart.seriesRefs) && chart.seriesRefs.length) {
+        return chart.seriesRefs.map((item) => item?.metricId).filter(Boolean);
+      }
+      return [];
+    })
   ).size;
+}
+
+function hydrateChartConfig(chartConfig = {}, dataset = {}) {
+  const chartKey = String(chartConfig?.chartKey || '').trim();
+  const sourceChart = chartKey ? dataset?.charts?.[chartKey] : null;
+  const seriesRefs = resolveChartSeriesRefs(chartConfig, sourceChart, dataset);
+  const metricIds = seriesRefs.map((item) => item?.metricId).filter(Boolean);
+  if (!metricIds.length) return null;
+  const dbCode = chartConfig.dbCode || inferChartDbCode(sourceChart, dataset);
+  const pieConfig = normalizePieConfig(chartConfig.pieConfig, metricIds);
+
+  return {
+    ...chartConfig,
+    id: chartConfig.id || chartKey || metricIds.join('__'),
+    chartKey,
+    title: chartConfig.title || sourceChart?.title || chartKey || '未命名图表',
+    dbCode,
+    metricIds,
+    seriesRefs,
+    datasets: Array.isArray(sourceChart?.datasets) ? sourceChart.datasets : [],
+    pieConfig
+  };
+}
+
+function resolveChartSeriesRefs(chartConfig = {}, sourceChart = null, dataset = {}) {
+  const explicitMetricIds = Array.isArray(chartConfig.metricIds)
+    ? chartConfig.metricIds.map((item) => String(item || '').trim()).filter(Boolean)
+    : [];
+
+  if (explicitMetricIds.length) {
+    return explicitMetricIds
+      .map((metricId) => resolveMetricRef(metricId, sourceChart, dataset))
+      .filter(Boolean);
+  }
+
+  const sourceSeriesRefs = Array.isArray(sourceChart?.seriesRefs) ? sourceChart.seriesRefs : [];
+  const includes = Array.isArray(chartConfig.metricDisplayNameIncludes) ? chartConfig.metricDisplayNameIncludes : [];
+  const excludes = Array.isArray(chartConfig.metricDisplayNameExcludes) ? chartConfig.metricDisplayNameExcludes : [];
+
+  if (!includes.length && !excludes.length) {
+    return sourceSeriesRefs;
+  }
+
+  return sourceSeriesRefs.filter((item) => {
+    const label = String(item?.displayName || item?.name || item?.metricId || '').trim();
+    const included = includes.length ? includes.some((pattern) => matchMetricPattern(label, pattern)) : true;
+    const excluded = excludes.some((pattern) => matchMetricPattern(label, pattern));
+    return included && !excluded;
+  });
+}
+
+function resolveMetricRef(metricId, sourceChart = null, dataset = {}) {
+  const chartSeriesRefs = Array.isArray(sourceChart?.seriesRefs) ? sourceChart.seriesRefs : [];
+  const matchedRef = chartSeriesRefs.find((item) => item?.metricId === metricId);
+  if (matchedRef) return matchedRef;
+
+  const metric = dataset?.metrics?.[metricId];
+  const indicator = dataset?.datasets?.[metricId];
+  if (!metric && !indicator) return null;
+
+  return {
+    metricId,
+    requestKey: metric?.requestKey || indicator?.requestKey || '',
+    sourceNodeId: metric?.sourceNodeId || indicator?.sourceNodeId || '',
+    queryKey: metric?.queryKey || indicator?.queryKey || '',
+    displayName: metric?.displayName || indicator?.displayName || indicator?.name || metricId,
+    unit: metric?.unit || indicator?.unit || '',
+    aliasKey: metric?.aliasKey || ''
+  };
+}
+
+function matchMetricPattern(label, pattern) {
+  if (!pattern) return false;
+  if (pattern instanceof RegExp) return pattern.test(label);
+  return label.includes(String(pattern));
+}
+
+function inferChartDbCode(chart = {}, dataset = {}) {
+  const chartPeriods = (Array.isArray(chart.datasets) ? chart.datasets : [])
+    .flatMap((item) => Array.isArray(item?.periods) ? item.periods : [])
+    .map((item) => String(item || '').trim())
+    .filter(Boolean);
+
+  if (chartPeriods.includes('yd')) return 'yd';
+  if (chartPeriods.includes('nd')) return 'nd';
+  if (chartPeriods.includes('jd')) return 'jd';
+
+  const metricIds = Array.isArray(chart.seriesRefs) ? chart.seriesRefs.map((item) => item?.metricId).filter(Boolean) : [];
+  for (const metricId of metricIds) {
+    const periods = dataset?.datasets?.[metricId]?.periods;
+    if (Array.isArray(periods) && periods.length) {
+      return String(periods[0] || '').trim();
+    }
+  }
+
+  const fallbackPeriod = String(chart?.period || '').trim();
+  return fallbackPeriod === 'mixed' ? '' : fallbackPeriod;
+}
+
+function normalizePieConfig(pieConfig, metricIds = []) {
+  if (!pieConfig?.enabled || !Array.isArray(pieConfig.pies) || !pieConfig.pies.length) return null;
+
+  const pies = pieConfig.pies
+    .map((pie) => {
+      const triggerMetricIds = resolvePieMetricIds(pie, metricIds);
+      if (!triggerMetricIds.length) return null;
+      return {
+        ...pie,
+        triggerMetricIds
+      };
+    })
+    .filter(Boolean);
+
+  if (!pies.length) return null;
+  return {
+    ...pieConfig,
+    pies
+  };
+}
+
+function resolvePieMetricIds(pie = {}, metricIds = []) {
+  if (Array.isArray(pie.triggerMetricIds) && pie.triggerMetricIds.length) {
+    return pie.triggerMetricIds.map((item) => String(item || '').trim()).filter(Boolean);
+  }
+
+  if (pie.trigger === 'all-series') {
+    return metricIds;
+  }
+
+  if (pie.trigger === 'first-series') {
+    return metricIds.length ? [metricIds[0]] : [];
+  }
+
+  if (Array.isArray(pie.triggerMetricIndexes) && pie.triggerMetricIndexes.length) {
+    return pie.triggerMetricIndexes
+      .map((index) => metricIds[index])
+      .filter(Boolean);
+  }
+
+  return [];
 }
 
 function resolveRouteLabels(path = '') {
