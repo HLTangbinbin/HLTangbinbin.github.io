@@ -85,7 +85,28 @@ function pieIndexes(triggerMetricIndexes = [], extra = {}) {
   };
 }
 
-const WH_POPULATION_METRICS = ['city_registered_population', 'city_resident_population'];
+const WH_POPULATION_METRICS = [
+  'city_resident_population',
+  'city_population_nd:3825c2d7a32b4cf6b3d72fc5ed9e62c6'
+];
+const WH_NEW_HOUSE_MONTHLY_DISTRICT_METRICS = [
+  'wh_new_house_monthly_jiang_an',
+  'wh_new_house_monthly_jiang_han',
+  'wh_new_house_monthly_qiao_kou',
+  'wh_new_house_monthly_han_yang',
+  'wh_new_house_monthly_wu_chang',
+  'wh_new_house_monthly_qing_shan',
+  'wh_new_house_monthly_hong_shan',
+  'wh_new_house_monthly_dong_xi_hu',
+  'wh_new_house_monthly_han_nan',
+  'wh_new_house_monthly_cai_dian',
+  'wh_new_house_monthly_jiang_xia',
+  'wh_new_house_monthly_huang_pi',
+  'wh_new_house_monthly_xin_zhou',
+  'wh_new_house_monthly_dong_hu_high_tech',
+  'wh_new_house_monthly_economic_development',
+  'wh_new_house_monthly_chang_jiang_new_area'
+];
 const CITY_BUDGET_OVERVIEW_METRICS = [
   'city_budget_income_nd:35aeb374f06c48f1b293917b06ccc27d',
   'city_budget_expenditure_nd:340d5501921e432b865f275363665dc7',
@@ -274,6 +295,17 @@ export const v3PageRegistry = {
     charts: [
       chartRef('wh_new_house_yearly_total'),
       chartRef('wh_new_house_monthly_total'),
+      metricChartRef('wh_new_house_monthly_by_district', '武汉各区域新房月成交量', WH_NEW_HOUSE_MONTHLY_DISTRICT_METRICS, {
+        dbCode: 'yd',
+        legendTop: '90px',
+        gridTop: '320px',
+        ...pieAll({
+          topN: 8,
+          mergeOthersLabel: '其他区域',
+          center: ['50%', '190px'],
+          radius: '16%'
+        })
+      }),
       chartRef('wh_new_house_yearly_by_district', {
         legendTop: '90px',
         gridTop: '320px',
@@ -305,8 +337,8 @@ export const v3PageRegistry = {
     ]
   },
   WHGDP: {
-    source: createDataSource('wh'),
-    charts: [chartRef('wh_gdp')]
+    source: createDataSource('city', { cityCodeArr: ['420100'] }),
+    charts: [regionChartRef('city_gdp', { regionCodes: ['420100'] })]
   },
   WHPopulation: {
     source: createDataSource('city', { cityCodeArr: ['420100'] }),
