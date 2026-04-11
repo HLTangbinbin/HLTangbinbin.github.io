@@ -280,13 +280,26 @@ const NATION_BOND_FUND_FUTURES_METRICS = [
   'nation_securities_market_nd:efa10ca36fc642c1bec08025ff68e486'
 ];
 const NATION_EXPORT_BY_COUNTRY_METRICS = [
-  'nation_export_by_country_nd:aea84c6b0e2c479a8045d6dce99b9ed1',
-  'nation_export_by_country_nd:5614220711e44c7aa2b5920f7b97ae0d',
-  'nation_export_by_country_nd:9bd2c853b10443e3b7426144ac4fcb6d',
-  'nation_export_by_country_nd:5655eedaf59f423397a6faff984a0165',
-  'nation_export_by_country_nd:c76a9dbb03d844e687d85612fbc2eb5c',
-  'nation_export_by_country_nd:8a409e836cdf4d5aa4a9b4f8236c7d3f',
-  'nation_export_by_country_nd:a1230afa4dd246dbaa7285da907cdc92'
+  'nation_export_by_country_north_america_nd:aea84c6b0e2c479a8045d6dce99b9ed1',
+  'nation_export_by_country_north_america_nd:100f72e55d3e4e16b3b0857b0404e24c',
+  'nation_export_by_country_europe_nd:5614220711e44c7aa2b5920f7b97ae0d',
+  'nation_export_by_country_europe_nd:9bd2c853b10443e3b7426144ac4fcb6d',
+  'nation_export_by_country_europe_nd:5655eedaf59f423397a6faff984a0165',
+  'nation_export_by_country_asia_nd:c76a9dbb03d844e687d85612fbc2eb5c',
+  'nation_export_by_country_asia_nd:8a409e836cdf4d5aa4a9b4f8236c7d3f',
+  'nation_export_by_country_asia_nd:a1230afa4dd246dbaa7285da907cdc92',
+  'nation_export_by_country_asia_nd:38c858590bcd48528b2074ea04759023'
+];
+const NATION_IMPORT_BY_COUNTRY_METRICS = [
+  'nation_import_by_country_north_america_nd:0aba1c7b11ab4587915391a9779ef0ed',
+  'nation_import_by_country_north_america_nd:6b919aff0c144ce2b3793f5867f4bb7d',
+  'nation_import_by_country_europe_nd:1f56bdfe758b49939d0f8d148bba3cd1',
+  'nation_import_by_country_europe_nd:b46f01be513d4206b3a521b5e678856f',
+  'nation_import_by_country_europe_nd:81c0737301bc4e8f81134ed665787f82',
+  'nation_import_by_country_europe_nd:2ca4cad6116a4f3eb8fa1bc5a0935f0c',
+  'nation_import_by_country_asia_nd:9214dd4cdaf5419eb2c21e8212c77261',
+  'nation_import_by_country_asia_nd:b56888c43bc94af4ab528f5aa64b8730',
+  'nation_import_by_country_asia_nd:ff9c7181aca848718e5184e5f7e6a92d'
 ];
 
 export const v3PageRegistry = {
@@ -712,6 +725,7 @@ export const v3PageRegistry = {
     charts: [
       chartRef('nation_trade_nd'),
       metricChartRef('nation_export_by_country', '中国向各国出口', NATION_EXPORT_BY_COUNTRY_METRICS, { dbCode: 'nd' }),
+      metricChartRef('nation_import_by_country', '中国从各国进口', NATION_IMPORT_BY_COUNTRY_METRICS, { dbCode: 'nd' }),
       chartRef('nation_trade_total_monthly', {
         id: 'nation_trade_total_monthly_value',
         title: '进出口当期值/累计值',
