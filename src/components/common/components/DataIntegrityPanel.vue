@@ -9,7 +9,7 @@
         <div class="row-title">{{ row.title }}</div>
         <div class="row-meta">
           <span class="meta-item">频率: {{ row.dbCode }}</span>
-          <span class="meta-item">指标: {{ row.metricIds.join(', ') || '-' }}</span>
+          <span class="meta-item">指标: {{ row.englishKeys.join(', ') || '-' }}</span>
           <span class="meta-item">布局: {{ row.seriesLayout }}</span>
         </div>
         <div class="row-detail">
@@ -46,14 +46,14 @@ const regionNameMap = computed(() => {
 });
 
 const rows = computed(() => props.chartMetaList
-  .filter((chart) => Array.isArray(chart?.metricIds) && chart.metricIds.length > 0)
+  .filter((chart) => Array.isArray(chart?.englishKeys) && chart.englishKeys.length > 0)
   .map((chart) => {
     const defaultRegionCodes = (chart.seriesLayout === 'region'
       ? (chart.regionCodes?.length ? chart.regionCodes : (props.config?.cityCodeArr || []))
       : []);
 
     const availableCodes = Array.from(new Set(
-      chart.metricIds.flatMap((metricId) => getAvailableRegionCodes(props.returnData, metricId))
+      chart.englishKeys.flatMap((englishKey) => getAvailableRegionCodes(props.returnData, englishKey))
     )).filter((code) => code && code !== '100000');
 
     const toName = (code) => regionNameMap.value.get(code) || code;
@@ -62,7 +62,7 @@ const rows = computed(() => props.chartMetaList
       id: chart.id,
       title: chart.title,
       dbCode: chart.dbCode,
-      metricIds: chart.metricIds,
+      englishKeys: chart.englishKeys,
       seriesLayout: chart.seriesLayout || 'indicator',
       defaultRegions: defaultRegionCodes.map(toName),
       availableRegions: availableCodes.map(toName),

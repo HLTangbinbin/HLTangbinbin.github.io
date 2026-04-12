@@ -32,11 +32,11 @@ function regionChartRef(chartKey, extra = {}) {
   });
 }
 
-function metricChartRef(id, title, metricIds, extra = {}) {
+function metricChartRef(id, title, englishKeys, extra = {}) {
   return {
     id,
     title,
-    metricIds,
+    englishKeys,
     chartType: 'line',
     seriesLayout: 'indicator',
     ...extra
@@ -86,220 +86,312 @@ function pieIndexes(triggerMetricIndexes = [], extra = {}) {
 }
 
 const WH_POPULATION_METRICS = [
-  'city_resident_population',
-  'city_population_nd:3825c2d7a32b4cf6b3d72fc5ed9e62c6'
+  'registered_population_at_year_end',
+  'resident_population'
 ];
 const WH_NEW_HOUSE_MONTHLY_DISTRICT_METRICS = [
-  'wh_new_house_monthly_jiang_an',
-  'wh_new_house_monthly_jiang_han',
-  'wh_new_house_monthly_qiao_kou',
-  'wh_new_house_monthly_han_yang',
-  'wh_new_house_monthly_wu_chang',
-  'wh_new_house_monthly_qing_shan',
-  'wh_new_house_monthly_hong_shan',
-  'wh_new_house_monthly_dong_xi_hu',
-  'wh_new_house_monthly_han_nan',
-  'wh_new_house_monthly_cai_dian',
-  'wh_new_house_monthly_jiang_xia',
-  'wh_new_house_monthly_huang_pi',
-  'wh_new_house_monthly_xin_zhou',
-  'wh_new_house_monthly_dong_hu_high_tech',
-  'wh_new_house_monthly_economic_development',
-  'wh_new_house_monthly_chang_jiang_new_area'
+  'jiang_an_district_new_home_transaction_volume_yd',
+  'jiang_han_district_new_home_transaction_volume_yd',
+  'qiao_kou_district_new_home_transaction_volume_yd',
+  'han_yang_district_new_home_transaction_volume_yd',
+  'wu_chang_district_new_home_transaction_volume_yd',
+  'qing_shan_district_new_home_transaction_volume_yd',
+  'hong_shan_district_new_home_transaction_volume_yd',
+  'dong_xi_hu_district_new_home_transaction_volume_yd',
+  'han_nan_district_new_home_transaction_volume_yd',
+  'cai_dian_district_new_home_transaction_volume_yd',
+  'jiang_xia_district_new_home_transaction_volume_yd',
+  'huang_pi_district_new_home_transaction_volume_yd',
+  'xin_zhou_district_new_home_transaction_volume_yd',
+  'east_lake_high_tech_zone_new_home_transaction_volume_yd',
+  'economic_development_zone_new_home_transaction_volume_yd',
+  'yangtze_river_new_area_new_home_transaction_volume_yd'
 ];
 const CITY_BUDGET_OVERVIEW_METRICS = [
-  'city_budget_income_nd:35aeb374f06c48f1b293917b06ccc27d',
-  'city_budget_expenditure_nd:340d5501921e432b865f275363665dc7',
+  'local_general_public_budget_revenue_hm_yuan',
+  'local_general_public_budget_expenditure_hm_yuan',
   'city_budget_deficit'
 ];
 const CITY_REAL_ESTATE_INVEST_METRICS = [
-  'city_real_estate_dev_investment_nd:bbf7ec6da3054ee1af4fc830ffa15dfd',
-  'city_residential_dev_investment_nd:5868f06c7e3e454f88b4798f01c902e8',
-  'city_office_dev_investment_nd:2a94954713584f0280055fe2633223b7'
+  'real_estate_development_investment_hm_yuan',
+  'real_estate_development_residential_investment_hm_yuan',
+  'real_estate_development_office_building_investment_hm_yuan'
 ];
 const PROVINCE_MEDICAL_METRICS = {
-  institution: 'province_hospital_count_nd:c131f882f421408f9c0bf61d968ae561',
-  bedPer10k: 'province_bed_count_per_10k_nd:393831aacb9c4f428f2acb470d8c86af',
-  bedCount: 'province_bed_count_nd:ab89e8e6902e46c1b36ab2711decba39'
+  institution: 'hospital_count',
+  bedPer10k: 'per_10k_people_medical_institutions_bed_count',
+  bedCount: 'medical_and_health_institutions_bed_count_tenk_beds'
 };
+const NATION_GDP_METRICS = [
+  'gross_national_income',
+  'gross_domestic_product',
+  'value_added_of_primary_industry_hm_yuan',
+  'value_added_of_secondary_industry_hm_yuan',
+  'value_added_of_tertiary_industry_hm_yuan',
+  'per_capita_gross_domestic_product_yuan'
+];
 const PROVINCE_MARRIAGE_METRICS = [
-  'province_marriage_count_nd:0474017afd2642fcb5f74e1bdd6ffbb3',
-  'province_first_marriage_count_nd:7ec2dbf6a94d40aab2b7554b1bee11bd',
-  'province_divorce_count_nd:57e418060e6649a3844bada609eb2a7b'
+  'marriage_registrations_tenk_couples',
+  'marriage_registrations_first_marriage_registrants_tenk_people',
+  'divorce_registrations_tenk_couples'
 ];
 const PROVINCE_SOCIAL_SECURITY_METRICS = [
-  'province_pension_balance_nd:e5644730c4dc4f2c92d0d9c53ac2cbf5',
-  'province_medical_insurance_balance_nd:7abcf209e6224eeebdd86cb4d368c7de'
+  'urban_employees_basic_pension_insurance_cumulative_balance',
+  'basic_medical_insurance_fund_cumulative_balance'
 ];
 const NATION_TOTAL_POPULATION_METRICS = [
-  'nation_population_total_nd:806083491dbe46a08995783945a30b9d',
-  'nation_population_total_nd:b808a4131bd041c4abc87b52385cd578',
-  'nation_population_total_nd:30d59b42875145c696883366172bb3d1',
-  'nation_population_total_nd:07e1e3444cd34c43b4fd749f060bba5f',
-  'nation_population_total_nd:2dd9894936d448fcb88605863d90d85c'
+  'nian_mo_total_population_tenk_people_total_nd',
+  'male_population_tenk_people',
+  'female_population_tenk_people',
+  'urban_population_tenk_people',
+  'rural_population_tenk_people'
 ];
 const NATION_POPULATION_AGE_METRICS = [
-  'nation_population_age_structure_nd:067f5f3ec585402e9f31037e5f27eb17',
-  'nation_population_age_structure_nd:a6051fc22d394d81b2007dc7c7c761fa',
-  'nation_population_age_structure_nd:c2627d8e6b5843bfa3372bacdf858804',
-  'nation_population_age_structure_nd:0d2db39cd5424f5fbca859052413f4ad',
-  'nation_population_age_structure_nd:93c00898dbeb4aff881fa97723901739',
-  'nation_population_age_structure_nd:9d77e24ce8c94679937b07188f4e7fbc'
+  'aged_0_to_14_population_tenk_people',
+  'aged_15_to_64_population_tenk_people',
+  'aged_65_and_above_population_tenk_people',
+  'zong_dependency_ratio_percent',
+  'shao_er_dependency_ratio_percent',
+  'lao_nian_dependency_ratio_percent'
+];
+const NATION_BIRTH_DEATH_GROWTH_METRICS = [
+  'birth_rate',
+  'death_rate',
+  'natural_population_growth_rate'
+];
+const NATION_POPULATION_SAMPLE_AGE_METRICS = [
+  'population_in_population_sample_survey',
+  'aged_0_to_4_population_sample',
+  'aged_5_to_9_population_sample',
+  'aged_10_to_14_population_sample',
+  'aged_15_to_19_population_sample',
+  'aged_20_to_24_population_sample',
+  'aged_25_to_29_population_sample',
+  'aged_30_to_34_population_sample',
+  'aged_35_to_39_population_sample',
+  'aged_40_to_44_population_sample',
+  'aged_45_to_49_population_sample',
+  'aged_50_to_54_population_sample',
+  'aged_55_to_59_population_sample',
+  'aged_60_to_64_population_sample',
+  'aged_65_to_69_population_sample',
+  'aged_75_to_79_population_sample',
+  'aged_80_to_84_population_sample',
+  'aged_85_to_89_population_sample',
+  'aged_90_to_94_population_sample',
+  'aged_95_and_above_population_sample'
+];
+const NATION_POPULATION_SAMPLE_SEX_RATIO_METRICS = [
+  'sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_0_to_4_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_5_to_9_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_10_to_14_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_15_to_19_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_20_to_24_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_25_to_29_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_30_to_34_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_35_to_39_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_40_to_44_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_45_to_49_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_50_to_54_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_55_to_59_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_60_to_64_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_65_to_69_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_70_to_74_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_75_to_79_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_80_to_84_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_85_to_89_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_90_to_94_sex_ratio_nv_equals_100_population_sample_survey',
+  'aged_95_and_above_sex_ratio_nv_equals_100_population_sample_survey'
+];
+const NATION_POPULATION_SAMPLE_EDUCATION_METRICS = [
+  'age_6_plus_population_sample',
+  'age_6_plus_male_sample',
+  'age_6_plus_female_sample',
+  'age_6_plus_never_attended_school_population_sample',
+  'age_6_plus_never_attended_school_male_sample',
+  'age_6_plus_never_attended_school_female_sample',
+  'age_6_plus_primary_school_population_sample',
+  'age_6_plus_primary_school_male_sample',
+  'age_6_plus_primary_school_female_sample',
+  'age_6_plus_junior_high_school_population_sample',
+  'age_6_plus_junior_high_school_male_sample',
+  'age_6_plus_junior_high_school_female_sample',
+  'age_6_plus_high_school_population_sample',
+  'age_6_plus_high_school_male_population_sample',
+  'age_6_plus_high_school_female_population_sample',
+  'age_6_plus_college_and_above_population_sample',
+  'age_6_plus_college_and_above_male_sample',
+  'age_6_plus_college_and_above_female_sample'
 ];
 const NATION_BUDGET_REVENUE_METRICS = [
-  'nation_budget_income_nd:da99cb5e78da41489ec0dc077c1dceff',
-  'nation_budget_income_nd:28ddf14044bd4edb851ec68e3ea2ee24',
-  'nation_budget_income_nd:1e8d2201d7e44b439c160f38cd6eb8c3'
+  'national_general_public_budget_revenue_hm_yuan_budget_income_nd',
+  'central_general_public_budget_revenue_hm_yuan',
+  'local_general_public_budget_revenue_hm_yuan'
 ];
 const NATION_BUDGET_EXPENDITURE_METRICS = [
-  'nation_budget_expenditure_nd:244b4498c31447d4a48a43b16e65e7ea',
-  'nation_budget_expenditure_nd:e6eed1bddd3945b2b2ecc3d358701192',
-  'nation_budget_expenditure_nd:42c519a0f77741d2a26fdbe4bc96f3ef'
+  'national_general_public_budget_expenditure_hm_yuan_budget_expenditure_nd',
+  'central_general_public_budget_expenditure_hm_yuan',
+  'local_general_public_budget_expenditure_hm_yuan'
 ];
 const NATION_BUDGET_DEFICIT_METRICS = [
-  'nation_finance_deficit_total',
-  'nation_finance_deficit_central',
-  'nation_finance_deficit_local'
+  'national_general_public_budget_deficit_hm_yuan',
+  'central_general_public_budget_deficit_hm_yuan',
+  'local_general_public_budget_deficit_hm_yuan'
 ];
 const NATION_BUDGET_INCOME_ITEM_METRICS = [
-  'nation_budget_main_income_items_nd:6878278c17814b8cb424867b3c0cf8a0',
-  'nation_budget_main_income_items_nd:dd298501e2ff4e6f9d05a27a185dc8e8',
-  'nation_budget_main_income_items_nd:04e1ba1dede544698f7da5673c2d04a0',
-  'nation_budget_main_income_items_nd:ecf5011a5832489a9459e2ac8c7441a4'
+  'national_general_public_budget_revenue_hm_yuan_budget_income_nd',
+  'national_tax_revenue_hm_yuan',
+  'national_non_tax_revenue_hm_yuan',
+  'national_qi_ta_tax_revenue_hm_yuan'
 ];
 const NATION_BUDGET_EXPENDITURE_ITEM_METRICS = [
-  'nation_budget_main_expenditure_items_nd:95d720d41c5e4093951e72c4389f4fb4',
-  'nation_budget_main_expenditure_items_nd:77edd61f29414b6394b73f5d82d08442',
-  'nation_budget_main_expenditure_items_nd:f404ab723b7f4825adbf0eeee9413f6d',
-  'nation_budget_main_expenditure_items_nd:dd945af5782a4b9e9c0381b2600a2a3d',
-  'nation_budget_main_expenditure_items_nd:a982e05e978447089e65dd73f28ef768',
-  'nation_budget_main_expenditure_items_nd:eedbbe37e38842399d77eae80c9c574a',
-  'nation_budget_main_expenditure_items_nd:63ef7fda1ce445ca97e812a8f883b9a3',
-  'nation_budget_main_expenditure_items_nd:49178bd55add44ef83b6d46ba6355d12',
-  'nation_budget_main_expenditure_items_nd:d0a97c5bef354ad0b2c349eb7ae7216a',
-  'nation_budget_main_expenditure_items_nd:051ee69d584f418e9af576d5025e56d4',
-  'nation_budget_main_expenditure_items_nd:5020c72baa2d40e88f7af3e213624dd8',
-  'nation_budget_main_expenditure_items_nd:649ab3bfde6a4adaa2afa519b603e2a4',
-  'nation_budget_main_expenditure_items_nd:3be9cb5ab4a8493ab91047f4ffc781cb',
-  'nation_budget_main_expenditure_items_nd:8a9127d5440e4934b66c699befb161bd',
-  'nation_budget_main_expenditure_items_nd:68fd476365fa41abb31301fdd7136de5',
-  'nation_budget_main_expenditure_items_nd:a8fae3ab2d4643f6ad299edb526e4262',
-  'nation_budget_main_expenditure_items_nd:6fd381d5994f452a82c20861fc624079'
+  'national_general_public_budget_expenditure_hm_yuan_budget_expenditure_nd',
+  'fiscal_general_public_services_expenditure_hm_yuan',
+  'fiscal_foreign_affairs_expenditure_hm_yuan',
+  'fiscal_national_defense_expenditure_hm_yuan',
+  'fiscal_armed_police_expenditure_hm_yuan',
+  'fiscal_public_security_expenditure_hm_yuan',
+  'fiscal_education_expenditure_hm_yuan',
+  'fiscal_science_technology_expenditure_hm_yuan',
+  'fiscal_healthcare_expenditure_hm_yuan',
+  'fiscal_social_security_employment_expenditure_hm_yuan',
+  'fiscal_transportation_expenditure_hm_yuan',
+  'fiscal_culture_sports_media_expenditure_hm_yuan',
+  'fiscal_environmental_protection_expenditure_hm_yuan',
+  'fiscal_foreign_aid_expenditure_hm_yuan',
+  'fiscal_vehicle_purchase_tax_expenditure_hm_yuan',
+  'national_fiscal_post_earthquake_reconstruction_expenditure',
+  'national_fiscal_other_expenditure'
 ];
 const NATION_SCHOOL_COUNT_METRICS = [
-  'nation_school_count_nd:d050b7d822fa4519a84631b8e6491e56',
-  'nation_school_count_nd:204e3ad025e44296949d027d0994f224',
-  'nation_school_count_nd:c11c73b8c61041688bc0b0c6caa9f402',
-  'nation_school_count_nd:3031225a48554c34b6be6c6c67cb54ae',
-  'nation_school_count_nd:31f7fa3300964e129534c93ebdb27b54',
-  'nation_school_count_nd:4ecc4952511543ec96365617f801c58c',
-  'nation_school_count_nd:ef856fcf8e5c4634949f895ca51c0e5e',
-  'nation_school_count_nd:ef144502d27a4b7e8bb55c776ca02f50'
+  'kindergarten_count',
+  'special_education_school_count',
+  'regular_primary_school_count',
+  'vocational_secondary_school_count',
+  'junior_high_school_count',
+  'regular_high_school_count',
+  'regular_secondary_school_count',
+  'higher_education_institution_count'
 ];
 const NATION_TEACHER_COUNT_METRICS = [
-  'nation_teacher_count_nd:8ae214507ab34a5898ce8b321bf07a9b',
-  'nation_teacher_count_nd:c3c301aa0d334ed29076e589b93eb74d',
-  'nation_teacher_count_nd:4ffef95e7352462eb57c423652c302f3',
-  'nation_teacher_count_nd:f1e8369a04ce4794a402d21568767a3e',
-  'nation_teacher_count_nd:0ac14953782045a88034409ab7a8fde0',
-  'nation_teacher_count_nd:1ce51192c3f04845b1ec50a49ae68de5',
-  'nation_teacher_count_nd:db9e304f776a45789d9d230b50937f85',
-  'nation_teacher_count_nd:948d9aeef0df4b598732dde268d173fc'
+  'preschool_education_full_time_teacher_count',
+  'special_education_full_time_teacher_count',
+  'primary_school_stage_full_time_teacher_count',
+  'vocational_secondary_school_full_time_teacher_count',
+  'junior_secondary_stage_full_time_teacher_count',
+  'regular_high_school_full_time_teacher_count',
+  'regular_secondary_school_full_time_teacher_count',
+  'higher_education_full_time_teacher_count'
 ];
 const NATION_ENROLLMENT_METRICS = [
-  'nation_student_enrollment_nd:320e8d02bd144e78b7c2b317330eeaa7',
-  'nation_student_enrollment_nd:ffa67f6d40104ba7b38b4e0ca4ed29c4',
-  'nation_student_enrollment_nd:5d1186dfd08844af9c5caf714d03d297',
-  'nation_student_enrollment_nd:0873625da3284141a4fd9179c28c72e6',
-  'nation_student_enrollment_nd:5aceb409e13045d9b3e4e5023d619998',
-  'nation_student_enrollment_nd:2bb48e6b946e404986a9572aaff4c968',
-  'nation_student_enrollment_nd:e480d7eeb3914a8291c89f3aed394b8e',
-  'nation_student_enrollment_nd:ded9455ec09040659fa0798b899fc58d'
+  'preschool_education_enrollment_count_tenk_people',
+  'regular_primary_school_enrollment_count_tenk_people',
+  'regular_junior_high_school_enrollment_count_tenk_people',
+  'regular_high_school_enrollment_count_tenk_people',
+  'junior_college_enrollment_count',
+  'regular_undergraduate_enrollment_count',
+  'masters_enrollment_count_tenk_people',
+  'doctoral_enrollment_count_tenk_people'
 ];
 const NATION_STUDENTS_METRICS = [
-  'nation_students_nd:9bc3158d1625473880850ff91040de24',
-  'nation_students_nd:3b57e38ca40f4bca9092f119922b43b3',
-  'nation_students_nd:977bc78bde0a4144a729dec62d208481',
-  'nation_students_nd:498b7f1263f64afbb317c30361116c6a',
-  'nation_students_nd:b86710fff7184d599d2e3bf169eaf23d',
-  'nation_students_nd:9c27c39b017f42a18e1c35dc5554302c',
-  'nation_students_nd:3114a320f0934db0abd6a9b3dd9bc432',
-  'nation_students_nd:201a74d94c0149d587400d779fb0605a'
+  'preschool_education_student_count_tenk_people',
+  'regular_primary_school_student_count_tenk_people',
+  'regular_junior_high_school_student_count_tenk_people',
+  'regular_high_school_student_count_tenk_people',
+  'junior_college_student_count',
+  'regular_undergraduate_student_count',
+  'masters_student_count_tenk_people',
+  'doctoral_student_count_tenk_people'
 ];
 const NATION_GRADUATES_METRICS = [
-  'nation_graduates_nd:311631a8642941edb80864738895a588',
-  'nation_graduates_nd:19d2395b818345afb277086cf961cc52',
-  'nation_graduates_nd:e85b803aa52849ad909202a57a7dd9be',
-  'nation_graduates_nd:5ad8292e71864e1b918fb344ed19e801',
-  'nation_graduates_nd:2d6f90c3011d49f4ba23a162e841da27',
-  'nation_graduates_nd:4d9a96bf2e3d4e21bc55bcd594529eb3',
-  'nation_graduates_nd:6a65c69a09914090b91f4027e37db17a',
-  'nation_graduates_nd:fb87c9bbe7c44203917e49678f838fbd'
+  'preschool_education_graduate_count_tenk_people',
+  'regular_primary_school_graduate_count_tenk_people',
+  'regular_junior_high_school_graduate_count_tenk_people',
+  'regular_high_school_graduate_count_tenk_people',
+  'junior_college_graduate_count',
+  'regular_undergraduate_graduate_count',
+  'masters_graduate_count_tenk_people',
+  'doctoral_graduate_count_tenk_people'
 ];
 const NATION_MEDICAL_COUNT_METRICS = [
-  'nation_health_institutions_nd:789787dae3f5401da40983aadcfde804',
-  'nation_health_institutions_nd:ecc1c2212e8a4beaa36f503cd602ceea'
+  'hospital_count',
+  'medical_and_health_institutions_count'
 ];
 const NATION_MEDICAL_PER_CAPITA_METRICS = [
-  'nation_beds_per_10k_nd:6ebf312939884be7bed111a26a35df87',
-  'nation_beds_per_10k_nd:0d532653fd904bbcaafee9a6b00af195'
+  'per_10k_people_hospitals_he_health_centers_bed_count',
+  'per_10k_people_medical_and_health_institutions_bed_count'
 ];
 const NATION_MARRIAGE_METRICS = [
-  'nation_marriage_nd:5e0866382c3b452c9b7b2e86d3095a78',
-  'nation_marriage_nd:c39dfcdb699c423d839d4551ccfa21c8',
-  'nation_marriage_nd:f4484230fc8c4d048264f1ea4404795f',
-  'nation_marriage_nd:93cab04607d241158bfc2d9375bc8f55',
-  'nation_birth_population'
+  'marriage_registrations_tenk_couples',
+  'marriage_registrations_first_marriage_registrants_tenk_people',
+  'marriage_registrations_zai_hun_people_count_tenk_people',
+  'divorce_registrations_tenk_couples'
 ];
 const NATION_RETAIL_MONTHLY_METRICS = {
-  current: ['nation_retail_sales_yd:1142a3a03e9045959e606a21822641ac'],
-  cumulative: ['nation_retail_sales_yd:260a1794443b43dd93a59928b12f38af']
+  current: ['total_retail_sales_current_value'],
+  cumulative: ['total_retail_sales_cum_value']
 };
 const NATION_MONEY_SUPPLY_MONTHLY_GROWTH_METRICS = [
-  'nation_money_supply_yd:db7891fb8f3c4eb2a4d71a9955eba8c7',
-  'nation_money_supply_yd:640401d3351b4b868dea28f89f410a54',
-  'nation_money_supply_yd:e03f2232631f41cd9d754a7d7feb4a81'
+  'cash_in_circulation_m0_supply_yoy_growth',
+  'money_m1_supply_yoy_growth',
+  'money_and_quasi_money_m2_supply_yoy_growth'
+];
+const NATION_MONEY_SUPPLY_MONTHLY_LEVEL_METRICS = [
+  'cash_in_circulation_m0_supply_period_end_value',
+  'money_m1_supply_period_end_value',
+  'money_and_quasi_money_m2_supply_period_end_value'
+];
+const NATION_MONEY_SUPPLY_LEVEL_METRICS = [
+  'cash_in_circulation_m0_supply',
+  'money_m1_supply',
+  'money_and_quasi_money_m2_supply'
+];
+const NATION_MONEY_SUPPLY_GROWTH_METRICS = [
+  'cash_in_circulation_m0_supply_yoy_growth_rate',
+  'money_m1_supply_yoy_growth_rate',
+  'money_and_quasi_money_m2_supply_yoy_growth_rate'
 ];
 const NATION_STOCK_MARKET_METRICS = [
-  'nation_securities_market_nd:d6c362e7dd5b454c8052b4e1bc2ae827',
-  'nation_securities_market_nd:e0ade27d80c34d329682405f1de2196e',
-  'nation_securities_market_nd:5810b4ecf0624f809466f0142a9fd93c',
-  'nation_securities_market_nd:91e826760a9a428eb244b22c78f8e5f4',
-  'nation_securities_market_nd:863c1cd763be4ac1aa37202824a85562',
-  'nation_securities_market_nd:b80a17221fb34dd894e9136a3717a6ba'
+  'shanghai_shenzhen_stock_market_stocks_total_share_capital',
+  'shanghai_shenzhen_stock_market_circulating_share_capital',
+  'shanghai_shenzhen_stock_market_stocks_market_capitalization',
+  'shanghai_shenzhen_stock_market_stocks_circulating_market_value',
+  'shanghai_shenzhen_stock_market_stocks_transaction_volume',
+  'shanghai_shenzhen_stock_market_stocks_transaction_value'
 ];
 const NATION_BOND_FUND_FUTURES_METRICS = [
-  'nation_securities_market_nd:0a9d1acaddc24b7eaa4e934df0bce9c4',
-  'nation_securities_market_nd:57046d7f7a1a4f03acbeaa9e43ce89cb',
-  'nation_securities_market_nd:5439aaf98b984a32b762761d9c120f5e',
-  'nation_securities_market_nd:5aaf020f740c47a282d5918613256112',
-  'nation_securities_market_nd:3c35acbb60a34cdf8b990eeb81a1731a',
-  'nation_securities_market_nd:f7a238191e9f49e88f0056d1ed84e7a6',
-  'nation_securities_market_nd:82c943ef8af547d394064b863c0d4847',
-  'nation_securities_market_nd:25f399c6a214401fac5a736ab6612b1e',
-  'nation_securities_market_nd:efa10ca36fc642c1bec08025ff68e486'
+  'exchange_market_bonds_transaction_value_hm_yuan',
+  'exchange_market_bonds_spot_transaction_value_hm_yuan',
+  'exchange_market_bonds_repo_transaction_value_hm_yuan',
+  'corporate_bonds_issuance_hm_yuan',
+  'securities_investment_fund_count',
+  'securities_investment_fund_scale',
+  'securities_investment_fund_transaction_value',
+  'futures_total_transaction_volume_ten_thousand_lots',
+  'futures_total_transaction_value_hundred_million_yuan'
 ];
 const NATION_EXPORT_BY_COUNTRY_METRICS = [
-  'nation_export_by_country_north_america_nd:aea84c6b0e2c479a8045d6dce99b9ed1',
-  'nation_export_by_country_north_america_nd:100f72e55d3e4e16b3b0857b0404e24c',
-  'nation_export_by_country_europe_nd:5614220711e44c7aa2b5920f7b97ae0d',
-  'nation_export_by_country_europe_nd:9bd2c853b10443e3b7426144ac4fcb6d',
-  'nation_export_by_country_europe_nd:5655eedaf59f423397a6faff984a0165',
-  'nation_export_by_country_asia_nd:c76a9dbb03d844e687d85612fbc2eb5c',
-  'nation_export_by_country_asia_nd:8a409e836cdf4d5aa4a9b4f8236c7d3f',
-  'nation_export_by_country_asia_nd:a1230afa4dd246dbaa7285da907cdc92',
-  'nation_export_by_country_asia_nd:38c858590bcd48528b2074ea04759023'
+  'china_exports_to_united_states_total_ten_thousand_usd',
+  'china_exports_to_canada_total_ten_thousand_usd',
+  'china_exports_to_united_kingdom_total_ten_thousand_usd',
+  'china_exports_to_france_total_ten_thousand_usd',
+  'china_exports_to_germany_total_ten_thousand_usd',
+  'china_exports_to_russia_total_ten_thousand_usd',
+  'china_exports_to_south_korea_total_ten_thousand_usd',
+  'china_exports_to_japan_total_ten_thousand_usd',
+  'china_exports_to_india_total_ten_thousand_usd'
 ];
 const NATION_IMPORT_BY_COUNTRY_METRICS = [
-  'nation_import_by_country_north_america_nd:0aba1c7b11ab4587915391a9779ef0ed',
-  'nation_import_by_country_north_america_nd:6b919aff0c144ce2b3793f5867f4bb7d',
-  'nation_import_by_country_europe_nd:1f56bdfe758b49939d0f8d148bba3cd1',
-  'nation_import_by_country_europe_nd:b46f01be513d4206b3a521b5e678856f',
-  'nation_import_by_country_europe_nd:81c0737301bc4e8f81134ed665787f82',
-  'nation_import_by_country_europe_nd:2ca4cad6116a4f3eb8fa1bc5a0935f0c',
-  'nation_import_by_country_asia_nd:9214dd4cdaf5419eb2c21e8212c77261',
-  'nation_import_by_country_asia_nd:b56888c43bc94af4ab528f5aa64b8730',
-  'nation_import_by_country_asia_nd:ff9c7181aca848718e5184e5f7e6a92d'
+  'china_imports_from_united_states_total_ten_thousand_usd',
+  'china_imports_from_canada_total_ten_thousand_usd',
+  'china_imports_from_united_kingdom_total_ten_thousand_usd',
+  'china_imports_from_france_total_ten_thousand_usd',
+  'china_imports_from_germany_total_ten_thousand_usd',
+  'china_imports_from_russia_total_ten_thousand_usd',
+  'china_imports_from_south_korea_total_ten_thousand_usd',
+  'china_imports_from_japan_total_ten_thousand_usd',
+  'china_imports_from_india_total_ten_thousand_usd'
 ];
 
 export const v3PageRegistry = {
@@ -336,16 +428,16 @@ export const v3PageRegistry = {
     charts: [
       chartRef('wh_second_house_yearly_total'),
       metricChartRef('wh_second_house_monthly_total', '武汉二手房成交量', [
-        'wh_second_house_monthly_total'
+        'second_hand_housing_transaction_volume_yd'
       ], { dbCode: 'yd' }),
       metricChartRef('wh_second_house_monthly_price', '武汉二手房成交价格', [
-        'wh_second_house_monthly_price'
+        'second_hand_housing_transaction_price'
       ], { dbCode: 'yd' }),
       metricChartRef('wh_second_house_market_changes', '武汉二手房市场变化', [
-        'wh_second_house_monthly_price_drop_listing_count',
-        'wh_second_house_monthly_price_rise_listing_count',
-        'wh_second_house_monthly_new_listing_count',
-        'wh_second_house_monthly_viewer_count'
+        'second_hand_housing_price_drop_listing_count',
+        'second_hand_housing_price_rise_listing_count',
+        'second_hand_housing_new_listing_count',
+        'second_hand_housing_viewer_count'
       ], { dbCode: 'yd' })
     ]
   },
@@ -404,8 +496,12 @@ export const v3PageRegistry = {
   CityPopulation: {
     source: createDataSource('city', { cityCodeArr: CITY_POPULATION_CODES }),
     charts: [
-      regionChartRef('city_resident_population', pieFirst()),
-      regionChartRef('city_registered_population', pieFirst())
+      regionChartRef('city_registered_population', pieFirst()),
+      metricChartRef('city_resident_population', '重点城市常住人口', ['resident_population'], {
+        dbCode: 'nd',
+        seriesLayout: 'region',
+        ...pieFirst()
+      })
     ]
   },
   CityFinance: {
@@ -413,7 +509,10 @@ export const v3PageRegistry = {
     charts: [
       regionChartRef('city_budget_income', pieFirst()),
       regionChartRef('city_budget_expenditure', pieFirst()),
-      regionChartRef('city_budget_deficit'),
+      metricChartRef('city_budget_deficit_region', '重点城市地方一般公共预算赤字', ['city_budget_deficit'], {
+        dbCode: 'nd',
+        seriesLayout: 'region'
+      }),
       regionChartRef('city_household_deposit_balance', pieFirst())
     ]
   },
@@ -468,7 +567,10 @@ export const v3PageRegistry = {
     charts: [
       regionChartRef('province_budget_income', pieFirst()),
       regionChartRef('province_budget_expenditure', pieFirst()),
-      regionChartRef('province_budget_deficit')
+      metricChartRef('province_budget_deficit_region', '重点省市地方财政一般预算赤字', ['province_budget_deficit'], {
+        dbCode: 'nd',
+        seriesLayout: 'region'
+      })
     ]
   },
   ProvincialRealEstateInvest: {
@@ -539,7 +641,12 @@ export const v3PageRegistry = {
 
   GrossDomesticProduct: {
     source: createDataSource('nation'),
-    charts: [chartRef('nation_gdp', pieIndexes([2, 3, 4]))]
+    charts: [
+      metricChartRef('nation_gdp_metrics', 'GDP及三次产业', NATION_GDP_METRICS, {
+        dbCode: 'nd',
+        ...pieIndexes([2, 3, 4])
+      })
+    ]
   },
   PopulationBasic: {
     source: createDataSource('nation'),
@@ -564,7 +671,9 @@ export const v3PageRegistry = {
           ]
         }
       }),
-      chartRef('nation_birth_death_growth'),
+      metricChartRef('nation_birth_death_growth_metrics', '出生率/死亡率/自然增长率', NATION_BIRTH_DEATH_GROWTH_METRICS, {
+        dbCode: 'nd'
+      }),
       chartRef('nation_birth_death_population'),
       metricChartRef('nation_population_age', '年龄结构与抚养比', NATION_POPULATION_AGE_METRICS, {
         dbCode: 'nd',
@@ -575,29 +684,38 @@ export const v3PageRegistry = {
   PopulationSpot: {
     source: createDataSource('nation'),
     charts: [
-      chartRef('nation_pop_sample_age', pieAll({
-        topN: 10,
-        mergeOthersLabel: '其他年龄段'
-      })),
-      chartRef('nation_pop_sample_sex_ratio', pieAll({
-        topN: 10,
-        mergeOthersLabel: '其他年龄段'
-      })),
-      chartRef('nation_pop_sample_education', pieAll({
-        mergeOthersLabel: '其他分组'
-      }))
+      metricChartRef('nation_population_sample_age_metrics', '人口数（人口抽样调查）', NATION_POPULATION_SAMPLE_AGE_METRICS, {
+        dbCode: 'nd',
+        ...pieAll({
+          topN: 10,
+          mergeOthersLabel: '其他年龄段'
+        })
+      }),
+      metricChartRef('nation_population_sample_sex_ratio_metrics', '性别比（人口抽样调查）', NATION_POPULATION_SAMPLE_SEX_RATIO_METRICS, {
+        dbCode: 'nd',
+        ...pieAll({
+          topN: 10,
+          mergeOthersLabel: '其他年龄段'
+        })
+      }),
+      metricChartRef('nation_population_sample_education_metrics', '受教育情况（人口抽样调查）', NATION_POPULATION_SAMPLE_EDUCATION_METRICS, {
+        dbCode: 'nd',
+        ...pieAll({
+          mergeOthersLabel: '其他分组'
+        })
+      })
     ]
   },
   NationalFinance: {
     source: createDataSource('nation'),
     charts: [
       metricChartRef('nation_budget_monthly_value', '财政收入/支出累计值', [
-        'nation_budget_income_yd:d615e8de42114feb9169f027e6c2dcc6',
-        'nation_budget_expenditure_yd:cbb9b066b0e84cad93d249388b258a81'
+        'fiscal_revenue_cum_value_hm_yuan',
+        'fiscal_expenditure_excl_debt_principal_cum_value'
       ], { dbCode: 'yd' }),
       metricChartRef('nation_budget_monthly_growth', '财政收入/支出累计增长', [
-        'nation_budget_income_yd:03e60611a6be446099bef411599bceb0',
-        'nation_budget_expenditure_yd:8dc84fd764df46a294e54a7662b1a38a'
+        'fiscal_revenue_cum_growth_pct',
+        'fiscal_expenditure_excl_debt_principal_cum_growth'
       ], { dbCode: 'yd' }),
       metricChartRef('nation_budget_income_by_level', '全国、中央、地方财政收入', NATION_BUDGET_REVENUE_METRICS, { dbCode: 'nd' }),
       metricChartRef('nation_budget_expenditure_by_level', '全国、中央、地方财政支出', NATION_BUDGET_EXPENDITURE_METRICS, { dbCode: 'nd' }),
@@ -609,7 +727,7 @@ export const v3PageRegistry = {
   RealEstateInvest: {
     source: createDataSource('nation'),
     charts: [
-      chartRef('nation_real_estate_investment_total'),
+      chartRef('real_estate_development_investment'),
       chartRef('nation_real_estate_investment', {
         id: 'nation_real_estate_investment_value',
         title: '房地产投资累计值',
@@ -625,17 +743,20 @@ export const v3PageRegistry = {
   RealEstateSell: {
     source: createDataSource('nation'),
     charts: [
-      chartRef('nation_new_home_sales_area_total'),
-      chartRef('nation_new_home_sales_amount_total'),
-      chartRef('nation_new_home_avg_price_total'),
-      metricChartRef('nation_residential_sales_value', '商品住宅销售面积、销售额累计值', [
-        'nation_residential_sales_area_yd:d324a9c4f1a34dd2b38a85e979a54554',
-        'nation_residential_sales_amount_yd:375ffa7283dd458c9a3bcb1f4929537e'
-      ], { dbCode: 'yd' }),
-      metricChartRef('nation_residential_sales_growth', '商品住宅销售面积、销售额累计增长', [
-        'nation_residential_sales_area_yd:206c52536182472aae8e01b52aaeb201',
-        'nation_residential_sales_amount_yd:2de1944906984790bc41d58d7c0cb885'
-      ], { dbCode: 'yd' })
+      chartRef('new_commercial_housing_sales_area', { dbCode: 'nd', viewModes: ['yearly'] }),
+      chartRef('new_commercial_housing_sales_amount', { dbCode: 'nd', viewModes: ['yearly'] }),
+      metricChartRef('nation_residential_sales_area_cumulative', '商品住宅销售面积累计值', [
+        'residential_housing_sales_area_cum_value_tenk_sqm'
+      ], { dbCode: 'yd', viewModes: ['monthly'] }),
+      metricChartRef('nation_residential_sales_amount_cumulative', '商品住宅销售额累计值', [
+        'residential_housing_sales_amount_cum_value_hm_yuan'
+      ], { dbCode: 'yd', viewModes: ['monthly'] }),
+      metricChartRef('nation_residential_sales_area_growth', '商品住宅销售面积累计增长', [
+        'residential_housing_sales_area_cum_growth_pct'
+      ], { dbCode: 'yd', viewModes: ['monthly'] }),
+      metricChartRef('nation_residential_sales_amount_growth', '商品住宅销售额累计增长', [
+        'residential_housing_sales_amount_cum_growth_pct'
+      ], { dbCode: 'yd', viewModes: ['monthly'] })
     ]
   },
   EducationSchool: {
@@ -687,7 +808,7 @@ export const v3PageRegistry = {
   SocialRetailgoods: {
     source: createDataSource('nation'),
     charts: [
-      chartRef('nation_retail_sales'),
+      chartRef('total_retail_sales_of_consumer_goods'),
       metricChartRef('nation_retail_sales_current', '社会消费品总额当期值', NATION_RETAIL_MONTHLY_METRICS.current, { dbCode: 'yd' }),
       metricChartRef('nation_retail_sales_cumulative', '社会消费品总额累计值', NATION_RETAIL_MONTHLY_METRICS.cumulative, { dbCode: 'yd' })
     ]
@@ -696,9 +817,9 @@ export const v3PageRegistry = {
     source: createDataSource('nation'),
     charts: [
       chartRef('nation_gold_fx_reserve'),
-      chartRef('nation_money_supply_levels'),
-      chartRef('nation_money_supply_growth'),
-      chartRef('nation_money_supply'),
+      metricChartRef('nation_money_supply_levels_annual', 'M0 / M1 / M2 供应量', NATION_MONEY_SUPPLY_LEVEL_METRICS, { dbCode: 'nd' }),
+      metricChartRef('nation_money_supply_growth_annual', 'M0 / M1 / M2 同比增长', NATION_MONEY_SUPPLY_GROWTH_METRICS, { dbCode: 'nd' }),
+      metricChartRef('nation_money_supply_monthly_levels', 'M0 / M1 / M2 期末值', NATION_MONEY_SUPPLY_MONTHLY_LEVEL_METRICS, { dbCode: 'yd' }),
       metricChartRef('nation_money_supply_monthly_growth', 'M0 / M1 / M2 供应量增长', NATION_MONEY_SUPPLY_MONTHLY_GROWTH_METRICS, { dbCode: 'yd' })
     ]
   },
@@ -727,31 +848,47 @@ export const v3PageRegistry = {
       metricChartRef('nation_export_by_country', '中国向各国出口', NATION_EXPORT_BY_COUNTRY_METRICS, { dbCode: 'nd' }),
       metricChartRef('nation_import_by_country', '中国从各国进口', NATION_IMPORT_BY_COUNTRY_METRICS, { dbCode: 'nd' }),
       chartRef('nation_trade_total_monthly', {
-        id: 'nation_trade_total_monthly_value',
-        title: '进出口当期值/累计值',
-        metricDisplayNameIncludes: ['当期值', '累计值']
+        id: 'nation_trade_total_monthly_current_value',
+        title: '进出口当期值',
+        metricDisplayNameIncludes: ['当期值']
       }),
       chartRef('nation_trade_total_monthly', {
-        id: 'nation_trade_total_monthly_growth',
-        title: '进出口同比增长/累计增长',
-        metricDisplayNameIncludes: ['同比增长', '累计增长']
+        id: 'nation_trade_total_monthly_cumulative_value',
+        title: '进出口累计值',
+        metricDisplayNameIncludes: ['累计值']
+      }),
+      chartRef('nation_trade_total_monthly', {
+        id: 'nation_trade_total_monthly_yoy_growth',
+        title: '进出口同比增长',
+        metricDisplayNameIncludes: ['同比增长']
+      }),
+      chartRef('nation_trade_total_monthly', {
+        id: 'nation_trade_total_monthly_cumulative_growth',
+        title: '进出口累计增长',
+        metricDisplayNameIncludes: ['累计增长']
       })
     ]
   },
   IndicesData: {
     source: createDataSource('nation'),
     charts: [
-      chartRef('nation_cpi_mom'),
-      metricChartRef('nation_ppi_index', '工业出厂价格指数', ['nation_ppi_mom_yd:e64079bae9064aebad1c4c5fe0c8a6ef'], { dbCode: 'yd' }),
+      chartRef('consumer_price_index_month_over_month'),
+      metricChartRef('nation_ppi_index', '工业出厂价格指数', ['gong_ye_sheng_chan_zhe_chu_chang_jia_ge_zhi_count_month_over_month_100'], { dbCode: 'yd' }),
       chartRef('nation_pmi')
     ]
   },
   AccommodationAndCateringIndustry: {
     source: createDataSource('nation'),
     charts: [
-      chartRef('nation_hotel_catering_employees'),
-      chartRef('nation_hotel_catering_legal_entities'),
-      chartRef('nation_hotel_catering_turnover')
+      chartRef('nation_hotel_catering_employees', {
+        metricDisplayNameIncludes: ['从业人数']
+      }),
+      chartRef('nation_hotel_catering_legal_entities', {
+        metricDisplayNameIncludes: ['法人企业数']
+      }),
+      chartRef('nation_hotel_catering_turnover', {
+        metricDisplayNameIncludes: ['营业额']
+      })
     ]
   },
   LivingStandards: {
@@ -759,31 +896,51 @@ export const v3PageRegistry = {
     charts: [
       chartRef('nation_income', pieAll()),
       chartRef('nation_engel'),
-      chartRef('nation_gini')
+      chartRef('resident_per_capita_disposable_income_gini_coefficient')
     ]
   },
   TransportationAndTelecommunications: {
     source: createDataSource('nation'),
     charts: [
       chartRef('nation_freight_volume', {
-        id: 'nation_freight_volume_value',
-        title: '货物运输量当期值/累计值',
-        metricDisplayNameIncludes: ['当期值', '累计值']
+        id: 'nation_freight_volume_current_value',
+        title: '货物运输量当期值',
+        metricDisplayNameIncludes: ['当期值']
       }),
       chartRef('nation_freight_volume', {
-        id: 'nation_freight_volume_growth',
-        title: '货物运输量同比增长/累计增长',
-        metricDisplayNameIncludes: ['同比增长', '累计增长']
+        id: 'nation_freight_volume_cumulative_value',
+        title: '货物运输量累计值',
+        metricDisplayNameIncludes: ['累计值']
       }),
       chartRef('nation_passenger_volume', {
-        id: 'nation_passenger_volume_value',
-        title: '旅客运输量当期值/累计值',
-        metricDisplayNameIncludes: ['当期值', '累计值']
+        id: 'nation_freight_volume_yoy_growth',
+        title: '货物运输量同比增长',
+        metricDisplayNameIncludes: ['同比增长']
       }),
       chartRef('nation_passenger_volume', {
-        id: 'nation_passenger_volume_growth',
-        title: '旅客运输量同比增长/累计增长',
-        metricDisplayNameIncludes: ['同比增长', '累计增长']
+        id: 'nation_freight_volume_cumulative_growth',
+        title: '货物运输量累计增长',
+        metricDisplayNameIncludes: ['累计增长']
+      }),
+      chartRef('nation_passenger_volume', {
+        id: 'nation_passenger_volume_current_value',
+        title: '旅客运输量当期值',
+        metricDisplayNameIncludes: ['当期值']
+      }),
+      chartRef('nation_passenger_volume', {
+        id: 'nation_passenger_volume_cumulative_value',
+        title: '旅客运输量累计值',
+        metricDisplayNameIncludes: ['累计值']
+      }),
+      chartRef('nation_passenger_volume', {
+        id: 'nation_passenger_volume_yoy_growth',
+        title: '旅客运输量同比增长',
+        metricDisplayNameIncludes: ['同比增长']
+      }),
+      chartRef('nation_passenger_volume', {
+        id: 'nation_passenger_volume_cumulative_growth',
+        title: '旅客运输量累计增长',
+        metricDisplayNameIncludes: ['累计增长']
       })
     ]
   }

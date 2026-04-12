@@ -16,7 +16,12 @@ export async function loadJsonOnce(path) {
     return jsonCache.get(path);
   }
 
-  const loadPromise = fetch(path)
+  const isLocalJson = /^\/json\//.test(path);
+  const fetchOptions = isLocalJson
+    ? { cache: 'no-store' }
+    : {};
+
+  const loadPromise = fetch(path, fetchOptions)
     .then(res => {
       if (!res.ok) {
         throw new Error(`加载失败: ${res.status} ${res.statusText}`);

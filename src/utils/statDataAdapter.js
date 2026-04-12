@@ -42,25 +42,78 @@ function ensureDerivedDataset(raw, targetKey, totalKey, partKey, options = {}) {
   const totalDataset = raw.datasets[totalKey];
   raw.datasets[targetKey] = {
     ...totalDataset,
+    id: targetKey,
     key: targetKey,
     metricKey: targetKey,
+    englishKey: targetKey,
     derived: true,
     name: options.name || totalDataset.name,
     displayName: options.displayName || totalDataset.displayName,
+    showName: options.displayName || options.name || totalDataset.displayName || totalDataset.name,
     chartKeys: Array.from(new Set([...(totalDataset.chartKeys || []), ...(raw.datasets[partKey]?.chartKeys || [])])),
     pageKeys: Array.from(new Set([...(totalDataset.pageKeys || []), ...(raw.datasets[partKey]?.pageKeys || [])])),
     series: buildDifferenceSeries(totalDataset.series, raw.datasets[partKey].series)
   };
 }
 
+function ensureAliasedDataset(raw, targetKey, sourceKey, options = {}) {
+  if (!raw?.datasets || raw.datasets[targetKey] || !raw.datasets[sourceKey]) return;
+
+  const sourceDataset = raw.datasets[sourceKey];
+  raw.datasets[targetKey] = {
+    ...sourceDataset,
+    id: targetKey,
+    key: targetKey,
+    metricKey: targetKey,
+    englishKey: targetKey,
+    derived: true,
+    name: options.name || sourceDataset.name,
+    displayName: options.displayName || sourceDataset.displayName,
+    showName: options.displayName || options.name || sourceDataset.showName || sourceDataset.displayName || sourceDataset.name
+  };
+}
+
 function applyDerivedDatasets(raw) {
-  ensureDerivedDataset(raw, 'city_budget_deficit', 'city_budget_expenditure', 'city_budget_income', {
+  ensureAliasedDataset(raw, 'city_budget_deficit', 'local_general_public_budget_deficit', {
     name: '地方一般公共预算赤字',
     displayName: '地方一般公共预算赤字 (亿元)'
   });
-  ensureDerivedDataset(raw, 'province_budget_deficit', 'province_budget_expenditure', 'province_budget_income', {
+  ensureAliasedDataset(raw, 'province_budget_deficit', 'local_fiscal_yi_ban_yu_suan_deficit', {
     name: '地方财政一般预算赤字',
     displayName: '地方财政一般预算赤字 (亿元)'
+  });
+  ensureAliasedDataset(raw, 'national_general_public_budget_deficit_hm_yuan', 'fiscal_deficit', {
+    name: '全国一般公共预算赤字',
+    displayName: '全国一般公共预算赤字 (亿元)'
+  });
+  ensureAliasedDataset(raw, 'central_general_public_budget_deficit_hm_yuan', 'central_fiscal_deficit', {
+    name: '中央一般公共预算赤字',
+    displayName: '中央一般公共预算赤字 (亿元)'
+  });
+  ensureAliasedDataset(raw, 'local_general_public_budget_deficit_hm_yuan', 'local_fiscal_deficit', {
+    name: '地方一般公共预算赤字',
+    displayName: '地方一般公共预算赤字 (亿元)'
+  });
+
+  ensureDerivedDataset(raw, 'city_budget_deficit', 'local_general_public_budget_expenditure_hm_yuan', 'local_general_public_budget_revenue_hm_yuan', {
+    name: '地方一般公共预算赤字',
+    displayName: '地方一般公共预算赤字 (亿元)'
+  });
+  ensureDerivedDataset(raw, 'province_budget_deficit', 'local_fiscal_general_public_budget_expenditure_hm_yuan', 'local_fiscal_general_public_budget_revenue_hm_yuan', {
+    name: '地方财政一般预算赤字',
+    displayName: '地方财政一般预算赤字 (亿元)'
+  });
+  ensureDerivedDataset(raw, 'national_general_public_budget_deficit_hm_yuan', 'national_general_public_budget_expenditure_hm_yuan_budget_expenditure_nd', 'national_general_public_budget_revenue_hm_yuan_budget_income_nd', {
+    name: '全国一般公共预算赤字',
+    displayName: '全国一般公共预算赤字 (亿元)'
+  });
+  ensureDerivedDataset(raw, 'central_general_public_budget_deficit_hm_yuan', 'central_general_public_budget_expenditure_hm_yuan', 'central_general_public_budget_revenue_hm_yuan', {
+    name: '中央一般公共预算赤字',
+    displayName: '中央一般公共预算赤字 (亿元)'
+  });
+  ensureDerivedDataset(raw, 'local_general_public_budget_deficit_hm_yuan', 'local_general_public_budget_expenditure_hm_yuan', 'local_general_public_budget_revenue_hm_yuan', {
+    name: '地方一般公共预算赤字',
+    displayName: '地方一般公共预算赤字 (亿元)'
   });
   ensureDerivedDataset(raw, 'nation_hotel_catering_catering_employees', 'nation_hotel_catering_employees_combined', 'nation_hotel_catering_metric_hs_07', {
     name: '餐饮业年末从业人数',
@@ -110,11 +163,104 @@ function resolveDatasetPeriod(indicator = {}) {
   return inferPeriod(firstDate);
 }
 
+function getPeriodAliases(period) {
+  const normalized = String(period || '').trim();
+  if (!normalized) return [];
+  if (normalized === 'yd') return ['yd', 'monthly', 'month'];
+  if (normalized === 'nd') return ['nd', 'yearly', 'year'];
+  if (normalized === 'jd') return ['jd', 'quarterly', 'quarter'];
+  return [normalized];
+}
+
+function buildMetricLabelAliases(indicator = {}, period = '') {
+  const labels = [
+    indicator?.title,
+    indicator?.showName,
+    indicator?.displayName,
+    indicator?.name
+  ]
+    .map((item) => String(item || '').trim())
+    .filter(Boolean);
+
+  if (!labels.length) return [];
+
+  const aliases = new Set(labels);
+  const periodAliases = getPeriodAliases(period);
+
+  labels.forEach((label) => {
+    periodAliases.forEach((periodAlias) => {
+      aliases.add(`${periodAlias}:${label}`);
+      aliases.add(`${label}:${periodAlias}`);
+    });
+  });
+
+  return Array.from(aliases);
+}
+
 function buildIndex(dataset) {
   const regionEntries = new Map();
   const timeEntries = new Map();
   const viewPeriodIndex = new Map();
   const pageMap = new Map(Object.entries(dataset.pages || {}));
+  const metricKeyAliases = new Map();
+  const metricTitleAliases = new Map();
+  const metricTitleAliasConflicts = new Set();
+
+  function addMetricAlias(key, englishKey) {
+    const normalizedKey = String(key || '').trim();
+    const normalizedEnglishKey = String(englishKey || '').trim();
+    if (!normalizedKey || !normalizedEnglishKey) return;
+    if (!metricKeyAliases.has(normalizedKey)) {
+      metricKeyAliases.set(normalizedKey, normalizedEnglishKey);
+    }
+  }
+
+  function addMetricTitleAlias(alias, englishKey) {
+    const normalizedAlias = String(alias || '').trim();
+    const normalizedEnglishKey = String(englishKey || '').trim();
+    if (!normalizedAlias || !normalizedEnglishKey || metricKeyAliases.has(normalizedAlias) || metricTitleAliasConflicts.has(normalizedAlias)) {
+      return;
+    }
+
+    const existingEnglishKey = metricTitleAliases.get(normalizedAlias);
+    if (!existingEnglishKey) {
+      metricTitleAliases.set(normalizedAlias, normalizedEnglishKey);
+      return;
+    }
+
+    if (existingEnglishKey !== normalizedEnglishKey) {
+      metricTitleAliases.delete(normalizedAlias);
+      metricTitleAliasConflicts.add(normalizedAlias);
+    }
+  }
+
+  Object.entries(dataset.metrics || {}).forEach(([englishKey, metric]) => {
+    const keys = [
+      englishKey,
+      metric?.key,
+      metric?.englishKey
+    ]
+      .map((item) => String(item || '').trim())
+      .filter(Boolean);
+
+    keys.forEach((key) => addMetricAlias(key, englishKey));
+    buildMetricLabelAliases(metric, metric?.period || metric?.periods?.[0]).forEach((alias) => addMetricTitleAlias(alias, englishKey));
+  });
+
+  Object.entries(dataset.datasets || {}).forEach(([datasetKey, indicator]) => {
+    const period = resolveDatasetPeriod(indicator);
+    const keys = [
+      datasetKey,
+      indicator?.key,
+      indicator?.metricKey,
+      indicator?.englishKey
+    ]
+      .map((item) => String(item || '').trim())
+      .filter(Boolean);
+
+    keys.forEach((key) => addMetricAlias(key, datasetKey));
+    buildMetricLabelAliases(indicator, period).forEach((alias) => addMetricTitleAlias(alias, datasetKey));
+  });
 
   Object.entries(dataset.pages || {}).forEach(([pageKey, page]) => {
     const period = String(page?.period || '').trim();
@@ -158,7 +304,9 @@ function buildIndex(dataset) {
     regionMap: regionEntries,
     timeMap: timeEntries,
     viewPeriodIndex,
-    pageMap
+    pageMap,
+    metricKeyAliases,
+    metricTitleAliases
   };
 }
 
@@ -167,8 +315,10 @@ export function normalizeStatData(raw = {}) {
     throw new Error('统计数据为空，无法解析。');
   }
 
-  if (!raw.pages || !raw.datasets) {
-    throw new Error('统计数据缺少 pages / datasets 核心字段。');
+  const hasDatasets = raw.datasets && typeof raw.datasets === 'object';
+  const hasEnglishDatasets = raw.englishDatasets && typeof raw.englishDatasets === 'object';
+  if (!hasDatasets && !hasEnglishDatasets) {
+    throw new Error('统计数据缺少 datasets / englishDatasets 核心字段。');
   }
 
   applyDerivedDatasets(raw);
@@ -186,11 +336,22 @@ export function normalizeStatData(raw = {}) {
 }
 
 export function getIndicator(dataset, indicatorKey) {
-  return normalizeStatData(dataset).datasets?.[indicatorKey] || null;
+  const normalized = normalizeStatData(dataset);
+  const resolvedKey = resolveIndicatorKey(normalized, indicatorKey);
+  return normalized.datasets?.[resolvedKey] || null;
 }
 
 export function getSeries(dataset, indicatorKey) {
   return getIndicator(dataset, indicatorKey)?.series || [];
+}
+
+export function resolveIndicatorKey(dataset, indicatorKey) {
+  const normalized = normalizeStatData(dataset);
+  const rawKey = String(indicatorKey || '').trim();
+  if (!rawKey) return '';
+  return normalized.__index.metricKeyAliases.get(rawKey)
+    || normalized.__index.metricTitleAliases.get(rawKey)
+    || rawKey;
 }
 
 export function getRegionItems(dataset) {

@@ -39,10 +39,10 @@ const INDICATOR_LABEL_OVERRIDES = {
   nation_income_total: '居民人均可支配收入增速',
   nation_income_urban: '城镇居民人均可支配收入相关增速',
   nation_income_rural: '农村居民人均可支配收入相关增速',
-  'nation_residential_sales_area_yd:d324a9c4f1a34dd2b38a85e979a54554': '面积',
-  'nation_residential_sales_amount_yd:375ffa7283dd458c9a3bcb1f4929537e': '销售额',
-  'nation_residential_sales_area_yd:206c52536182472aae8e01b52aaeb201': '面积',
-  'nation_residential_sales_amount_yd:2de1944906984790bc41d58d7c0cb885': '销售额'
+  cumulative_value_of_residential_commercial_housing_sales_area: '面积',
+  cumulative_value_of_residential_commercial_housing_sales_amount: '销售额',
+  cumulative_growth_of_residential_commercial_housing_sales_area: '面积',
+  cumulative_growth_of_residential_commercial_housing_sales_amount: '销售额'
 };
 
 function looksLikeMachineLabel(label) {
@@ -138,7 +138,7 @@ class ChartBuilder {
   initContext() {
     const {
       data,
-      metricIds = [],
+      englishKeys = [],
       regionCodes = [],
       dbCode = 'nd',
       unit = '',
@@ -153,10 +153,10 @@ class ChartBuilder {
     } = this.params;
 
     if (chartType === 'map') {
-        const mainMetricId = metricIds[0];
-        const mapTimelineData = selectMapTimelineData(data, mainMetricId, dbCode, yearLimit);
+        const mainEnglishKey = englishKeys[0];
+        const mapTimelineData = selectMapTimelineData(data, mainEnglishKey, dbCode, yearLimit);
         this.params.mapTimelineData = mapTimelineData;
-        const indicator = getIndicator(data, mainMetricId);
+        const indicator = getIndicator(data, mainEnglishKey);
         this.params.metricName = exceptName || indicator?.name || '指标';
         this.params.unit = indicator?.unit || '';
 
@@ -177,18 +177,18 @@ class ChartBuilder {
     if (seriesLayout !== 'region') {
       const singleRegionCode = regionCodes.length === 1 ? regionCodes[0] : '';
       const pendingSeries = [];
-      metricIds.forEach((metricId) => {
-        const indicator = getIndicator(data, metricId);
+      englishKeys.forEach((englishKey) => {
+        const indicator = getIndicator(data, englishKey);
         if (!indicator) return;
 
-        const cname = normalizeIndicatorLabel(indicator, metricId, exceptName);
+        const cname = normalizeIndicatorLabel(indicator, englishKey, exceptName);
         const baseName = `${cname}${unit}`;
-        let result = selectDataFromArr(data, metricId, dbCode, singleRegionCode, yearLimit);
+        let result = selectDataFromArr(data, englishKey, dbCode, singleRegionCode, yearLimit);
         let valueArr = result.map(item => item.value);
         let dateArr = result.map(item => item.date);
 
-        if (enableBirthOffset && metricId.includes('marriage')) marriageArr = valueArr;
-        else if (enableBirthOffset && metricId.includes('birth')) {
+        if (enableBirthOffset && englishKey.includes('marriage')) marriageArr = valueArr;
+        else if (enableBirthOffset && englishKey.includes('birth')) {
           birthArr = valueArr;
           valueArr = offsetArray(valueArr, yearLimit, -1);
         } else if (chartType === 'line' && baseName === selectedLegend) {
@@ -197,7 +197,7 @@ class ChartBuilder {
 
         pendingSeries.push({
           baseName,
-          zbCode: metricId,
+          zbCode: englishKey,
           type: chartType,
           data: valueArr,
           date: dateArr,
@@ -233,7 +233,7 @@ class ChartBuilder {
         name: ensureUniqueSeriesName(compactNames[index] || item.baseName, item.zbCode, usedSeriesNames)
       }));
     } else {
-      const mainMetricId = metricIds[0];
+      const mainEnglishKey = englishKeys[0];
       const allRegions = getRegionItems(data);
       const targetRegionCodes = regionCodes.length ? regionCodes : Object.keys(allRegions).filter((code) => code !== '100000');
       // 多地区对比（城市 city.json、省市 province.json 等，凡 seriesLayout === 'region' 均走此分支）：
@@ -243,9 +243,9 @@ class ChartBuilder {
       const perRegionLimit = 0;
       targetRegionCodes.forEach((regionCode) => {
         const name = regionLabelMap.get(regionCode) || getRegionName(data, regionCode) || '';
-        let result = selectDataFromArr(data, mainMetricId, dbCode, regionCode, perRegionLimit) || [];
+        let result = selectDataFromArr(data, mainEnglishKey, dbCode, regionCode, perRegionLimit) || [];
         if (!result.length) return;
-        seriesData.push({ name, zbCode: mainMetricId, type: chartType, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' } });
+        seriesData.push({ name, zbCode: mainEnglishKey, type: chartType, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' } });
       });
 
       if (seriesData.length) {
@@ -270,13 +270,13 @@ class ChartBuilder {
       }
     }
 
-    if (!seriesData.length && metricIds.length) {
-      const fallbackRegionCode = getDefaultRegionCode(data, metricIds[0]);
-      const fallback = selectDataFromArr(data, metricIds[0], dbCode, fallbackRegionCode, yearLimit);
+    if (!seriesData.length && englishKeys.length) {
+      const fallbackRegionCode = getDefaultRegionCode(data, englishKeys[0]);
+      const fallback = selectDataFromArr(data, englishKeys[0], dbCode, fallbackRegionCode, yearLimit);
       if (fallback.length) {
         seriesData.push({
           name: regionLabelMap.get(fallbackRegionCode) || getRegionName(data, fallbackRegionCode),
-          zbCode: metricIds[0],
+          zbCode: englishKeys[0],
           type: chartType,
           data: fallback.map((item) => item.value),
           date: fallback.map((item) => item.date),

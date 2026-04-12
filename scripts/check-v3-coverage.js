@@ -43,6 +43,11 @@ const PROVINCE_CODES = ['110000', '120000', '310000', '320000', '330000', '37000
 const ADD_PROVINCE_CODES = provinceRegionList.filter((prov) => !PROVINCE_CODES.includes(prov.code));
 const CITY_JSON = `./${dataFiles.city}`;
 const PROVINCE_JSON = `./${dataFiles.province}`;
+const LEGACY_INDICATOR_ALIASES = {
+  city_registered_population: 'registered_population_at_year_end',
+  city_second_hand_house_price_mom: 'second_hand_residential_sales_price_index_month_over_month',
+  province_residential_sales_area_value: 'residential_housing_sales_area_cum_value_tenk_sqm'
+};
 
 function chart(id, title, indicatorKeys, dbCode, extra = {}) {
   return { id, title, indicatorKeys, dbCode, chartType: 'line', seriesLayout: 'indicator', ...extra };
@@ -73,8 +78,66 @@ const v3PageRegistry = {
 function loadJson(localJson) {
   const filePath = path.join(process.cwd(), 'public', 'json', path.basename(localJson));
   const raw = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  buildAliasIndex(raw);
   applyDerivedDatasets(raw);
   return raw;
+}
+
+function addAlias(aliasMap, alias, targetKey) {
+  const normalizedAlias = String(alias || '').trim();
+  const normalizedTargetKey = String(targetKey || '').trim();
+  if (!normalizedAlias || !normalizedTargetKey) return;
+  if (!aliasMap.has(normalizedAlias)) {
+    aliasMap.set(normalizedAlias, normalizedTargetKey);
+  }
+}
+
+function buildAliasIndex(raw) {
+  if (!raw || raw.__aliasIndex) return raw?.__aliasIndex;
+
+  const aliasMap = new Map();
+
+  Object.keys(raw.datasets || {}).forEach((datasetKey) => {
+    addAlias(aliasMap, datasetKey, datasetKey);
+  });
+
+  Object.entries(raw.metrics || {}).forEach(([metricKey, metric]) => {
+    addAlias(aliasMap, metricKey, metricKey);
+    addAlias(aliasMap, metric?.key, metricKey);
+    addAlias(aliasMap, metric?.englishKey, metricKey);
+  });
+
+  (raw.meta?.reports || []).forEach((report) => {
+    const reportKey = String(report?.key || '').trim();
+    const resolvedKeys = Array.isArray(report?.resolvedEnglishKeys)
+      ? report.resolvedEnglishKeys.map((item) => String(item || '').trim()).filter(Boolean)
+      : [];
+    if (!reportKey || !resolvedKeys.length) return;
+
+    resolvedKeys.forEach((resolvedKey) => {
+      addAlias(aliasMap, reportKey, resolvedKey);
+      addAlias(aliasMap, reportKey.replace(/_(nd|yd|jd)$/u, ''), resolvedKey);
+    });
+  });
+
+  Object.defineProperty(raw, '__aliasIndex', {
+    value: aliasMap,
+    enumerable: false,
+    configurable: false,
+    writable: false
+  });
+
+  return aliasMap;
+}
+
+function resolveIndicatorKey(dataset, indicatorKey) {
+  const normalizedKey = String(indicatorKey || '').trim();
+  if (!normalizedKey) return '';
+  if (dataset?.datasets?.[normalizedKey]) return normalizedKey;
+  const legacyAlias = LEGACY_INDICATOR_ALIASES[normalizedKey];
+  if (legacyAlias && dataset?.datasets?.[legacyAlias]) return legacyAlias;
+  const aliasMap = buildAliasIndex(dataset);
+  return aliasMap.get(normalizedKey) || normalizedKey;
 }
 
 function normalizePointMap(values = []) {
@@ -110,35 +173,41 @@ function buildDifferenceSeries(totalSeries = [], partSeries = []) {
 }
 
 function ensureDerivedDataset(raw, targetKey, totalKey, partKey, options = {}) {
-  if (!raw?.datasets || raw.datasets[targetKey] || !raw.datasets[totalKey] || !raw.datasets[partKey]) return;
+  const resolvedTargetKey = resolveIndicatorKey(raw, targetKey) || targetKey;
+  const resolvedTotalKey = resolveIndicatorKey(raw, totalKey);
+  const resolvedPartKey = resolveIndicatorKey(raw, partKey);
 
-  const totalDataset = raw.datasets[totalKey];
-  raw.datasets[targetKey] = {
+  if (!raw?.datasets || raw.datasets[resolvedTargetKey] || !raw.datasets[resolvedTotalKey] || !raw.datasets[resolvedPartKey]) return;
+
+  const totalDataset = raw.datasets[resolvedTotalKey];
+  raw.datasets[resolvedTargetKey] = {
     ...totalDataset,
-    key: targetKey,
-    metricKey: targetKey,
+    key: resolvedTargetKey,
+    metricKey: resolvedTargetKey,
     derived: true,
     name: options.name || totalDataset.name,
     displayName: options.displayName || totalDataset.displayName,
-    chartKeys: Array.from(new Set([...(totalDataset.chartKeys || []), ...(raw.datasets[partKey]?.chartKeys || [])])),
-    pageKeys: Array.from(new Set([...(totalDataset.pageKeys || []), ...(raw.datasets[partKey]?.pageKeys || [])])),
-    series: buildDifferenceSeries(totalDataset.series, raw.datasets[partKey].series)
+    chartKeys: Array.from(new Set([...(totalDataset.chartKeys || []), ...(raw.datasets[resolvedPartKey]?.chartKeys || [])])),
+    pageKeys: Array.from(new Set([...(totalDataset.pageKeys || []), ...(raw.datasets[resolvedPartKey]?.pageKeys || [])])),
+    series: buildDifferenceSeries(totalDataset.series, raw.datasets[resolvedPartKey].series)
   };
+
+  addAlias(buildAliasIndex(raw), targetKey, resolvedTargetKey);
 }
 
 function applyDerivedDatasets(raw) {
-  ensureDerivedDataset(raw, 'city_budget_deficit', 'city_budget_expenditure', 'city_budget_income', {
+  ensureDerivedDataset(raw, 'city_budget_deficit', 'local_general_public_budget_expenditure_hm_yuan', 'local_general_public_budget_revenue_hm_yuan', {
     name: '地方一般公共预算赤字',
     displayName: '地方一般公共预算赤字 (亿元)'
   });
-  ensureDerivedDataset(raw, 'province_budget_deficit', 'province_budget_expenditure', 'province_budget_income', {
+  ensureDerivedDataset(raw, 'province_budget_deficit', 'local_fiscal_general_public_budget_expenditure_hm_yuan', 'local_fiscal_general_public_budget_revenue_hm_yuan', {
     name: '地方财政一般预算赤字',
     displayName: '地方财政一般预算赤字 (亿元)'
   });
 }
 
 function getAvailableRegionCodes(dataset, indicatorKey) {
-  const indicator = dataset.datasets?.[indicatorKey];
+  const indicator = dataset.datasets?.[resolveIndicatorKey(dataset, indicatorKey)];
   if (!indicator) return [];
   return (indicator.series || [])
     .map((item) => item?.regionKey)

@@ -68,10 +68,10 @@ export default {
     showToggles: { type: Boolean, default: true }
   },
   setup(props) {
-    const resolveMetricIds = (chart) => {
-      if (Array.isArray(chart?.metricIds) && chart.metricIds.length) return chart.metricIds;
+    const resolveEnglishKeys = (chart) => {
+      if (Array.isArray(chart?.englishKeys) && chart.englishKeys.length) return chart.englishKeys;
       if (Array.isArray(chart?.seriesRefs) && chart.seriesRefs.length) {
-        return chart.seriesRefs.map((item) => item?.metricId).filter(Boolean);
+        return chart.seriesRefs.map((item) => item?.englishKey).filter(Boolean);
       }
       return [];
     };
@@ -115,15 +115,23 @@ export default {
 
     const filteredCharts = computed(() => {
       if (!internalShowToggles.value) return props.chartMetaList;
-      return props.chartMetaList.filter(c =>
-        viewMode.value === 'monthly' ? c.dbCode === 'yd' : c.dbCode === 'nd'
-      );
+      return props.chartMetaList.filter((chart) => {
+        const explicitViewModes = Array.isArray(chart?.viewModes)
+          ? chart.viewModes.map((item) => String(item || '').trim()).filter(Boolean)
+          : [];
+
+        if (explicitViewModes.length) {
+          return explicitViewModes.includes(viewMode.value);
+        }
+
+        return viewMode.value === 'monthly' ? chart.dbCode === 'yd' : chart.dbCode === 'nd';
+      });
     });
 
     const chartsToRender = computed(() => {
       return filteredCharts.value.filter((chart) => {
-        const metricIds = resolveMetricIds(chart);
-        return metricIds.some((metricId) => selectDataFromArr(props.returnData, metricId, chart.dbCode, '', 1).length > 0);
+        const englishKeys = resolveEnglishKeys(chart);
+        return englishKeys.some((englishKey) => selectDataFromArr(props.returnData, englishKey, chart.dbCode, '', 1).length > 0);
       });
     });
 
@@ -146,11 +154,11 @@ export default {
       const dbCode = activeDbCode.value;
       const relevantCharts = chartsToRender.value.length ? chartsToRender.value : filteredCharts.value;
       const latestDates = relevantCharts.flatMap(chart =>
-        resolveMetricIds(chart).flatMap((metricId) => {
-          const cacheKey = `${dbCode}|${metricId}|root|0`;
+        resolveEnglishKeys(chart).flatMap((englishKey) => {
+          const cacheKey = `${dbCode}|${englishKey}|root|0`;
           let seriesData = latestPeriodCache.get(cacheKey);
           if (!seriesData) {
-            seriesData = selectDataFromArr(props.returnData, metricId, dbCode, '', 0);
+            seriesData = selectDataFromArr(props.returnData, englishKey, dbCode, '', 0);
             latestPeriodCache.set(cacheKey, seriesData);
           }
           return seriesData.map(item => String(item.date));

@@ -216,13 +216,7 @@ export const PiePlugin = (option, ctx) => {
 };
 
 const resolvePieTriggerKeys = (pieConfig = {}) => {
-  if (Array.isArray(pieConfig.triggerMetricIds) && pieConfig.triggerMetricIds.length > 0) {
-    return pieConfig.triggerMetricIds;
-  }
-  if (Array.isArray(pieConfig.triggerIndicatorKeys) && pieConfig.triggerIndicatorKeys.length > 0) {
-    return pieConfig.triggerIndicatorKeys;
-  }
-  return Array.isArray(pieConfig.triggerZbCodes) ? pieConfig.triggerZbCodes : [];
+  return Array.isArray(pieConfig.triggerEnglishKeys) ? pieConfig.triggerEnglishKeys : [];
 };
 
 const getNearestSeriesValue = (seriesData, targetIndex) => {
