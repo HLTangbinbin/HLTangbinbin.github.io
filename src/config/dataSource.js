@@ -1,12 +1,12 @@
+import { RUNTIME_CONFIG } from '@/config/runtimeConfig.js';
+
 const trimTrailingSlash = (value = '') => value.replace(/\/+$/, '');
 const trimLeadingDotSlash = (value = '') => value.replace(/^\.\//, '');
 
 const dataBaseUrl = trimTrailingSlash(process.env.VUE_APP_DATA_BASE_URL || '');
 const mapBaseUrl = trimTrailingSlash(process.env.VUE_APP_MAP_BASE_URL || dataBaseUrl);
 const localDataBaseUrl = trimTrailingSlash(process.env.VUE_APP_LOCAL_DATA_BASE_URL || '/json');
-const defaultDataSourceMode = String(process.env.VUE_APP_DATA_SOURCE_MODE || '').trim().toLowerCase();
-const DATA_SOURCE_QUERY_KEY = 'dataSource';
-const DATA_SOURCE_STORAGE_KEY = 'tangdata:data-source-mode';
+const defaultDataSourceMode = String(RUNTIME_CONFIG.dataSourceMode || process.env.VUE_APP_DATA_SOURCE_MODE || '').trim().toLowerCase();
 
 function normalizeMode(value = '') {
   const mode = String(value || '').trim().toLowerCase();
@@ -14,25 +14,8 @@ function normalizeMode(value = '') {
   return '';
 }
 
-function getRuntimeDataSourceMode() {
-  if (typeof window === 'undefined') {
-    return normalizeMode(defaultDataSourceMode);
-  }
-
-  const queryMode = normalizeMode(new URLSearchParams(window.location.search).get(DATA_SOURCE_QUERY_KEY));
-  if (queryMode) {
-    window.localStorage.setItem(DATA_SOURCE_STORAGE_KEY, queryMode);
-    return queryMode;
-  }
-
-  const storedMode = normalizeMode(window.localStorage.getItem(DATA_SOURCE_STORAGE_KEY));
-  if (storedMode) return storedMode;
-
-  return normalizeMode(defaultDataSourceMode);
-}
-
 export function getCurrentDataSourceMode() {
-  return getRuntimeDataSourceMode() || 'cloud';
+  return normalizeMode(defaultDataSourceMode) || 'cloud';
 }
 
 export function resolveDataJsonUrl(path = '') {

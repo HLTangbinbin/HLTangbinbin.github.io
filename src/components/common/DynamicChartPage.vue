@@ -41,7 +41,7 @@ import { loadChartData } from '@/config/dataLoader.js';
 import { getRouteChartKey, resolveChartConfig } from '@/config/chartRegistry.js';
 import { hydratePageConfig, normalizePageConfig } from '@/config/pageConfig.js';
 import { logger } from '@/utils/Logger.js';
-import { getCurrentDataSourceMode } from '@/config/dataSource.js';
+import { RUNTIME_CONFIG } from '@/config/runtimeConfig.js';
 
 const route = useRoute();
 const currentConfig = shallowRef(null);
@@ -49,7 +49,7 @@ const returnData = shallowRef(null);
 const loading = shallowRef(false);
 const errorMessage = shallowRef('');
 let requestId = 0;
-const showIntegrityPanel = computed(() => process.env.NODE_ENV !== 'production' || getCurrentDataSourceMode() === 'local');
+const showIntegrityPanel = computed(() => Boolean(RUNTIME_CONFIG.showDataIntegrityPanel));
 const hasCharts = computed(() => Array.isArray(currentConfig.value?.charts) && currentConfig.value.charts.length > 0);
 const fallbackPageMeta = computed(() => normalizePageConfig({}, {
   routeKey: getRouteChartKey(route.path),
