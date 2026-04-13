@@ -27,6 +27,9 @@ export default {
     const chartContainer = ref(null);
     let chartInstance = null;
     let resizeHandler = null;
+    let touchStartHandler = null;
+    let touchMoveHandler = null;
+    let touchEndHandler = null;
 
     // 暴露给父组件的方法
     const toggleAllLegends = (selectAll) => {
@@ -44,6 +47,65 @@ export default {
     const hideTooltip = () => {
       if (!chartInstance || chartInstance.isDisposed()) return;
       chartInstance.dispatchAction({ type: 'hideTip' });
+    };
+
+    const isMobileViewport = () => window.innerWidth <= 768;
+
+    const showTooltipFromTouch = (event) => {
+      if (!isMobileViewport() || !chartInstance || chartInstance.isDisposed()) return;
+      const touch = event.touches?.[0];
+      const container = chartContainer.value;
+      if (!touch || !container) return;
+
+      const rect = container.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+
+      // Mobile tooltip should track the finger immediately instead of relying on long-press selection.
+      chartInstance.dispatchAction({
+        type: 'showTip',
+        x,
+        y
+      });
+    };
+
+    const bindMobileTooltipEvents = () => {
+      const container = chartContainer.value;
+      if (!container) return;
+
+      touchStartHandler = (event) => {
+        if (!isMobileViewport()) return;
+        event.preventDefault();
+        showTooltipFromTouch(event);
+      };
+
+      touchMoveHandler = () => {
+        if (!isMobileViewport()) return;
+        hideTooltip();
+      };
+
+      touchEndHandler = () => {
+        hideTooltip();
+      };
+
+      container.addEventListener('touchstart', touchStartHandler, { passive: false });
+      container.addEventListener('touchmove', touchMoveHandler, { passive: true });
+      container.addEventListener('touchend', touchEndHandler, { passive: true });
+      container.addEventListener('touchcancel', touchEndHandler, { passive: true });
+    };
+
+    const unbindMobileTooltipEvents = () => {
+      const container = chartContainer.value;
+      if (!container) return;
+      if (touchStartHandler) container.removeEventListener('touchstart', touchStartHandler);
+      if (touchMoveHandler) container.removeEventListener('touchmove', touchMoveHandler);
+      if (touchEndHandler) {
+        container.removeEventListener('touchend', touchEndHandler);
+        container.removeEventListener('touchcancel', touchEndHandler);
+      }
+      touchStartHandler = null;
+      touchMoveHandler = null;
+      touchEndHandler = null;
     };
 
     const getPrimaryCategoryAxisData = (option) => {
@@ -180,8 +242,8 @@ export default {
         hideTooltip();
       });
 
-      chartContainer.value?.addEventListener('touchend', hideTooltip, { passive: true });
-      chartContainer.value?.addEventListener('touchcancel', hideTooltip, { passive: true });
+      unbindMobileTooltipEvents();
+      bindMobileTooltipEvents();
 
       // 🌟 性能优化核心：缓存上一次悬停的索引
       let lastDataIndex = -1;
@@ -325,8 +387,7 @@ export default {
     });
 
     onBeforeUnmount(() => {
-      chartContainer.value?.removeEventListener('touchend', hideTooltip);
-      chartContainer.value?.removeEventListener('touchcancel', hideTooltip);
+      unbindMobileTooltipEvents();
       if (resizeHandler) {
         window.removeEventListener('resize', resizeHandler);
         resizeHandler.cancel();
@@ -344,5 +405,8 @@ export default {
 .chart-view {
   width: 100%;
   height: 100%;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 </style>

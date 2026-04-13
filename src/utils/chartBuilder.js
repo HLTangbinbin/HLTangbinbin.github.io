@@ -413,7 +413,7 @@ class ChartBuilder {
       },
       tooltip: {
         trigger: 'axis', confine: true, enterable: !isMobile, alwaysShowContent: false,
-        triggerOn: 'mousemove|click',
+        triggerOn: isMobile ? 'none' : 'mousemove|click',
         backgroundColor: theme.bgCard,
         borderColor: theme.borderDefault,
         borderWidth: 1,
