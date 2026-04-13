@@ -85,12 +85,14 @@ function hydrateChartConfig(chartConfig = {}, dataset = {}) {
   if (!englishKeys.length) return null;
   const dbCode = chartConfig.dbCode || inferChartDbCode(sourceChart, dataset);
   const pieConfig = normalizePieConfig(chartConfig.pieConfig, englishKeys);
+  const resolvedUnit = resolveChartUnit(chartConfig, sourceChart, seriesRefs);
 
   return {
     ...chartConfig,
     id: chartConfig.id || chartKey || englishKeys.join('__'),
     chartKey,
     title: chartConfig.title || sourceChart?.title || chartKey || '未命名图表',
+    unit: resolvedUnit,
     dbCode,
     englishKeys,
     seriesRefs,
@@ -115,7 +117,9 @@ function resolveChartSeriesRefs(chartConfig = {}, sourceChart = null, dataset = 
   const excludes = Array.isArray(chartConfig.metricDisplayNameExcludes) ? chartConfig.metricDisplayNameExcludes : [];
 
   if (!includes.length && !excludes.length) {
-    return sourceSeriesRefs;
+    return sourceSeriesRefs
+      .map((item) => hydrateSeriesRef(item, dataset))
+      .filter(Boolean);
   }
 
   return sourceSeriesRefs.filter((item) => {
@@ -136,7 +140,9 @@ function resolveMetricRef(englishKey, sourceChart = null, dataset = {}) {
       refEnglishKey === String(englishKey || '').trim() ||
       refId === resolvedEnglishKey;
   });
-  if (matchedRef) return matchedRef;
+  if (matchedRef) {
+    return hydrateSeriesRef(matchedRef, dataset) || matchedRef;
+  }
 
   const metric = dataset?.metrics?.[resolvedEnglishKey];
   const indicator = dataset?.datasets?.[resolvedEnglishKey];
@@ -154,10 +160,41 @@ function resolveMetricRef(englishKey, sourceChart = null, dataset = {}) {
   };
 }
 
+function hydrateSeriesRef(seriesRef = {}, dataset = {}) {
+  const englishKey = String(seriesRef?.englishKey || seriesRef?.id || '').trim();
+  if (!englishKey) return seriesRef;
+
+  const resolved = resolveMetricRef(englishKey, null, dataset);
+  if (!resolved) return seriesRef;
+
+  return {
+    ...resolved,
+    ...seriesRef,
+    englishKey: seriesRef?.englishKey || resolved.englishKey,
+    unit: seriesRef?.unit || resolved.unit || '',
+    displayName: seriesRef?.displayName || resolved.displayName || '',
+    showName: seriesRef?.showName || resolved.showName || ''
+  };
+}
+
 function matchMetricPattern(label, pattern) {
   if (!pattern) return false;
   if (pattern instanceof RegExp) return pattern.test(label);
   return label.includes(String(pattern));
+}
+
+function resolveChartUnit(chartConfig = {}, sourceChart = null, seriesRefs = []) {
+  const explicitUnit = String(chartConfig?.unit || sourceChart?.unit || '').trim();
+  if (explicitUnit && explicitUnit !== '无') return explicitUnit;
+
+  const units = Array.from(new Set(
+    (Array.isArray(seriesRefs) ? seriesRefs : [])
+      .map((item) => String(item?.unit || '').trim())
+      .filter((item) => item && item !== '无')
+  ));
+
+  if (units.length === 1) return units[0];
+  return '';
 }
 
 function inferChartDbCode(chart = {}, dataset = {}) {

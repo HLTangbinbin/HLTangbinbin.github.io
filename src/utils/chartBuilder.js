@@ -127,6 +127,21 @@ function trimSharedParts(values = []) {
   });
 }
 
+function formatChartTitle(title = '', unit = '') {
+  const normalizedTitle = String(title || '').trim();
+  const normalizedUnit = String(unit || '').trim();
+  if (normalizedUnit === '无') return normalizedTitle;
+  if (!normalizedTitle || !normalizedUnit) return normalizedTitle;
+
+  const normalizedCompact = normalizedTitle.replace(/\s+/gu, '');
+  const unitSuffixes = [`(${normalizedUnit})`, `（${normalizedUnit}）`];
+  if (unitSuffixes.some((suffix) => normalizedCompact.endsWith(suffix))) {
+    return normalizedTitle;
+  }
+
+  return `${normalizedTitle} (${normalizedUnit})`;
+}
+
 class ChartBuilder {
   constructor(params) {
     this.params = params;
@@ -141,7 +156,6 @@ class ChartBuilder {
       englishKeys = [],
       regionCodes = [],
       dbCode = 'nd',
-      unit = '',
       exceptName = '',
       chartType = 'bar',
       yearLimit,
@@ -182,7 +196,7 @@ class ChartBuilder {
         if (!indicator) return;
 
         const cname = normalizeIndicatorLabel(indicator, englishKey, exceptName);
-        const baseName = `${cname}${unit}`;
+        const baseName = cname;
         let result = selectDataFromArr(data, englishKey, dbCode, singleRegionCode, yearLimit);
         let valueArr = result.map(item => item.value);
         let dateArr = result.map(item => item.date);
@@ -294,6 +308,7 @@ class ChartBuilder {
   buildBaseOption() {
     const { title, subtitle, isHorizontal, legendAllSelected, linkedLegend, gridTop = '140px', legendTop = '70px', unit = '', isMobile, titleTop = '15px', isYearlyCompare = false } = this.params;
     const theme = getChartThemeTokens();
+    const finalTitle = formatChartTitle(title, unit);
     
     const valueAxisConfig = {
       type: 'value', scale: true,
@@ -301,7 +316,7 @@ class ChartBuilder {
       max: (v) => v.max + (v.max - v.min) * 0.1,
       axisLine: { lineStyle: { color: theme.borderStrong } },
       splitLine: { lineStyle: { color: theme.borderDefault, type: 'dashed' } },
-      axisLabel: { color: theme.textMuted, formatter: (v) => v.toFixed(Math.abs(v) >= 1 ? 2 : 3) + unit },
+      axisLabel: { color: theme.textMuted, formatter: (v) => v.toFixed(Math.abs(v) >= 1 ? 2 : 3) },
     };
     const categoryAxisConfig = {
       type: 'category',
@@ -326,7 +341,7 @@ class ChartBuilder {
       backgroundColor: 'transparent',
       color: theme.palette,
       title: {
-        text: title, subtext: subtitle, left: 'center', top: titleTop, itemGap: 22,
+        text: finalTitle, subtext: subtitle, left: 'center', top: titleTop, itemGap: 22,
         textStyle: { fontSize: isMobile ? 14 : 18, color: theme.textPrimary, fontWeight: 700 },
         subtextStyle: { color: theme.textSecondary, fontWeight: 'bold', fontSize: isMobile ? 12 : 13, width: window.innerWidth * 0.8, overflow: 'breakAll' }
       },
