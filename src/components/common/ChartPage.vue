@@ -1,25 +1,29 @@
 <template>
   <div class="dashboard-global-wrapper">
-    <div class="page-header" v-if="headerStats.length || internalShowToggles">
+    <div class="page-header" v-if="latestPeriodText || internalShowToggles">
       <div class="header-left">
-        <div class="header-path" v-if="headerPathText">{{ headerPathText }}</div>
-        <div class="header-meta" v-if="headerStats.length || linkSummary">
-          <div class="header-stats" v-if="headerStats.length">
-            <div
-              v-for="item in headerStats"
-              :key="item.label"
-              class="header-stat"
-            >
-              <span class="header-stat-label">{{ item.label }}</span>
-              <span class="header-stat-value">{{ item.value }}</span>
-            </div>
-          </div>
+        <div class="header-path-wrap" v-if="headerPathText">
+          <div class="header-path">{{ headerPathText }}</div>
+        </div>
+        <div class="header-stat latest-inline" v-if="latestPeriodText">
+          <span class="header-stat-label">最新</span>
+          <span class="header-stat-value">{{ latestPeriodText }}</span>
+        </div>
+        <div class="header-meta" v-if="linkSummary">
           <div v-if="linkSummary" class="header-linkage">
             <span class="linkage-label">联动中</span>
             <span class="linkage-value">{{ linkSummary }}</span>
             <button class="linkage-clear" type="button" @click="clearLinkedSelection">清除</button>
           </div>
         </div>
+      </div>
+
+      <div class="header-center">
+        <DataStatusPanel
+          :chartMetaList="chartsToRender.length ? chartsToRender : filteredCharts"
+          :returnData="returnData"
+          inline
+        />
       </div>
 
       <div class="view-mode-container" v-if="internalShowToggles">
@@ -55,11 +59,12 @@
 <script>
 import { ref, computed, watch } from 'vue'; 
 import ChartContainer from './ChartContainer.vue';
+import DataStatusPanel from '@/components/common/components/DataStatusPanel.vue';
 import { selectDataFromArr } from '@/utils/dataEngine.js';
 
 export default {
   name: 'ChartPage',
-  components: { ChartContainer },
+  components: { ChartContainer, DataStatusPanel },
   props: {
     chartMetaList: { type: Array, required: true },
     returnData: { type: Object, required: true },
@@ -195,9 +200,7 @@ export default {
       return pathText || modeText;
     });
 
-    const headerStats = computed(() => ([
-      { label: '最新', value: latestPeriod.value }
-    ]));
+    const latestPeriodText = computed(() => latestPeriod.value);
 
     const linkSummary = computed(() => {
       if (!linkedSelection.value?.value) return '';
@@ -237,7 +240,7 @@ export default {
       availableDbCodes,
       internalShowToggles,
       headerPathText,
-      headerStats,
+      latestPeriodText,
       linkedSelection,
       linkSummary,
       chartsToRender,
@@ -292,15 +295,41 @@ function getDbCodeLabel(dbCode, viewMode) {
   flex-wrap: nowrap;
   padding-bottom: 14px;
   border-bottom: 1px solid var(--border-default);
+  position: relative;
 }
 
 .header-left {
   min-width: 0;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 30px;
   flex: 1 1 auto;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.header-path-wrap {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.header-center {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 14px;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  max-width: min(42vw, 560px);
+  pointer-events: none;
 }
 
 .header-path {
@@ -312,8 +341,13 @@ function getDbCodeLabel(dbCode, viewMode) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
+  max-width: 100%;
+}
+
+.latest-inline {
+  flex: 0 0 auto;
 }
 
 .header-meta {
@@ -439,9 +473,13 @@ function getDbCodeLabel(dbCode, viewMode) {
 .view-mode-container {
   display: flex;
   justify-content: flex-end;
-  margin-left: auto;
+  align-items: center;
+  gap: 10px;
   align-self: center;
   flex: 0 0 auto;
+  margin-left: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .custom-segment {
@@ -506,8 +544,8 @@ function getDbCodeLabel(dbCode, viewMode) {
 
   .page-header {
     width: 100%;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
     gap: 6px;
     margin: 0 0 10px;
     padding-bottom: 10px;
@@ -521,10 +559,30 @@ function getDbCodeLabel(dbCode, viewMode) {
     min-width: 0;
   }
 
+  .header-path-wrap {
+    width: auto;
+    max-width: 100%;
+    flex: 0 1 auto;
+  }
+
+  .header-center {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    pointer-events: auto;
+  }
+
+  .view-mode-container {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
   .header-path {
     font-size: 12px;
     line-height: 28px;
-    flex: 1 1 0;
+    flex: 0 1 auto;
+    max-width: 100%;
   }
 
   .header-meta {

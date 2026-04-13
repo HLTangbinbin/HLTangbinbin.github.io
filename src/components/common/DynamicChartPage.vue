@@ -6,10 +6,6 @@
       :returnData="returnData"
       :config="currentConfig.source"
     />
-    <DataStatusPanel
-      :chartMetaList="currentConfig.charts"
-      :returnData="returnData"
-    />
     <ChartPage
       :chartMetaList="currentConfig.charts"
       :returnData="returnData"
@@ -36,7 +32,6 @@ import { computed, shallowRef, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import ChartPage from '@/components/common/ChartPage.vue';
 import DataIntegrityPanel from '@/components/common/components/DataIntegrityPanel.vue';
-import DataStatusPanel from '@/components/common/components/DataStatusPanel.vue';
 import { loadChartData } from '@/config/dataLoader.js';
 import { getRouteChartKey, resolveChartConfig } from '@/config/chartRegistry.js';
 import { hydratePageConfig, normalizePageConfig } from '@/config/pageConfig.js';

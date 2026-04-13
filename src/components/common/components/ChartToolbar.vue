@@ -2,23 +2,15 @@
   <div class="bi-toolbar">
     <div class="toolbar-group view-group">
       <div class="group-label"><i class="el-icon-menu"></i> 视图</div>
-      <el-radio-group v-model="store.viewModeDisplay.value" :size="store.controlSize.value" class="no-shrink"
-        style="margin-right: 8px;">
-        <el-radio-button label="chart">图表</el-radio-button>
+      <el-radio-group v-model="store.displayModeModel.value" :size="store.controlSize.value" class="no-shrink">
         <el-radio-button label="table">表格</el-radio-button>
+        <el-radio-button label="bar">柱状</el-radio-button>
+        <el-radio-button label="hbar">条形</el-radio-button>
+        <el-radio-button label="line">折线</el-radio-button>
         <el-radio-button v-if="store?.isMapSupported?.value" label="map">
-        地图
-      </el-radio-button>
+          地图
+        </el-radio-button>
       </el-radio-group>
-      <template v-if="store.viewModeDisplay.value === 'chart'">
-        <div class="split-line"></div>
-        <el-radio-group v-model="store.chartTypeModel.value" :size="store.controlSize.value"
-          class="chart-type-radio no-shrink">
-          <el-radio-button label="bar">柱状</el-radio-button>
-          <el-radio-button label="hbar">条形</el-radio-button>
-          <el-radio-button label="line">折线</el-radio-button>
-        </el-radio-group>
-      </template>
     </div>
 
     <div class="toolbar-group time-group">
@@ -414,17 +406,17 @@ defineEmits(['toggleAllLegends']);
 @media (max-width: 768px) {
   .bi-toolbar {
     flex-direction: column !important;
-    padding: 6px;
-    gap: 6px;
+    padding: 4px;
+    gap: 4px;
     margin-bottom: 0px;
     align-items: stretch;
   }
 
   .toolbar-group {
     width: 100%;
-    padding: 0 8px;
-    gap: 8px;
-    height: 40px;
+    padding: 0 6px;
+    gap: 6px;
+    height: 36px;
     flex-wrap: nowrap !important;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -436,10 +428,10 @@ defineEmits(['toggleAllLegends']);
   }
 
   .group-label {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
-    width: 45px;
-    padding-right: 4px;
+    width: 38px;
+    padding-right: 2px;
     flex-shrink: 0;
     justify-content: flex-start;
   }
@@ -470,9 +462,9 @@ defineEmits(['toggleAllLegends']);
   }
 
   .slider-wrapper {
-    min-width: 120px;
+    min-width: 96px;
     flex: 1 1 auto;
-    gap: 8px;
+    gap: 6px;
   }
 
   .flex-slider {
@@ -499,14 +491,14 @@ defineEmits(['toggleAllLegends']);
   :deep(.el-checkbox-button__inner) {
     width: 100%;
     height: 28px !important;
-    padding: 0 4px !important;
-    font-size: 12px !important;
+    padding: 0 2px !important;
+    font-size: 11px !important;
     border-radius: 6px !important;
   }
 
   .btn-toggle-all {
     height: 28px !important;
-    padding: 0 10px !important;
+    padding: 0 8px !important;
     font-size: 12px !important;
     flex: 0 0 auto;
     border-radius: 8px !important;
@@ -521,17 +513,16 @@ defineEmits(['toggleAllLegends']);
   }
 
   .split-line {
-    height: 14px;
-    margin: 0 2px;
+    display: none;
   }
 
   .compare-trigger {
     height: 28px;
-    padding: 0 10px;
+    padding: 0 8px;
     font-size: 12px;
     border-radius: 8px;
     flex: 1 1 auto;
-    margin-right: 4px;
+    margin-right: 0;
   }
 
   .export-text {

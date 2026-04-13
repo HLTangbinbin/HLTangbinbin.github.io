@@ -159,6 +159,11 @@ const NATION_BIRTH_DEATH_GROWTH_METRICS = [
   'death_rate',
   'natural_population_growth_rate'
 ];
+const NATION_BIRTH_DEATH_POPULATION_METRICS = [
+  'birth_population',
+  'death_population',
+  'zi_ran_zeng_zhang_population'
+];
 const NATION_POPULATION_SAMPLE_AGE_METRICS = [
   'population_in_population_sample_survey',
   'aged_0_to_4_population_sample',
@@ -326,7 +331,8 @@ const NATION_MARRIAGE_METRICS = [
   'marriage_registrations_tenk_couples',
   'marriage_registrations_first_marriage_registrants_tenk_people',
   'marriage_registrations_zai_hun_people_count_tenk_people',
-  'divorce_registrations_tenk_couples'
+  'divorce_registrations_tenk_couples',
+  'birth_population'
 ];
 const NATION_RETAIL_MONTHLY_METRICS = {
   current: ['total_retail_sales_current_value'],
@@ -674,7 +680,9 @@ export const v3PageRegistry = {
       metricChartRef('nation_birth_death_growth_metrics', '出生率/死亡率/自然增长率', NATION_BIRTH_DEATH_GROWTH_METRICS, {
         dbCode: 'nd'
       }),
-      chartRef('nation_birth_death_population'),
+      metricChartRef('nation_birth_death_population_clean', '出生/死亡/自然增长人口', NATION_BIRTH_DEATH_POPULATION_METRICS, {
+        dbCode: 'nd'
+      }),
       metricChartRef('nation_population_age', '年龄结构与抚养比', NATION_POPULATION_AGE_METRICS, {
         dbCode: 'nd',
         ...pieIndexes([0, 1, 2])
@@ -788,7 +796,7 @@ export const v3PageRegistry = {
   MarriageStatus: {
     source: createDataSource('nation'),
     charts: [
-      metricChartRef('nation_marriage_overview', '结婚/初婚/再婚/离婚/出生人口', NATION_MARRIAGE_METRICS, {
+      metricChartRef('nation_marriage_overview', '结离婚人数', NATION_MARRIAGE_METRICS, {
         dbCode: 'nd',
         legendTop: '90px',
         gridTop: '320px',

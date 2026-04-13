@@ -1,5 +1,9 @@
 <template>
-  <section v-if="alerts.length" class="status-panel">
+  <section
+    v-if="alerts.length"
+    class="status-panel"
+    :class="[inline ? 'inline' : `count-${alerts.length}`]"
+  >
     <article
       v-for="alert in alerts"
       :key="alert.title"
@@ -7,35 +11,55 @@
       :class="`tone-${alert.tone}`"
     >
       <div class="alert-title">{{ alert.title }}</div>
-      <div class="alert-body">{{ alert.body }}</div>
+      <div class="alert-body">{{ inline ? (alert.shortBody || alert.body) : alert.body }}</div>
     </article>
   </section>
 </template>
 
 <script setup>
 import { computed, defineProps } from 'vue';
-import { getTimeItems } from '@/utils/statDataAdapter.js';
+import { selectDataFromArr } from '@/utils/dataEngine.js';
 
 const props = defineProps({
   chartMetaList: { type: Array, default: () => [] },
   returnData: { type: Object, default: () => ({}) },
+  inline: { type: Boolean, default: false },
 });
+
+function resolveEnglishKeys(chart) {
+  if (Array.isArray(chart?.englishKeys) && chart.englishKeys.length) return chart.englishKeys;
+  if (Array.isArray(chart?.seriesRefs) && chart.seriesRefs.length) {
+    return chart.seriesRefs.map((item) => item?.englishKey).filter(Boolean);
+  }
+  return [];
+}
 
 const requiredDbCodes = computed(() => Array.from(new Set(
   props.chartMetaList.map(chart => chart.dbCode).filter(Boolean)
 )));
 
 const availableDbCodes = computed(() => {
-  const timeItems = Object.values(getTimeItems(props.returnData));
-  return requiredDbCodes.value.filter((dbCode) => timeItems.some((item) => item?.period === dbCode));
+  return requiredDbCodes.value.filter((dbCode) =>
+    props.chartMetaList
+      .filter((chart) => chart?.dbCode === dbCode)
+      .some((chart) =>
+        resolveEnglishKeys(chart).some((englishKey) =>
+          selectDataFromArr(props.returnData, englishKey, dbCode, '', 1).length > 0
+        )
+      )
+  );
 });
 
 const latestPeriodMap = computed(() => {
   const result = {};
   requiredDbCodes.value.forEach((dbCode) => {
-    const periods = Object.values(getTimeItems(props.returnData))
-      .filter((item) => item?.period === dbCode)
-      .map((item) => item?.key)
+    const periods = props.chartMetaList
+      .filter((chart) => chart?.dbCode === dbCode)
+      .flatMap((chart) =>
+        resolveEnglishKeys(chart).flatMap((englishKey) =>
+          selectDataFromArr(props.returnData, englishKey, dbCode, '', 0).map((item) => item?.date)
+        )
+      )
       .filter(Boolean);
     if (!periods.length) return;
     const normalized = periods.map((item) => String(item)).sort((a, b) => Number(a) - Number(b));
@@ -52,33 +76,20 @@ const alerts = computed(() => {
     items.push({
       tone: 'critical',
       title: '频率缺失',
+      shortBody: formatDbCodes(missingCodes),
       body: `当前页面需要 ${formatDbCodes(missingCodes)} 数据，但返回结果中未提供对应时间序列。`,
     });
   }
 
   requiredDbCodes.value.forEach(dbCode => {
-    const periods = Object.values(getTimeItems(props.returnData))
-      .filter((item) => item?.period === dbCode)
-      .map((item) => item?.key)
-      .filter(Boolean);
     const freshnessState = evaluateFreshness(dbCode, latestPeriodMap.value[dbCode]);
     if (freshnessState && freshnessState.tone !== 'healthy') {
       items.push({
         tone: freshnessState.tone,
         title: `${dbCode === 'yd' ? '月度' : '年度'}更新偏慢`,
+        shortBody: freshnessState.shortBody,
         body: freshnessState.body,
       });
-    }
-
-    if (Array.isArray(periods)) {
-      const threshold = dbCode === 'yd' ? 12 : 8;
-      if (periods.length < threshold) {
-        items.push({
-          tone: 'warn',
-          title: `${dbCode === 'yd' ? '月度' : '年度'}样本偏短`,
-          body: `当前仅返回 ${periods.length} 个期次，趋势判断和同比分析容易受短样本干扰。`,
-        });
-      }
     }
   });
 
@@ -89,6 +100,7 @@ function evaluateFreshness(dbCode, latestPeriod) {
   if (!latestPeriod) {
     return {
       tone: 'critical',
+      shortBody: '暂无期次',
       body: `未识别到${dbCode === 'yd' ? '月度' : '年度'}最新期次。`,
     };
   }
@@ -103,9 +115,17 @@ function evaluateFreshness(dbCode, latestPeriod) {
       return { tone: 'healthy', body: '' };
     }
     if (diff <= 5) {
-      return { tone: 'warn', body: `最新月度数据停留在 ${formatPeriod(latestPeriod)}，较当前时间已滞后 ${diff} 个月。` };
+      return {
+        tone: 'warn',
+        shortBody: `${formatPeriod(latestPeriod)} · 滞后${diff}月`,
+        body: `最新月度数据停留在 ${formatPeriod(latestPeriod)}，较当前时间已滞后 ${diff} 个月。`
+      };
     }
-    return { tone: 'critical', body: `最新月度数据停留在 ${formatPeriod(latestPeriod)}，滞后 ${diff} 个月，建议优先检查定时任务和服务器文件同步。` };
+    return {
+      tone: 'critical',
+      shortBody: `${formatPeriod(latestPeriod)} · 滞后${diff}月`,
+      body: `最新月度数据停留在 ${formatPeriod(latestPeriod)}，滞后 ${diff} 个月，建议优先检查定时任务和服务器文件同步。`
+    };
   }
 
   const parsed = parseYearPeriod(latestPeriod);
@@ -115,9 +135,17 @@ function evaluateFreshness(dbCode, latestPeriod) {
     return { tone: 'healthy', body: '' };
   }
   if (diff <= 2) {
-    return { tone: 'warn', body: `最新年度数据停留在 ${formatPeriod(latestPeriod)}，较当前年份已有明显延迟。` };
+    return {
+      tone: 'warn',
+      shortBody: formatPeriod(latestPeriod),
+      body: `最新年度数据停留在 ${formatPeriod(latestPeriod)}，较当前年份已有明显延迟。`
+    };
   }
-  return { tone: 'critical', body: `最新年度数据停留在 ${formatPeriod(latestPeriod)}，建议确认年度快照是否已重新生成。` };
+  return {
+    tone: 'critical',
+    shortBody: formatPeriod(latestPeriod),
+    body: `最新年度数据停留在 ${formatPeriod(latestPeriod)}，建议确认年度快照是否已重新生成。`
+  };
 }
 
 function parseMonthPeriod(value) {
@@ -168,10 +196,40 @@ function dedupeAlerts(items) {
   gap: 12px;
 }
 
+.status-panel.count-1 {
+  max-width: 760px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.status-panel.count-2 {
+  max-width: 1080px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.status-panel.inline {
+  width: auto;
+  max-width: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .alert-card {
   padding: 14px 16px;
   border-radius: 18px;
   border: 1px solid transparent;
+}
+
+.status-panel.inline .alert-card {
+  padding: 6px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
 }
 
 .alert-card.tone-healthy {
@@ -196,10 +254,24 @@ function dedupeAlerts(items) {
   color: var(--text-primary);
 }
 
+.status-panel.inline .alert-title {
+  margin-bottom: 0;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
 .alert-body {
   font-size: 13px;
   line-height: 1.75;
   color: var(--text-secondary);
+}
+
+.status-panel.inline .alert-body {
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (max-width: 768px) {
@@ -207,8 +279,25 @@ function dedupeAlerts(items) {
     grid-template-columns: 1fr;
   }
 
+  .status-panel.inline {
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
   .alert-card {
     border-radius: 14px;
+  }
+
+  .status-panel.inline .alert-card {
+    width: 100%;
+    border-radius: 12px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .status-panel.inline .alert-body {
+    white-space: normal;
   }
 }
 </style>

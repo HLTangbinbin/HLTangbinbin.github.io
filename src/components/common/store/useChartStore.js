@@ -85,6 +85,26 @@ export function createChartStore(props) {
     }
   });
 
+  const displayModeModel = computed({
+    get() {
+      if (viewModeDisplay.value === 'table') return 'table';
+      if (viewModeDisplay.value === 'map') return 'map';
+      return chartTypeModel.value;
+    },
+    set(val) {
+      if (val === 'table') {
+        viewModeDisplay.value = 'table';
+        return;
+      }
+      if (val === 'map') {
+        viewModeDisplay.value = 'map';
+        return;
+      }
+      viewModeDisplay.value = 'chart';
+      chartTypeModel.value = val;
+    }
+  });
+
   watch(isMonthlyChart, (isMonthly) => {
     if (!isMonthly) isYearlyCompare.value = false;
     selectedExtraCities.value = [];
@@ -243,7 +263,7 @@ export function createChartStore(props) {
     props,
     themeMode,
     isMobile, controlSize, chartHeight,
-    viewModeDisplay, chartTypeModel, currentChartType, isHorizontal,
+    viewModeDisplay, chartTypeModel, displayModeModel, currentChartType, isHorizontal,
     yearLimit, legendAllSelected, isYearlyCompare, selectedLegend, offsetValue,
     enableSmartAnalysis, isDrawerVisible, searchKeyword, selectedExtraCities,
     isProvince, finalCityCodeArr, showCityAddToggle, filteredCities, getCityName, toggleCity,

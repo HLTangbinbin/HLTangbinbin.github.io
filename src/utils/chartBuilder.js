@@ -10,6 +10,21 @@ function escapeRegExp(text) {
 const INDICATOR_LABEL_OVERRIDES = {
   nation_shanghai_composite_index: '上证综合指数',
   nation_shenzhen_composite_index: '深证综合指数',
+  kindergarten_count: '幼儿园',
+  special_education_school_count: '特殊教育',
+  regular_primary_school_count: '普通小学',
+  vocational_secondary_school_count: '职业中学',
+  junior_high_school_count: '初中',
+  regular_high_school_count: '普通高中',
+  regular_secondary_school_count: '普通中学',
+  higher_education_institution_count: '普通、职业高等学校',
+  marriage_registrations_tenk_couples: '结婚',
+  divorce_registrations_tenk_couples: '离婚',
+  marriage_registrations_first_marriage_registrants_tenk_people: '初婚',
+  marriage_registrations_zai_hun_people_count_tenk_people: '再婚',
+  birth_population: '出生人口',
+  death_population: '死亡人口',
+  zi_ran_zeng_zhang_population: '自然增长人口',
   nation_kindergarten_count: '学前',
   nation_primary_school_count: '普通小学',
   nation_junior_high_school_count: '普通初中',
@@ -112,19 +127,70 @@ function trimSharedParts(values = []) {
   const safeSuffix = suffix.length >= 2 ? suffix : '';
 
   return normalized.map((label) => {
-    let compact = label;
-    if (safePrefix && compact.startsWith(safePrefix)) {
-      compact = compact.slice(safePrefix.length);
-    }
+    const prefixTrimmed = safePrefix && label.startsWith(safePrefix)
+      ? label.slice(safePrefix.length)
+      : label;
+    const suffixTrimmed = safeSuffix && label.endsWith(safeSuffix)
+      ? label.slice(0, label.length - safeSuffix.length)
+      : label;
+
+    let compact = prefixTrimmed;
     if (safeSuffix && compact.endsWith(safeSuffix)) {
       compact = compact.slice(0, compact.length - safeSuffix.length);
     }
-    compact = compact.replace(/^[\s:：、，,;；\-_/()（）]+|[\s:：、，,;；\-_/()（）]+$/gu, '').trim();
+    compact = sanitizeCompactLabel(compact);
+
+    if (compact.length >= 2) {
+      return compact;
+    }
+
+    const fallbackCandidates = [
+      createTailFallback(prefixTrimmed),
+      createHeadFallback(suffixTrimmed),
+      sanitizeCompactLabel(prefixTrimmed),
+      sanitizeCompactLabel(suffixTrimmed)
+    ].filter(Boolean);
+
+    const shortestMeaningful = fallbackCandidates
+      .filter((item, index, arr) => arr.indexOf(item) === index)
+      .sort((a, b) => a.length - b.length)[0];
+
+    if (shortestMeaningful) {
+      return shortestMeaningful;
+    }
+
     if (!compact && safePrefix && safeSuffix) {
       return '全部';
     }
-    return compact.length >= 2 ? compact : label;
+
+    return label;
   });
+}
+
+function sanitizeCompactLabel(value) {
+  return String(value || '')
+    .replace(/^[\s:：、，,;；\-_/()（）]+|[\s:：、，,;；\-_/()（）]+$/gu, '')
+    .trim();
+}
+
+function createTailFallback(value) {
+  const text = sanitizeCompactLabel(value);
+  if (text.length <= 4) return text;
+
+  const semanticTail = text.match(/(累计增长率|累计增长|同比增长率|同比增长|同比|累计值|当期值|期末值|增速|增长率|增长|销售额|销售面积|投资额|均价|价格指数|指数)$/u);
+  if (semanticTail?.[0]) return semanticTail[0];
+
+  return text.slice(-4);
+}
+
+function createHeadFallback(value) {
+  const text = sanitizeCompactLabel(value);
+  if (text.length <= 4) return text;
+
+  const semanticHead = text.match(/^(累计增长率|累计增长|同比增长率|同比增长|同比|累计值|当期值|期末值|增速|增长率|增长|销售额|销售面积|投资额|均价|价格指数|指数)/u);
+  if (semanticHead?.[0]) return semanticHead[0];
+
+  return text.slice(0, 4);
 }
 
 function formatChartTitle(title = '', unit = '') {
