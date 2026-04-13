@@ -146,10 +146,12 @@ const NATION_TOTAL_POPULATION_METRICS = [
   'urban_population_tenk_people',
   'rural_population_tenk_people'
 ];
-const NATION_POPULATION_AGE_METRICS = [
+const NATION_POPULATION_AGE_STRUCTURE_METRICS = [
   'aged_0_to_14_population_tenk_people',
   'aged_15_to_64_population_tenk_people',
-  'aged_65_and_above_population_tenk_people',
+  'aged_65_and_above_population_tenk_people'
+];
+const NATION_POPULATION_DEPENDENCY_METRICS = [
   'zong_dependency_ratio_percent',
   'shao_er_dependency_ratio_percent',
   'lao_nian_dependency_ratio_percent'
@@ -230,12 +232,12 @@ const NATION_POPULATION_SAMPLE_EDUCATION_METRICS = [
   'age_6_plus_college_and_above_female_sample'
 ];
 const NATION_BUDGET_REVENUE_METRICS = [
-  'national_general_public_budget_revenue_hm_yuan_budget_income_nd',
+  'national_general_public_budget_revenue_hm_yuan_nd',
   'central_general_public_budget_revenue_hm_yuan',
   'local_general_public_budget_revenue_hm_yuan'
 ];
 const NATION_BUDGET_EXPENDITURE_METRICS = [
-  'national_general_public_budget_expenditure_hm_yuan_budget_expenditure_nd',
+  'national_general_public_budget_expenditure_hm_yuan_nd',
   'central_general_public_budget_expenditure_hm_yuan',
   'local_general_public_budget_expenditure_hm_yuan'
 ];
@@ -245,13 +247,36 @@ const NATION_BUDGET_DEFICIT_METRICS = [
   'local_general_public_budget_deficit_hm_yuan'
 ];
 const NATION_BUDGET_INCOME_ITEM_METRICS = [
-  'national_general_public_budget_revenue_hm_yuan_budget_income_nd',
+  'national_general_public_budget_revenue_hm_yuan_budget_items_nd',
   'national_tax_revenue_hm_yuan',
+  'national_domestic_value_added_tax_hm_yuan',
+  'national_domestic_consumption_tax_hm_yuan',
+  'national_qi_ye_income_tax_hm_yuan',
+  'national_count_people_income_tax_hm_yuan',
+  'national_imported_goods_value_added_tax_consumption_tax_hm_yuan',
+  'national_export_goods_vat_and_consumption_tax_rebate',
+  'national_vehicle_purchase_tax_hm_yuan',
+  'national_stamp_tax_hm_yuan',
+  'national_securities_trading_stamp_tax_hm_yuan',
+  'national_resource_tax_hm_yuan',
+  'national_deed_tax_hm_yuan',
+  'national_tobacco_tax_hm_yuan',
+  'national_urban_maintenance_construction_tax_hm_yuan',
+  'national_property_tax_hm_yuan',
+  'national_farmland_occupation_tax_hm_yuan',
+  'national_tu_di_value_added_tax_hm_yuan',
+  'national_vehicle_vessel_tax_hm_yuan',
+  'national_vessel_tonnage_tax',
+  'national_urban_land_use_tax',
+  'national_business_tax',
+  'national_fa_mo_revenue_hm_yuan',
+  'national_zhuan_xiang_revenue_hm_yuan',
   'national_non_tax_revenue_hm_yuan',
+  'national_qi_ta_revenue_hm_yuan',
   'national_qi_ta_tax_revenue_hm_yuan'
 ];
 const NATION_BUDGET_EXPENDITURE_ITEM_METRICS = [
-  'national_general_public_budget_expenditure_hm_yuan_budget_expenditure_nd',
+  'national_general_public_budget_expenditure_hm_yuan_budget_items_nd',
   'fiscal_general_public_services_expenditure_hm_yuan',
   'fiscal_foreign_affairs_expenditure_hm_yuan',
   'fiscal_national_defense_expenditure_hm_yuan',
@@ -261,7 +286,9 @@ const NATION_BUDGET_EXPENDITURE_ITEM_METRICS = [
   'fiscal_science_technology_expenditure_hm_yuan',
   'fiscal_healthcare_expenditure_hm_yuan',
   'fiscal_social_security_employment_expenditure_hm_yuan',
+  'fiscal_agriculture_forestry_water_affairs_expenditure_hm_yuan',
   'fiscal_transportation_expenditure_hm_yuan',
+  'fiscal_urban_rural_community_affairs_expenditure_hm_yuan',
   'fiscal_culture_sports_media_expenditure_hm_yuan',
   'fiscal_environmental_protection_expenditure_hm_yuan',
   'fiscal_foreign_aid_expenditure_hm_yuan',
@@ -271,7 +298,6 @@ const NATION_BUDGET_EXPENDITURE_ITEM_METRICS = [
 ];
 const NATION_SCHOOL_COUNT_METRICS = [
   'kindergarten_count',
-  'special_education_school_count',
   'regular_primary_school_count',
   'vocational_secondary_school_count',
   'junior_high_school_count',
@@ -281,7 +307,6 @@ const NATION_SCHOOL_COUNT_METRICS = [
 ];
 const NATION_TEACHER_COUNT_METRICS = [
   'preschool_education_full_time_teacher_count',
-  'special_education_full_time_teacher_count',
   'primary_school_stage_full_time_teacher_count',
   'vocational_secondary_school_full_time_teacher_count',
   'junior_secondary_stage_full_time_teacher_count',
@@ -324,7 +349,7 @@ const NATION_MEDICAL_COUNT_METRICS = [
   'medical_and_health_institutions_count'
 ];
 const NATION_MEDICAL_PER_CAPITA_METRICS = [
-  'per_10k_people_hospitals_he_health_centers_bed_count',
+  'per_10k_people_have_health_technicians_count_people',
   'per_10k_people_medical_and_health_institutions_bed_count'
 ];
 const NATION_MARRIAGE_METRICS = [
@@ -683,9 +708,12 @@ export const v3PageRegistry = {
       metricChartRef('nation_birth_death_population_clean', '出生/死亡/自然增长人口', NATION_BIRTH_DEATH_POPULATION_METRICS, {
         dbCode: 'nd'
       }),
-      metricChartRef('nation_population_age', '年龄结构与抚养比', NATION_POPULATION_AGE_METRICS, {
+      metricChartRef('nation_population_age_structure', '年龄指标', NATION_POPULATION_AGE_STRUCTURE_METRICS, {
         dbCode: 'nd',
         ...pieIndexes([0, 1, 2])
+      }),
+      metricChartRef('nation_population_dependency_ratio', '抚养比指标', NATION_POPULATION_DEPENDENCY_METRICS, {
+        dbCode: 'nd'
       })
     ]
   },
@@ -728,14 +756,26 @@ export const v3PageRegistry = {
       metricChartRef('nation_budget_income_by_level', '全国、中央、地方财政收入', NATION_BUDGET_REVENUE_METRICS, { dbCode: 'nd' }),
       metricChartRef('nation_budget_expenditure_by_level', '全国、中央、地方财政支出', NATION_BUDGET_EXPENDITURE_METRICS, { dbCode: 'nd' }),
       metricChartRef('nation_budget_deficit_by_level', '全国、中央、地方财政赤字', NATION_BUDGET_DEFICIT_METRICS, { dbCode: 'nd' }),
-      metricChartRef('nation_budget_income_items', '全国财政收入各项目', NATION_BUDGET_INCOME_ITEM_METRICS, { dbCode: 'nd' }),
-      metricChartRef('nation_budget_expenditure_items', '全国财政支出各项目', NATION_BUDGET_EXPENDITURE_ITEM_METRICS, { dbCode: 'nd' })
+      metricChartRef('nation_budget_income_items', '全国财政收入各项目', NATION_BUDGET_INCOME_ITEM_METRICS, {
+        dbCode: 'nd',
+        ...pieAll({
+          topN: 10,
+          mergeOthersLabel: '其他项目'
+        })
+      }),
+      metricChartRef('nation_budget_expenditure_items', '全国财政支出各项目', NATION_BUDGET_EXPENDITURE_ITEM_METRICS, {
+        dbCode: 'nd',
+        ...pieAll({
+          topN: 10,
+          mergeOthersLabel: '其他项目'
+        })
+      })
     ]
   },
   RealEstateInvest: {
     source: createDataSource('nation'),
     charts: [
-      chartRef('real_estate_development_investment'),
+      chartRef('nation_real_estate_investment_total', { dbCode: 'nd', viewModes: ['yearly'] }),
       chartRef('nation_real_estate_investment', {
         id: 'nation_real_estate_investment_value',
         title: '房地产投资累计值',
@@ -753,6 +793,7 @@ export const v3PageRegistry = {
     charts: [
       chartRef('new_commercial_housing_sales_area', { dbCode: 'nd', viewModes: ['yearly'] }),
       chartRef('new_commercial_housing_sales_amount', { dbCode: 'nd', viewModes: ['yearly'] }),
+      chartRef('nation_new_home_avg_price_total', { dbCode: 'nd', viewModes: ['yearly'] }),
       metricChartRef('nation_residential_sales_area_cumulative', '商品住宅销售面积累计值', [
         'residential_housing_sales_area_cum_value_tenk_sqm'
       ], { dbCode: 'yd', viewModes: ['monthly'] }),
@@ -790,7 +831,7 @@ export const v3PageRegistry = {
     source: createDataSource('nation'),
     charts: [
       metricChartRef('nation_healthcare_count', '医院和机构数量', NATION_MEDICAL_COUNT_METRICS, { dbCode: 'nd' }),
-      metricChartRef('nation_healthcare_per_10k', '每万人医院和机构指标', NATION_MEDICAL_PER_CAPITA_METRICS, { dbCode: 'nd' })
+      metricChartRef('nation_healthcare_per_10k', '每万人卫生技术员数和每万人卫生机构床位数', NATION_MEDICAL_PER_CAPITA_METRICS, { dbCode: 'nd' })
     ]
   },
   MarriageStatus: {

@@ -18,14 +18,6 @@
         </div>
       </div>
 
-      <div class="header-center">
-        <DataStatusPanel
-          :chartMetaList="chartsToRender.length ? chartsToRender : filteredCharts"
-          :returnData="returnData"
-          inline
-        />
-      </div>
-
       <div class="view-mode-container" v-if="internalShowToggles">
         <el-radio-group v-model="viewMode" class="custom-segment" @change="handleViewModeUpdate">
           <el-radio-button label="monthly">月度</el-radio-button>
@@ -59,12 +51,11 @@
 <script>
 import { ref, computed, watch } from 'vue'; 
 import ChartContainer from './ChartContainer.vue';
-import DataStatusPanel from '@/components/common/components/DataStatusPanel.vue';
 import { selectDataFromArr } from '@/utils/dataEngine.js';
 
 export default {
   name: 'ChartPage',
-  components: { ChartContainer, DataStatusPanel },
+  components: { ChartContainer },
   props: {
     chartMetaList: { type: Array, required: true },
     returnData: { type: Object, required: true },
