@@ -1,9 +1,7 @@
 // utils/loadJsonOnce.js
 
-const jsonCache = new Map();
-
 /**
- * 加载本地 JSON 文件，只加载一次，后续返回缓存内容
+ * 纯网络层 JSON 加载器，缓存策略统一收敛到 dataLoader。
  * @param {string} path - JSON 文件相对路径（例如 /json/nation.json）
  * @returns {Promise<Object>} - 解析后的 JSON 对象
  */
@@ -12,32 +10,14 @@ export async function loadJsonOnce(path) {
     throw new Error('loadJsonOnce: 路径不能为空');
   }
 
-  if (jsonCache.has(path)) {
-    return jsonCache.get(path);
-  }
-
   const isLocalJson = /^\/json\//.test(path);
   const fetchOptions = isLocalJson
     ? { cache: 'no-store' }
     : {};
 
-  const loadPromise = fetch(path, fetchOptions)
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`加载失败: ${res.status} ${res.statusText}`);
-      }
-      return res.json();
-    })
-    .then(data => {
-      jsonCache.set(path, data);
-      return data;
-    })
-    .catch(err => {
-      jsonCache.delete(path); // 加载失败不缓存，防止死缓存
-      throw err;
-    });
-
-  // 立即缓存 Promise（防止并发重复请求）
-  jsonCache.set(path, loadPromise);
-  return loadPromise;
+  const response = await fetch(path, fetchOptions);
+  if (!response.ok) {
+    throw new Error(`加载失败: ${response.status} ${response.statusText}`);
+  }
+  return response.json();
 }

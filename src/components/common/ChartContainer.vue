@@ -25,13 +25,14 @@
 </template>
 
 <script setup>
-import { provide, ref, defineEmits, defineProps } from 'vue';
+import { provide, ref, defineEmits, defineProps, defineAsyncComponent } from 'vue';
 import { createChartStore } from './store/useChartStore.js';
-import ChartToolbar from './components/ChartToolbar.vue';
-import CityDrawer from './components/CityDrawer.vue';
-import SmartNarrativePanel from './components/SmartNarrativePanel.vue';
-import DataTableView from './components/DataTableView.vue';
 import ChartView from './ChartView.vue'; // 用户底层的 ECharts 包装器
+
+const ChartToolbar = defineAsyncComponent(() => import('./components/ChartToolbar.vue'));
+const CityDrawer = defineAsyncComponent(() => import('./components/CityDrawer.vue'));
+const SmartNarrativePanel = defineAsyncComponent(() => import('./components/SmartNarrativePanel.vue'));
+const DataTableView = defineAsyncComponent(() => import('./components/DataTableView.vue'));
 
 const props = defineProps({
   chart: { type: Object, required: true },

@@ -3,9 +3,7 @@ import { logger } from '@/utils/Logger.js';
 import { loadJsonOnce } from '@/utils/loadJsonOnce.js'; 
 import { normalizeStatData } from '@/utils/statDataAdapter.js';
 
-const dataCache = {};
-const preloadQueue = new Set();
-const preloadStatus = new Map();
+const dataCache = new Map();
 
 const CACHE_CONFIG = {
   TTL: 5 * 60 * 1000, 
@@ -23,48 +21,52 @@ export async function loadChartData({ localJson }, options = {}) {
   const { forceRefresh = false } = options;
   const jsonUrl = resolveDataJsonUrl(localJson);
   const cacheKey = jsonUrl;
+  const now = Date.now();
 
-  if (!forceRefresh && dataCache[cacheKey]) {
-    const { data, time } = dataCache[cacheKey];
-    if (Date.now() - time < CACHE_CONFIG.TTL) {
+  if (!cacheKey) {
+    throw new Error('缺少 JSON 数据源路径配置');
+  }
+
+  pruneExpiredCache(now);
+
+  if (!forceRefresh && dataCache.has(cacheKey)) {
+    const cachedEntry = dataCache.get(cacheKey);
+    if (cachedEntry?.data && cachedEntry.expiresAt > now) {
       performanceMetrics.cacheHits++;
-      return data;
+      touchCacheEntry(cacheKey, cachedEntry);
+      return cachedEntry.data;
+    }
+    if (cachedEntry?.promise) {
+      performanceMetrics.cacheHits++;
+      touchCacheEntry(cacheKey, cachedEntry);
+      return cachedEntry.promise;
     }
   }
 
   performanceMetrics.cacheMisses++;
-
-  if (preloadQueue.has(cacheKey)) {
-    return new Promise((resolve, reject) => {
-      const checkStatus = () => {
-        if (dataCache[cacheKey]) resolve(dataCache[cacheKey].data);
-        else if (preloadStatus.get(cacheKey) === 'error') reject(new Error('预加载失败'));
-        else setTimeout(checkStatus, 100);
-      };
-      checkStatus();
-    });
-  }
-
   const startTime = performance.now();
-  
-  try {
-    if (!jsonUrl) {
-      throw new Error('缺少 JSON 数据源路径配置');
-    }
+  const pendingPromise = loadJsonOnce(jsonUrl)
+    .then((rawData) => normalizeStatData(rawData))
+    .then((result) => {
+      const loadTime = performance.now() - startTime;
+      performanceMetrics.loadTimes[cacheKey] = loadTime;
+      updateCache(cacheKey, result);
+      logger.info(`数据加载完成: ${cacheKey}, 耗时: ${loadTime.toFixed(2)}ms`);
+      return result;
+    })
+    .catch((error) => {
+      dataCache.delete(cacheKey);
+      logger.error(`数据加载失败: ${cacheKey}`, error);
+      throw error;
+    });
 
-    const result = normalizeStatData(await loadJsonOnce(jsonUrl));
+  dataCache.set(cacheKey, {
+    promise: pendingPromise,
+    expiresAt: now + CACHE_CONFIG.TTL,
+    time: now
+  });
 
-    updateCache(cacheKey, result);
-    
-    const loadTime = performance.now() - startTime;
-    performanceMetrics.loadTimes[cacheKey] = loadTime;
-    
-    logger.info(`数据加载完成: ${cacheKey}, 耗时: ${loadTime.toFixed(2)}ms`);
-    return result;
-  } catch (error) {
-    logger.error(`数据加载失败: ${cacheKey}`, error);
-    throw error;
-  }
+  return pendingPromise;
 }
 
 export async function smartPreload(configs, options = {}) {
@@ -82,23 +84,17 @@ export async function smartPreload(configs, options = {}) {
   }
 
   setTimeout(async () => {
-    const remainingConfigs = configs.filter(config => 
-      !preloadQueue.has(resolveDataJsonUrl(config.source.localJson))
-    );
+    const remainingConfigs = configs.filter((config) => {
+      const cacheKey = resolveDataJsonUrl(config.source.localJson);
+      if (!cacheKey || !dataCache.has(cacheKey)) return true;
+      const cachedEntry = dataCache.get(cacheKey);
+      return !(cachedEntry?.data || cachedEntry?.promise);
+    });
 
     for (let i = 0; i < remainingConfigs.length; i += maxConcurrent) {
       const batch = remainingConfigs.slice(i, i + maxConcurrent);
       await Promise.allSettled(
-        batch.map(config => {
-          const cacheKey = resolveDataJsonUrl(config.source.localJson);
-          preloadQueue.add(cacheKey);
-          preloadStatus.set(cacheKey, 'loading');
-          
-          return loadChartData(config.source, { priority: 'low', preload: true }).finally(() => {
-            preloadQueue.delete(cacheKey);
-            preloadStatus.delete(cacheKey);
-          });
-        })
+        batch.map(config => loadChartData(config.source, { priority: 'low', preload: true }))
       );
       if (i + maxConcurrent < remainingConfigs.length) await new Promise(resolve => setTimeout(resolve, 200));
     }
@@ -107,27 +103,55 @@ export async function smartPreload(configs, options = {}) {
 
 function updateCache(key, data) {
   const now = Date.now();
-  Object.keys(dataCache).forEach(k => {
-    if (now - dataCache[k].time > CACHE_CONFIG.TTL) delete dataCache[k];
+  pruneExpiredCache(now);
+  dataCache.delete(key);
+  dataCache.set(key, {
+    data,
+    expiresAt: now + CACHE_CONFIG.TTL,
+    time: now
   });
-
-  if (Object.keys(dataCache).length >= CACHE_CONFIG.MAX_SIZE) {
-    const oldestKey = Object.keys(dataCache).reduce((a, b) => dataCache[a].time < dataCache[b].time ? a : b);
-    delete dataCache[oldestKey];
-  }
-  dataCache[key] = { data, time: now };
+  pruneOverflowCache();
 }
 
 export function getPerformanceMetrics() {
-  return { ...performanceMetrics, cacheSize: Object.keys(dataCache).length, preloadQueueSize: preloadQueue.size };
+  const preloadQueueSize = Array.from(dataCache.values()).filter((entry) => entry?.promise && !entry?.data).length;
+  return { ...performanceMetrics, cacheSize: dataCache.size, preloadQueueSize };
 }
 
 export function clearCache(pattern = null) {
   if (pattern) {
-    Object.keys(dataCache).forEach(key => {
-      if (key.includes(pattern)) delete dataCache[key];
+    Array.from(dataCache.keys()).forEach(key => {
+      if (key.includes(pattern)) dataCache.delete(key);
     });
   } else {
-    Object.keys(dataCache).forEach(key => delete dataCache[key]);
+    dataCache.clear();
+  }
+}
+
+function touchCacheEntry(key, entry) {
+  dataCache.delete(key);
+  dataCache.set(key, {
+    ...entry,
+    time: Date.now()
+  });
+}
+
+function pruneExpiredCache(now = Date.now()) {
+  Array.from(dataCache.entries()).forEach(([key, entry]) => {
+    if (!entry) {
+      dataCache.delete(key);
+      return;
+    }
+    if (entry.data && entry.expiresAt <= now) {
+      dataCache.delete(key);
+    }
+  });
+}
+
+function pruneOverflowCache() {
+  while (dataCache.size > CACHE_CONFIG.MAX_SIZE) {
+    const oldestKey = dataCache.keys().next().value;
+    if (oldestKey === undefined) break;
+    dataCache.delete(oldestKey);
   }
 }
