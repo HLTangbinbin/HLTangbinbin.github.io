@@ -24,6 +24,7 @@ export function createChartStore(props) {
   const isHorizontal = ref(false);
   const yearLimit = ref(10);
   const legendAllSelected = ref(true);
+  const legendSelectionMap = ref({});
   const isYearlyCompare = ref(false);
   const selectedLegend = ref(null);
   const offsetValue = ref(0);
@@ -60,6 +61,7 @@ export function createChartStore(props) {
       offsetValue.value = 0;
       isYearlyCompare.value = false;
       enableSmartAnalysis.value = false;
+      legendSelectionMap.value = {};
     }
   });
 
@@ -214,9 +216,18 @@ export function createChartStore(props) {
     if (finalOption.legend && finalOption.series) {
       const legendData = finalOption.legend.data || [];
       const activeLegend = linkedLegend.value;
+      const persistedSelection = legendSelectionMap.value || {};
 
       finalOption.legend.selected = legendData.reduce((acc, name) => {
-        acc[name] = activeLegend ? name === activeLegend : legendAllSelected.value;
+        if (activeLegend) {
+          acc[name] = name === activeLegend;
+          return acc;
+        }
+        if (Object.prototype.hasOwnProperty.call(persistedSelection, name)) {
+          acc[name] = persistedSelection[name];
+          return acc;
+        }
+        acc[name] = legendAllSelected.value;
         return acc;
       }, {});
     }
@@ -261,7 +272,7 @@ export function createChartStore(props) {
     isMobile, controlSize, chartHeight,
     viewModeDisplay, chartTypeModel, displayModeModel, currentChartType, isHorizontal,
     yearLimit, legendAllSelected, isYearlyCompare, selectedLegend, offsetValue,
-    enableSmartAnalysis, isDrawerVisible, searchKeyword, selectedExtraCities,
+    legendSelectionMap, enableSmartAnalysis, isDrawerVisible, searchKeyword, selectedExtraCities,
     isProvince, finalCityCodeArr, showCityAddToggle, filteredCities, getCityName, toggleCity,
     showSmartAnalysisToggle, showCompareToggle, showLegendSelector, showOffsetControls, legendList,
     chartOption, smartInsights, mapType, isMapSupported, linkedLegend,

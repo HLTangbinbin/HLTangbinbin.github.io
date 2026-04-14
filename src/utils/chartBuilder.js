@@ -279,6 +279,7 @@ class ChartBuilder {
           baseName,
           zbCode: englishKey,
           type: chartType,
+          legendHoverLink: false,
           data: valueArr,
           date: dateArr,
           emphasis: { focus: 'series' }
@@ -325,7 +326,7 @@ class ChartBuilder {
         const name = regionLabelMap.get(regionCode) || getRegionName(data, regionCode) || '';
         let result = selectDataFromArr(data, mainEnglishKey, dbCode, regionCode, perRegionLimit) || [];
         if (!result.length) return;
-        seriesData.push({ name, zbCode: mainEnglishKey, type: chartType, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' } });
+        seriesData.push({ name, zbCode: mainEnglishKey, type: chartType, legendHoverLink: false, data: result.map(i => i.value), date: result.map(i => i.date), emphasis: { focus: 'series' } });
       });
 
       if (seriesData.length) {
@@ -358,6 +359,7 @@ class ChartBuilder {
           name: regionLabelMap.get(fallbackRegionCode) || getRegionName(data, fallbackRegionCode),
           zbCode: englishKeys[0],
           type: chartType,
+          legendHoverLink: false,
           data: fallback.map((item) => item.value),
           date: fallback.map((item) => item.date),
           emphasis: { focus: 'series' }

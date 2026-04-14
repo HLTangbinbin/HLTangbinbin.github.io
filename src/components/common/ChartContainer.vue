@@ -16,6 +16,7 @@
         :initSelectAll="chartStore.legendAllSelected.value"
         :pieConfig="chartStore.isYearlyCompare.value ? null : chart.pieConfig"
         @legendStateChange="chartStore.legendAllSelected.value = $event"
+        @legendSelectionChange="chartStore.legendSelectionMap.value = $event"
         @dataPointClick="handleDataPointClick"
       />
 
@@ -52,9 +53,14 @@ provide('chartStore', chartStore);
 // 获取 ECharts 组件实例，用于触发内部方法
 const echartsInstanceRef = ref(null);
 const handleToggleAllLegends = () => {
-  chartStore.legendAllSelected.value = !chartStore.legendAllSelected.value;
+  const nextSelected = !chartStore.legendAllSelected.value;
+  chartStore.legendAllSelected.value = nextSelected;
+  chartStore.legendSelectionMap.value = chartStore.legendList.value.reduce((acc, name) => {
+    acc[name] = nextSelected;
+    return acc;
+  }, {});
   if (echartsInstanceRef.value) {
-    echartsInstanceRef.value.toggleAllLegends(chartStore.legendAllSelected.value);
+    echartsInstanceRef.value.toggleAllLegends(nextSelected);
   }
 };
 

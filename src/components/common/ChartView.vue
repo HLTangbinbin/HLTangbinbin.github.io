@@ -22,7 +22,7 @@ export default {
     pieConfig: { type: Object, default: () => ({}) },
     initSelectAll: { type: Boolean, default: true }
   },
-  emits: ['legendStateChange', 'dataPointClick'],
+  emits: ['legendStateChange', 'legendSelectionChange', 'dataPointClick'],
   setup(props, { expose, emit }) {
     const chartContainer = ref(null);
     let chartInstance = null;
@@ -298,6 +298,7 @@ export default {
 
       // 绑定图例点击事件
       chartInstance.on('legendselectchanged', (params) => {
+        emit('legendSelectionChange', { ...(params.selected || {}) });
         const allSelected = Object.values(params.selected).every(v => v === true);
         const noneSelected = Object.values(params.selected).every(v => v === false);
         if (allSelected) emit('legendStateChange', true);

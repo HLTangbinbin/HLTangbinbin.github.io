@@ -60,6 +60,7 @@ export const ComparePlugin = (option, ctx) => {
       newSeries.push({
         name: seriesName,
         type: 'line',
+        legendHoverLink: false,
         connectNulls: false,
         symbolSize: 6,
         data: yearMap[year][series.name] || new Array(12).fill(null)
@@ -113,6 +114,7 @@ export const SmartAnalysisPlugin = (option, ctx) => {
       trendLines.push({
         name: s.name + ' (趋势)',
         type: 'line',
+        legendHoverLink: false,
         data: trendData,
         isTrendline: true,
         lineStyle: { type: 'dashed', width: 2, opacity: 0.8 },
@@ -126,6 +128,7 @@ export const SmartAnalysisPlugin = (option, ctx) => {
         trendLines.push({
           name: `${s.name} (预测下限)`,
           type: 'line',
+          legendHoverLink: false,
           data: meta.lowerBand,
           isTrendline: true,
           hideInLegend: true,
@@ -139,6 +142,7 @@ export const SmartAnalysisPlugin = (option, ctx) => {
         trendLines.push({
           name: `${s.name} (预测区间)`,
           type: 'line',
+          legendHoverLink: false,
           data: meta.bandDiff,
           isTrendline: true,
           hideInLegend: true,
@@ -212,6 +216,7 @@ export const PiePlugin = (option, ctx) => {
     option.series.push({
       id: `pie_${idx}`,
       type: 'pie',
+      legendHoverLink: false,
       radius: r,
       center: [cx, cy],
       data: finalPieData,
@@ -288,10 +293,10 @@ export const BirthPredictionPlugin = (option, ctx) => {
         updatedData[lastIndex] = nextBirth;
 
         newSeries.push({ ...s, type: 'line', name: '出生人口', data: updatedData.slice(0, lastIndex), lineStyle: { type: 'solid' } });
-        newSeries.push({ ...s, type: 'line', name: '出生人口预测', data: updatedData.map((d, i) => (i >= lastIndex - 1 ? d : null)), lineStyle: { color: s.lineStyle?.color || '#5470C6', type: 'dashed' }, symbol: 'circle', symbolSize: 10, connectNulls: true });
+        newSeries.push({ ...s, type: 'line', legendHoverLink: false, name: '出生人口预测', data: updatedData.map((d, i) => (i >= lastIndex - 1 ? d : null)), lineStyle: { color: s.lineStyle?.color || '#5470C6', type: 'dashed' }, symbol: 'circle', symbolSize: 10, connectNulls: true });
       } else {
-        newSeries.push({ ...s, type: 'bar' });
-        newSeries.push({ ...s, type: 'bar', data: [] });
+        newSeries.push({ ...s, type: 'bar', legendHoverLink: false });
+        newSeries.push({ ...s, type: 'bar', legendHoverLink: false, data: [] });
       }
     } else {
       newSeries.push(s);
