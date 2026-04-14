@@ -1,10 +1,10 @@
-import { ref, computed, watch, onBeforeUnmount } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { buildChartOption } from '@/utils/chartBuilder.js';
 import { generateSmartInsights } from '@/utils/narrativeEngine.js';
 import { useTableEngine } from './useTableEngine.js';
 import { resolveMapType } from '@/utils/mapProvider.js';
-import { getThemeMode } from '@/utils/theme.js';
 import { cityRegionList, provinceRegionList } from '@/config/regionLists.js';
+import { useAppViewport } from '@/utils/appViewport.js';
 
 export function createChartStore(props) {
   const resolveEnglishKeys = (chart) => {
@@ -15,18 +15,7 @@ export function createChartStore(props) {
     return [];
   };
 
-  const windowWidth = ref(window.innerWidth);
-  const themeMode = ref(getThemeMode());
-  const onResize = () => { windowWidth.value = window.innerWidth; };
-  const onThemeChange = (event) => {
-    themeMode.value = event?.detail || getThemeMode();
-  };
-  window.addEventListener('resize', onResize);
-  window.addEventListener('themechange', onThemeChange);
-  onBeforeUnmount(() => {
-    window.removeEventListener('resize', onResize);
-    window.removeEventListener('themechange', onThemeChange);
-  });
+  const { windowWidth, themeMode } = useAppViewport();
   const isMobile = computed(() => windowWidth.value <= 768);
   const controlSize = computed(() => windowWidth.value > 768 ? 'large' : 'small');
 
@@ -46,7 +35,8 @@ export function createChartStore(props) {
   const selectedExtraCities = ref([]);
 
   const isMonthlyChart = computed(() => props.chart?.dbCode === 'yd' || props.viewMode === 'monthly');
-  const isProvince = computed(() => (props.config?.localJson || '').includes('province'));
+  const localJsonPath = computed(() => String(props.config?.localJson || ''));
+  const isProvince = computed(() => localJsonPath.value.includes('province'));
 
   const chartIdentityStr = computed(() => `${props.chart?.title}-${props.chart?.id}-${props.config?.localJson}`);
 

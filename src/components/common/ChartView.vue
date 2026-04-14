@@ -6,12 +6,12 @@
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue';
 import * as echarts from 'echarts/core';
 import { BarChart, LineChart, PieChart, MapChart } from 'echarts/charts';
-import { TitleComponent, GridComponent, TooltipComponent, LegendComponent, TimelineComponent, VisualMapComponent, GeoComponent } from 'echarts/components';
+import { TitleComponent, GridComponent, TooltipComponent, LegendComponent, TimelineComponent, VisualMapComponent, GeoComponent, MarkPointComponent } from 'echarts/components';
 import { CanvasRenderer, SVGRenderer } from 'echarts/renderers';
 import debounce from 'lodash-es/debounce';
 import { ensureMapRegistered } from '@/utils/mapProvider.js';
 
-echarts.use([TitleComponent, GridComponent, TooltipComponent, LegendComponent, BarChart, LineChart, PieChart, CanvasRenderer, SVGRenderer, TimelineComponent, VisualMapComponent, GeoComponent, MapChart]);
+echarts.use([TitleComponent, GridComponent, TooltipComponent, LegendComponent, MarkPointComponent, BarChart, LineChart, PieChart, CanvasRenderer, SVGRenderer, TimelineComponent, VisualMapComponent, GeoComponent, MapChart]);
 
 export default {
   name: 'ChartView',
@@ -30,6 +30,26 @@ export default {
     let touchStartHandler = null;
     let touchMoveHandler = null;
     let touchEndHandler = null;
+    let pieUpdateContext = null;
+    let hoveredSeriesName = '';
+
+    const buildOptionWithTooltipHoverState = (option) => {
+      const sourceFormatter = option?.tooltip?.formatter;
+      if (typeof sourceFormatter !== 'function') return option;
+
+      return {
+        ...option,
+        tooltip: {
+          ...option.tooltip,
+          formatter: (params) => {
+            const nextParams = Array.isArray(params)
+              ? params.map((item) => ({ ...item, __tooltipHovered: !!hoveredSeriesName && item?.seriesName === hoveredSeriesName }))
+              : { ...params, __tooltipHovered: !!hoveredSeriesName && params?.seriesName === hoveredSeriesName };
+            return sourceFormatter(nextParams);
+          }
+        }
+      };
+    };
 
     // 暴露给父组件的方法
     const toggleAllLegends = (selectAll) => {
@@ -183,6 +203,74 @@ export default {
       ];
     };
 
+    const buildPieUpdateContext = (option, pieConfig = {}) => {
+      if (!pieConfig?.enabled || !Array.isArray(pieConfig.pies) || !option?.series?.length) {
+        return null;
+      }
+
+      const categories = getPrimaryCategoryAxisData(option);
+      const sourceSeries = option.series.filter(
+        (series) => series && series.type !== 'pie' && !series.isTrendline && series.zbCode
+      );
+
+      const pies = pieConfig.pies.map((pie, idx) => {
+        const triggerKeys = resolvePieTriggerKeys(pie);
+        const targetSeries = sourceSeries.filter((series) => triggerKeys.includes(series.zbCode));
+        return {
+          idx,
+          config: pie,
+          series: targetSeries
+        };
+      }).filter((pie) => pie.series.length > 0);
+
+      if (!pies.length) return null;
+
+      return {
+        categories,
+        pies,
+        cache: new Map()
+      };
+    };
+
+    const buildPieSeriesUpdates = (context, dataIndex) => {
+      if (!context?.pies?.length) return [];
+
+      return context.pies.map((pie) => {
+        const cacheKey = `${pie.idx}|${dataIndex}`;
+        let pieData = context.cache.get(cacheKey);
+
+        if (!pieData) {
+          pieData = pie.series
+            .map((series) => {
+              const rawVal = Array.isArray(series.data) ? getNearestSeriesValue(series.data, dataIndex) : null;
+              const value = typeof rawVal === 'object' && rawVal !== null ? rawVal.value : rawVal;
+              if (value === null || value === undefined || value === '' || value === '-' || Number.isNaN(Number(value))) {
+                return null;
+              }
+              return {
+                name: series.name,
+                value: Number(value)
+              };
+            })
+            .filter(Boolean);
+
+          pieData = normalizePieData(pieData, pie.config);
+          context.cache.set(cacheKey, pieData);
+        }
+
+        return {
+          id: `pie_${pie.idx}`,
+          data: pieData,
+          label: {
+            formatter: (params) => {
+              const isMobile = window.innerWidth <= 768;
+              return isMobile ? `${params.name}\n(${params.percent}%)` : `${params.name}(${params.percent}%)`;
+            },
+          },
+        };
+      });
+    };
+
     const initChart = () => {
       if (!chartContainer.value || !props.option?.series?.length) return;
 
@@ -193,7 +281,8 @@ export default {
 
       const renderer = window.innerWidth <= 768 ? 'svg' : 'canvas';
       chartInstance = echarts.init(chartContainer.value, props.themeMode === 'dark' ? 'dark' : null, { renderer });
-      chartInstance.setOption(props.option, true);
+      chartInstance.setOption(buildOptionWithTooltipHoverState(props.option), true);
+      pieUpdateContext = buildPieUpdateContext(props.option, props.pieConfig);
 
       // 初始化图例状态
       const legends = chartInstance.getOption().legend?.[0]?.data || [];
@@ -232,6 +321,14 @@ export default {
         });
       });
 
+      chartInstance.on('mouseover', (params) => {
+        hoveredSeriesName = String(params?.seriesName || '').trim();
+      });
+
+      chartInstance.on('mouseout', () => {
+        hoveredSeriesName = '';
+      });
+
       chartInstance.getZr().on('click', (event) => {
         if (!event?.target) {
           hideTooltip();
@@ -247,67 +344,18 @@ export default {
 
       // 🌟 性能优化核心：缓存上一次悬停的索引
       let lastDataIndex = -1;
-
-      const pieDataCache = new Map();
       chartInstance.on('updateAxisPointer', function (event) {
         const xAxisInfo = event.axesInfo?.[0];
         if (!xAxisInfo) return;
 
         const pieConfig = props.pieConfig;
         if (!pieConfig?.enabled || !Array.isArray(pieConfig.pies)) return;
+        if (!pieUpdateContext) return;
 
-        const merged = chartInstance.getOption();
-        const categories = getPrimaryCategoryAxisData(merged);
-        const dataIndex = resolveCategoryDataIndex(xAxisInfo.value, categories);
+        const dataIndex = resolveCategoryDataIndex(xAxisInfo.value, pieUpdateContext.categories);
         if (dataIndex === lastDataIndex) return;
         lastDataIndex = dataIndex;
-
-        const seriesData = (merged.series || []).filter(
-          (s) => s && s.type !== 'pie' && !s.isTrendline && s.zbCode
-        );
-        const pieSeriesUpdates = [];
-
-        pieConfig.pies.forEach((pie, idx) => {
-          const cacheKey = `${idx}|${dataIndex}`;
-          let pieData = pieDataCache.get(cacheKey);
-          if (!pieData) {
-            const triggerKeys = resolvePieTriggerKeys(pie);
-            const targetSeries = seriesData.filter(s => triggerKeys.includes(s.zbCode));
-            pieData = targetSeries
-              .map(series => {
-                const rawVal = Array.isArray(series.data) ? getNearestSeriesValue(series.data, dataIndex) : null;
-                const value = typeof rawVal === 'object' && rawVal !== null ? rawVal.value : rawVal;
-                if (value === null || value === undefined || value === '' || value === '-' || Number.isNaN(Number(value))) {
-                  return null;
-                }
-                return {
-                  name: series.name,
-                  value: Number(value)
-                };
-              })
-              .filter(Boolean);
-            pieData = normalizePieData(pieData, pie);
-            pieDataCache.set(cacheKey, pieData);
-          }
-
-          pieSeriesUpdates.push({
-            id: `pie_${idx}`,
-            data: pieData,
-            label: {
-              formatter: params => {
-                // 动态获取当前屏幕宽度，<= 768px 认为是移动端
-                const isMobile = window.innerWidth <= 768;
-                if (isMobile) {
-                  // 移动端：在名称和百分比之间加入 \n 实现换行
-                  return `${params.name}\n(${params.percent}%)`;
-                } else {
-                  // PC 端：保持原样单行显示
-                  return `${params.name}(${params.percent}%)`;
-                }
-              },
-            },
-          });
-        });
+        const pieSeriesUpdates = buildPieSeriesUpdates(pieUpdateContext, dataIndex);
 
         if (pieSeriesUpdates.length > 0) {
           chartInstance.setOption({ series: pieSeriesUpdates });
@@ -364,8 +412,9 @@ export default {
         return;
       }
       if (!newOption?.series?.length) return;
+      pieUpdateContext = buildPieUpdateContext(newOption, props.pieConfig);
       // 使用增量更新，提高性能
-      chartInstance.setOption(newOption, true, true);
+      chartInstance.setOption(buildOptionWithTooltipHoverState(newOption), true, true);
     };
 
     // 🌟 修复点：使用 async/await 处理 nextTick 🌟
@@ -382,6 +431,7 @@ export default {
         chartInstance.dispose();
         chartInstance = null;
       }
+      pieUpdateContext = null;
       await nextTick();
       initChart();
     });
@@ -394,6 +444,7 @@ export default {
       }
       chartInstance?.dispose();
       chartInstance = null;
+      pieUpdateContext = null;
     });
 
     return { chartContainer };

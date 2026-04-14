@@ -436,12 +436,17 @@ class ChartBuilder {
 
   getAdvancedTooltipFormatter() {
     const theme = getChartThemeTokens();
+    const builder = this;
     return (params) => {
       if (!params) return '';
       const paramsArray = Array.isArray(params) ? params : [params];
+      const finalSeries = Array.isArray(builder.option?.series) ? builder.option.series : [];
 
       const validParams = paramsArray.filter(p =>
         p && p.value !== '-' && p.value != null && p.value !== '' &&
+        finalSeries[p.seriesIndex]?.hideInTooltip !== true &&
+        finalSeries[p.seriesIndex]?.isTrendline !== true &&
+        !String(p.seriesName).includes('(趋势)') &&
         !String(p.seriesName).includes('(预测下限)') &&
         !String(p.seriesName).includes('(预测区间)')
       );
@@ -455,41 +460,65 @@ class ChartBuilder {
       if (sorted.length === 0) return paramsArray[0]?.axisValue || paramsArray[0]?.name || '';
 
       const title = sorted[0].axisValue || sorted[0].name || '';
-      let result = `<div style="font-size: 14px; margin-bottom: 8px; color: ${theme.textPrimary};">${title}</div>`;
+      const showRegionalRanking = builder.params.enableRegionalBiEnhancements === true;
+      const rankingHint = '排序: 高→低';
+      const currentDataIndex = Number.isInteger(sorted[0]?.dataIndex) ? sorted[0].dataIndex : -1;
+      const currentRanking = new Map(sorted.map((item, index) => [String(item.seriesName || item.name), index + 1]));
+      const previousRanking = showRegionalRanking && currentDataIndex > 0
+        ? new Map(
+          finalSeries
+            .filter((seriesItem) => seriesItem && seriesItem.hideInTooltip !== true && seriesItem.hideInLegend !== true && !seriesItem.isTrendline)
+            .map((seriesItem) => ({
+              name: String(seriesItem.name || ''),
+              value: Array.isArray(seriesItem.data) ? seriesItem.data[currentDataIndex - 1] : null
+            }))
+            .map((item) => ({ ...item, numericValue: typeof item.value === 'object' && item.value !== null ? item.value.value : item.value }))
+            .filter((item) => item.name && item.numericValue !== null && item.numericValue !== undefined && item.numericValue !== '' && !Number.isNaN(Number(item.numericValue)))
+            .sort((a, b) => Number(b.numericValue) - Number(a.numericValue))
+            .map((item, index) => [item.name, index + 1])
+        )
+        : new Map();
+
+      let result = showRegionalRanking
+        ? `<div style="font-size: 14px; margin-bottom: 8px; color: ${theme.textPrimary}; display:flex; justify-content:space-between; gap:12px;">
+          <span>${title}</span>
+          <span style="font-size:12px; color:${theme.textMuted};">${rankingHint}</span>
+        </div>`
+        : `<div style="font-size: 14px; margin-bottom: 8px; color: ${theme.textPrimary};">${title}</div>`;
 
       sorted.forEach(item => {
         let rawValue = typeof item.value === 'object' ? item.value?.value : item.value;
         let val = typeof rawValue === 'number' ? rawValue.toLocaleString() : (rawValue || '-');
         let markerHtml = item.marker || `<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${item.color || '#ccc'};"></span>`;
+        const seriesName = String(item.seriesName || item.name || '');
+        const isHovered = item.__tooltipHovered === true;
+        const currentRank = showRegionalRanking ? currentRanking.get(seriesName) : null;
+        const previousRank = showRegionalRanking ? previousRanking.get(seriesName) : null;
+        let rankDeltaHtml = '';
+        if (showRegionalRanking && currentRank) {
+          rankDeltaHtml = `<span style="margin-left:8px; font-size:12px; color:${theme.textMuted};">#${currentRank}</span>`;
+          if (previousRank) {
+            const delta = previousRank - currentRank;
+            if (delta > 0) {
+              rankDeltaHtml += `<span style="margin-left:6px; font-size:12px; color:#10b981;">↑${delta}</span>`;
+            } else if (delta < 0) {
+              rankDeltaHtml += `<span style="margin-left:6px; font-size:12px; color:#ef4444;">↓${Math.abs(delta)}</span>`;
+            } else {
+              rankDeltaHtml += `<span style="margin-left:6px; font-size:12px; color:${theme.textMuted};">-</span>`;
+            }
+          }
+        }
 
         result += `
-          <div style="margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-            <div style="display: flex; align-items: center; color: ${theme.textSecondary}; font-size: 13px;">
+          <div style="margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: ${isHovered ? '6px 8px' : '0'}; margin-left: ${isHovered ? '-8px' : '0'}; margin-right: ${isHovered ? '-8px' : '0'}; border-radius: 8px; background: ${isHovered ? theme.accentSoft : 'transparent'}; border: ${isHovered ? `1px solid ${theme.accent}` : '1px solid transparent'};">
+            <div style="display: flex; align-items: center; color: ${isHovered ? theme.textPrimary : theme.textSecondary}; font-size: 13px; font-weight: ${isHovered ? '700' : '500'};">
               ${markerHtml} 
-              <span style="margin-left: 2px;">${item.seriesName || item.name}</span>
+              <span style="margin-left: 2px;">${seriesName}</span>${rankDeltaHtml}
             </div>
-            <div style="font-weight: 600; color: ${theme.textPrimary}; font-size: 14px; margin-left: 24px; font-variant-numeric: tabular-nums;">
+            <div style="font-weight: ${isHovered ? '700' : '600'}; color: ${theme.textPrimary}; font-size: 14px; margin-left: 24px; font-variant-numeric: tabular-nums;">
               ${val}
             </div>
           </div>`;
-
-        if (item.data && item.data.formula && item.data.r2) {
-          result += `
-            <div style="margin-top: 6px; margin-bottom: 10px; padding: 8px 10px; background: ${theme.accentSoft}; border-radius: 6px; border-left: 3px solid ${theme.accent}; font-size: 12px; color: ${theme.textMuted}; font-family: 'Consolas', 'Courier New', monospace; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);">
-              <div style="margin-bottom: 4px; display: flex; justify-content: space-between;">
-                <span>回归方程：</span>
-                <span style="color: ${theme.textPrimary}; font-weight: 600;">${item.data.formula}</span>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span>拟合优度 (R²)：</span>
-                <span style="font-weight: 600;">
-                  <span style="color: ${item.data.r2 > 0.8 ? '#10b981' : '#f59e0b'}; margin-right: 6px;">${item.data.r2}</span>
-                  ${item.data.status || ''}
-                </span>
-              </div>
-            </div>
-          `;
-        }
       });
       return result;
     };

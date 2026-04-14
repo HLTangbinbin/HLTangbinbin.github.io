@@ -1,6 +1,19 @@
 import { calculateLinearRegression, fitMarriageBirthDynamic } from './analysisEngine.js';
 import { getChartThemeTokens } from './theme.js';
 
+function mergeMarkPointConfig(original = {}, addition = {}) {
+  const originalData = Array.isArray(original?.data) ? original.data : [];
+  const additionData = Array.isArray(addition?.data) ? addition.data : [];
+  return {
+    ...original,
+    ...addition,
+    itemStyle: { ...(original?.itemStyle || {}), ...(addition?.itemStyle || {}) },
+    label: { ...(original?.label || {}), ...(addition?.label || {}) },
+    emphasis: { ...(original?.emphasis || {}), ...(addition?.emphasis || {}) },
+    data: [...originalData, ...additionData]
+  };
+}
+
 export const ComparePlugin = (option, ctx) => {
   const xAxisData = ['01月', '02月', '03月', '04月', '05月', '06月', '07月', '08月', '09月', '10月', '11月', '12月'];
   const yearMap = {};
@@ -139,13 +152,13 @@ export const SmartAnalysisPlugin = (option, ctx) => {
       }
 
       if (meta && meta.anomalies.length > 0) {
-        s.markPoint = {
+        s.markPoint = mergeMarkPointConfig(s.markPoint, {
           symbol: 'pin',
           symbolSize: 45,
           itemStyle: { color: '#ef4444', shadowBlur: 10, shadowColor: 'rgba(239,68,68,0.4)' },
           label: { color: theme.textInverse, fontSize: 10, formatter: '异常' },
           data: meta.anomalies.map(a => ({ coord: [a.x, a.y], name: '异常点', value: a.diff }))
-        };
+        });
       }
     }
   });
@@ -153,6 +166,7 @@ export const SmartAnalysisPlugin = (option, ctx) => {
   option.series = [...option.series, ...trendLines];
   return option;
 };
+
 
 export const PiePlugin = (option, ctx) => {
   if (!ctx.seriesData || ctx.seriesData.length === 0 || !ctx.filteredYears || ctx.filteredYears.length === 0) return option;
