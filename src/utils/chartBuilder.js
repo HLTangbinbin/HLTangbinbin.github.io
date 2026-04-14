@@ -534,7 +534,9 @@ class ChartBuilder {
     this.plugins.forEach(plugin => {
       finalOption = plugin(finalOption, this.ctx);
     });
-    finalOption.originalLegendData = this.ctx.seriesData.map(s => s.name);
+    finalOption.originalLegendData = Array.isArray(finalOption.legend?.data) && finalOption.legend.data.length
+      ? [...finalOption.legend.data]
+      : this.ctx.seriesData.map(s => s.name);
     return finalOption;
   }
 }

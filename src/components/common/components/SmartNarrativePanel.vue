@@ -3,12 +3,14 @@
     <div v-if="store.enableSmartAnalysis.value && store.viewModeDisplay.value === 'chart' && store.smartInsights.value?.cards?.length"
       class="smart-narrative-panel">
       <div class="narrative-header">
-        <div class="narrative-title">
-        <el-icon>
-          <MagicStick />
-        </el-icon> 洞察总结
+        <div class="narrative-title-wrap">
+          <div class="narrative-title">
+            <el-icon>
+              <MagicStick />
+            </el-icon> 洞察总结
+          </div>
+          <div v-if="store.smartInsights.value?.subject" class="narrative-subject">{{ store.smartInsights.value.subject }}</div>
         </div>
-        <div v-if="store.smartInsights.value?.subject" class="narrative-subject">{{ store.smartInsights.value.subject }}</div>
       </div>
       <div v-if="store.smartInsights.value?.cards?.length" class="insight-grid">
         <div
@@ -51,9 +53,16 @@ const store = inject('chartStore');
 .narrative-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
   margin-bottom: 8px;
+}
+
+.narrative-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  min-width: 0;
 }
 
 .narrative-title {
@@ -177,9 +186,14 @@ const store = inject('chartStore');
 
   .narrative-header {
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-direction: row;
     gap: 6px;
+  }
+
+  .narrative-title-wrap {
+    gap: 12px;
+    min-width: 0;
   }
 
   .insight-card {

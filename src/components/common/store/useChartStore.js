@@ -37,6 +37,9 @@ export function createChartStore(props) {
   const isMonthlyChart = computed(() => props.chart?.dbCode === 'yd' || props.viewMode === 'monthly');
   const localJsonPath = computed(() => String(props.config?.localJson || ''));
   const isProvince = computed(() => localJsonPath.value.includes('province'));
+  const enableRegionalBiEnhancements = computed(() => {
+    return localJsonPath.value.includes('city') || localJsonPath.value.includes('province');
+  });
 
   const chartIdentityStr = computed(() => `${props.chart?.title}-${props.chart?.id}-${props.config?.localJson}`);
 
@@ -202,6 +205,7 @@ export function createChartStore(props) {
       enableBirthOffset: props.chart?.enableBirthOffset || false,
       enableBirthPrediction: props.chart?.enableBirthPrediction || false,
       enableSmartAnalysis: enableSmartAnalysis.value,
+      enableRegionalBiEnhancements: enableRegionalBiEnhancements.value,
       mapType: mapType.value,
       themeMode: themeMode.value,
       seriesLayout: props.chart?.seriesLayout || 'indicator',
@@ -223,10 +227,12 @@ export function createChartStore(props) {
   watch(chartOption, (newOption) => {
     legendNames.value = newOption?.originalLegendData || newOption?.legend?.data || [];
     if (isYearlyCompare.value && !selectedLegend.value && legendNames.value.length > 0) {
-      selectedLegend.value = legendNames.value[0];
+      selectedLegend.value = legendNames.value[legendNames.value.length - 1];
     }
     if (selectedLegend.value && !legendNames.value.includes(selectedLegend.value) && legendNames.value.length > 0) {
-      selectedLegend.value = legendNames.value[0];
+      selectedLegend.value = isYearlyCompare.value
+        ? legendNames.value[legendNames.value.length - 1]
+        : legendNames.value[0];
     }
   }, { immediate: true });
 

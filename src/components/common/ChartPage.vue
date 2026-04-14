@@ -535,8 +535,9 @@ function getDbCodeLabel(dbCode, viewMode) {
 
   .page-header {
     width: 100%;
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 6px;
     margin: 0 0 10px;
     padding-bottom: 10px;
@@ -548,6 +549,8 @@ function getDbCodeLabel(dbCode, viewMode) {
     gap: 6px;
     flex: 1 1 auto;
     min-width: 0;
+    overflow: hidden;
+    flex-wrap: nowrap;
   }
 
   .header-path-wrap {
@@ -565,8 +568,11 @@ function getDbCodeLabel(dbCode, viewMode) {
   }
 
   .view-mode-container {
-    width: 100%;
-    justify-content: flex-start;
+    width: auto;
+    justify-content: flex-end;
+    margin-left: auto;
+    align-self: center;
+    flex: 0 0 auto;
   }
 
   .header-path {
@@ -574,6 +580,10 @@ function getDbCodeLabel(dbCode, viewMode) {
     line-height: 28px;
     flex: 0 1 auto;
     max-width: 100%;
+  }
+
+  .latest-inline {
+    flex: 0 0 auto;
   }
 
   .header-meta {
@@ -608,16 +618,9 @@ function getDbCodeLabel(dbCode, viewMode) {
     font-size: 12px;
   }
 
-  .view-mode-container {
-    width: auto;
-    justify-content: flex-end;
-    margin-left: 0;
-    align-self: center;
-    flex: 0 0 auto;
-  }
-
   .custom-segment {
     width: auto;
+    flex-shrink: 0;
   }
 
   .custom-segment :deep(.el-radio-group),

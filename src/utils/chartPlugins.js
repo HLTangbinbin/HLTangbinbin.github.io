@@ -75,7 +75,7 @@ export const ComparePlugin = (option, ctx) => {
 
 export const SmartAnalysisPlugin = (option, ctx) => {
   const theme = getChartThemeTokens();
-  const futureSteps = ctx.params.isYearlyCompare ? 0 : 3;
+  const futureSteps = ctx.params.isYearlyCompare ? 0 : 1;
 
   if (futureSteps > 0 && ctx.filteredYears.length > 0) {
     const isMonthly = ctx.params.dbCode === 'yd' || ctx.params.viewMode === 'monthly';
@@ -173,7 +173,7 @@ export const PiePlugin = (option, ctx) => {
 
   const theme = getChartThemeTokens();
   option.color = option.color || theme.palette;
-  const futureSteps = (ctx.params.enableSmartAnalysis && !ctx.params.isYearlyCompare) ? 3 : 0;
+  const futureSteps = (ctx.params.enableSmartAnalysis && !ctx.params.isYearlyCompare) ? 1 : 0;
   const targetIndex = Math.max(0, ctx.filteredYears.length - 1 - futureSteps);
   const legendData = option.legend?.data || [];
 

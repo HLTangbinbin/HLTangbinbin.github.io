@@ -67,6 +67,7 @@ export default {
     const hideTooltip = () => {
       if (!chartInstance || chartInstance.isDisposed()) return;
       chartInstance.dispatchAction({ type: 'hideTip' });
+      chartInstance.dispatchAction({ type: 'updateAxisPointer', currTrigger: 'leave' });
     };
 
     const isMobileViewport = () => window.innerWidth <= 768;
