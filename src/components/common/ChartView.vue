@@ -285,12 +285,17 @@ export default {
       chartInstance.setOption(buildOptionWithTooltipHoverState(props.option), true);
       pieUpdateContext = buildPieUpdateContext(props.option, props.pieConfig);
 
-      // 初始化图例状态
+      // 初始化图例状态时，优先使用外部 option 中已经计算好的 selected 映射，
+      // 避免在组件重建时把“部分选中”错误覆盖成“全选/全不选”。
       const legends = chartInstance.getOption().legend?.[0]?.data || [];
+      const explicitLegendSelection = props.option?.legend?.selected || {};
       if (legends.length > 0) {
         legends.forEach(name => {
+          const shouldSelect = Object.prototype.hasOwnProperty.call(explicitLegendSelection, name)
+            ? explicitLegendSelection[name]
+            : props.initSelectAll;
           chartInstance.dispatchAction({
-            type: props.initSelectAll ? 'legendSelect' : 'legendUnSelect',
+            type: shouldSelect ? 'legendSelect' : 'legendUnSelect',
             name
           });
         });
@@ -300,9 +305,7 @@ export default {
       chartInstance.on('legendselectchanged', (params) => {
         emit('legendSelectionChange', { ...(params.selected || {}) });
         const allSelected = Object.values(params.selected).every(v => v === true);
-        const noneSelected = Object.values(params.selected).every(v => v === false);
-        if (allSelected) emit('legendStateChange', true);
-        else if (noneSelected) emit('legendStateChange', false);
+        emit('legendStateChange', allSelected);
       });
 
       chartInstance.on('click', (params) => {

@@ -6,6 +6,7 @@
   "homepage": "https://HLTangbinbin.github.io/",
   "scripts": {
     "serve": "vue-cli-service serve",
+    "dev+chrome": "node scripts/dev-with-chrome.js",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "check:v3": "node scripts/check-v3-coverage.js",
