@@ -459,7 +459,7 @@ export const v3PageRegistry = {
     charts: [
       chartRef('wh_second_house_yearly_total'),
       metricChartRef('wh_second_house_monthly_total', '武汉二手房成交量', [
-        'second_hand_housing_transaction_volume_yd'
+        'second_hand_housing_transaction_volume'
       ], { dbCode: 'yd' }),
       metricChartRef('wh_second_house_monthly_price', '武汉二手房成交价格', [
         'second_hand_housing_transaction_price'
