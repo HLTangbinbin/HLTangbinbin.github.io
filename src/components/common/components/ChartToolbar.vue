@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div v-if="store.viewModeDisplay.value === 'chart' || store.viewModeDisplay.value === 'table'"
+    <div v-if="store.viewModeDisplay.value === 'chart' || store.viewModeDisplay.value === 'table' || store.viewModeDisplay.value === 'map'"
       class="toolbar-group dim-group">
       <div class="group-label"><i class="el-icon-s-data"></i> 操作</div>
 
@@ -34,12 +34,12 @@
         <div class="split-line"></div>
 
         <el-checkbox-button v-if="store.showSmartAnalysisToggle.value" v-model="store.enableSmartAnalysis.value"
-          :size="store.controlSize.value" class="no-shrink" style="margin-right: 8px;">智能分析
+          :size="store.controlSize.value" class="no-shrink" style="margin-right: 8px;">分析
         </el-checkbox-button>
         <div v-if="store.showSmartAnalysisToggle.value" class="split-line"></div>
 
-        <el-radio-group v-if="store.showCompareToggle.value" v-model="store.isYearlyCompare.value"
-          :size="store.controlSize.value" class="no-shrink">
+      <el-radio-group v-if="store.showCompareToggle.value" v-model="store.isYearlyCompare.value"
+        :size="store.controlSize.value" class="no-shrink compare-segment">
           <el-radio-button :label="false">连续</el-radio-button>
           <el-radio-button :label="true">同比</el-radio-button>
         </el-radio-group>
@@ -83,35 +83,36 @@
 
       <template v-if="store.viewModeDisplay.value === 'table'">
         <div v-if="store.showCityAddToggle.value" class="split-line"></div>
-        <el-button :size="store.controlSize.value" type="success" plain class="no-shrink export-btn"
-          @click="store.exportToCSV" title="导出数据">
-          <el-icon>
-            <Download />
-          </el-icon> <span class="export-text">导出</span>
-        </el-button>
       </template>
+
+      <el-button :size="store.controlSize.value" type="success" plain class="no-shrink export-btn"
+        @click="$emit('exportCurrentView')" title="导出当前视图">
+        <span class="export-text">导出</span>
+      </el-button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { inject, defineEmits } from 'vue';
-import { Plus, Download } from '@element-plus/icons-vue';
+import { Plus } from '@element-plus/icons-vue';
 
 const store = inject('chartStore');
-defineEmits(['toggleAllLegends']);
+defineEmits(['toggleAllLegends', 'exportCurrentView']);
 </script>
 
 <style scoped>
 .bi-toolbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   flex-wrap: nowrap !important;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 5px 5px;
-  border-radius: 12px;
-  margin-bottom: 5px;
+  justify-content: stretch;
+  gap: 8px;
+  padding: 5px 5px 12px;
+  border-radius: 0;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border-default);
   overflow-x: auto !important;
   overflow-y: hidden !important;
   width: 100%;
@@ -126,51 +127,51 @@ defineEmits(['toggleAllLegends']);
 .toolbar-group {
   display: flex;
   align-items: center;
-  background: var(--bg-card);
-  padding: 0 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-soft);
-  gap: 12px;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+  gap: 8px;
   flex: 0 1 auto;
   min-width: 0;
   white-space: nowrap;
-  min-height: 50px;
+  min-height: 38px;
   box-sizing: border-box;
   overflow-y: hidden !important;
 }
 
+.view-group {
+  justify-content: flex-start;
+}
+
+.time-group {
+  justify-content: center;
+}
+
+.dim-group {
+  justify-content: flex-end;
+}
+
 .group-label {
-  font-size: 15px;
-  font-weight: 600;
+  display: none;
+  font-size: 12px;
+  font-weight: 850;
   color: var(--text-muted);
-  display: flex;
   align-items: center;
-  gap: 6px;
-  padding-right: 12px;
-  border-right: 1px solid var(--border-default);
+  gap: 4px;
+  padding-right: 0;
+  border-right: 0;
   flex-shrink: 0;
 }
 
 .split-line {
-  width: 1px;
-  height: 18px;
-  background-color: var(--border-strong);
-  margin: 0 4px;
-  flex-shrink: 0;
-}
-
-.view-group {
-  flex: 0 1 auto;
+  display: none;
 }
 
 .time-group {
-  width: 280px;
+  width: 230px;
   flex-shrink: 0;
-}
-
-.dim-group {
-  flex: 0 1 auto;
 }
 
 .legend-select {
@@ -216,6 +217,19 @@ defineEmits(['toggleAllLegends']);
   gap: 8px;
   flex: 1 1 auto;
   min-width: 0;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  background: var(--bg-card-soft);
+}
+
+.time-group .slider-wrapper::before {
+  content: "时间";
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 850;
+  flex: 0 0 auto;
 }
 
 .offset-slider {
@@ -241,8 +255,8 @@ defineEmits(['toggleAllLegends']);
 }
 
 .ctrl-val {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 850;
   color: var(--text-secondary);
   min-width: 24px;
   margin-left: 10px;
@@ -260,15 +274,15 @@ defineEmits(['toggleAllLegends']);
 }
 
 :deep(.el-checkbox-button__inner) {
-  height: 36px !important;
-  padding: 0 16px !important;
-  font-size: 14px !important;
-  font-weight: 600 !important;
+  height: 32px !important;
+  padding: 0 10px !important;
+  font-size: 12px !important;
+  font-weight: 850 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
-  border-radius: 10px !important;
+  border-radius: 8px !important;
   box-shadow: none !important;
   border: 1px solid var(--border-default);
   transition: all 0.2s ease;
@@ -297,10 +311,10 @@ defineEmits(['toggleAllLegends']);
 
 :deep(.el-radio-button__inner),
 .btn-toggle-all {
-  height: 36px !important;
-  padding: 0 16px !important;
-  font-size: 14px !important;
-  font-weight: 600 !important;
+  height: 32px !important;
+  padding: 0 10px !important;
+  font-size: 12px !important;
+  font-weight: 850 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -310,16 +324,24 @@ defineEmits(['toggleAllLegends']);
 }
 
 .btn-toggle-all {
-  border-radius: 10px !important;
-  margin-left: 4px;
+  border-radius: 8px !important;
+  margin-left: 0;
 }
 
 :deep(.el-radio-button:first-child .el-radio-button__inner) {
-  border-radius: 10px 0 0 10px !important;
+  border-radius: 8px !important;
 }
 
 :deep(.el-radio-button:last-child .el-radio-button__inner) {
-  border-radius: 0 10px 10px 0 !important;
+  border-radius: 8px !important;
+}
+
+:deep(.el-radio-button) {
+  margin-right: 8px;
+}
+
+:deep(.el-radio-button:last-child) {
+  margin-right: 0;
 }
 
 :deep(.el-radio-button__original-radio:not(:checked) + .el-radio-button__inner) {
@@ -327,6 +349,7 @@ defineEmits(['toggleAllLegends']);
   background-color: var(--bg-card) !important;
   box-shadow: none !important;
   border-color: var(--border-default) !important;
+  border-radius: 8px !important;
 }
 
 :deep(.el-radio-button__original-radio:not(:checked) + .el-radio-button__inner:hover) {
@@ -338,6 +361,39 @@ defineEmits(['toggleAllLegends']);
   border-color: var(--color-accent) !important;
   color: var(--color-accent-contrast) !important;
   box-shadow: -1px 0 0 0 var(--color-accent) !important;
+  border-radius: 8px !important;
+}
+
+.compare-segment {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  background: var(--bg-card-soft);
+  box-shadow: var(--shadow-soft);
+  flex: 0 0 auto;
+}
+
+.compare-segment :deep(.el-radio-button) {
+  margin-right: 3px;
+}
+
+.compare-segment :deep(.el-radio-button:last-child) {
+  margin-right: 0;
+}
+
+.compare-segment :deep(.el-radio-button__inner) {
+  height: 28px !important;
+  padding: 0 10px !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.compare-segment :deep(.el-radio-button__original-radio:checked + .el-radio-button__inner) {
+  background: linear-gradient(135deg, var(--color-accent), #1696a8) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 12px rgba(var(--color-accent-rgb), 0.18) !important;
 }
 
 :deep(.el-button--primary.btn-toggle-all) {
@@ -357,14 +413,14 @@ defineEmits(['toggleAllLegends']);
   align-items: center;
   justify-content: center;
   gap: 4px;
-  height: 36px;
-  padding: 0 16px;
+  height: 32px;
+  padding: 0 10px;
   background-color: var(--bg-card-soft);
   border: 1px dashed var(--border-strong);
   border-radius: 10px;
   color: var(--text-muted);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 850;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -377,7 +433,17 @@ defineEmits(['toggleAllLegends']);
 
 .export-btn {
   border-radius: 8px !important;
-  font-weight: bold;
+  font-weight: 850;
+  height: 32px !important;
+  padding: 0 10px !important;
+  font-size: 12px !important;
+  line-height: normal !important;
+}
+
+.export-btn :deep(span) {
+  font-size: 12px !important;
+  font-weight: 850 !important;
+  line-height: normal !important;
 }
 
 :deep(.el-button--default.btn-toggle-all) {
@@ -405,22 +471,30 @@ defineEmits(['toggleAllLegends']);
 /* 移动端响应式 */
 @media (max-width: 768px) {
   .bi-toolbar {
+    display: flex;
     flex-direction: column !important;
-    padding: 4px;
-    gap: 4px;
-    margin-bottom: 0px;
+    padding: 2px 0 10px;
+    gap: 6px;
+    margin-bottom: 8px;
     align-items: stretch;
   }
 
   .toolbar-group {
     width: 100%;
-    padding: 0 6px;
+    padding: 0;
     gap: 6px;
-    height: 36px;
+    min-height: 32px;
+    height: auto;
     flex-wrap: nowrap !important;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
+  }
+
+  .view-group,
+  .time-group,
+  .dim-group {
+    justify-content: flex-start;
   }
 
   .toolbar-group::-webkit-scrollbar {
@@ -428,12 +502,7 @@ defineEmits(['toggleAllLegends']);
   }
 
   .group-label {
-    font-size: 12px;
-    font-weight: bold;
-    width: 38px;
-    padding-right: 2px;
-    flex-shrink: 0;
-    justify-content: flex-start;
+    display: none;
   }
 
   .view-group,
@@ -462,9 +531,11 @@ defineEmits(['toggleAllLegends']);
   }
 
   .slider-wrapper {
-    min-width: 96px;
+    min-width: 140px;
     flex: 1 1 auto;
     gap: 6px;
+    height: 30px;
+    padding: 0 8px;
   }
 
   .flex-slider {
@@ -478,22 +549,23 @@ defineEmits(['toggleAllLegends']);
   }
 
   :deep(.el-radio-group) {
-    display: flex;
+    display: inline-flex;
     flex: 1 1 auto;
   }
 
   :deep(.el-radio-button) {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     display: flex;
+    margin-right: 6px;
   }
 
   :deep(.el-radio-button__inner),
   :deep(.el-checkbox-button__inner) {
-    width: 100%;
+    width: auto;
     height: 28px !important;
-    padding: 0 2px !important;
+    padding: 0 9px !important;
     font-size: 11px !important;
-    border-radius: 6px !important;
+    border-radius: 8px !important;
   }
 
   .btn-toggle-all {
@@ -505,11 +577,11 @@ defineEmits(['toggleAllLegends']);
   }
 
   :deep(.el-radio-button:first-child .el-radio-button__inner) {
-    border-radius: 8px 0 0 8px !important;
+    border-radius: 8px !important;
   }
 
   :deep(.el-radio-button:last-child .el-radio-button__inner) {
-    border-radius: 0 8px 8px 0 !important;
+    border-radius: 8px !important;
   }
 
   .split-line {
@@ -521,17 +593,39 @@ defineEmits(['toggleAllLegends']);
     padding: 0 8px;
     font-size: 12px;
     border-radius: 8px;
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     margin-right: 0;
   }
 
   .export-text {
-    display: none;
+    display: inline-flex;
   }
 
   .export-btn {
-    width: 32px;
+    width: auto;
     padding: 0 !important;
+    min-width: 44px;
+    height: 28px !important;
+    font-size: 11px !important;
+  }
+
+  .export-btn :deep(span) {
+    font-size: 11px !important;
+  }
+
+  .compare-segment {
+    flex: 0 0 auto;
+    padding: 2px;
+  }
+
+  .compare-segment :deep(.el-radio-group) {
+    flex: 0 0 auto;
+  }
+
+  .compare-segment :deep(.el-radio-button__inner) {
+    height: 26px !important;
+    padding: 0 8px !important;
+    font-size: 11px !important;
   }
 }
 </style>

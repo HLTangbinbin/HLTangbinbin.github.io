@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <ChartToolbar @toggleAllLegends="handleToggleAllLegends" />
+    <ChartToolbar @toggleAllLegends="handleToggleAllLegends" @exportCurrentView="handleExportCurrentView" />
 
     <CityDrawer />
 
@@ -27,6 +27,7 @@
 
 <script setup>
 import { provide, ref, defineEmits, defineProps, defineAsyncComponent } from 'vue';
+import { ElMessage } from 'element-plus';
 import { createChartStore } from './store/useChartStore.js';
 import ChartView from './ChartView.vue'; // 用户底层的 ECharts 包装器
 
@@ -64,6 +65,37 @@ const handleToggleAllLegends = () => {
   }
 };
 
+const sanitizeFileName = (value) => String(value || '图表导出').replace(/[\\/:*?"<>|]/g, '_');
+
+const downloadDataUrl = (dataUrl, filename) => {
+  const link = document.createElement('a');
+  link.href = dataUrl;
+  link.download = filename;
+  link.click();
+};
+
+const handleExportCurrentView = () => {
+  if (chartStore.viewModeDisplay.value === 'table') {
+    chartStore.exportToCSV();
+    return;
+  }
+
+  if (!echartsInstanceRef.value?.exportImage) {
+    ElMessage.warning('当前图表暂不支持截图导出');
+    return;
+  }
+
+  const dataUrl = echartsInstanceRef.value.exportImage();
+  if (!dataUrl) {
+    ElMessage.warning('当前图表暂不支持截图导出');
+    return;
+  }
+
+  const filename = `${sanitizeFileName(props.chart?.title)}_${new Date().toISOString().slice(0, 10)}.png`;
+  downloadDataUrl(dataUrl, filename);
+  ElMessage.success('图表截图导出成功！');
+};
+
 const handleDataPointClick = (payload) => {
   emit('linkSelect', {
     ...payload,
@@ -78,8 +110,8 @@ const handleDataPointClick = (payload) => {
 .chart-container {
     width: 98%;
     max-width: 1500px;
-    margin: 10px auto 20px;
-    padding: 10px;
+    margin: 14px auto 20px;
+    padding: 14px 10px 10px;
     background-color: var(--bg-card);
     border-radius: 16px;
     border: 1px solid var(--border-default);
@@ -93,13 +125,13 @@ const handleDataPointClick = (payload) => {
     position: relative;
     z-index: 0 !important;
     overflow: hidden;
-    margin-top: 6px;
+    margin-top: 10px;
 }
 
 /* 移动端适配 */
 @media (max-width: 768px) {
     .chart-container {
-        padding: 10px;
+        padding: 10px 8px;
         margin: 10px auto 16px;
         border-radius: 12px;
     }

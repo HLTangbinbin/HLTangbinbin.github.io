@@ -401,6 +401,12 @@ class ChartBuilder {
 
     const clonedSeries = this.ctx.seriesData.map((seriesItem) => ({
       ...seriesItem,
+      itemStyle: seriesItem.type === 'bar'
+        ? {
+          ...(seriesItem.itemStyle || {}),
+          borderRadius: isHorizontal ? [0, 4, 4, 0] : [4, 4, 0, 0]
+        }
+        : seriesItem.itemStyle,
       data: Array.isArray(seriesItem.data) ? [...seriesItem.data] : seriesItem.data,
       date: Array.isArray(seriesItem.date) ? [...seriesItem.date] : seriesItem.date
     }));

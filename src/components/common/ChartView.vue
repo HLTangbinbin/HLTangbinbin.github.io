@@ -62,7 +62,15 @@ export default {
         });
       });
     };
-    expose({ toggleAllLegends });
+    const exportImage = () => {
+      if (!chartInstance || chartInstance.isDisposed()) return '';
+      return chartInstance.getDataURL({
+        type: 'png',
+        pixelRatio: 2,
+        backgroundColor: props.themeMode === 'dark' ? '#142031' : '#ffffff'
+      });
+    };
+    expose({ toggleAllLegends, exportImage });
 
     const hideTooltip = () => {
       if (!chartInstance || chartInstance.isDisposed()) return;

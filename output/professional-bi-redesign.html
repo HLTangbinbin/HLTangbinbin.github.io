@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>大唐统计局 - 专业 BI 工作台设计稿</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --ink-2: #374151;
+      --ink-3: #6b7280;
+      --muted: #8a95a5;
+      --line: #d9e1e8;
+      --line-soft: #e8eef3;
+      --page: #eef2f6;
+      --panel: #ffffff;
+      --panel-2: #f7fafc;
+      --rail: #182433;
+      --rail-2: #223246;
+      --brand: #0f766e;
+      --brand-2: #0891b2;
+      --brand-soft: #e2f3f4;
+      --blue: #3867d6;
+      --green: #15956b;
+      --amber: #c98720;
+      --red: #d84b4b;
+      --purple: #7c5cc4;
+      --shadow: 0 18px 50px rgba(25, 39, 52, 0.12);
+      --shadow-sm: 0 8px 24px rgba(25, 39, 52, 0.08);
+      --radius: 10px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background: var(--page);
+      font-variant-numeric: tabular-nums;
+    }
+
+    button, input, select { font: inherit; }
+
+    .bi-app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+    }
+
+    .rail {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      background: linear-gradient(180deg, var(--rail), #111a26);
+      color: #dce7f2;
+      padding: 18px 14px;
+      overflow-y: auto;
+      box-shadow: 12px 0 36px rgba(17, 24, 39, 0.18);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 8px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 16px;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #37b8b0, #0f766e);
+      color: white;
+      font-weight: 850;
+      box-shadow: 0 12px 28px rgba(8, 145, 178, 0.32);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: #9fb0c4;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .rail-section {
+      margin: 18px 0;
+    }
+
+    .rail-title {
+      padding: 0 10px 8px;
+      color: #8fa3ba;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .rail-item {
+      height: 38px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 10px;
+      color: #c9d5e4;
+      font-size: 14px;
+      font-weight: 720;
+      margin-bottom: 4px;
+    }
+
+    .rail-item::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 3px;
+      background: #64748b;
+    }
+
+    .rail-item.active {
+      color: #ffffff;
+      background: rgba(8, 145, 178, 0.22);
+      box-shadow: inset 3px 0 0 #22d3ee;
+    }
+
+    .rail-item.active::before { background: #22d3ee; }
+
+    .filter-card {
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .filter-card label {
+      display: block;
+      color: #9fb0c4;
+      font-size: 12px;
+      font-weight: 760;
+      margin-bottom: 8px;
+    }
+
+    .filter-card select {
+      width: 100%;
+      height: 34px;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 8px;
+      background: var(--rail-2);
+      color: #eef6ff;
+      padding: 0 9px;
+      outline: none;
+      margin-bottom: 10px;
+    }
+
+    .main {
+      min-width: 0;
+      padding: 18px 22px 34px;
+    }
+
+    .topbar {
+      height: 58px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.88);
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px 0 20px;
+      position: sticky;
+      top: 12px;
+      z-index: 5;
+    }
+
+    .crumb {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .crumb strong {
+      font-size: 18px;
+      white-space: nowrap;
+    }
+
+    .crumb span {
+      color: var(--ink-3);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search {
+      width: 260px;
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--panel-2);
+      padding: 0 12px;
+      color: var(--ink-2);
+      font-weight: 650;
+    }
+
+    .button {
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--panel);
+      color: var(--ink-2);
+      padding: 0 13px;
+      font-weight: 780;
+    }
+
+    .button.primary {
+      color: white;
+      border-color: var(--brand);
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      box-shadow: 0 10px 20px rgba(8, 145, 178, 0.18);
+    }
+
+    .context {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .summary {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: var(--shadow-sm);
+      padding: 18px;
+    }
+
+    .summary-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .summary h2 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0;
+    }
+
+    .summary p {
+      margin: 7px 0 0;
+      color: var(--ink-3);
+      font-size: 13px;
+      line-height: 1.7;
+      font-weight: 650;
+    }
+
+    .frequency {
+      display: inline-flex;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel-2);
+      flex: 0 0 auto;
+    }
+
+    .frequency span {
+      width: 76px;
+      height: 32px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: var(--ink-2);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .frequency .active {
+      color: white;
+      background: var(--brand);
+      box-shadow: 0 8px 16px rgba(15, 118, 110, 0.2);
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .kpi {
+      min-height: 116px;
+      border: 1px solid var(--line-soft);
+      border-radius: 12px;
+      background:
+        linear-gradient(180deg, rgba(8, 145, 178, 0.05), transparent 58%),
+        var(--panel-2);
+      padding: 13px;
+    }
+
+    .kpi-label {
+      color: var(--ink-3);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-size: 25px;
+      font-weight: 850;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+
+    .trend {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 820;
+      color: var(--green);
+    }
+
+    .trend.down { color: var(--red); }
+    .spark {
+      height: 24px;
+      margin-top: 10px;
+      background:
+        linear-gradient(135deg, transparent 0 20%, rgba(15, 118, 110, 0.22) 20% 21%, transparent 21% 35%, rgba(15, 118, 110, 0.35) 35% 36%, transparent 36% 52%, rgba(15, 118, 110, 0.25) 52% 53%, transparent 53% 70%, rgba(15, 118, 110, 0.4) 70% 71%, transparent 71%);
+      border-bottom: 1px solid rgba(15, 118, 110, 0.2);
+    }
+
+    .insights {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: var(--shadow-sm);
+      padding: 16px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 15px;
+      font-weight: 850;
+      margin-bottom: 14px;
+    }
+
+    .badge {
+      height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--brand);
+      background: var(--brand-soft);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .insight-row {
+      padding: 12px 0;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .insight-row:first-of-type { border-top: 0; }
+
+    .insight-row b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .insight-row p {
+      margin: 0;
+      color: var(--ink-3);
+      font-size: 12px;
+      line-height: 1.7;
+      font-weight: 650;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(420px, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+      align-items: start;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .card-head {
+      height: 58px;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--line-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .card-title {
+      min-width: 0;
+    }
+
+    .card-title h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .card-title span {
+      display: block;
+      margin-top: 3px;
+      color: var(--ink-3);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tools {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .icon-btn {
+      height: 32px;
+      min-width: 32px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-2);
+      color: var(--ink-2);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .icon-btn.active {
+      color: white;
+      border-color: var(--brand);
+      background: var(--brand);
+    }
+
+    .chart {
+      height: 430px;
+      padding: 22px 24px 24px;
+      position: relative;
+      background:
+        linear-gradient(to bottom, transparent 0 19%, var(--line-soft) 19.4%, transparent 19.8%),
+        linear-gradient(to bottom, transparent 0 39%, var(--line-soft) 39.4%, transparent 39.8%),
+        linear-gradient(to bottom, transparent 0 59%, var(--line-soft) 59.4%, transparent 59.8%),
+        linear-gradient(to bottom, transparent 0 79%, var(--line-soft) 79.4%, transparent 79.8%);
+    }
+
+    .chart svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .axis {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .legend {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      display: flex;
+      gap: 14px;
+      color: var(--ink-3);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .legend i {
+      display: inline-block;
+      width: 18px;
+      height: 3px;
+      border-radius: 999px;
+      margin-right: 6px;
+      vertical-align: middle;
+      background: var(--brand);
+    }
+
+    .legend .b i { background: var(--blue); }
+    .legend .c i { background: var(--amber); }
+
+    .side-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .table-wrap {
+      padding: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th {
+      height: 36px;
+      color: var(--ink-3);
+      background: var(--panel-2);
+      text-align: left;
+      padding: 0 10px;
+      font-weight: 850;
+      border-bottom: 1px solid var(--line);
+    }
+
+    td {
+      height: 42px;
+      padding: 0 10px;
+      border-bottom: 1px solid var(--line-soft);
+      font-weight: 720;
+    }
+
+    td.num {
+      text-align: right;
+      color: var(--ink);
+    }
+
+    .rank {
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      display: inline-grid;
+      place-items: center;
+      background: var(--brand-soft);
+      color: var(--brand);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .map {
+      height: 280px;
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr);
+      gap: 12px;
+      padding: 18px;
+      align-items: center;
+    }
+
+    .scale {
+      height: 180px;
+      width: 16px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #b91c1c, #f97316, #facc15, #dbeafe);
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .scale::before,
+    .scale::after {
+      position: absolute;
+      left: 24px;
+      color: var(--ink-3);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .scale::before { content: "高"; top: 0; }
+    .scale::after { content: "低"; bottom: 0; }
+
+    .map-shape {
+      width: min(300px, 100%);
+      aspect-ratio: 1.18;
+      justify-self: center;
+      border-radius: 52% 48% 48% 52% / 44% 50% 50% 56%;
+      background:
+        radial-gradient(circle at 66% 55%, #dc2626 0 8%, transparent 9%),
+        radial-gradient(circle at 58% 45%, #f97316 0 13%, transparent 14%),
+        radial-gradient(circle at 45% 52%, #f6ad37 0 20%, transparent 21%),
+        radial-gradient(circle at 34% 39%, #fee08a 0 25%, transparent 26%),
+        linear-gradient(135deg, #fee08a, #f59e0b 58%, #dc2626);
+      border: 2px solid #fff;
+      box-shadow: 0 18px 36px rgba(25, 39, 52, 0.18);
+    }
+
+    .comparison {
+      margin-top: 18px;
+      border: 1px dashed #b8c7d4;
+      border-radius: 14px;
+      background: #fbfdff;
+      padding: 16px;
+    }
+
+    .comparison h3 {
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .compare-card {
+      min-height: 92px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 12px;
+    }
+
+    .compare-card b {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .compare-card p {
+      margin: 0;
+      color: var(--ink-3);
+      font-size: 12px;
+      line-height: 1.65;
+      font-weight: 650;
+    }
+
+    .mobile-preview {
+      display: none;
+    }
+
+    @media (max-width: 1180px) {
+      .bi-app { grid-template-columns: 1fr; }
+      .rail {
+        position: static;
+        height: auto;
+        display: block;
+      }
+      .rail-section:nth-of-type(n+3), .filter-card { display: none; }
+      .context, .workspace { grid-template-columns: 1fr; }
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .search { display: none; }
+    }
+
+    @media (max-width: 760px) {
+      .main { padding: 12px; }
+      .topbar {
+        height: auto;
+        min-height: 58px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+        top: 8px;
+      }
+      .top-actions { width: 100%; overflow-x: auto; }
+      .summary-head { flex-direction: column; }
+      .frequency { width: 100%; }
+      .frequency span { flex: 1; width: auto; }
+      .kpis, .compare-grid { grid-template-columns: 1fr; }
+      .card-head {
+        height: auto;
+        min-height: 58px;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px;
+      }
+      .tools { width: 100%; overflow-x: auto; }
+      .chart { height: 330px; padding: 16px 14px 18px; }
+      .legend {
+        position: static;
+        padding: 12px 14px 0;
+        flex-wrap: wrap;
+      }
+      .map { grid-template-columns: 1fr; height: auto; }
+      .scale {
+        width: 180px;
+        height: 14px;
+        background: linear-gradient(90deg, #dbeafe, #facc15, #f97316, #b91c1c);
+      }
+      .scale::before { left: auto; right: -24px; top: -2px; }
+      .scale::after { left: -24px; bottom: auto; top: -2px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bi-app">
+    <aside class="rail">
+      <div class="brand">
+        <div class="brand-icon">唐</div>
+        <div>
+          <h1>大唐统计局</h1>
+          <p>Professional BI Workspace</p>
+        </div>
+      </div>
+
+      <section class="rail-section">
+        <div class="rail-title">数据范围</div>
+        <div class="rail-item active">武汉</div>
+        <div class="rail-item">城市对比</div>
+        <div class="rail-item">重点省市</div>
+        <div class="rail-item">全国宏观</div>
+      </section>
+
+      <section class="rail-section">
+        <div class="rail-title">主题分析</div>
+        <div class="rail-item active">房地产</div>
+        <div class="rail-item">GDP 与产业</div>
+        <div class="rail-item">人口结构</div>
+        <div class="rail-item">财政收入</div>
+        <div class="rail-item">教育医疗</div>
+        <div class="rail-item">交通社保</div>
+      </section>
+
+      <section class="rail-section">
+        <div class="rail-title">细分指标</div>
+        <div class="rail-item active">新房成交</div>
+        <div class="rail-item">二手房成交</div>
+        <div class="rail-item">投资额</div>
+        <div class="rail-item">销售面积</div>
+      </section>
+
+      <div class="filter-card">
+        <label>地区筛选</label>
+        <select><option>武汉市</option></select>
+        <label>时间频率</label>
+        <select><option>月度</option><option>年度</option></select>
+        <label>最近周期</label>
+        <select><option>最近 10 期</option><option>最近 24 期</option></select>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">
+          <strong>武汉新房成交分析</strong>
+          <span>房地产 / 新房成交 / 月度</span>
+          <span>最新：2026/03</span>
+        </div>
+        <div class="top-actions">
+          <input class="search" value="搜索指标、城市或栏目">
+          <button class="button">保存视图</button>
+          <button class="button">导出</button>
+          <button class="button primary">刷新数据</button>
+        </div>
+      </header>
+
+      <section class="context">
+        <div class="summary">
+          <div class="summary-head">
+            <div>
+              <h2>武汉房地产成交监控</h2>
+              <p>聚合新房成交、区域对比、同比趋势与异常波动，面向持续监控和横向比较。</p>
+            </div>
+            <div class="frequency"><span class="active">月度</span><span>年度</span></div>
+          </div>
+          <div class="kpis">
+            <div class="kpi">
+              <div class="kpi-label">最新成交量</div>
+              <div class="kpi-value">12,204</div>
+              <div class="trend">↑ 417.1% 较上期</div>
+              <div class="spark"></div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">近 10 期均值</div>
+              <div class="kpi-value">9,376</div>
+              <div class="trend">↑ 高于均值 30.2%</div>
+              <div class="spark"></div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">峰值月份</div>
+              <div class="kpi-value">2025/12</div>
+              <div class="trend down">↓ 当前低于峰值 44.9%</div>
+              <div class="spark"></div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">数据健康度</div>
+              <div class="kpi-value">98%</div>
+              <div class="trend">● 同步正常</div>
+              <div class="spark"></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="insights">
+          <div class="panel-title">智能洞察 <span class="badge">AI Summary</span></div>
+          <div class="insight-row">
+            <b>成交恢复</b>
+            <p>2026/03 较 2026/02 出现明显回升，建议结合节后成交恢复与区域供应节奏判断。</p>
+          </div>
+          <div class="insight-row">
+            <b>异常提醒</b>
+            <p>2025/12 为近 10 期高点，和相邻月份差异较大，需要确认是否存在集中备案。</p>
+          </div>
+          <div class="insight-row">
+            <b>下一步操作</b>
+            <p>建议切换区域维度，识别贡献主要来自主城区还是远城区。</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="workspace">
+        <article class="card">
+          <div class="card-head">
+            <div class="card-title">
+              <h3>新房成交趋势</h3>
+              <span>柱状 + 移动均线 + 异常标记</span>
+            </div>
+            <div class="tools">
+              <button class="icon-btn">表格</button>
+              <button class="icon-btn active">柱状</button>
+              <button class="icon-btn">折线</button>
+              <button class="icon-btn">同比</button>
+              <button class="icon-btn">反选</button>
+            </div>
+          </div>
+          <div class="legend"><span><i></i>成交量</span><span class="b"><i></i>移动均线</span><span class="c"><i></i>异常点</span></div>
+          <div class="chart">
+            <svg viewBox="0 0 900 360" role="img" aria-label="专业BI趋势图示意">
+              <g fill="#0f766e" opacity="0.9">
+                <rect x="40" y="160" width="44" height="150" rx="4"></rect>
+                <rect x="120" y="210" width="44" height="100" rx="4"></rect>
+                <rect x="200" y="230" width="44" height="80" rx="4"></rect>
+                <rect x="280" y="220" width="44" height="90" rx="4"></rect>
+                <rect x="360" y="175" width="44" height="135" rx="4"></rect>
+                <rect x="440" y="168" width="44" height="142" rx="4"></rect>
+                <rect x="520" y="58" width="44" height="252" rx="4" fill="#c98720"></rect>
+                <rect x="600" y="260" width="44" height="50" rx="4"></rect>
+                <rect x="680" y="278" width="44" height="32" rx="4"></rect>
+                <rect x="760" y="150" width="44" height="160" rx="4"></rect>
+              </g>
+              <polyline points="62,190 142,198 222,204 302,203 382,192 462,184 542,150 622,174 702,196 782,182" fill="none" stroke="#3867d6" stroke-width="4" stroke-linecap="round"></polyline>
+              <g fill="#ffffff" stroke="#3867d6" stroke-width="3">
+                <circle cx="62" cy="190" r="5"></circle><circle cx="142" cy="198" r="5"></circle><circle cx="222" cy="204" r="5"></circle>
+                <circle cx="302" cy="203" r="5"></circle><circle cx="382" cy="192" r="5"></circle><circle cx="462" cy="184" r="5"></circle>
+                <circle cx="542" cy="150" r="5"></circle><circle cx="622" cy="174" r="5"></circle><circle cx="702" cy="196" r="5"></circle><circle cx="782" cy="182" r="5"></circle>
+              </g>
+              <g fill="#c98720">
+                <circle cx="542" cy="58" r="7"></circle>
+                <text x="562" y="64" font-size="13" font-weight="800" fill="#8a5a10">异常高点</text>
+              </g>
+              <g class="axis" fill="currentColor">
+                <text x="36" y="340">202506</text><text x="116" y="340">202507</text><text x="196" y="340">202508</text>
+                <text x="276" y="340">202509</text><text x="356" y="340">202510</text><text x="436" y="340">202511</text>
+                <text x="516" y="340">202512</text><text x="596" y="340">202601</text><text x="676" y="340">202602</text><text x="756" y="340">202603</text>
+              </g>
+            </svg>
+          </div>
+        </article>
+
+        <div class="side-grid">
+          <article class="card">
+            <div class="card-head">
+              <div class="card-title">
+                <h3>区域贡献排行</h3>
+                <span>按最新期成交量排序</span>
+              </div>
+              <button class="icon-btn active">联动</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>排名</th><th>区域</th><th class="num">成交量</th><th class="num">占比</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="rank">1</span></td><td>洪山区</td><td class="num">2,148</td><td class="num">17.6%</td></tr>
+                  <tr><td><span class="rank">2</span></td><td>江岸区</td><td class="num">1,932</td><td class="num">15.8%</td></tr>
+                  <tr><td><span class="rank">3</span></td><td>武昌区</td><td class="num">1,706</td><td class="num">14.0%</td></tr>
+                  <tr><td><span class="rank">4</span></td><td>汉阳区</td><td class="num">1,445</td><td class="num">11.8%</td></tr>
+                  <tr><td><span class="rank">5</span></td><td>东西湖区</td><td class="num">1,108</td><td class="num">9.1%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-head">
+              <div class="card-title">
+                <h3>省市热力地图</h3>
+                <span>用于 GDP、财政、人口等跨区域页面</span>
+              </div>
+              <button class="icon-btn">播放</button>
+            </div>
+            <div class="map">
+              <div class="scale"></div>
+              <div class="map-shape"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="comparison">
+        <h3>这版与现有页面的核心差异</h3>
+        <div class="compare-grid">
+          <div class="compare-card"><b>信息架构</b><p>从顶部横向导航改为 BI 应用壳：左侧主题导航、顶部命令栏、主工作区。</p></div>
+          <div class="compare-card"><b>分析入口</b><p>新增 KPI 总览、区域排行、洞察面板，用户无需先进入单张图才理解页面。</p></div>
+          <div class="compare-card"><b>图表组织</b><p>从纵向堆叠图表改为主图 + 侧栏辅助分析，更符合监控和决策场景。</p></div>
+          <div class="compare-card"><b>交互模式</b><p>视图保存、搜索、联动、刷新、导出作为全局命令，不散落在每个卡片里。</p></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -97,8 +97,10 @@ body, html, #app {
 
 .app-root {
   min-height: 100vh;
-  padding-bottom: 30px;
-  background-color: var(--bg-page);
+  padding-bottom: 34px;
+  background:
+    linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.08), transparent 330px),
+    var(--bg-page);
 }
 
 .app-header {

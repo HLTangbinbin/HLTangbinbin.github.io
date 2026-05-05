@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>大唐统计局 - 页面优化设计稿</title>
+  <style>
+    :root {
+      --accent: #278fa1;
+      --accent-strong: #176b78;
+      --accent-soft: rgba(39, 143, 161, 0.12);
+      --accent-fill: #d6eef2;
+      --accent-contrast: #125764;
+      --positive: #15956b;
+      --warning: #c98720;
+      --danger: #d84b4b;
+      --page: #f3f6f8;
+      --card: #ffffff;
+      --soft: #f7fafb;
+      --line: #d6e2e9;
+      --line-strong: #b8cad4;
+      --text: #142235;
+      --text-2: #415168;
+      --muted: #6b7a8d;
+      --shadow: 0 14px 36px rgba(31, 53, 72, 0.08);
+      --shadow-soft: 0 8px 24px rgba(31, 53, 72, 0.06);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(39, 143, 161, 0.08) 0, transparent 340px),
+        radial-gradient(circle at 8% 0, rgba(39, 143, 161, 0.08), transparent 280px),
+        var(--page);
+      font-variant-numeric: tabular-nums;
+    }
+
+    button, select { font: inherit; }
+
+    .shell {
+      width: min(94vw, 1480px);
+      margin: 0 auto;
+      padding: 22px 0 44px;
+    }
+
+    .brand-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent-fill), var(--card));
+      border: 1px solid rgba(39, 143, 161, 0.24);
+      color: var(--accent-contrast);
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .brand-copy h1 {
+      margin: 0;
+      font-size: 25px;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .brand-copy p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .mode-button {
+      height: 36px;
+      margin-left: 14px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.76);
+      color: var(--accent-strong);
+      font-size: 14px;
+      font-weight: 750;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .nav {
+      position: sticky;
+      top: 10px;
+      z-index: 10;
+      width: min(100%, 1180px);
+      margin: 0 auto 20px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: auto;
+    }
+
+    .nav-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 0 0 auto;
+    }
+
+    .divider {
+      width: 1px;
+      height: 24px;
+      margin: 0 10px;
+      background: var(--line-strong);
+      opacity: 0.75;
+    }
+
+    .pill {
+      min-height: 36px;
+      padding: 0 15px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .pill.active {
+      color: var(--accent-contrast);
+      background: var(--accent-fill);
+      box-shadow: inset 0 0 0 1px rgba(39, 143, 161, 0.22), 0 8px 18px rgba(39, 143, 161, 0.12);
+    }
+
+    .pill.secondary { color: var(--text-2); }
+    .pill.tertiary { color: var(--muted); }
+
+    .dashboard {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: var(--shadow);
+      padding: 26px 34px 32px;
+    }
+
+    .page-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .stat-chip {
+      min-height: 34px;
+      padding: 0 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .stat-chip strong {
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .segmented {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--soft);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .segmented span {
+      min-width: 78px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      color: var(--text-2);
+      font-weight: 750;
+    }
+
+    .segmented .on {
+      color: var(--accent-contrast);
+      background: var(--accent-fill);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+
+    .linkage {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      max-width: 100%;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--text-2);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .linkage b { color: var(--accent-strong); }
+
+    .card {
+      margin-top: 26px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 16px 16px 10px;
+      overflow-x: auto;
+    }
+
+    .tool-group {
+      min-height: 50px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--card);
+      box-shadow: var(--shadow-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex: 0 0 auto;
+    }
+
+    .tool-label {
+      padding-right: 11px;
+      border-right: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .mini-tabs {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--soft);
+    }
+
+    .mini-tabs span {
+      height: 34px;
+      min-width: 68px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid var(--line);
+      color: var(--text-2);
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .mini-tabs span:last-child { border-right: 0; }
+
+    .mini-tabs .on {
+      color: var(--accent-contrast);
+      background: var(--accent-fill);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+
+    .slider {
+      width: 150px;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent) 0 35%, #dbe5ea 35% 100%);
+      position: relative;
+    }
+
+    .slider::after {
+      content: "";
+      position: absolute;
+      left: 35%;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      border: 2px solid var(--accent);
+      background: var(--card);
+    }
+
+    .value {
+      min-width: 24px;
+      color: var(--text-2);
+      font-weight: 800;
+    }
+
+    .ghost-button {
+      height: 34px;
+      padding: 0 16px;
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      background: var(--accent-fill);
+      color: var(--accent-contrast);
+      font-weight: 800;
+    }
+
+    .select-like {
+      height: 34px;
+      min-width: 120px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+      color: var(--text-2);
+      font-weight: 750;
+    }
+
+    .insight {
+      margin: 0 44px 18px;
+      padding: 12px 16px;
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-soft), var(--card));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .insight-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--accent-strong);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .subject {
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(39, 143, 161, 0.1);
+      border: 1px solid rgba(39, 143, 161, 0.2);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .metric {
+      min-height: 88px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(39, 143, 161, 0.14);
+      background: linear-gradient(180deg, rgba(39, 143, 161, 0.08), var(--soft));
+    }
+
+    .metric.warn {
+      border-color: rgba(216, 75, 75, 0.24);
+      background: linear-gradient(180deg, rgba(216, 75, 75, 0.08), var(--soft));
+    }
+
+    .metric.good {
+      border-color: rgba(21, 149, 107, 0.24);
+      background: linear-gradient(180deg, rgba(21, 149, 107, 0.08), var(--soft));
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      color: var(--danger);
+      font-size: 19px;
+      font-weight: 850;
+      margin-bottom: 6px;
+    }
+
+    .metric.good .metric-value { color: var(--positive); }
+    .metric-detail { color: var(--text-2); font-size: 13px; font-weight: 650; }
+
+    .chart-title {
+      margin: 18px 0 8px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 850;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      color: var(--text-2);
+      font-size: 13px;
+      font-weight: 650;
+      flex-wrap: wrap;
+    }
+
+    .legend i {
+      display: inline-block;
+      width: 22px;
+      height: 4px;
+      margin-right: 6px;
+      border-radius: 999px;
+      vertical-align: middle;
+      background: var(--accent);
+    }
+
+    .chart-area {
+      height: 430px;
+      margin: 18px 34px 28px;
+      position: relative;
+      border-bottom: 1px solid var(--line-strong);
+      background:
+        repeating-linear-gradient(to bottom, transparent 0 72px, var(--line) 73px, transparent 74px);
+    }
+
+    .bars {
+      position: absolute;
+      inset: 28px 28px 0 72px;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      align-items: end;
+      gap: 26px;
+    }
+
+    .bar {
+      min-width: 18px;
+      background: linear-gradient(180deg, #2f9fb1, #278fa1);
+      border-radius: 4px 4px 0 0;
+      box-shadow: 0 10px 20px rgba(39, 143, 161, 0.16);
+    }
+
+    .axis-labels {
+      position: absolute;
+      left: 72px;
+      right: 28px;
+      bottom: -24px;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 26px;
+      color: var(--text-2);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .table-demo {
+      width: calc(100% - 68px);
+      margin: 18px 34px 34px;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: inset 0 0 0 1px var(--line);
+    }
+
+    .table-demo th, .table-demo td {
+      height: 46px;
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .table-demo th {
+      background: var(--soft);
+    }
+
+    .table-demo td:nth-child(2) {
+      background: rgba(39, 143, 161, 0.13);
+    }
+
+    .map-demo {
+      height: 420px;
+      margin: 20px 34px 34px;
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .scale {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-2);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .scale-bar {
+      width: 18px;
+      height: 150px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #cb1d34, #ff8b3d, #ffe390);
+    }
+
+    .china {
+      width: min(520px, 72%);
+      aspect-ratio: 1.2;
+      justify-self: center;
+      border-radius: 54% 46% 48% 52% / 45% 50% 50% 55%;
+      background:
+        radial-gradient(circle at 65% 55%, #dd4c2f 0 7%, transparent 8%),
+        radial-gradient(circle at 56% 47%, #f08a3a 0 12%, transparent 13%),
+        radial-gradient(circle at 47% 52%, #f3b351 0 18%, transparent 19%),
+        radial-gradient(circle at 36% 40%, #ffe08c 0 23%, transparent 24%),
+        linear-gradient(135deg, #ffe390, #f39c43 58%, #e65a35);
+      box-shadow: 0 22px 42px rgba(31, 53, 72, 0.16);
+      border: 2px solid #fff;
+      position: relative;
+    }
+
+    .china::after {
+      content: "地图视图：保留真实 ECharts 地图，此处展示布局与色阶方案";
+      position: absolute;
+      left: 50%;
+      bottom: -44px;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .notes {
+      margin: 22px 0 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .note {
+      padding: 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .note h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .note p {
+      margin: 0;
+      color: var(--text-2);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .dark-preview {
+      margin-top: 22px;
+      padding: 22px;
+      border-radius: 18px;
+      background: #0d1522;
+      color: #edf5fb;
+      border: 1px solid #334155;
+    }
+
+    .dark-preview .dark-card {
+      margin-top: 14px;
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      background: #142031;
+      color: #cbd5e1;
+    }
+
+    @media (max-width: 900px) {
+      .shell { width: 96vw; padding-top: 14px; }
+      .brand-bar { justify-content: space-between; }
+      .brand-copy h1 { font-size: 20px; }
+      .dashboard { padding: 18px 14px 22px; border-radius: 14px; }
+      .page-head { align-items: flex-start; flex-direction: column; }
+      .segmented { width: 100%; }
+      .segmented span { flex: 1; min-width: 0; }
+      .toolbar { align-items: stretch; flex-direction: column; padding: 12px; }
+      .tool-group { width: 100%; overflow-x: auto; min-height: 42px; }
+      .tool-label { min-width: 42px; font-size: 12px; }
+      .mini-tabs span { min-width: 58px; height: 30px; padding: 0 10px; font-size: 12px; }
+      .insight { margin: 0 12px 14px; }
+      .insight-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .chart-area { height: 330px; margin: 14px 12px 28px; }
+      .bars { inset: 22px 12px 0 42px; gap: 8px; }
+      .axis-labels { left: 42px; right: 12px; gap: 8px; font-size: 10px; }
+      .table-demo { width: calc(100% - 24px); margin: 14px 12px 22px; }
+      .map-demo { height: 340px; margin: 14px 12px 22px; grid-template-columns: 1fr; gap: 12px; }
+      .scale { justify-content: center; }
+      .scale-bar { width: 150px; height: 14px; background: linear-gradient(90deg, #ffe390, #ff8b3d, #cb1d34); }
+      .china { width: 78%; }
+      .china::after { white-space: normal; width: 100%; text-align: center; }
+      .notes { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="brand-bar">
+      <div class="brand-mark">唐</div>
+      <div class="brand-copy">
+        <h1>大唐统计局</h1>
+        <p>城市与宏观数据看板</p>
+      </div>
+      <button class="mode-button">暗黑</button>
+    </header>
+
+    <nav class="nav" aria-label="页面导航设计">
+      <div class="nav-group">
+        <span class="pill active">武汉</span>
+        <span class="pill">城市</span>
+        <span class="pill">省市</span>
+        <span class="pill">全国</span>
+      </div>
+      <span class="divider"></span>
+      <div class="nav-group">
+        <span class="pill secondary active">新房</span>
+        <span class="pill secondary">二手房</span>
+        <span class="pill secondary">GDP</span>
+        <span class="pill secondary">人口</span>
+        <span class="pill secondary">财政</span>
+        <span class="pill secondary">房地产</span>
+        <span class="pill secondary">教育</span>
+        <span class="pill secondary">医疗</span>
+      </div>
+    </nav>
+
+    <section class="dashboard">
+      <div class="page-head">
+        <div>
+          <div class="title-row">
+            <h2 class="page-title">武汉 / 新房 / 月度</h2>
+            <span class="stat-chip">最新 <strong>2026/03</strong></span>
+            <span class="stat-chip">状态 <strong>已更新</strong></span>
+          </div>
+          <div class="linkage"><b>当前联动</b> 北京市 · 地区生产总值 <b>清除</b></div>
+        </div>
+        <div class="segmented">
+          <span class="on">月度</span>
+          <span>年度</span>
+        </div>
+      </div>
+
+      <article class="card">
+        <div class="toolbar">
+          <div class="tool-group">
+            <span class="tool-label">视图</span>
+            <div class="mini-tabs">
+              <span>表格</span>
+              <span class="on">柱状</span>
+              <span>条形</span>
+              <span>折线</span>
+            </div>
+          </div>
+          <div class="tool-group">
+            <span class="tool-label">时间</span>
+            <span class="slider"></span>
+            <span class="value">10</span>
+          </div>
+          <div class="tool-group">
+            <span class="tool-label">操作</span>
+            <button class="ghost-button">反选</button>
+            <button class="ghost-button">智能分析</button>
+            <select class="select-like"><option>指标</option></select>
+          </div>
+        </div>
+
+        <section class="insight">
+          <div class="insight-head">洞察总结 <span class="subject">北京市</span></div>
+          <div class="insight-grid">
+            <div class="metric warn">
+              <div class="metric-label">最新值</div>
+              <div class="metric-value">49,843.1</div>
+              <div class="metric-detail">2024 · 较上期增长 5.3%</div>
+            </div>
+            <div class="metric warn">
+              <div class="metric-label">区间</div>
+              <div class="metric-value">26,034.1 - 49,843.1</div>
+              <div class="metric-detail">高点 2024 · 低点 2015</div>
+            </div>
+            <div class="metric good">
+              <div class="metric-label">风险提示</div>
+              <div class="metric-value">运行平稳</div>
+              <div class="metric-detail">近期未见明显异常</div>
+            </div>
+            <div class="metric warn">
+              <div class="metric-label">未来预测</div>
+              <div class="metric-value">53,090.25</div>
+              <div class="metric-detail">下一期预测值 · 偏上行</div>
+            </div>
+          </div>
+        </section>
+
+        <h3 class="chart-title">武汉新房月成交量（套）</h3>
+        <div class="legend"><span><i></i>新房成交量</span></div>
+        <div class="chart-area" aria-label="柱状图设计示意">
+          <div class="bars">
+            <div class="bar" style="height: 52%"></div>
+            <div class="bar" style="height: 34%"></div>
+            <div class="bar" style="height: 26%"></div>
+            <div class="bar" style="height: 28%"></div>
+            <div class="bar" style="height: 43%"></div>
+            <div class="bar" style="height: 45%"></div>
+            <div class="bar" style="height: 92%"></div>
+            <div class="bar" style="height: 13%"></div>
+            <div class="bar" style="height: 8%"></div>
+            <div class="bar" style="height: 50%"></div>
+          </div>
+          <div class="axis-labels">
+            <span>202506</span><span>202507</span><span>202508</span><span>202509</span><span>202510</span>
+            <span>202511</span><span>202512</span><span>202601</span><span>202602</span><span>202603</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="toolbar">
+          <div class="tool-group">
+            <span class="tool-label">视图</span>
+            <div class="mini-tabs">
+              <span class="on">表格</span>
+              <span>柱状</span>
+              <span>条形</span>
+              <span>折线</span>
+            </div>
+          </div>
+          <div class="tool-group">
+            <span class="tool-label">操作</span>
+            <button class="ghost-button">热力图</button>
+            <button class="ghost-button">导出</button>
+          </div>
+        </div>
+        <h3 class="chart-title">武汉新房月成交量</h3>
+        <table class="table-demo">
+          <thead><tr><th>时间</th><th>新房成交量</th></tr></thead>
+          <tbody>
+            <tr><td>202506</td><td>12618</td></tr>
+            <tr><td>202507</td><td>8212</td></tr>
+            <tr><td>202508</td><td>6638</td></tr>
+            <tr><td>202509</td><td>6985</td></tr>
+            <tr><td>202510</td><td>10447</td></tr>
+            <tr><td>202511</td><td>10753</td></tr>
+            <tr><td>202512</td><td>22152</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="card">
+        <div class="toolbar">
+          <div class="tool-group">
+            <span class="tool-label">视图</span>
+            <div class="mini-tabs">
+              <span>表格</span>
+              <span>柱状</span>
+              <span>条形</span>
+              <span>折线</span>
+              <span class="on">地图</span>
+            </div>
+          </div>
+          <div class="tool-group">
+            <span class="tool-label">时间</span>
+            <span class="slider"></span>
+            <span class="value">10</span>
+          </div>
+        </div>
+        <h3 class="chart-title">国内生产总值（2017）</h3>
+        <div class="map-demo">
+          <div class="scale"><span>低</span><span class="scale-bar"></span><span>高</span></div>
+          <div class="china"></div>
+        </div>
+      </article>
+
+      <section class="notes">
+        <div class="note">
+          <h3>布局原则</h3>
+          <p>从“卡片堆叠”改为清晰的数据工作台：顶部定位、导航检索、页面上下文、图表操作依次展开。</p>
+        </div>
+        <div class="note">
+          <h3>色彩原则</h3>
+          <p>保留青绿色识别，但降低饱和度；状态色只用于数据变化、风险和提示，避免页面一色到底。</p>
+        </div>
+        <div class="note">
+          <h3>交互原则</h3>
+          <p>工具栏按任务分组，当前状态明确；移动端改为多行紧凑控件，避免横向拥挤导致误触。</p>
+        </div>
+      </section>
+
+      <section class="dark-preview">
+        <strong>暗色模式方向</strong>
+        <div class="dark-card">暗色模式使用独立色板，不做简单反相：背景 #0D1522，卡片 #142031，主色 #54AEBD，图表网格线降低对比。</div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

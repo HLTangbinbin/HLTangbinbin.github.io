@@ -2,13 +2,10 @@
   <div class="dashboard-global-wrapper">
     <div class="page-header" v-if="latestPeriodText || internalShowToggles">
       <div class="header-left">
-        <div class="header-path-wrap" v-if="headerPathText">
-          <div class="header-path">{{ headerPathText }}</div>
-        </div>
-        <div class="header-stat latest-inline" v-if="latestPeriodText">
-          <span class="header-stat-label">最新</span>
-          <span class="header-stat-value">{{ latestPeriodText }}</span>
-        </div>
+        <span class="header-chip path-chip" v-if="headerPathText">{{ headerPathText }}</span>
+        <span class="header-chip" v-if="latestPeriodText">最新 <strong>{{ latestPeriodText }}</strong></span>
+        <span class="header-chip">图表 <strong>{{ chartsToRender.length }} 张</strong></span>
+        <span class="header-chip warning" v-if="warningCount > 0">异常 <strong>{{ warningCount }} 项</strong></span>
         <div class="header-meta" v-if="linkSummary">
           <div v-if="linkSummary" class="header-linkage">
             <span class="linkage-label">联动中</span>
@@ -192,6 +189,7 @@ export default {
     });
 
     const latestPeriodText = computed(() => latestPeriod.value);
+    const warningCount = computed(() => latestPeriod.value === '暂无数据' || chartsToRender.value.length === 0 ? 1 : 0);
 
     const linkSummary = computed(() => {
       if (!linkedSelection.value?.value) return '';
@@ -232,6 +230,7 @@ export default {
       internalShowToggles,
       headerPathText,
       latestPeriodText,
+      warningCount,
       linkedSelection,
       linkSummary,
       chartsToRender,
@@ -268,12 +267,12 @@ function getDbCodeLabel(dbCode, viewMode) {
   width: 98%;
   max-width: 1500px;
   margin: 0 auto;
-  background-color: var(--bg-card);
-  border-radius: 20px;
-  padding: 20px; 
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
   box-sizing: border-box;
-  border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-soft);
+  border: 0;
+  box-shadow: none;
 }
 
 .page-header {
@@ -282,10 +281,13 @@ function getDbCodeLabel(dbCode, viewMode) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  flex-wrap: nowrap;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--border-default);
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  border: 1px solid var(--border-default);
+  border-radius: 16px;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-soft);
   position: relative;
 }
 
@@ -293,9 +295,10 @@ function getDbCodeLabel(dbCode, viewMode) {
   min-width: 0;
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
   flex: 1 1 auto;
-  overflow: hidden;
+  overflow: visible;
+  flex-wrap: wrap;
   position: relative;
   z-index: 1;
 }
@@ -323,12 +326,18 @@ function getDbCodeLabel(dbCode, viewMode) {
   pointer-events: none;
 }
 
-.header-path {
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 34px;
-  color: var(--text-primary);
-  letter-spacing: 0.01em;
+.header-chip {
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-card-soft);
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 760;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -337,8 +346,17 @@ function getDbCodeLabel(dbCode, viewMode) {
   max-width: 100%;
 }
 
-.latest-inline {
-  flex: 0 0 auto;
+.header-chip strong {
+  color: var(--text-primary);
+  font-weight: 850;
+}
+
+.header-chip.warning strong {
+  color: #c98720;
+}
+
+.path-chip {
+  max-width: 360px;
 }
 
 .header-meta {
@@ -363,8 +381,8 @@ function getDbCodeLabel(dbCode, viewMode) {
   min-height: 34px;
   padding: 0 12px;
   border-radius: 999px;
-  background: var(--color-accent-soft);
-  border: 1px solid rgba(11, 194, 214, 0.24);
+  background: var(--color-accent-fill);
+  border: 1px solid rgba(var(--color-accent-rgb), 0.22);
   white-space: nowrap;
   max-width: 100%;
   flex: 0 1 auto;
@@ -398,29 +416,6 @@ function getDbCodeLabel(dbCode, viewMode) {
 
 .linkage-clear:hover {
   color: var(--color-accent);
-}
-
-.header-stat {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: 999px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-default);
-  white-space: nowrap;
-}
-
-.header-stat-label {
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.header-stat-value {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-primary);
 }
 
 .charts-flow {
@@ -475,45 +470,47 @@ function getDbCodeLabel(dbCode, viewMode) {
 
 .custom-segment {
   box-shadow: var(--shadow-soft);
-  border-radius: 14px; 
-  background: var(--bg-card);
+  border-radius: 11px;
+  background: var(--bg-card-soft);
+  border: 1px solid var(--border-default);
+  padding: 3px;
 }
 
 .custom-segment :deep(.el-radio-button__inner) {
-  height: 36px !important; 
-  padding: 0 32px !important;
-  font-size: 15px !important;
-  font-weight: bold !important;
+  height: 33px !important;
+  min-width: 72px;
+  padding: 0 18px !important;
+  font-size: 14px !important;
+  font-weight: 820 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
   transition: all 0.2s ease;
-  background-color: var(--bg-card) !important;
-  color: var(--text-muted) !important;
+  background-color: transparent !important;
+  color: var(--text-secondary) !important;
   border: 1px solid transparent !important; 
 }
 
 .custom-segment :deep(.el-radio-button:first-child .el-radio-button__inner) {
-  border-radius: 14px 0 0 14px !important; 
+  border-radius: 8px !important;
 }
 .custom-segment :deep(.el-radio-button:last-child .el-radio-button__inner) {
-  border-radius: 0 14px 14px 0 !important;
+  border-radius: 8px !important;
 }
 
 .custom-segment :deep(.el-radio-button__original-radio:checked + .el-radio-button__inner) {
-  background-color: var(--color-accent-fill) !important;
-  color: var(--color-accent-contrast) !important;
+  background: linear-gradient(135deg, var(--color-accent), #1696a8) !important;
+  color: #fff !important;
   border-color: var(--color-accent) !important;
-  box-shadow: inset 0 0 0 1px rgba(var(--color-accent-rgb), 0.08) !important;
+  box-shadow: 0 8px 16px rgba(var(--color-accent-rgb), 0.18) !important;
 }
 
 @media (max-width: 768px) {
   .dashboard-global-wrapper {
     width: 98%;
-    padding: 10px;
-    border-radius: 14px;
-    background-color: var(--bg-card);
+    padding: 0;
+    border-radius: 0;
   }
 
   .empty-state-card {
@@ -535,22 +532,22 @@ function getDbCodeLabel(dbCode, viewMode) {
 
   .page-header {
     width: 100%;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
     justify-content: space-between;
-    gap: 6px;
-    margin: 0 0 10px;
-    padding-bottom: 10px;
-    flex-wrap: nowrap;
+    gap: 10px;
+    margin: 0 0 12px;
+    padding: 12px;
+    flex-wrap: wrap;
   }
 
   .header-left {
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     flex: 1 1 auto;
     min-width: 0;
-    overflow: hidden;
-    flex-wrap: nowrap;
+    overflow: visible;
+    flex-wrap: wrap;
   }
 
   .header-path-wrap {
@@ -568,21 +565,10 @@ function getDbCodeLabel(dbCode, viewMode) {
   }
 
   .view-mode-container {
-    width: auto;
-    justify-content: flex-end;
-    margin-left: auto;
-    align-self: center;
-    flex: 0 0 auto;
-  }
-
-  .header-path {
-    font-size: 12px;
-    line-height: 28px;
-    flex: 0 1 auto;
-    max-width: 100%;
-  }
-
-  .latest-inline {
+    width: 100%;
+    justify-content: stretch;
+    margin-left: 0;
+    align-self: stretch;
     flex: 0 0 auto;
   }
 
@@ -600,46 +586,46 @@ function getDbCodeLabel(dbCode, viewMode) {
   }
 
   .header-linkage {
-    display: none;
+    width: 100%;
+    border-radius: 10px;
   }
 
-  .header-stat {
+  .header-chip {
     min-height: 28px;
     padding: 0 8px;
     border-radius: 999px;
-    justify-content: center;
-  }
-
-  .header-stat-label {
-    font-size: 10px;
-  }
-
-  .header-stat-value {
     font-size: 12px;
+    flex: 0 1 auto;
+    max-width: 100%;
+  }
+
+  .path-chip {
+    max-width: 100%;
   }
 
   .custom-segment {
-    width: auto;
+    width: 100%;
     flex-shrink: 0;
   }
 
   .custom-segment :deep(.el-radio-group),
   .custom-segment :deep(.el-radio-button) {
-    width: auto;
+    width: 100%;
+    flex: 1 1 0;
   }
 
   .custom-segment :deep(.el-radio-button__inner) {
-    height: 28px !important;
-    width: auto;
+    height: 31px !important;
+    width: 100%;
     min-width: 52px;
     padding: 0 12px !important;
-    font-size: 11px !important;
+    font-size: 12px !important;
   }
   .custom-segment :deep(.el-radio-button:first-child .el-radio-button__inner) {
-    border-radius: 12px 0 0 12px !important;
+    border-radius: 8px !important;
   }
   .custom-segment :deep(.el-radio-button:last-child .el-radio-button__inner) {
-    border-radius: 0 12px 12px 0 !important;
+    border-radius: 8px !important;
   }
 }
 </style>

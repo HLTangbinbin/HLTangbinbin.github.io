@@ -79,6 +79,18 @@ const headerCellStyle = () => ({
   --el-fill-color-lighter: var(--bg-card-soft);
   background: var(--bg-card);
   color: var(--text-primary);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.data-table-wrapper :deep(.el-table__inner-wrapper),
+.data-table-wrapper :deep(.el-table__body-wrapper),
+.data-table-wrapper :deep(.el-table__header-wrapper) {
+  border-radius: inherit;
+}
+
+.data-table-wrapper :deep(.el-table--border) {
+  border: 1px solid var(--border-default);
 }
 
 .data-table-wrapper :deep(.el-table th.el-table__cell) {

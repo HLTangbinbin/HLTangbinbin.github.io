@@ -1,27 +1,27 @@
 :root {
-  --color-accent: #2e95a7;
-  --color-accent-rgb: 46, 149, 167;
-  --color-accent-strong: #227b8b;
-  --color-accent-soft: rgba(46, 149, 167, 0.14);
-  --color-accent-fill: #d7ebef;
-  --color-accent-contrast: #1f5f6b;
+  --color-accent: #0f7f8f;
+  --color-accent-rgb: 15, 127, 143;
+  --color-accent-strong: #0b6c7a;
+  --color-accent-soft: rgba(15, 127, 143, 0.12);
+  --color-accent-fill: #dff2f5;
+  --color-accent-contrast: #07525c;
 
-  --bg-page: #f4f6f8;
-  --bg-elevated: #eef3f6;
+  --bg-page: #eef4f7;
+  --bg-elevated: #e7f0f4;
   --bg-card: #ffffff;
-  --bg-card-soft: #f5f8fa;
+  --bg-card-soft: #f7fafc;
   --bg-overlay: rgba(255, 255, 255, 0.9);
 
-  --text-primary: #1e293b;
-  --text-secondary: #314155;
-  --text-muted: #566476;
+  --text-primary: #142235;
+  --text-secondary: #3d4f66;
+  --text-muted: #718093;
   --text-inverse: #ffffff;
 
   --border-default: #d8e2e8;
   --border-strong: #c3cfd8;
 
-  --shadow-soft: 0 4px 16px rgba(15, 23, 42, 0.06);
-  --shadow-medium: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-soft: 0 8px 22px rgba(27, 45, 62, 0.06);
+  --shadow-medium: 0 16px 42px rgba(27, 45, 62, 0.09);
 
   --radius-card: 16px;
   --radius-pill: 999px;
