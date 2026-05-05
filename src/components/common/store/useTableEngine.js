@@ -25,7 +25,29 @@ export function useTableEngine(chartOption, isMobile, chartTitle, chartIdentityS
       });
   });
 
-  const getSafeAxisData = (axis) => (Array.isArray(axis) ? axis[0]?.data : axis?.data) || [];
+  const normalizeAxes = (axis) => (Array.isArray(axis) ? axis : [axis]).filter(Boolean);
+
+  const getCategoryAxisData = (option) => {
+    const axes = [
+      ...normalizeAxes(option?.xAxis),
+      ...normalizeAxes(option?.yAxis)
+    ];
+
+    const categoryAxis = axes.find(axis => axis?.type === 'category' && Array.isArray(axis.data) && axis.data.length > 0);
+    if (categoryAxis) return categoryAxis.data;
+
+    const axisWithData = axes.find(axis => Array.isArray(axis?.data) && axis.data.length > 0);
+    if (axisWithData) return axisWithData.data;
+
+    const seriesWithDates = validSeries.value.find(item => Array.isArray(item.series?.date) && item.series.date.length > 0);
+    if (seriesWithDates) return seriesWithDates.series.date;
+
+    const maxSeriesLength = validSeries.value.reduce((max, item) => {
+      return Math.max(max, Array.isArray(item.series?.data) ? item.series.data.length : 0);
+    }, 0);
+
+    return Array.from({ length: maxSeriesLength }, (_, index) => index + 1);
+  };
 
   const tableColumns = computed(() => {
     const cols = [{ prop: 'time', label: '时间', fixed: 'left', minWidth: 120 }];
@@ -36,7 +58,7 @@ export function useTableEngine(chartOption, isMobile, chartTitle, chartIdentityS
   });
 
   const tableData = computed(() => {
-    const categories = getSafeAxisData(chartOption.value.xAxis) || getSafeAxisData(chartOption.value.yAxis) || [];
+    const categories = getCategoryAxisData(chartOption.value);
     if (categories.length > 0) {
       return categories.map((cat, timeIdx) => {
         const row = { time: cat };
