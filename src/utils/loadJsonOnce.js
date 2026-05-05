@@ -10,10 +10,7 @@ export async function loadJsonOnce(path) {
     throw new Error('loadJsonOnce: 路径不能为空');
   }
 
-  const isLocalJson = /^\/json\//.test(path);
-  const fetchOptions = isLocalJson
-    ? { cache: 'no-store' }
-    : {};
+  const fetchOptions = { cache: 'no-store' };
 
   const response = await fetch(path, fetchOptions);
   if (!response.ok) {
