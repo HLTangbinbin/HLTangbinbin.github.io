@@ -28,7 +28,6 @@ export default {
     let chartInstance = null;
     let resizeHandler = null;
     let touchStartHandler = null;
-    let touchMoveHandler = null;
     let touchEndHandler = null;
     let pieUpdateContext = null;
     let hoveredSeriesName = '';
@@ -104,21 +103,14 @@ export default {
 
       touchStartHandler = (event) => {
         if (!isMobileViewport()) return;
-        event.preventDefault();
         showTooltipFromTouch(event);
-      };
-
-      touchMoveHandler = () => {
-        if (!isMobileViewport()) return;
-        hideTooltip();
       };
 
       touchEndHandler = () => {
         hideTooltip();
       };
 
-      container.addEventListener('touchstart', touchStartHandler, { passive: false });
-      container.addEventListener('touchmove', touchMoveHandler, { passive: true });
+      container.addEventListener('touchstart', touchStartHandler, { passive: true });
       container.addEventListener('touchend', touchEndHandler, { passive: true });
       container.addEventListener('touchcancel', touchEndHandler, { passive: true });
     };
@@ -127,13 +119,11 @@ export default {
       const container = chartContainer.value;
       if (!container) return;
       if (touchStartHandler) container.removeEventListener('touchstart', touchStartHandler);
-      if (touchMoveHandler) container.removeEventListener('touchmove', touchMoveHandler);
       if (touchEndHandler) {
         container.removeEventListener('touchend', touchEndHandler);
         container.removeEventListener('touchcancel', touchEndHandler);
       }
       touchStartHandler = null;
-      touchMoveHandler = null;
       touchEndHandler = null;
     };
 
