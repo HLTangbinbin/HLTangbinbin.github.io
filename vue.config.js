@@ -1,9 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
-  // 使用该配置打包到github pages
-  // publicPath: './',
-
   // 部署在 Nginx 的根目录
    publicPath: '/',
   
