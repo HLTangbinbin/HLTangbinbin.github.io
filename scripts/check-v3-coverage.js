@@ -36,8 +36,9 @@ const provinceRegionList = [
 
 const CITY_CODES = ['110000', '310000', '440100', '440300', '330100', '510100', '320100', '420100', '500000', '120000', '430100', '610100', '410100', '340100'];
 const CITY_POPULATION_CODES = ['110000', '310000', '440100', '440300', '330100', '510100', '420100', '320100', '500000', '610100', '410100', '340100', '430100'];
+const NBS_36_CITIES = ['110000', '120000', '130100', '140100', '150100', '210100', '210200', '220100', '230100', '310000', '320100', '330100', '330200', '340100', '350100', '350200', '360100', '370100', '370200', '410100', '420100', '430100', '440100', '440300', '450100', '460100', '500000', '510100', '520100', '530100', '540100', '610100', '620100', '630100', '640100', '650100'];
 const ADD_CITY_CODES_YD = cityRegionList.filter((city) => !CITY_CODES.includes(city.code));
-const ADD_CITY_CODES_ND = cityRegionList.filter((city) => !CITY_CODES.includes(city.code));
+const ADD_CITY_CODES_ND = cityRegionList.filter((city) => !CITY_CODES.includes(city.code) && NBS_36_CITIES.includes(city.code));
 const PROVINCE_CODES = ['110000', '120000', '310000', '320000', '330000', '370000', '410000', '420000', '430000', '440000', '500000', '510000'];
 const ADD_PROVINCE_CODES = provinceRegionList.filter((prov) => !PROVINCE_CODES.includes(prov.code));
 const CITY_JSON = `./${dataFiles.city}`;
