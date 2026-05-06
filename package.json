@@ -8,7 +8,8 @@
     "dev+chrome": "node scripts/dev-with-chrome.js",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "check:v3": "node scripts/check-v3-coverage.js"
+    "check:v3": "node scripts/check-v3-coverage.js",
+    "check:catalog": "node scripts/check-chart-catalog-consistency.js"
   },
   "dependencies": {
     "axios": "^1.7.2",

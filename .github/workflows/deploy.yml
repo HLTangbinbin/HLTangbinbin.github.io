@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit
 
+      - name: Check chart catalog consistency
+        run: npm run check:catalog
+
       - name: Build project
         run: npm run build
 

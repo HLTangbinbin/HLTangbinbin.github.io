@@ -6849,6 +6849,14 @@ export const CHART_CATALOG = {
         "englishKey": "second_hand_housing_transaction_volume_nd"
       }
     ]
+  },
+  "wh_second_house_monthly_total": {
+    "title": "武汉二手房月成交量",
+    "seriesRefs": [
+      {
+        "englishKey": "second_hand_housing_transaction_volume_yd"
+      }
+    ]
   }
 };
 
