@@ -86,7 +86,7 @@ const alerts = computed(() => {
     if (freshnessState && freshnessState.tone !== 'healthy') {
       items.push({
         tone: freshnessState.tone,
-        title: `${dbCode === 'yd' ? '月度' : '年度'}更新偏慢`,
+        title: `${formatDbCodes([dbCode])}更新偏慢`,
         shortBody: freshnessState.shortBody,
         body: freshnessState.body,
       });
@@ -101,11 +101,32 @@ function evaluateFreshness(dbCode, latestPeriod) {
     return {
       tone: 'critical',
       shortBody: '暂无期次',
-      body: `未识别到${dbCode === 'yd' ? '月度' : '年度'}最新期次。`,
+      body: `未识别到${formatDbCodes([dbCode])}最新期次。`,
     };
   }
 
   const now = new Date();
+
+  if (dbCode === 'rd') {
+    const parsed = parseDayPeriod(latestPeriod);
+    if (!parsed) return null;
+    const diff = dayDiff(parsed, now);
+    if (diff <= 7) {
+      return { tone: 'healthy', body: '' };
+    }
+    if (diff <= 30) {
+      return {
+        tone: 'warn',
+        shortBody: `${formatPeriod(latestPeriod)} · 滞后${diff}天`,
+        body: `最新日度数据停留在 ${formatPeriod(latestPeriod)}，较当前时间已滞后 ${diff} 天。`
+      };
+    }
+    return {
+      tone: 'critical',
+      shortBody: `${formatPeriod(latestPeriod)} · 滞后${diff}天`,
+      body: `最新日度数据停留在 ${formatPeriod(latestPeriod)}，滞后 ${diff} 天，建议优先检查定时任务和服务器文件同步。`
+    };
+  }
 
   if (dbCode === 'yd') {
     const parsed = parseMonthPeriod(latestPeriod);
@@ -154,6 +175,12 @@ function parseMonthPeriod(value) {
   return new Date(Number(text.slice(0, 4)), Number(text.slice(4, 6)) - 1, 1);
 }
 
+function parseDayPeriod(value) {
+  const text = String(value);
+  if (!/^\d{8}$/.test(text)) return null;
+  return new Date(Number(text.slice(0, 4)), Number(text.slice(4, 6)) - 1, Number(text.slice(6, 8)));
+}
+
 function parseYearPeriod(value) {
   const text = String(value);
   if (!/^\d{4}$/.test(text)) return null;
@@ -164,15 +191,25 @@ function monthDiff(from, to) {
   return (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth());
 }
 
+function dayDiff(from, to) {
+  return Math.floor((new Date(to.getFullYear(), to.getMonth(), to.getDate()) - from) / 86400000);
+}
+
 function formatPeriod(value) {
   const text = String(value || '');
+  if (/^\d{8}$/.test(text)) return `${text.slice(0, 4)}-${text.slice(4, 6)}-${text.slice(6, 8)}`;
   if (/^\d{6}$/.test(text)) return `${text.slice(0, 4)}-${text.slice(4, 6)}`;
   if (/^\d{4}$/.test(text)) return `${text} 年`;
   return text || '暂无数据';
 }
 
 function formatDbCodes(codes) {
-  return codes.map(code => code === 'yd' ? '月度' : '年度').join(' / ');
+  return codes.map(code => {
+    if (code === 'rd') return '日度';
+    if (code === 'yd') return '月度';
+    if (code === 'nd') return '年度';
+    return code;
+  }).join(' / ');
 }
 
 function dedupeAlerts(items) {

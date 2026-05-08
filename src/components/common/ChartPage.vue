@@ -17,6 +17,7 @@
 
       <div class="view-mode-container" v-if="internalShowToggles">
         <el-radio-group v-model="viewMode" class="custom-segment" @change="handleViewModeUpdate">
+          <el-radio-button v-if="availableViewModes.includes('daily')" label="daily">日度</el-radio-button>
           <el-radio-button label="monthly">月度</el-radio-button>
           <el-radio-button label="yearly">年度</el-radio-button>
         </el-radio-group>
@@ -77,20 +78,29 @@ export default {
       if (pageCodes.length) return pageCodes;
       return Array.from(new Set(props.chartMetaList.map(chart => chart.dbCode).filter(Boolean)));
     });
+    const availableViewModes = computed(() => {
+      const dbCodes = new Set(availableDbCodes.value);
+      return [
+        dbCodes.has('rd') ? 'daily' : '',
+        dbCodes.has('yd') ? 'monthly' : '',
+        dbCodes.has('nd') ? 'yearly' : ''
+      ].filter(Boolean);
+    });
 
     const internalShowToggles = computed(() => {
       if (!props.showToggles) return false;
       const dbCodes = new Set(availableDbCodes.value);
-      return dbCodes.has('yd') && dbCodes.has('nd');
+      return availableViewModes.value.length > 1 || (dbCodes.has('yd') && dbCodes.has('nd'));
     });
 
     const resolveDefaultViewMode = () => {
       const pageDefault = props.pageMeta?.defaultViewMode;
-      if (pageDefault === 'monthly' || pageDefault === 'yearly') {
+      if (pageDefault === 'daily' || pageDefault === 'monthly' || pageDefault === 'yearly') {
         return pageDefault;
       }
 
       const dbCodes = new Set(availableDbCodes.value);
+      if (dbCodes.has('rd')) return 'daily';
       if (dbCodes.has('yd')) return 'monthly';
       if (dbCodes.has('nd')) return 'yearly';
       return 'monthly';
@@ -117,7 +127,9 @@ export default {
           return explicitViewModes.includes(viewMode.value);
         }
 
-        return viewMode.value === 'monthly' ? chart.dbCode === 'yd' : chart.dbCode === 'nd';
+        if (viewMode.value === 'daily') return chart.dbCode === 'rd';
+        if (viewMode.value === 'monthly') return chart.dbCode === 'yd';
+        return chart.dbCode === 'nd';
       });
     });
 
@@ -130,7 +142,9 @@ export default {
 
     const activeDbCode = computed(() => {
       if (internalShowToggles.value) {
-        return viewMode.value === 'monthly' ? 'yd' : 'nd';
+        if (viewMode.value === 'daily') return 'rd';
+        if (viewMode.value === 'monthly') return 'yd';
+        return 'nd';
       }
 
       if (chartsToRender.value.length > 0) {
@@ -138,6 +152,7 @@ export default {
       }
 
       const dbCodes = availableDbCodes.value;
+      if (dbCodes.includes('rd')) return 'rd';
       if (dbCodes.includes('yd')) return 'yd';
       if (dbCodes.includes('nd')) return 'nd';
       return '';
@@ -227,6 +242,7 @@ export default {
     return {
       viewMode,
       availableDbCodes,
+      availableViewModes,
       internalShowToggles,
       headerPathText,
       latestPeriodText,
@@ -245,16 +261,19 @@ export default {
 function formatPeriod(value) {
   if (!value) return '暂无数据';
   const text = String(value);
+  if (/^\d{8}$/.test(text)) return `${text.slice(0, 4)}/${text.slice(4, 6)}/${text.slice(6, 8)}`;
   if (/^\d{6}$/.test(text)) return `${text.slice(0, 4)}/${text.slice(4, 6)}`;
   if (/^\d{4}$/.test(text)) return `${text} 年`;
   return text;
 }
 
 function getDbCodeLabel(dbCode, viewMode) {
+  if (dbCode === 'rd') return '日度';
   if (dbCode === 'yd') return '月度';
   if (dbCode === 'nd') return '年度';
   if (dbCode === 'jd') return '季度';
   if (!dbCode && viewMode) {
+    if (viewMode === 'daily') return '日度';
     return viewMode === 'monthly' ? '月度' : '年度';
   }
   return '';

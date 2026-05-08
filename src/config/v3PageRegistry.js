@@ -1,5 +1,5 @@
 import { cityRegionList, provinceRegionList } from '@/config/regionLists.js';
-import { createDataSource } from '@/config/dataFiles.js';
+import { createDataSource, createMergedDataSource } from '@/config/dataFiles.js';
 
 const CITY_CODES = ['110000', '310000', '440100', '440300', '330100', '510100', '320100', '420100', '500000', '120000', '430100', '610100', '410100', '340100'];
 const CITY_POPULATION_CODES = ['110000', '310000', '440100', '440300', '330100', '510100', '420100', '320100', '500000', '610100', '410100', '340100', '430100'];
@@ -106,6 +106,24 @@ const WH_NEW_HOUSE_MONTHLY_DISTRICT_METRICS = [
   'east_lake_high_tech_zone_new_home_transaction_volume_yd',
   'economic_development_zone_new_home_transaction_volume_yd',
   'yangtze_river_new_area_new_home_transaction_volume_yd'
+];
+const WH_NEW_HOUSE_DAILY_DISTRICT_METRICS = [
+  'jiang_an_district_new_home_transaction_volume_daily',
+  'jiang_han_district_new_home_transaction_volume_daily',
+  'qiao_kou_district_new_home_transaction_volume_daily',
+  'han_yang_district_new_home_transaction_volume_daily',
+  'wu_chang_district_new_home_transaction_volume_daily',
+  'qing_shan_district_new_home_transaction_volume_daily',
+  'hong_shan_district_new_home_transaction_volume_daily',
+  'dong_xi_hu_district_new_home_transaction_volume_daily',
+  'han_nan_district_new_home_transaction_volume_daily',
+  'cai_dian_district_new_home_transaction_volume_daily',
+  'jiang_xia_district_new_home_transaction_volume_daily',
+  'huang_pi_district_new_home_transaction_volume_daily',
+  'xin_zhou_district_new_home_transaction_volume_daily',
+  'east_lake_high_tech_zone_new_home_transaction_volume_daily',
+  'economic_development_zone_new_home_transaction_volume_daily',
+  'yangtze_river_new_area_new_home_transaction_volume_daily'
 ];
 const CITY_BUDGET_OVERVIEW_METRICS = [
   'local_general_public_budget_revenue_hm_yuan',
@@ -427,12 +445,32 @@ const NATION_IMPORT_BY_COUNTRY_METRICS = [
 
 export const v3PageRegistry = {
   WHNewHouse: {
-    source: createDataSource('wh'),
+    source: createMergedDataSource(['wh', 'whDailyNewHouse']),
+    page: {
+      availableDbCodes: ['rd', 'yd', 'nd'],
+      defaultViewMode: 'daily'
+    },
     charts: [
-      chartRef('wh_new_house_yearly_total'),
-      chartRef('wh_new_house_monthly_total'),
+      chartRef('wh_new_house_yearly_total', { viewModes: ['yearly'] }),
+      chartRef('wh_new_house_monthly_total', { viewModes: ['monthly'] }),
+      metricChartRef('wh_new_house_daily_total', '武汉新房日成交量', [
+        'new_home_transaction_volume_daily'
+      ], { dbCode: 'rd', viewModes: ['daily'] }),
+      metricChartRef('wh_new_house_daily_by_district', '武汉各区域新房日成交量', WH_NEW_HOUSE_DAILY_DISTRICT_METRICS, {
+        dbCode: 'rd',
+        viewModes: ['daily'],
+        legendTop: '90px',
+        gridTop: '320px',
+        ...pieAll({
+          topN: 8,
+          mergeOthersLabel: '其他区域',
+          center: ['50%', '190px'],
+          radius: '16%'
+        })
+      }),
       metricChartRef('wh_new_house_monthly_by_district', '武汉各区域新房月成交量', WH_NEW_HOUSE_MONTHLY_DISTRICT_METRICS, {
         dbCode: 'yd',
+        viewModes: ['monthly'],
         legendTop: '90px',
         gridTop: '320px',
         ...pieAll({
@@ -443,6 +481,7 @@ export const v3PageRegistry = {
         })
       }),
       chartRef('wh_new_house_yearly_by_district', {
+        viewModes: ['yearly'],
         legendTop: '90px',
         gridTop: '320px',
         ...pieAll({

@@ -145,6 +145,7 @@ function normalizePointArray(values) {
 
 function inferPeriod(value) {
   const text = String(value || '').trim();
+  if (/^\d{8}$/.test(text)) return 'rd';
   if (/^\d{6}$/.test(text)) return 'yd';
   if (/^\d{4}$/.test(text)) return 'nd';
   return '';
@@ -166,6 +167,7 @@ function resolveDatasetPeriod(indicator = {}) {
 function getPeriodAliases(period) {
   const normalized = String(period || '').trim();
   if (!normalized) return [];
+  if (normalized === 'rd' || normalized === 'daily' || normalized === 'day') return ['rd', 'daily', 'day'];
   if (normalized === 'yd') return ['yd', 'monthly', 'month'];
   if (normalized === 'nd') return ['nd', 'yearly', 'year'];
   if (normalized === 'jd') return ['jd', 'quarterly', 'quarter'];

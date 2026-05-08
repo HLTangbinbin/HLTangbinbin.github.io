@@ -1,5 +1,6 @@
 {
   "wh": "wh.json",
+  "whDailyNewHouse": "wh_daily_newhouse.json",
   "city": "city.json",
   "province": "province.json",
   "nation": "nation.json",

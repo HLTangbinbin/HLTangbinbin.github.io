@@ -22,7 +22,10 @@ export function createChartStore(props) {
   const viewModeDisplay = ref('chart');
   const currentChartType = ref('bar');
   const isHorizontal = ref(false);
-  const yearLimit = ref(10);
+  const resolveDbCode = () => props.chart?.dbCode || (props.viewMode === 'daily' ? 'rd' : (props.viewMode === 'monthly' ? 'yd' : 'nd'));
+  const defaultTimeLimit = computed(() => resolveDbCode() === 'rd' ? 366 : 10);
+  const timeLimitMax = computed(() => resolveDbCode() === 'rd' ? 366 : 40);
+  const yearLimit = ref(defaultTimeLimit.value);
   const legendAllSelected = ref(true);
   const legendSelectionMap = ref({});
   const isYearlyCompare = ref(false);
@@ -35,7 +38,8 @@ export function createChartStore(props) {
   const searchKeyword = ref('');
   const selectedExtraCities = ref([]);
 
-  const isMonthlyChart = computed(() => props.chart?.dbCode === 'yd' || props.viewMode === 'monthly');
+  const isMonthlyChart = computed(() => props.chart?.dbCode === 'yd' || props.chart?.dbCode === 'rd' || props.viewMode === 'monthly' || props.viewMode === 'daily');
+  const supportsYearlyCompare = computed(() => props.chart?.dbCode === 'yd' || props.viewMode === 'monthly');
   const localJsonPath = computed(() => String(props.config?.localJson || ''));
   const isProvince = computed(() => localJsonPath.value.includes('province'));
   const enableRegionalBiEnhancements = computed(() => {
@@ -59,6 +63,7 @@ export function createChartStore(props) {
       selectedExtraCities.value = [];
       searchKeyword.value = '';
       offsetValue.value = 0;
+      yearLimit.value = defaultTimeLimit.value;
       isYearlyCompare.value = false;
       enableSmartAnalysis.value = false;
       legendSelectionMap.value = {};
@@ -100,15 +105,15 @@ export function createChartStore(props) {
     }
   });
 
-  watch(isMonthlyChart, (isMonthly) => {
-    if (!isMonthly) isYearlyCompare.value = false;
+  watch(supportsYearlyCompare, (canCompare) => {
+    if (!canCompare) isYearlyCompare.value = false;
     selectedExtraCities.value = [];
   }, { immediate: true });
 
   watch(isYearlyCompare, (isCompare) => { if (isCompare) offsetValue.value = 0; });
 
   const showSmartAnalysisToggle = computed(() => currentChartType.value === 'line' && !isHorizontal.value);
-  const showCompareToggle = computed(() => isMonthlyChart.value && currentChartType.value === 'line' && !isHorizontal.value);
+  const showCompareToggle = computed(() => supportsYearlyCompare.value && currentChartType.value === 'line' && !isHorizontal.value);
   const showLegendSelector = computed(() => legendList.value.length > 1 && (isYearlyCompare.value || showOffsetControls.value || enableSmartAnalysis.value));
   const showOffsetControls = computed(() => props.chart?.enableOffset === true && currentChartType.value === 'line' && !isHorizontal.value && !isYearlyCompare.value);
   const linkedLegend = computed(() => {
@@ -161,7 +166,7 @@ export function createChartStore(props) {
   const chartHeight = computed(() => isMobile.value ? (isPieActive.value ? 450 : 350) : (isPieActive.value ? 650 : 550));
 
   const chartOption = computed(() => {
-    const actualDataLimit = (isYearlyCompare.value && isMonthlyChart.value) ? 360 : yearLimit.value;
+    const actualDataLimit = (isYearlyCompare.value && supportsYearlyCompare.value) ? 360 : yearLimit.value;
     const isPieActiveVal = isPieActive.value;
 
     let finalTitleTop = isMobile.value ? '10px' : '15px';
@@ -188,7 +193,7 @@ export function createChartStore(props) {
       subtitle: props.chart?.subtitle || '',
       englishKeys: resolveEnglishKeys(props.chart),
       regionCodes: finalCityCodeArr.value,
-      dbCode: props.chart?.dbCode || (props.viewMode === 'monthly' ? 'yd' : 'nd'),
+      dbCode: resolveDbCode(),
       unit: props.chart?.unit || '',
       exceptName: props.chart?.exceptName || '',
       titleTop: finalTitleTop,
@@ -199,7 +204,7 @@ export function createChartStore(props) {
       yearLimit: actualDataLimit,
       compareYearCount: yearLimit.value,
       isHorizontal: isHorizontal.value,
-      isYearlyCompare: isMonthlyChart.value ? isYearlyCompare.value : false,
+      isYearlyCompare: supportsYearlyCompare.value ? isYearlyCompare.value : false,
       selectedLegend: selectedLegend.value,
       linkedLegend: linkedLegend.value,
       offsetValue: offsetValue.value,
@@ -271,7 +276,7 @@ export function createChartStore(props) {
     themeMode,
     isMobile, controlSize, chartHeight,
     viewModeDisplay, chartTypeModel, displayModeModel, currentChartType, isHorizontal,
-    yearLimit, legendAllSelected, isYearlyCompare, selectedLegend, offsetValue,
+    yearLimit, defaultTimeLimit, timeLimitMax, legendAllSelected, isYearlyCompare, selectedLegend, offsetValue,
     legendSelectionMap, enableSmartAnalysis, isDrawerVisible, searchKeyword, selectedExtraCities,
     isProvince, finalCityCodeArr, showCityAddToggle, filteredCities, getCityName, toggleCity,
     showSmartAnalysisToggle, showCompareToggle, showLegendSelector, showOffsetControls, legendList,

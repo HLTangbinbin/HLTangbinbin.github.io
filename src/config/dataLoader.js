@@ -17,8 +17,11 @@ const performanceMetrics = {
   cacheMisses: 0,
 };
 
-export async function loadChartData({ localJson }, options = {}) {
+export async function loadChartData({ localJson, localJsonArr } = {}, options = {}) {
   const { forceRefresh = false } = options;
+  if (Array.isArray(localJsonArr) && localJsonArr.length) {
+    return loadMergedChartData(localJsonArr, options);
+  }
   const jsonUrl = resolveDataJsonUrl(localJson);
   const cacheKey = jsonUrl;
   const now = Date.now();
@@ -67,6 +70,80 @@ export async function loadChartData({ localJson }, options = {}) {
   });
 
   return pendingPromise;
+}
+
+async function loadMergedChartData(localJsonArr, options = {}) {
+  const jsonUrls = localJsonArr.map((item) => resolveDataJsonUrl(item)).filter(Boolean);
+  const cacheKey = jsonUrls.join('|');
+  const now = Date.now();
+
+  if (!cacheKey) {
+    throw new Error('缺少 JSON 数据源路径配置');
+  }
+
+  pruneExpiredCache(now);
+
+  if (!options.forceRefresh && dataCache.has(cacheKey)) {
+    const cachedEntry = dataCache.get(cacheKey);
+    if (cachedEntry?.data && cachedEntry.expiresAt > now) {
+      performanceMetrics.cacheHits++;
+      touchCacheEntry(cacheKey, cachedEntry);
+      return cachedEntry.data;
+    }
+    if (cachedEntry?.promise) {
+      performanceMetrics.cacheHits++;
+      touchCacheEntry(cacheKey, cachedEntry);
+      return cachedEntry.promise;
+    }
+  }
+
+  performanceMetrics.cacheMisses++;
+  const startTime = performance.now();
+  const pendingPromise = Promise.all(jsonUrls.map((jsonUrl) => loadJsonOnce(jsonUrl)))
+    .then((rawDataArr) => rawDataArr.map((rawData) => normalizeStatData(rawData)))
+    .then((normalizedArr) => mergeStatData(normalizedArr))
+    .then((result) => {
+      const loadTime = performance.now() - startTime;
+      performanceMetrics.loadTimes[cacheKey] = loadTime;
+      updateCache(cacheKey, result);
+      logger.info(`数据加载完成: ${cacheKey}, 耗时: ${loadTime.toFixed(2)}ms`);
+      return result;
+    })
+    .catch((error) => {
+      dataCache.delete(cacheKey);
+      logger.error(`数据加载失败: ${cacheKey}`, error);
+      throw error;
+    });
+
+  dataCache.set(cacheKey, {
+    promise: pendingPromise,
+    expiresAt: now + CACHE_CONFIG.TTL,
+    time: now
+  });
+
+  return pendingPromise;
+}
+
+function mergeStatData(datasets = []) {
+  const base = datasets[0] || {};
+  const merged = {
+    ...base,
+    meta: {
+      ...(base.meta || {}),
+      mergedSources: datasets.map((item) => item?.meta?.source).filter(Boolean)
+    },
+    metrics: { ...(base.metrics || {}) },
+    datasets: { ...(base.datasets || {}) },
+    pages: { ...(base.pages || {}) }
+  };
+
+  datasets.slice(1).forEach((dataset) => {
+    Object.assign(merged.metrics, dataset.metrics || {});
+    Object.assign(merged.datasets, dataset.datasets || {});
+    Object.assign(merged.pages, dataset.pages || {});
+  });
+
+  return normalizeStatData(merged);
 }
 
 export async function smartPreload(configs, options = {}) {

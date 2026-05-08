@@ -17,3 +17,10 @@ export function createDataSource(key, extra = {}) {
     ...extra
   };
 }
+
+export function createMergedDataSource(keys = [], extra = {}) {
+  return {
+    localJsonArr: keys.map((key) => getLocalJsonFile(key)).filter(Boolean),
+    ...extra
+  };
+}
