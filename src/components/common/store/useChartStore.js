@@ -23,7 +23,11 @@ export function createChartStore(props) {
   const currentChartType = ref('bar');
   const isHorizontal = ref(false);
   const resolveDbCode = () => props.chart?.dbCode || (props.viewMode === 'daily' ? 'rd' : (props.viewMode === 'monthly' ? 'yd' : 'nd'));
-  const defaultTimeLimit = computed(() => resolveDbCode() === 'rd' ? 366 : 10);
+  const defaultTimeLimit = computed(() => {
+    const configuredLimit = Number(props.chart?.defaultTimeLimit);
+    if (Number.isFinite(configuredLimit) && configuredLimit > 0) return configuredLimit;
+    return resolveDbCode() === 'rd' ? 366 : 10;
+  });
   const timeLimitMax = computed(() => resolveDbCode() === 'rd' ? 366 : 40);
   const yearLimit = ref(defaultTimeLimit.value);
   const legendAllSelected = ref(true);
@@ -111,6 +115,12 @@ export function createChartStore(props) {
   }, { immediate: true });
 
   watch(isYearlyCompare, (isCompare) => { if (isCompare) offsetValue.value = 0; });
+  watch(currentChartType, (type) => {
+    if (type !== 'line') {
+      isYearlyCompare.value = false;
+      selectedLegend.value = null;
+    }
+  });
 
   const showSmartAnalysisToggle = computed(() => currentChartType.value === 'line' && !isHorizontal.value);
   const showCompareToggle = computed(() => supportsYearlyCompare.value && currentChartType.value === 'line' && !isHorizontal.value);
@@ -121,6 +131,7 @@ export function createChartStore(props) {
     if (!value) return null;
     return legendNames.value.includes(value) ? value : null;
   });
+  const indicatorLegendNames = computed(() => chartOption.value?.indicatorLegendData || legendNames.value);
 
   const currentExtraCityPool = computed(() => {
     const hasSplitConfig = props.config?.needAddCityCodeArr_yd || props.config?.needAddCityCodeArr_nd;
@@ -242,17 +253,16 @@ export function createChartStore(props) {
 
   watch(chartOption, (newOption) => {
     legendNames.value = newOption?.originalLegendData || newOption?.legend?.data || [];
-    if (isYearlyCompare.value && !selectedLegend.value && legendNames.value.length > 0) {
-      selectedLegend.value = legendNames.value[legendNames.value.length - 1];
+    const indicatorNames = newOption?.indicatorLegendData || legendNames.value;
+    if (isYearlyCompare.value && !selectedLegend.value && indicatorNames.length > 0) {
+      selectedLegend.value = indicatorNames[0];
     }
-    if (selectedLegend.value && !legendNames.value.includes(selectedLegend.value) && legendNames.value.length > 0) {
-      selectedLegend.value = isYearlyCompare.value
-        ? legendNames.value[legendNames.value.length - 1]
-        : legendNames.value[0];
+    if (selectedLegend.value && !indicatorNames.includes(selectedLegend.value) && indicatorNames.length > 0) {
+      selectedLegend.value = indicatorNames[0];
     }
   }, { immediate: true });
 
-  const legendList = computed(() => legendNames.value);
+  const legendList = computed(() => indicatorLegendNames.value);
 
   const smartInsights = computed(() => {
     if (!enableSmartAnalysis.value || viewModeDisplay.value !== 'chart') return null;

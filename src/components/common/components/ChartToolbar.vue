@@ -147,6 +147,8 @@ defineEmits(['toggleAllLegends', 'exportCurrentView']);
 
 .time-group {
   justify-content: center;
+  width: 230px;
+  flex-shrink: 0;
 }
 
 .dim-group {
@@ -167,11 +169,6 @@ defineEmits(['toggleAllLegends', 'exportCurrentView']);
 
 .split-line {
   display: none;
-}
-
-.time-group {
-  width: 230px;
-  flex-shrink: 0;
 }
 
 .legend-select {
@@ -222,14 +219,6 @@ defineEmits(['toggleAllLegends', 'exportCurrentView']);
   border: 1px solid var(--border-default);
   border-radius: 8px;
   background: var(--bg-card-soft);
-}
-
-.time-group .slider-wrapper::before {
-  content: "时间";
-  color: var(--text-secondary);
-  font-size: 12px;
-  font-weight: 850;
-  flex: 0 0 auto;
 }
 
 .offset-slider {
@@ -505,8 +494,14 @@ defineEmits(['toggleAllLegends', 'exportCurrentView']);
     display: none;
   }
 
-  .view-group,
-  .time-group,
+  .view-group {
+    width: 100%;
+  }
+
+  .time-group {
+    width: 100%;
+  }
+
   .dim-group {
     width: 100%;
   }

@@ -539,9 +539,13 @@ class ChartBuilder {
 
   build() {
     let finalOption = this.option;
+    const indicatorLegendData = Array.isArray(finalOption.legend?.data) && finalOption.legend.data.length
+      ? [...finalOption.legend.data]
+      : this.ctx.seriesData.map(s => s.name);
     this.plugins.forEach(plugin => {
       finalOption = plugin(finalOption, this.ctx);
     });
+    finalOption.indicatorLegendData = indicatorLegendData;
     finalOption.originalLegendData = Array.isArray(finalOption.legend?.data) && finalOption.legend.data.length
       ? [...finalOption.legend.data]
       : this.ctx.seriesData.map(s => s.name);

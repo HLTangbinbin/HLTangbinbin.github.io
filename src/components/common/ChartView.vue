@@ -28,9 +28,14 @@ export default {
     let chartInstance = null;
     let resizeHandler = null;
     let touchStartHandler = null;
+    let touchMoveHandler = null;
     let touchEndHandler = null;
+    let touchLongPressTimer = null;
+    let touchState = null;
     let pieUpdateContext = null;
     let hoveredSeriesName = '';
+    const TOUCH_LONG_PRESS_DELAY = 360;
+    const TOUCH_MOVE_CANCEL_DISTANCE = 10;
 
     const buildOptionWithTooltipHoverState = (option) => {
       const sourceFormatter = option?.tooltip?.formatter;
@@ -79,17 +84,22 @@ export default {
 
     const isMobileViewport = () => window.innerWidth <= 768;
 
-    const showTooltipFromTouch = (event) => {
+    const clearTouchLongPressTimer = () => {
+      if (touchLongPressTimer) {
+        window.clearTimeout(touchLongPressTimer);
+        touchLongPressTimer = null;
+      }
+    };
+
+    const showTooltipFromPoint = (clientX, clientY) => {
       if (!isMobileViewport() || !chartInstance || chartInstance.isDisposed()) return;
-      const touch = event.touches?.[0];
       const container = chartContainer.value;
-      if (!touch || !container) return;
+      if (!container) return;
 
       const rect = container.getBoundingClientRect();
-      const x = touch.clientX - rect.left;
-      const y = touch.clientY - rect.top;
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
 
-      // Mobile tooltip should track the finger immediately instead of relying on long-press selection.
       chartInstance.dispatchAction({
         type: 'showTip',
         x,
@@ -103,14 +113,56 @@ export default {
 
       touchStartHandler = (event) => {
         if (!isMobileViewport()) return;
-        showTooltipFromTouch(event);
+        const touch = event.touches?.[0];
+        if (!touch || event.touches.length !== 1) return;
+
+        clearTouchLongPressTimer();
+        touchState = {
+          startX: touch.clientX,
+          startY: touch.clientY,
+          latestX: touch.clientX,
+          latestY: touch.clientY,
+          active: false,
+          canceled: false
+        };
+
+        touchLongPressTimer = window.setTimeout(() => {
+          if (!touchState || touchState.canceled) return;
+          touchState.active = true;
+          showTooltipFromPoint(touchState.latestX, touchState.latestY);
+        }, TOUCH_LONG_PRESS_DELAY);
+      };
+
+      touchMoveHandler = (event) => {
+        if (!isMobileViewport() || !touchState) return;
+        const touch = event.touches?.[0];
+        if (!touch) return;
+
+        touchState.latestX = touch.clientX;
+        touchState.latestY = touch.clientY;
+
+        if (!touchState.active) {
+          const dx = touch.clientX - touchState.startX;
+          const dy = touch.clientY - touchState.startY;
+          if (Math.hypot(dx, dy) > TOUCH_MOVE_CANCEL_DISTANCE) {
+            touchState.canceled = true;
+            clearTouchLongPressTimer();
+          }
+          return;
+        }
+
+        if (event.cancelable) event.preventDefault();
+        showTooltipFromPoint(touch.clientX, touch.clientY);
       };
 
       touchEndHandler = () => {
+        clearTouchLongPressTimer();
+        touchState = null;
         hideTooltip();
       };
 
       container.addEventListener('touchstart', touchStartHandler, { passive: true });
+      container.addEventListener('touchmove', touchMoveHandler, { passive: false });
       container.addEventListener('touchend', touchEndHandler, { passive: true });
       container.addEventListener('touchcancel', touchEndHandler, { passive: true });
     };
@@ -119,12 +171,16 @@ export default {
       const container = chartContainer.value;
       if (!container) return;
       if (touchStartHandler) container.removeEventListener('touchstart', touchStartHandler);
+      if (touchMoveHandler) container.removeEventListener('touchmove', touchMoveHandler);
       if (touchEndHandler) {
         container.removeEventListener('touchend', touchEndHandler);
         container.removeEventListener('touchcancel', touchEndHandler);
       }
+      clearTouchLongPressTimer();
       touchStartHandler = null;
+      touchMoveHandler = null;
       touchEndHandler = null;
+      touchState = null;
     };
 
     const getPrimaryCategoryAxisData = (option) => {

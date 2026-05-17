@@ -1,0 +1,35 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - heading "大唐统计局" [level=1] [ref=e6]
+      - button "切换到暗黑模式" [ref=e7] [cursor=pointer]:
+        - generic [ref=e8]: 暗黑
+        - img [ref=e9]
+  - generic [ref=e12]:
+    - generic [ref=e13]:
+      - link "武汉" [ref=e14] [cursor=pointer]:
+        - /url: "#/WH"
+      - link "城市" [ref=e15] [cursor=pointer]:
+        - /url: "#/FirstTierCity"
+      - link "省市" [ref=e16] [cursor=pointer]:
+        - /url: "#/MajorProvincial"
+      - link "全国" [ref=e17] [cursor=pointer]:
+        - /url: "#/NationWide"
+    - generic [ref=e19]:
+      - link "新房" [ref=e20] [cursor=pointer]:
+        - /url: "#/WH/WHNewHouse"
+      - link "二手房" [ref=e21] [cursor=pointer]:
+        - /url: "#/WH/WHSecondHandHouse"
+      - link "GDP" [ref=e22] [cursor=pointer]:
+        - /url: "#/WH/WHGDP"
+      - link "人口" [ref=e23] [cursor=pointer]:
+        - /url: "#/WH/WHPopulation"
+      - link "财政" [ref=e24] [cursor=pointer]:
+        - /url: "#/WH/WHFinance"
+      - link "房地产" [ref=e25] [cursor=pointer]:
+        - /url: "#/WH/WHRealEstate"
+      - link "教育" [ref=e26] [cursor=pointer]:
+        - /url: "#/WH/WHEducation"
+      - link "医疗" [ref=e27] [cursor=pointer]:
+        - /url: "#/WH/WHMedical"
+  - generic [ref=e30]: 系统初始化中...

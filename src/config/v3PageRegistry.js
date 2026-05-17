@@ -455,10 +455,11 @@ export const v3PageRegistry = {
       chartRef('wh_new_house_monthly_total', { viewModes: ['monthly'] }),
       metricChartRef('wh_new_house_daily_total', '武汉新房日成交量', [
         'new_home_transaction_volume_daily'
-      ], { dbCode: 'rd', viewModes: ['daily'] }),
+      ], { dbCode: 'rd', viewModes: ['daily'], defaultTimeLimit: 30 }),
       metricChartRef('wh_new_house_daily_by_district', '武汉各区域新房日成交量', WH_NEW_HOUSE_DAILY_DISTRICT_METRICS, {
         dbCode: 'rd',
         viewModes: ['daily'],
+        defaultTimeLimit: 30,
         legendTop: '90px',
         gridTop: '320px',
         ...pieAll({

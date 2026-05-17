@@ -15,6 +15,9 @@ function mergeMarkPointConfig(original = {}, addition = {}) {
 }
 
 export const ComparePlugin = (option, ctx) => {
+  const isMonthlyCompare = ctx.params.dbCode === 'yd' || ctx.params.viewMode === 'monthly';
+  if (!isMonthlyCompare) return option;
+
   const xAxisData = ['01月', '02月', '03月', '04月', '05月', '06月', '07月', '08月', '09月', '10月', '11月', '12月'];
   const yearMap = {};
 
@@ -40,13 +43,16 @@ export const ComparePlugin = (option, ctx) => {
   const legendData = [];
 
   const focusLegend = ctx.params.linkedLegend || ctx.params.selectedLegend;
+  const indicatorNames = Array.isArray(ctx.params.indicatorLegendNames) && ctx.params.indicatorLegendNames.length
+    ? ctx.params.indicatorLegendNames
+    : ctx.seriesData.map((series) => series.name);
   let targetSeriesData = ctx.seriesData;
   if (ctx.seriesData.length > 1) {
-    if (focusLegend) {
+    if (focusLegend && indicatorNames.includes(focusLegend)) {
       targetSeriesData = ctx.seriesData.filter(s => s.name === focusLegend);
       if (targetSeriesData.length === 0) targetSeriesData = [ctx.seriesData[0]];
     } else {
-      // 同比模式下默认聚焦首个指标，避免“指标 x 年份”同时铺开造成图例混乱
+      // 同比模式下默认只展示首个指标，避免多指标同时按年份展开导致图例爆炸
       targetSeriesData = [ctx.seriesData[0]];
     }
   }

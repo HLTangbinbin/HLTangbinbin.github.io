@@ -1,0 +1,12 @@
+[     135ms] [WARNING] Feature flag __VUE_PROD_HYDRATION_MISMATCH_DETAILS__ is not explicitly defined. You are running the esm-bundler build of Vue, which expects these compile-time feature flags to be globally injected via the bundler config in order to get better tree-shaking in the production bundle.
+
+For more details, see https://link.vuejs.org/feature-flags. @ webpack-internal:///./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:4803
+[     151ms] [WARNING] [WARN] 检测到长任务: 75.00ms @ webpack-internal:///./src/utils/Logger.js:26
+[     591ms] [INFO] [INFO] 数据加载完成: /resource/wh.json|/resource/wh_daily_newhouse.json, 耗时: 145.90ms @ webpack-internal:///./src/utils/Logger.js:21
+[     593ms] [WARNING] [Vue warn]: Extraneous non-props attributes (navItems, currentBasePath) were passed to component but could not be automatically inherited because component renders fragment or text root nodes. 
+  at <DynamicChartPage navItems= [Object, Object, Object, Object, Object, Object, Object, Object] currentBasePath="/WH" onVnodeUnmounted=fn<onVnodeUnmounted>  ... > 
+  at <RouterView navItems= [Object, Object, Object, Object, Object, Object, Object, Object] currentBasePath="/WH" > 
+  at <GenericLayout navItems= [Object, Object, Object, Object, Object, Object, Object, Object] currentBasePath="/WH" onVnodeUnmounted=fn<onVnodeUnmounted>  ... > 
+  at <RouterView key=1 > 
+  at <App> @ webpack-internal:///./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:182
+[     728ms] [WARNING] [WARN] 检测到长任务: 138.00ms @ webpack-internal:///./src/utils/Logger.js:26
