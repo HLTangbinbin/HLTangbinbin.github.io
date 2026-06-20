@@ -34,6 +34,9 @@ export default {
     let touchState = null;
     let pieUpdateContext = null;
     let hoveredSeriesName = '';
+    let isPointerInsideTooltip = false;
+    let lastTooltipDataIndex = -1;
+    let lastTooltipSeriesIndex = -1;
     const TOUCH_LONG_PRESS_DELAY = 360;
     const TOUCH_MOVE_CANCEL_DISTANCE = 10;
 
@@ -78,6 +81,7 @@ export default {
 
     const hideTooltip = () => {
       if (!chartInstance || chartInstance.isDisposed()) return;
+      if (!isMobileViewport() && isPointerInsideTooltip) return;
       chartInstance.dispatchAction({ type: 'hideTip' });
       chartInstance.dispatchAction({ type: 'updateAxisPointer', currTrigger: 'leave' });
     };
@@ -104,6 +108,29 @@ export default {
         type: 'showTip',
         x,
         y
+      });
+    };
+
+    const refreshTooltipForCurrentAxis = (preferredSeriesIndex = null) => {
+      if (!chartInstance || chartInstance.isDisposed()) return;
+      if (!Number.isInteger(lastTooltipDataIndex) || lastTooltipDataIndex < 0) return;
+
+      const option = chartInstance.getOption();
+      const seriesList = Array.isArray(option?.series) ? option.series : [];
+      const fallbackSeriesIndex = seriesList.findIndex((seriesItem) => {
+        if (!seriesItem || seriesItem.type === 'pie' || seriesItem.type === 'map') return false;
+        return Array.isArray(seriesItem.data) && lastTooltipDataIndex < seriesItem.data.length;
+      });
+      const targetSeriesIndex = Number.isInteger(preferredSeriesIndex) && preferredSeriesIndex >= 0
+        ? preferredSeriesIndex
+        : (Number.isInteger(lastTooltipSeriesIndex) && lastTooltipSeriesIndex >= 0 ? lastTooltipSeriesIndex : fallbackSeriesIndex);
+
+      if (!Number.isInteger(targetSeriesIndex) || targetSeriesIndex < 0) return;
+
+      chartInstance.dispatchAction({
+        type: 'showTip',
+        seriesIndex: targetSeriesIndex,
+        dataIndex: lastTooltipDataIndex
       });
     };
 
@@ -338,6 +365,15 @@ export default {
       chartInstance = echarts.init(chartContainer.value, props.themeMode === 'dark' ? 'dark' : null, { renderer });
       chartInstance.setOption(buildOptionWithTooltipHoverState(props.option), true);
       pieUpdateContext = buildPieUpdateContext(props.option, props.pieConfig);
+      const tooltipEl = chartContainer.value.querySelector('.echarts-tooltip');
+      if (tooltipEl) {
+        tooltipEl.addEventListener('mouseenter', () => {
+          isPointerInsideTooltip = true;
+        });
+        tooltipEl.addEventListener('mouseleave', () => {
+          isPointerInsideTooltip = false;
+        });
+      }
 
       // 初始化图例状态时，优先使用外部 option 中已经计算好的 selected 映射，
       // 避免在组件重建时把“部分选中”错误覆盖成“全选/全不选”。
@@ -381,11 +417,15 @@ export default {
       });
 
       chartInstance.on('mouseover', (params) => {
+        if (params?.componentType !== 'series') return;
         hoveredSeriesName = String(params?.seriesName || '').trim();
+        refreshTooltipForCurrentAxis(params?.seriesIndex);
       });
 
-      chartInstance.on('mouseout', () => {
+      chartInstance.on('mouseout', (params) => {
+        if (params?.componentType !== 'series') return;
         hoveredSeriesName = '';
+        refreshTooltipForCurrentAxis(params?.seriesIndex);
       });
 
       chartInstance.getZr().on('click', (event) => {
@@ -395,7 +435,9 @@ export default {
       });
 
       chartInstance.on('globalout', () => {
-        hideTooltip();
+        if (isMobileViewport()) {
+          hideTooltip();
+        }
       });
 
       unbindMobileTooltipEvents();
@@ -406,12 +448,14 @@ export default {
       chartInstance.on('updateAxisPointer', function (event) {
         const xAxisInfo = event.axesInfo?.[0];
         if (!xAxisInfo) return;
+        lastTooltipDataIndex = resolveCategoryDataIndex(xAxisInfo.value, getPrimaryCategoryAxisData(props.option));
 
         const pieConfig = props.pieConfig;
         if (!pieConfig?.enabled || !Array.isArray(pieConfig.pies)) return;
         if (!pieUpdateContext) return;
 
         const dataIndex = resolveCategoryDataIndex(xAxisInfo.value, pieUpdateContext.categories);
+        lastTooltipSeriesIndex = -1;
         if (dataIndex === lastDataIndex) return;
         lastDataIndex = dataIndex;
         const pieSeriesUpdates = buildPieSeriesUpdates(pieUpdateContext, dataIndex);
@@ -497,6 +541,7 @@ export default {
 
     onBeforeUnmount(() => {
       unbindMobileTooltipEvents();
+      isPointerInsideTooltip = false;
       if (resizeHandler) {
         window.removeEventListener('resize', resizeHandler);
         resizeHandler.cancel();

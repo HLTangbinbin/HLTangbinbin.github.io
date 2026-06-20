@@ -8,9 +8,14 @@ const TARGET_URL = `http://${HOST}:${PORT}`;
 let chromeOpened = false;
 let shuttingDown = false;
 
-const serveProcess = spawn('npm', ['run', 'serve'], {
+const serveProcess = spawn('npm', ['run', 'serve', '--', '--host', HOST, '--port', String(PORT)], {
   cwd: process.cwd(),
   stdio: 'inherit',
+  env: {
+    ...process.env,
+    HOST,
+    PORT: String(PORT)
+  },
   shell: process.platform === 'win32'
 });
 
@@ -40,7 +45,10 @@ function openChrome(url) {
   chromeOpened = true;
 
   if (process.platform === 'darwin') {
-    spawn('open', ['-a', 'Google Chrome', url], { stdio: 'ignore', detached: true });
+    const chromeProcess = spawn('open', ['-a', 'Google Chrome', url], { stdio: 'ignore', detached: true });
+    chromeProcess.on('error', () => {
+      spawn('open', [url], { stdio: 'ignore', detached: true });
+    });
     return;
   }
 

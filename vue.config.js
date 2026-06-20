@@ -65,6 +65,8 @@ module.exports = defineConfig({
   },
   
   devServer: {
+    host: '127.0.0.1',
+    port: 8080,
     proxy: {
       '/api': {
         target: 'https://data.stats.gov.cn',

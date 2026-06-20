@@ -401,6 +401,7 @@ class ChartBuilder {
 
     const clonedSeries = this.ctx.seriesData.map((seriesItem) => ({
       ...seriesItem,
+      triggerLineEvent: seriesItem.type === 'line',
       itemStyle: seriesItem.type === 'bar'
         ? {
           ...(seriesItem.itemStyle || {}),
@@ -445,6 +446,32 @@ class ChartBuilder {
   getAdvancedTooltipFormatter() {
     const theme = getChartThemeTokens();
     const builder = this;
+    const resolveRawValue = (value) => (typeof value === 'object' && value !== null ? value.value : value);
+    const resolveNumericValue = (value) => {
+      const rawValue = resolveRawValue(value);
+      if (rawValue === null || rawValue === undefined || rawValue === '' || rawValue === '-') return null;
+      const numericValue = Number(rawValue);
+      return Number.isFinite(numericValue) ? numericValue : null;
+    };
+    const formatDeltaPercent = (currentValue, previousValue) => {
+      if (!Number.isFinite(currentValue) || !Number.isFinite(previousValue) || previousValue === 0) {
+        return { text: '-', color: theme.textMuted };
+      }
+
+      const deltaPercent = ((currentValue - previousValue) / Math.abs(previousValue)) * 100;
+      if (!Number.isFinite(deltaPercent)) {
+        return { text: '-', color: theme.textMuted };
+      }
+
+      if (deltaPercent > 0) {
+        return { text: `+${deltaPercent.toFixed(2)}%`, color: '#ef4444' };
+      }
+      if (deltaPercent < 0) {
+        return { text: `${deltaPercent.toFixed(2)}%`, color: '#10b981' };
+      }
+      return { text: '0.00%', color: theme.textMuted };
+    };
+
     return (params) => {
       if (!params) return '';
       const paramsArray = Array.isArray(params) ? params : [params];
@@ -495,11 +522,16 @@ class ChartBuilder {
         : `<div style="font-size: 14px; margin-bottom: 8px; color: ${theme.textPrimary};">${title}</div>`;
 
       sorted.forEach(item => {
-        let rawValue = typeof item.value === 'object' ? item.value?.value : item.value;
+        const rawValue = resolveRawValue(item.value);
         let val = typeof rawValue === 'number' ? rawValue.toLocaleString() : (rawValue || '-');
         let markerHtml = item.marker || `<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${item.color || '#ccc'};"></span>`;
         const seriesName = String(item.seriesName || item.name || '');
         const isHovered = item.__tooltipHovered === true;
+        const currentValue = resolveNumericValue(item.value);
+        const previousValue = currentDataIndex > 0
+          ? resolveNumericValue(finalSeries[item.seriesIndex]?.data?.[currentDataIndex - 1])
+          : null;
+        const deltaPercent = formatDeltaPercent(currentValue, previousValue);
         const currentRank = showRegionalRanking ? currentRanking.get(seriesName) : null;
         const previousRank = showRegionalRanking ? previousRanking.get(seriesName) : null;
         let rankDeltaHtml = '';
@@ -523,8 +555,13 @@ class ChartBuilder {
               ${markerHtml} 
               <span style="margin-left: 2px;">${seriesName}</span>${rankDeltaHtml}
             </div>
-            <div style="font-weight: ${isHovered ? '700' : '600'}; color: ${theme.textPrimary}; font-size: 14px; margin-left: 24px; font-variant-numeric: tabular-nums;">
-              ${val}
+            <div style="display:flex; align-items:center; gap:10px; font-variant-numeric: tabular-nums; margin-left: 24px;">
+              <span style="font-weight: ${isHovered ? '700' : '600'}; color: ${theme.textPrimary}; font-size: 14px;">
+                ${val}
+              </span>
+              <span style="font-size:12px; color:${deltaPercent.color}; min-width:64px; text-align:right;">
+                ${deltaPercent.text}
+              </span>
             </div>
           </div>`;
       });

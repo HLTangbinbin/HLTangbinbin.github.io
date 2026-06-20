@@ -19,7 +19,7 @@ export function createChartStore(props) {
   const isMobile = computed(() => windowWidth.value <= 768);
   const controlSize = computed(() => windowWidth.value > 768 ? 'large' : 'small');
 
-  const viewModeDisplay = ref('chart');
+  const viewModeDisplay = ref('table');
   const currentChartType = ref('bar');
   const isHorizontal = ref(false);
   const resolveDbCode = () => props.chart?.dbCode || (props.viewMode === 'daily' ? 'rd' : (props.viewMode === 'monthly' ? 'yd' : 'nd'));
@@ -61,7 +61,7 @@ export function createChartStore(props) {
 
   watch(chartIdentityStr, (newVal, oldVal) => {
     if (newVal !== oldVal) {
-      viewModeDisplay.value = 'chart';
+      viewModeDisplay.value = 'table';
       currentChartType.value = 'bar';
       isHorizontal.value = false;
       selectedExtraCities.value = [];
