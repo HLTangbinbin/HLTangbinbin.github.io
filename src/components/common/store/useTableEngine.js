@@ -57,21 +57,36 @@ export function useTableEngine(chartOption, isMobile, chartTitle, chartIdentityS
     return cols;
   });
 
+  const toSortableTime = (value) => {
+    const digits = String(value ?? '').replace(/\D/g, '');
+    return digits ? Number(digits) : null;
+  };
+
   const tableData = computed(() => {
     const categories = getCategoryAxisData(chartOption.value);
     if (categories.length > 0) {
-      return categories.map((cat, timeIdx) => {
-        const row = { time: cat };
-        validSeries.value.forEach(item => {
-          let val = '-';
-          if (Array.isArray(item.series.data)) {
-            const rawVal = item.series.data[timeIdx];
-            val = (rawVal !== null && typeof rawVal === 'object' && rawVal.value !== undefined) ? rawVal.value : rawVal;
+      return categories
+        .map((cat, timeIdx) => {
+          const row = { time: cat };
+          validSeries.value.forEach(item => {
+            let val = '-';
+            if (Array.isArray(item.series.data)) {
+              const rawVal = item.series.data[timeIdx];
+              val = (rawVal !== null && typeof rawVal === 'object' && rawVal.value !== undefined) ? rawVal.value : rawVal;
+            }
+            row[`col_${item.originalIdx}`] = (val === undefined || val === null || val === '') ? '-' : val;
+          });
+          return { row, sortValue: toSortableTime(cat), timeIdx };
+        })
+        .sort((a, b) => {
+          if (a.sortValue !== null && b.sortValue !== null && a.sortValue !== b.sortValue) {
+            return b.sortValue - a.sortValue;
           }
-          row[`col_${item.originalIdx}`] = (val === undefined || val === null || val === '') ? '-' : val;
-        });
-        return row;
-      });
+          if (a.sortValue !== null && b.sortValue === null) return -1;
+          if (a.sortValue === null && b.sortValue !== null) return 1;
+          return a.timeIdx - b.timeIdx;
+        })
+        .map((item) => item.row);
     }
     return [];
   });
